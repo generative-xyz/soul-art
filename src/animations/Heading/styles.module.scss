@@ -1,0 +1,43 @@
+.heading {
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  line-height: 120%;
+
+  &:is(h1) {
+    font-size: rem(44px);
+    @include minTablet {
+      font-size: rem(50px);
+    }
+    @include pcSmall {
+      font-size: rem(58px);
+    }
+    @include pcMid {
+      font-size: rem(66px);
+    }
+    @include pcWide {
+      font-size: rem(86px);
+    }
+  }
+
+  &:is(h2) {
+    font-size: rem(74px);
+  }
+
+  &:is(h3) {
+    line-height: (52/44);
+    font-size: rem(44px);
+    //@include calcFontAuto(34px, 48px);
+  }
+
+  &:is(h4) {
+    font-size: rem(36px);
+    line-height: (44/36);
+    letter-spacing: -0.02em;
+  }
+
+  &:is(h5) {
+  }
+
+  &:is(h6) {
+  }
+}
