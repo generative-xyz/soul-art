@@ -1,39 +1,30 @@
 import { PropsWithChildren } from 'react';
-import { CSSProperties } from 'styled-components';
+import { StyledComponentProps, DefaultTheme } from 'styled-components';
 import { StyledButton } from './Button.styled';
+import styles from './button.module.scss';
+import cs from 'classnames';
 
-export type ButtonProps = {
-  bg?: CSSProperties['backgroundColor'];
-  background?: string;
-  onClick?: () => void;
-  className?: string;
-  disabled?: boolean;
-  type?: 'submit' | 'reset' | 'button' | undefined;
-  primary?: boolean;
-  backgroundSize?: CSSProperties['backgroundSize'];
-  props?: HTMLButtonElement;
+export type AdditionalButtonProps = {
+  borderRadius: string;
 };
 
+export type ButtonProps = StyledComponentProps<
+  'button',
+  DefaultTheme,
+  AdditionalButtonProps,
+  'borderRadius'
+>;
+
 const Button = ({
-  type,
-  bg = 'bg1',
-  background,
-  className,
-  onClick,
+  borderRadius = '999px',
   children,
-  backgroundSize = 'auto',
-  primary = false,
+  className,
   ...props
 }: PropsWithChildren<ButtonProps>) => {
   return (
     <StyledButton
-      type={type}
-      bg={bg}
-      background={background}
-      className={className}
-      onClick={onClick}
-      primary={primary}
-      backgroundSize={backgroundSize}
+      borderRadius={borderRadius}
+      className={cs(styles.button, className)}
       {...props}
     >
       {children}
