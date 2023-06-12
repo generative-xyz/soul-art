@@ -30,7 +30,7 @@ export const useAnimate = (
     }
   }, []);
 
-  const onToggle = useCallback(self => {
+  const onToggle = useCallback((self: any) => {
     refOption.current.isActive = self.isActive;
   }, []);
 

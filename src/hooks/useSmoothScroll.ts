@@ -6,7 +6,7 @@ export const useSmoothScroll = (): void => {
   const { setLenis } = useContext(AnimateContext);
   const refCog = useRef<any>({ lenis: null, requestAnimation: null });
 
-  const raf = time => {
+  const raf = (time: number) => {
     refCog.current.lenis.raf(time);
     refCog.current.requestAnimation = requestAnimationFrame(raf);
   };

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { storageUtil } from "@Utils/storage";
 
-export const GridDebug = (): any => {
+export const GridDebug = () => {
   const [isGird, setIsGrid] = useState(false);
   const handleKeyDown = useCallback(
-    ev => {
+      (ev: any) => {
       const key = ev.which || ev.keyCode;
       const isShift = !!ev.shiftKey;
       if (isShift && key === 71) {
