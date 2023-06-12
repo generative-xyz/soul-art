@@ -1,3 +1,17 @@
-.hero{
+.hero {
+  overflow: hidden;
+  position: relative;
 
+  &_bg {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  &_inner {
+    position: absolute;
+    bottom: rem(48px);
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+  }
 }

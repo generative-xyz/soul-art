@@ -1,12 +1,18 @@
 .text {
   &.size {
-    &-d0,
     &-d1,
     &-d2,
-    &-d3,
-    &-supper {
+    &-32 {
+      font-family: var(--righteous-font);
       font-weight: 400;
       line-height: 100%;
+    }
+
+    &-24,
+    &-20,
+    &-16 {
+      font-weight: 400;
+      line-height: 140%;
     }
 
     &-d1 {
@@ -17,19 +23,19 @@
       font-size: rem(36px);
     }
 
-    &-d3 {
+    &-32 {
       font-size: rem(32px);
     }
 
-    &-d4 {
+    &-24 {
       font-size: rem(24px);
     }
 
-    &-d5 {
+    &-20 {
       font-size: rem(20px);
     }
 
-    &-body {
+    &-16 {
       font-size: rem(16px);
     }
   }
