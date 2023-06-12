@@ -1,3 +1,4 @@
+const path = require("path");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
@@ -12,9 +13,14 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.trustlessartifacts.com',
+        hostname: 'cdn.souldao.art',
       },
     ],
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
+    prependData: `@import "@styles/_tools.scss";
+    `,
   },
   async redirects() {
     return [
