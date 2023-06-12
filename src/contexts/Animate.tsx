@@ -65,7 +65,7 @@ export const AnimateContext = createContext<IAnimateContext>({
     isHideFooter: false,
 });
 
-export const AnimateProvider: React.FC = ({children}) => {
+export const AnimateProvider: React.FC = ({children}: any) => {
     const refOption = useRef<any>({counter: 0});
     const [isPageScrolling, setIsPageScrolling] = useState<boolean>(false);
     const [isHideHeader, setIsHideHeader] = useState<boolean>(false);

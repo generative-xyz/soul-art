@@ -103,7 +103,7 @@ export const isMobile = (): boolean => {
       )
     )
       check = true;
-  })(navigator.userAgent || navigator.vendor || window.opera);
+  })(navigator.userAgent || navigator.vendor);
   return check;
 };
 
@@ -119,7 +119,7 @@ export const isMobileAndTablet = (): boolean => {
       )
     )
       check = true;
-  })(navigator.userAgent || navigator.vendor || window.opera);
+  })(navigator.userAgent || navigator.vendor);
   return check;
 };
 
