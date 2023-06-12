@@ -5,10 +5,40 @@ import {
   ThemeProvider as StyledComponentsThemeProvider,
 } from 'styled-components';
 import { getTheme } from '@/theme/index';
-import { Poppins, Rowdies } from 'next/font/google';
+import { Righteous } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const poppins = Poppins({ weight: ['300', '400', '700'], subsets: ['latin'] });
-const rowdies = Rowdies({ weight: ['300', '400'], subsets: ['latin'] });
+const bandeinsSansVariable = localFont({
+  src: [
+    {
+      path: './fonts/BandeinsSans-Light.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: './fonts/BandeinsSans-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/BandeinsSans-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './fonts/BandeinsSans-SemiBold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: './fonts/BandeinsSans-Bold.woff2',
+      weight: '800',
+      style: 'normal',
+    },
+  ],
+});
+
+const righteous = Righteous({ weight: ['400'], subsets: ['latin'] });
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const darkMode = false;
@@ -28,8 +58,8 @@ export const ThemedGlobalStyle = createGlobalStyle`
     background-color: ${({ theme }) => theme.bg1};
 
     body{
-      --bs-body-font-family: ${poppins.style.fontFamily};
-       --rowdies-font: ${rowdies.style.fontFamily};
+      --bs-body-font-family: ${bandeinsSansVariable.style.fontFamily};
+      --righteous-font: ${righteous.style.fontFamily};
     }
 
     @media screen and (min-width: 1920px) {

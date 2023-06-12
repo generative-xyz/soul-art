@@ -45,7 +45,7 @@ const Wrapper = styled.header`
   }
 
   .logo-title {
-    font-family: var(--rowdies-font);
+    font-family: var(--righteous-font);
     font-weight: 400;
     font-size: ${px2rem(22)};
     line-height: ${px2rem(27)};
