@@ -1,12 +1,8 @@
-import React, { ReactNode, useLayoutEffect, useRef } from "react";
-import classNames from "classnames";
-import { useScrollTrigger } from "@Hooks/useScrollTrigger";
-import {
-  MathLerp,
-  MathMap,
-  webpSupported,
-} from "@Services/Animate/AnimateMathUtil";
-import s from "./Frames.module.scss";
+import React, { ReactNode, useLayoutEffect, useRef } from 'react';
+import classNames from 'classnames';
+import { useScrollTrigger } from '@Hooks/useScrollTrigger';
+import { MathLerp, MathMap, webpSupported } from '@Services/Animate/AnimateMathUtil';
+import s from './Frames.module.scss';
 
 interface IProps {
   className: string;
@@ -38,9 +34,9 @@ interface IRefDomFrames {
 }
 
 export const Frames: React.FC<IProps> = ({
-  className = "",
-  urlFrame = "",
-  webmFrame = "",
+  className = '',
+  urlFrame = '',
+  webmFrame = '',
   totalFrames = 0,
   children,
   height = 1080,
@@ -73,9 +69,7 @@ export const Frames: React.FC<IProps> = ({
     for (let i = 1; i <= totalFrames; i += 1) {
       const url: string = formatFrameUrl
         ? formatFrameUrl(refDom.current.currentUrlFrame, i)
-        : refDom.current.currentUrlFrame
-            ?.replace("%d", i.toString())
-            .toString();
+        : refDom.current.currentUrlFrame?.replace('%d', i.toString()).toString();
       const promise = new Promise<void>((resolve, reject): any => {
         const image = new Image();
         refDom.current.images[i] = { image, frame: i, isError: false };
@@ -103,7 +97,7 @@ export const Frames: React.FC<IProps> = ({
         0,
         0,
         refDom.current.canvas?.width || window.innerWidth,
-        refDom.current.canvas?.height || window.innerHeight
+        refDom.current.canvas?.height || window.innerHeight,
       );
       refDom.current.ctx?.drawImage(image, 0, 0);
     }
@@ -112,9 +106,9 @@ export const Frames: React.FC<IProps> = ({
   const runFrame = () => {
     refDom.current.currentFrame = Math.max(
       Math.floor(
-        MathLerp(refDom.current.currentFrame, refDom.current.lastFrame, 0.5)
+        MathLerp(refDom.current.currentFrame, refDom.current.lastFrame, 0.5),
       ),
-      1
+      1,
     );
 
     if (
@@ -130,22 +124,22 @@ export const Frames: React.FC<IProps> = ({
       const rect: DOMRect | undefined = comp.current?.getBoundingClientRect();
 
       refCanvas?.current?.setAttribute(
-        "width",
-        String(width || rect?.width || window.innerWidth)
+        'width',
+        String(width || rect?.width || window.innerWidth),
       );
       refCanvas?.current?.setAttribute(
-        "height",
-        String(height || rect?.width || window.innerWidth)
+        'height',
+        String(height || rect?.width || window.innerWidth),
       );
 
-      refDom.current.ctx = refCanvas.current.getContext("2d");
+      refDom.current.ctx = refCanvas.current.getContext('2d');
       runFrame();
     }
   };
 
   refDom.current.scroller = useScrollTrigger({
     trigger: comp,
-    start: "top top",
+    start: 'top top',
     end: `${MathMap(totalFrames, 0, 24, 0, 1000)}px bottom`,
     pin: true,
     // scrub: true, like lerp
