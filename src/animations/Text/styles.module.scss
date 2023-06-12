@@ -5,166 +5,32 @@
     &-d2,
     &-d3,
     &-supper {
-      font-weight: 500;
-      line-height: 110%;
-    }
-
-    &-d0,
-    &-d1,
-    &-d2,
-    &-supper {
-      letter-spacing: -0.03em;
-    }
-
-    &-d0 {
-      font-size: 58px;
+      font-weight: 400;
+      line-height: 100%;
     }
 
     &-d1 {
-      font-size: rem(44px);
-      @include minTablet {
-        font-size: rem(50px);
-      }
-      @include pcSmall {
-        font-size: rem(58px);
-      }
-      @include pcMid {
-        font-size: rem(66px);
-      }
-      @include pcWide {
-        font-size: rem(86px);
-      }
+      font-size: rem(68px);
     }
 
     &-d2 {
-      font-size: rem(44px);
-      @include minTablet {
-        font-size: rem(50px);
-      }
-      @include pcSmall {
-        font-size: rem(50px);
-      }
-      @include pcWide {
-        font-size: rem(74px);
-      }
+      font-size: rem(36px);
     }
 
     &-d3 {
-      letter-spacing: -0.01em;
-      font-size: rem(36px);
-
-      @include minTablet {
-        font-size: rem(30px);
-      }
-      @include pcSmall {
-        font-size: rem(36px);
-      }
-      @include pcWide {
-        font-size: rem(50px);
-      }
-    }
-
-    &-d-table {
-      letter-spacing: -0.01em;
-      font-size: rem(36px);
-      line-height: 120%;
-
-      @include minTablet {
-        font-size: rem(30px);
-      }
-      @include pcSmall {
-        font-size: rem(36px);
-      }
-      @include pcWide {
-        font-size: rem(58px);
-      }
+      font-size: rem(32px);
     }
 
     &-d4 {
-      letter-spacing: -0.01em;
-      font-size: rem(30px);
-
-      @include pcSmall {
-        font-size: rem(36px);
-      }
-
-      @include pcWide {
-        font-size: rem(44px);
-      }
+      font-size: rem(24px);
     }
 
-    &-40 {
-      line-height: 127%;
-      font-weight: 500;
-      letter-spacing: -0.001em;
-      font-size: rem(40px);
-      //@include calcFontAuto(18px, 26px);
+    &-d5 {
+      font-size: rem(20px);
     }
 
-    &-30 {
-      line-height: 127%;
-      font-weight: 500;
-      letter-spacing: -0.001em;
-      font-size: rem(30px);
-      //@include calcFontAuto(18px, 26px);
-    }
-
-    &-26 {
-      line-height: 131%;
-      font-weight: 400;
-      letter-spacing: -0.003em;
-
-      font-size: rem(18px);
-      @include minTablet {
-        font-size: rem(20px);
-      }
-      @include pcWide {
-        font-size: rem(26px);
-      }
-    }
-
-    &-20 {
-      font-style: normal;
-      font-weight: 400;
-      line-height: 130%;
-      letter-spacing: -0.01em;
+    &-body {
       font-size: rem(16px);
-
-      @include pcWide {
-        font-size: rem(20px);
-      }
-    }
-
-    &-18 {
-      line-height: (26/16);
-      font-size: rem(16px);
-      @include pcWide {
-        font-size: rem(18px);
-      }
-    }
-
-    &-16 {
-      line-height: (26/16);
-      @include calcFontAuto(14px, 16px);
-    }
-
-    &-14 {
-      line-height: (24/14);
-      font-size: rem(14px);
-    }
-
-    &-12 {
-      line-height: (20/12);
-      font-size: 12px;
-
-      @include pcWide {
-        font-size: rem(12px);
-      }
-    }
-
-    &-11 {
-      line-height: (18/11);
-      font-size: 11px;
     }
   }
 }
