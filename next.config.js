@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -18,8 +19,8 @@ const nextConfig = {
     ],
   },
   sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-    prependData: `@import "@styles/_tools.scss";
+    includePaths: [path.join(__dirname, 'src/styles')],
+    prependData: `@import "@Styles/_tools.scss";
     `,
   },
   async redirects() {

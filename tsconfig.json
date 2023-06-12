@@ -25,12 +25,14 @@
       "@Context/*": ["src/contexts/*"],
       "@Constants": ["src/constants"],
       "@Constants/*": ["src/constants/*"],
-      "@Pages/*": ["pages/*"],
+      "@Pages/*": ["src/pages/*"],
+      "@Pages": ["src/pages"],
       "@Services": ["src/services"],
       "@Services/*": ["src/services/*"],
       "@Hooks": ["src/hooks"],
       "@Hooks/*": ["src/hooks/*"],
-      "@Styles/*": ["styles/*"],
+      "@Styles/*": ["src/styles/*"],
+      "@Styles": ["src/styles"],
       "@Utils/*": ["src/utils/*"],
       "@Utils": ["src/utils"]
     }

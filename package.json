@@ -93,6 +93,7 @@
     "eslint-config-prettier": "^8.8.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
+    "path": "^0.12.7",
     "prettier": "^2.8.7"
   }
 }
