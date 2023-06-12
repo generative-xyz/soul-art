@@ -4,7 +4,7 @@ import React, {
     useState,
     useEffect,
     useCallback,
-    useRef,
+    useRef, PropsWithChildren, FC,
 } from "react";
 import {PageLoader} from "@Animations/PageLoader";
 import {pageScrollTop} from "@Services/Animate/AnimateMathUtil";
@@ -65,7 +65,7 @@ export const AnimateContext = createContext<IAnimateContext>({
     isHideFooter: false,
 });
 
-export const AnimateProvider: React.FC = ({children}: any) => {
+export const AnimateProvider: FC<PropsWithChildren> = ({children}) => {
     const refOption = useRef<any>({counter: 0});
     const [isPageScrolling, setIsPageScrolling] = useState<boolean>(false);
     const [isHideHeader, setIsHideHeader] = useState<boolean>(false);

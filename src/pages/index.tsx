@@ -1,11 +1,13 @@
-import About from '@/containers/About';
+import {LandingContainer} from "@/containers/Landing";
+import {AnimateProvider} from "@Context/Animate";
 
-const AboutPage = () => {
+
+const LandingPage = () => {
   return (
-    <div className="overflow-hidden">
-      <About />
-    </div>
+    <AnimateProvider>
+      <LandingContainer />
+    </AnimateProvider>
   );
 };
 
-export default AboutPage;
+export default LandingPage;
