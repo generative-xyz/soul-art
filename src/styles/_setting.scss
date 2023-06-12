@@ -1,6 +1,29 @@
 @use "sass:math" as math;
 
 $grid-gutter-width: 40px;
+
+$black-primary: #000000;
+$dark-primary: #0F1B01;
+$white-primary: #ffffff;
+$green-primary: #0ac681;
+$orange-primary: #ff7e21;
+
+$gray-primary: #f6f6f6;
+$gray-1: #f7f7f7;
+$gray-2: #ececec;
+$gray-3: #d9d9d9;
+$gray-4: #898989;
+
+$red-primary: #ff4747;
+
+$colors: (
+        "black-primary": $black-primary,
+) !default;
+$theme-colors: (
+        "black-primary": $black-primary,
+) !default;
+
+
 $grid-breakpoints: (
         xs: 0,
         sm: 768px,
@@ -36,4 +59,7 @@ $spacers: (
         10: rem(300px),
 ) !default;
 
-
+$easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
+$easeInOutCubic: cubic-bezier(0.65, 0, 0.35, 1);
+$easeInOutCirc : cubic-bezier(0.85, 0, 0.15, 1);
+@include color-classes($colors);

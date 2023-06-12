@@ -20,8 +20,7 @@ const nextConfig = {
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'src/styles')],
-    prependData: `@import "@Styles/_tools.scss";
-    `,
+    prependData: `@import "@Styles/_tools.scss";@import "@Styles/_setting.scss";`,
   },
   async redirects() {
     return [
