@@ -5,7 +5,6 @@ import Web3Provider from '@/components/Web3Provider';
 import { Provider } from 'react-redux';
 import { WalletProvider } from '@/contexts/wallet-context';
 import { AssetsProvider } from '@/contexts/assets-context';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import ThemeProvider, { ThemedGlobalStyle } from '@/theme/theme';
 import store from '@/state';
 import { Toaster } from 'react-hot-toast';
