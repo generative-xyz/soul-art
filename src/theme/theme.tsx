@@ -39,8 +39,6 @@ export const ThemedGlobalStyle = createGlobalStyle`
     @media screen and (min-width: 2048px) {
       font-size: 20px;
     }
-    
-
 
     h3 {
       font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSizes.h3};

@@ -27,6 +27,7 @@
   "dependencies": {
     "@bitcoinerlab/secp256k1": "^1.0.2",
     "@reduxjs/toolkit": "^1.9.3",
+    "@studio-freight/lenis": "^1.0.14",
     "@trustless-computer/dapp-core": "^0.0.6",
     "@web3-react/core": "^8.2.0",
     "@web3-react/metamask": "^8.2.1",
@@ -43,6 +44,7 @@
     "dotenv": "^16.0.3",
     "file-type": "^16.5.4",
     "formik": "^2.2.9",
+    "gsap": "^3.12.1",
     "lodash": "^4.17.21",
     "next": "^13.4.0",
     "query-string": "^8.1.0",
@@ -62,6 +64,7 @@
     "redux": "^4.2.1",
     "sass": "^1.62.0",
     "styled-components": "^5.3.9",
+    "supports-webp": "^3.0.0",
     "trustless-computer-sdk": "https://github.com/TrustlessComputer/tc-sdk#v0.1.38",
     "typescript": "5.0.4",
     "unzipit": "^1.4.2",
