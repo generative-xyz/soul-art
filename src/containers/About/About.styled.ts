@@ -79,7 +79,7 @@ export const StyledAbout = styled.div`
     }
 
     .title {
-      font-family: var(--rowdies-font);
+      font-family: var(--righteous-font);
       font-size: ${px2rem(56)};
       line-height: ${px2rem(61)};
       margin-bottom: ${px2rem(28)};
@@ -383,7 +383,7 @@ export const AboutHeader = styled.div`
   }
 
   .logo-title {
-    font-family: var(--rowdies-font);
+    font-family: var(--righteous-font);
     font-weight: 400;
     font-size: ${px2rem(22)};
     line-height: ${px2rem(27)};
