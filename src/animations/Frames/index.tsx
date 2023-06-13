@@ -148,7 +148,7 @@ export const Frames: React.FC<IProps> = ({
     };
 
     refDom.current.scroller = useScrollTrigger({
-        trigger: comp.current,
+        trigger: comp,
         start: 'top top',
         end: `${MathMap(totalFrames, 0, 24, 0, 1000)}px bottom`,
         pin: true,

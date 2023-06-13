@@ -1,9 +1,9 @@
 import {gsap} from "gsap";
-import { useEffect, useRef} from "react";
+import {MutableRefObject, useEffect, useRef} from "react";
 import {default as ScrollTrigger} from "gsap/ScrollTrigger";
 
 interface IProp {
-    trigger: HTMLDivElement | HTMLElement | HTMLHeadingElement | null;
+    trigger: MutableRefObject<HTMLDivElement | HTMLElement | HTMLHeadingElement | null>;
     start?: string | number | ((self: ScrollTrigger) => string | number);
     end?: string | number | ((self: ScrollTrigger) => string | number);
     pin?: boolean | string | HTMLElement;
@@ -45,7 +45,7 @@ export const useScrollTrigger = (
             refOg.current.id = (Math.random() * 1000000000).toString();
             refOg.current.scorller && refOg.current.scorller.refresh();
             refOg.current.scorller = ScrollTrigger.create({
-                trigger: trigger,
+                trigger: trigger.current,
                 id: refOg.current.id,
                 start,
                 markers,

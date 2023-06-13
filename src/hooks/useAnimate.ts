@@ -2,14 +2,14 @@ import {
     useRef,
     useCallback,
     useContext,
-    useLayoutEffect,
+    useLayoutEffect, MutableRefObject,
 } from "react";
 import {AnimateContext} from "@Context/Animate";
 import {useScrollTrigger} from "@Hooks/useScrollTrigger";
 import {PAGE_ENTER} from "@Constants/animation";
 
 export const useAnimate = (
-    el: HTMLDivElement | HTMLElement | HTMLHeadingElement | null,
+    el: MutableRefObject<HTMLDivElement | HTMLElement | HTMLHeadingElement | null>,
     onEnter: () => void,
     offsetPercent = 0,
     onSetter?: () => void,

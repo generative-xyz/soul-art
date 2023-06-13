@@ -30,7 +30,7 @@ const Heading: React.FC<PropsWithChildren<THeading>> = ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const comp = useRef<HTMLHeadingElement>(null);
-  useTextAnim(comp.current, animOption);
+  useTextAnim(comp, animOption);
 
   return (
     <Text

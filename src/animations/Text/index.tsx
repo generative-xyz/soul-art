@@ -46,7 +46,7 @@ const Text: React.FC<PropsWithChildren<TText>> = ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const comp = useRef<HTMLElement>(null);
-  useTextAnim(comp.current, animOption);
+  useTextAnim(comp, animOption);
 
   return (
     <TextTag

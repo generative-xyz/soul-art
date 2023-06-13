@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import {useRef, useCallback, MutableRefObject} from 'react';
 import { gsap } from 'gsap';
 import SplitType from 'split-type';
 import { useAnimate } from '@Hooks/useAnimate';
@@ -21,12 +21,12 @@ interface IProRefDom {
 }
 
 export const useTextAnim = (
-  comp: HTMLElement | HTMLHeadingElement | null,
+  comp: MutableRefObject<HTMLElement | HTMLHeadingElement | null>,
   animOption?: IAnimOption,
 ): void => {
   const refDom = useRef<IProRefDom>({});
   const onRunAnimate = useCallback(() => {
-    if (comp) {
+    if (comp && comp.current) {
       const delay = getDelay(animOption?.screen || 0, animOption?.offset || 0);
       refDom.current.runned = true;
       switch (animOption?.type || '') {
@@ -38,14 +38,14 @@ export const useTextAnim = (
             delay,
             stagger: 0.015,
             onComplete: () => {
-              if (comp)
-                refDom.current.resizeObserver?.unobserve(comp as HTMLElement);
+              if (comp && comp.current)
+                refDom.current.resizeObserver?.unobserve(comp.current as HTMLElement);
             },
           });
           break;
 
         default:
-          gsap.to(comp, {
+          gsap.to(comp.current, {
             opacity: 1,
             y: 0,
             ease: 'power3.out',
@@ -55,17 +55,17 @@ export const useTextAnim = (
           break;
       }
     }
-  }, []);
+  }, [comp]);
 
   const onSetAnimate = useCallback(() => {
-    if (comp && animOption) {
+    if (comp && comp.current && animOption) {
       switch (animOption.type) {
         case 'heading':
-          comp?.classList.add(`anim-heading`);
-          comp?.classList.add(`is-handle`);
+          comp.current?.classList.add(`anim-heading`);
+          comp.current?.classList.add(`is-handle`);
 
-          if (comp) {
-            refDom.current.texts = new SplitType(comp as HTMLElement, {
+          if (comp && comp.current) {
+            refDom.current.texts = new SplitType(comp.current as HTMLElement, {
               types: 'lines, chars',
             });
 
@@ -82,39 +82,41 @@ export const useTextAnim = (
                 }
               },
             );
-            refDom.current.resizeObserver.observe(comp as HTMLElement);
+            refDom.current.resizeObserver.observe(comp.current as HTMLElement);
           }
 
           break;
 
         default:
-          comp?.classList.add(`is-handle`);
-          gsap.set(comp, { opacity: '0', y: 50 });
+          if (comp && comp.current) {
+            comp.current?.classList.add(`is-handle`);
+            gsap.set(comp.current, {opacity: '0', y: 50});
+          }
           break;
       }
     }
-  }, []);
+  }, [comp, animOption]);
 
   const onClearAnimate = useCallback(() => {
-    if (comp && animOption) {
+    if (comp && comp.current && animOption) {
       switch (animOption.type) {
         case 'heading':
           if (refDom.current) {
-            comp?.classList.remove(`is-handle`);
+            comp.current?.classList.remove(`is-handle`);
             refDom.current.texts?.revert();
-            refDom.current.resizeObserver?.unobserve(comp as HTMLElement);
+            refDom.current.resizeObserver?.unobserve(comp.current as HTMLElement);
           }
           break;
 
         default:
-          if (comp) {
-            comp?.classList.remove(`is-handle`);
-            gsap.set(comp, { opacity: 1, y: 0 });
+          if (comp && comp.current) {
+            comp.current?.classList.remove(`is-handle`);
+            gsap.set(comp.current, { opacity: 1, y: 0 });
           }
           break;
       }
     }
-  }, []);
+  }, [comp, animOption]);
 
   useAnimate(comp, onRunAnimate, 0, onSetAnimate, onClearAnimate);
 };
