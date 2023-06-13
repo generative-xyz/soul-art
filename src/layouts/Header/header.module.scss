@@ -1,0 +1,91 @@
+.nav_container {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+
+  .nav_item {
+    opacity: 0.6;
+
+    &.active {
+      opacity: 1;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.connect_button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 1px solid $gray-2;
+  font-size: 14px;
+  line-height: 18px;
+  backdrop-filter: blur(2px);
+}
+
+.wallet_icon {
+  width: 20px;
+  height: 20px;
+}
+
+.profile {
+  &_container {
+    border-radius: 999px;
+    background-color: $gray-primary;
+    display: flex;
+    align-items: center;
+    border: 1px solid $gray-2;
+    padding: 6px 8px;
+    gap: 4px;
+  }
+
+  &_amount {
+    border-radius: 999px;
+    background-color: $white-primary;
+    padding: 4px 8px;
+    box-shadow: 0px 0px 12px -6px rgba(0, 0, 0, 0.08);
+    font-size: 14px;
+    line-height: 140%;
+
+    &.warning {
+      color: $red-primary;
+    }
+  }
+
+  &_avatar {
+    width: 32px;
+    height: 32px;
+    margin-right: -4px;
+    margin-left: 4px;
+    background: linear-gradient(0deg, #7196ff -0.45%, #2a5ee8 71.18%);
+    border: 1px solid $white-primary;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+}
+
+.tooltip_content {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  p {
+    color: $white-primary;
+    margin: 0;
+  }
+}
+
+.menu {
+  &_container {
+    width: 100%;
+    border: 1px solid #ececec;
+    box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
+    border-radius: 16px;
+    padding: 20px;
+  }
+}
