@@ -1,51 +1,40 @@
-import React, { CSSProperties, PropsWithChildren, useRef } from "react";
-import cs from "classnames";
-import { useTextAnim } from "@Hooks/useTextAnim";
-import s from "./styles.module.scss";
+import React, { CSSProperties, ElementType, PropsWithChildren, useRef } from 'react';
+import cs from 'classnames';
+import { useTextAnim } from '@Hooks/useTextAnim';
+import s from './styles.module.scss';
 
 type TText = {
-  as?:
-    | "p"
-    | "span"
-    | "strong"
-    | "em"
-    | "sub"
-    | "h1"
-    | "h2"
-    | "h3"
-    | "h4"
-    | "a"
-    | "label";
-  fontWeight?: "bold" | "semibold" | "medium" | "regular" | "light";
+  as?: ElementType;
+  fontWeight?: 'bold' | 'semibold' | 'medium' | 'regular' | 'light';
   style?: CSSProperties;
   size?:
-    | "18"
-    | "20"
-    | "26"
-    | "30"
-    | "40"
-    | "d0"
-    | "d1"
-    | "d2"
-    | "d3"
-    | "d-table"
-    | "supper";
+    | '18'
+    | '20'
+    | '26'
+    | '30'
+    | '40'
+    | 'd0'
+    | 'd1'
+    | 'd2'
+    | 'd3'
+    | 'd-table'
+    | 'supper';
   color?: string;
   className?: string;
   animOption?: {
     screen: number;
     offset: number;
-    type: "heading" | "random" | "paragraph";
+    type: 'heading' | 'random' | 'paragraph';
   };
   onClick?: () => void;
   htmlFor?: string;
 };
 
 const Text: React.FC<PropsWithChildren<TText>> = ({
-  as = "p",
+  as = 'h1',
   children,
-  fontWeight = "regular",
-  size = "16",
+  fontWeight = 'regular',
+  size = '16',
   style,
   color,
   className,
@@ -54,8 +43,8 @@ const Text: React.FC<PropsWithChildren<TText>> = ({
   ...props
 }) => {
   const TextTag = as;
-  const comp = useRef<HTMLElement | null>(null);
-  useTextAnim(animOption, comp.current);
+  const comp = useRef<HTMLElement>(null);
+  useTextAnim(comp.current, animOption);
 
   return (
     <TextTag
@@ -66,7 +55,7 @@ const Text: React.FC<PropsWithChildren<TText>> = ({
         s[`size-${size}`],
         `font-${fontWeight}`,
         `text-${color}`,
-        className
+        className,
       )}
       style={{ ...style }}
       onClick={onClick}
