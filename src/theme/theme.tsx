@@ -54,10 +54,9 @@ export const ThemedGlobalStyle = createGlobalStyle`
 
   html{
     font-size: 16px;
-    color: ${({ theme }: { theme: DefaultTheme }) => theme.bg1};
     background-color: ${({ theme }) => theme.bg1};
 
-    body{
+    body {
       --bs-body-font-family: ${bandeinsSansVariable.style.fontFamily};
       --righteous-font: ${righteous.style.fontFamily};
     }
