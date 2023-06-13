@@ -1,17 +1,24 @@
 import { FC, PropsWithChildren } from 'react';
 import s from './style.module.scss';
 import IconSVG from '../IconSVG';
+import { textAnimateIcon1, textAnimateIcon2 } from '@/constants/url';
 
 const TextAnimate: FC<PropsWithChildren> = (props) => {
-  const icon1 =
-    'https://storage.googleapis.com/generative-static-prod/soul-art/textIcon1.svg';
-  const icon2 =
-    'https://storage.googleapis.com/generative-static-prod/soul-art/textIcon2.svg';
   return (
     <div className={s.textAnimate}>
-      <IconSVG src={icon1} maxWidth={'46'} maxHeight={'20'} className={s.icon1} />
+      <IconSVG
+        src={textAnimateIcon1}
+        maxWidth={'46'}
+        maxHeight={'20'}
+        className={s.icon1}
+      />
       {props.children}
-      <IconSVG src={icon2} maxWidth={'46'} maxHeight={'20'} className={s.icon2} />
+      <IconSVG
+        src={textAnimateIcon2}
+        maxWidth={'46'}
+        maxHeight={'20'}
+        className={s.icon2}
+      />
     </div>
   );
 };

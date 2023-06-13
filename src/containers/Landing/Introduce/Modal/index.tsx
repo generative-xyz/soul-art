@@ -1,6 +1,7 @@
 import s from './style.module.scss';
 import IconSVG from '@/components/IconSVG';
 import ImageFrame from '@/components/ImageFrame';
+import { modalClose, videoSrc } from '@/constants/url';
 import { useEffect } from 'react';
 
 type ModalProps = {
@@ -9,10 +10,6 @@ type ModalProps = {
 };
 
 const HeroModal: React.FC<ModalProps> = ({ showModal, closeModal }) => {
-  const modalClose =
-    'https://storage.googleapis.com/generative-static-prod/soul-art/mdClose.svg';
-  const videoSrc = 'https://www.youtube.com/watch?v=PEM0Vs8jf1w';
-
   useEffect(() => {
     const backdrop = document.getElementById('js-modal');
     backdrop?.addEventListener('click', (e) => {
