@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require("path");
+const path = require('path');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
@@ -11,6 +11,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '**.trustless.computer',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.trustlessartifacts.com',
       },
       {
         protocol: 'https',

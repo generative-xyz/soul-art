@@ -31,12 +31,6 @@ const MenuMobile = ({ onCloseMenu, isOpen }: IProp) => {
 
   return (
     <Wrapper isOpen={isOpen}>
-      <Image
-        className="bg"
-        src={`${CDN_URL}/pages/artifacts/background.jpg`}
-        alt={'background'}
-        fill
-      />
       <div className="inner">
         <button className="btnMenuMobile" onClick={onCloseMenu}>
           <img src={`${CDN_URL}/icons/ic_close_menu.svg`} alt="ic_close_menu" />
@@ -50,12 +44,8 @@ const MenuMobile = ({ onCloseMenu, isOpen }: IProp) => {
         <Link href={'https://generative.xyz/discord/'} target="_blank">
           Discord
         </Link>
-        <Link href={ROUTE_PATH.ABOUT}>
-          About
-        </Link>
-        <Link href={ROUTE_PATH.STATUS}>
-          Status
-        </Link>
+        <Link href={ROUTE_PATH.ABOUT}>About</Link>
+        <Link href={ROUTE_PATH.STATUS}>Status</Link>
         {isAuthenticated ? (
           <div className="wallet mobile">
             <WalletBalance>
@@ -68,7 +58,10 @@ const MenuMobile = ({ onCloseMenu, isOpen }: IProp) => {
                 {account ? (
                   <Jazzicon diameter={32} seed={jsNumberForAddress(account)} />
                 ) : (
-                  <img src={`${CDN_URL}/icons/ic-avatar.svg`} alt="default avatar" />
+                  <img
+                    src={`${CDN_URL}/icons/ic-avatar.svg`}
+                    alt="default avatar"
+                  />
                 )}
               </div>
             </WalletBalance>

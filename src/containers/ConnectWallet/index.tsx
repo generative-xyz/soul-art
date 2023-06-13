@@ -42,12 +42,19 @@ const ConnectWallet: React.FC = (): React.ReactElement => {
     <Wrapper>
       <div className="mainContent">
         <h1 className="title">Connect Wallet</h1>
-        <p className="desc">
-          Connect your wallet to access Artifacts
-        </p>
-        <ArtifactButton className='button-container' variant="transparent-wide" width={280} height={48}>
+        <p className="desc">Connect your wallet to access Artifacts</p>
+        <ArtifactButton
+          className="button-container"
+          variant="transparent-wide"
+          width={280}
+          height={48}
+        >
           <ConnectWalletButton disabled={isConnecting} onClick={handleConnectWallet}>
-            <img alt='wallet-icon' className='wallet-icon' src={`${CDN_URL}/pages/artifacts/heroicons_wallet-solid.svg`}></img>
+            <img
+              alt="wallet-icon"
+              className="wallet-icon"
+              src={`${CDN_URL}/pages/artifacts/heroicons_wallet-solid.svg`}
+            ></img>
             <span>{isConnecting ? 'Connecting...' : 'Trustless Computer'}</span>
           </ConnectWalletButton>
         </ArtifactButton>

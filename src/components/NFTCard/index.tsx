@@ -1,5 +1,3 @@
-import { CDN_URL } from '@/configs';
-import IconSVG from '../IconSVG';
 import NFTDisplayBox from '../NFTDisplayBox';
 import { IMAGE_TYPE } from '../NFTDisplayBox/constant';
 import { Styled } from './NFTCard.styled';
@@ -40,14 +38,14 @@ const NFTCard = ({
             tokenID={tokenId}
             type={contentType}
           />
-          <a className="overlay" href={href}>
+          {/* <a className="overlay" href={href}>
             <div className="overlay-content">
               <IconSVG
                 maxWidth="100"
                 src={`${CDN_URL}/pages/artifacts/icons/ic-view.svg`}
               />
             </div>
-          </a>
+          </a> */}
         </div>
         <div className="card-info">
           {title1 && <p className="card-title1">{title1}</p>}
