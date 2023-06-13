@@ -25,10 +25,10 @@ const Heading: React.FC<PropsWithChildren<THeading>> = ({
                                                             animOption = undefined,
                                                             ...props
                                                         }) => {
-
-    const comp = useRef<any>(null);
     const Text = as;
-    useTextAnim(animOption, comp);
+
+    const comp = useRef<HTMLElement | null>(null);
+    useTextAnim(animOption, comp.current);
 
     return (
         <Text

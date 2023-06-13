@@ -50,7 +50,7 @@ export const AnimFade = ({
         gsap.set(comp.current, {opacity: 1, y: 0});
     }, [comp]);
 
-    useAnimate(comp, onEnter, threshold, onSetter, onClear);
+    useAnimate(comp.current, onEnter, threshold, onSetter, onClear);
 
     return (
         <div ref={comp} className={className}>

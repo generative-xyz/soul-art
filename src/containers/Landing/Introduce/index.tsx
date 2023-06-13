@@ -26,8 +26,8 @@ const Introduce: React.FC = () => {
   return (
     <div className={s.introduce}>
       <div className={s['introduceBox']}>
-        <Text animOption={{screen: 0, offset: 0, type: 'heading'}} className={s['introduce-box_title']}>Lorem ipsum dolor sit amet</Text>
-        <Text animOption={{screen: .3, offset: 0, type: 'paragraph'}} className={s['introduce-box_desc']}>
+        <Text as={'h1'} animOption={{screen: 0, offset: 0, type: 'heading'}} className={s['introduce-box_title']}>Lorem ipsum dolor sit amet</Text>
+        <Text as={'p'} animOption={{screen: .3, offset: 0, type: 'paragraph'}} className={s['introduce-box_desc']}>
           Once upon a time, in the magical land of New Bitcoin City, there was a
           unique and extraordinary force known as GM tokens. They were more than just
           digital assets—they were the embodiment of belief and hope for a brighter

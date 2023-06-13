@@ -1,9 +1,9 @@
 import {gsap} from "gsap";
-import {MutableRefObject, useEffect, useRef} from "react";
+import { useEffect, useRef} from "react";
 import {default as ScrollTrigger} from "gsap/ScrollTrigger";
 
 interface IProp {
-    trigger: any;
+    trigger: HTMLDivElement | HTMLElement | null;
     start?: string | number | ((self: ScrollTrigger) => string | number);
     end?: string | number | ((self: ScrollTrigger) => string | number);
     pin?: boolean | string | HTMLElement;
@@ -38,14 +38,14 @@ export const useScrollTrigger = (
 ): any => {
     const refOg = useRef<any>({scorller: null, timeOut: null});
     useEffect(() => {
-        if (trigger && trigger.current) {
+        if (trigger) {
             // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
             const ScrollTrigger = require("gsap/ScrollTrigger").default;
             gsap.registerPlugin(ScrollTrigger);
             refOg.current.id = (Math.random() * 1000000000).toString();
             refOg.current.scorller && refOg.current.scorller.refresh();
             refOg.current.scorller = ScrollTrigger.create({
-                trigger: trigger.current,
+                trigger: trigger,
                 id: refOg.current.id,
                 start,
                 markers,

@@ -54,12 +54,8 @@ const Text: React.FC<PropsWithChildren<TText>> = ({
   ...props
 }) => {
   const TextTag = as;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const comp = useRef<any>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const compNull = useRef<any>(null);
-
-  useTextAnim(animOption, animOption ? comp : compNull);
+  const comp = useRef<HTMLElement | null>(null);
+  useTextAnim(animOption, comp.current);
 
   return (
     <TextTag

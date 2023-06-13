@@ -137,10 +137,10 @@ export const Loading = (): JSX.Element => {
                         </div>
                     </div>
                     <div className={s.loading_inner}>
-                        <Text size={'d2'} className={'mb-1_16'}>
+                        <Text as={'p'} size={'d2'} className={'mb-1_16'}>
                             Welcome to New Bitcoin City
                         </Text>
-                        <Text size={'20'} className={'text-'}>
+                        <Text as={'p'} size={'20'} className={'text-'}>
                             Let the tale of Souls inspire you.
                         </Text>
                     </div>
