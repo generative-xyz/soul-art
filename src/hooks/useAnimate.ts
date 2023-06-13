@@ -9,7 +9,7 @@ import {useScrollTrigger} from "@Hooks/useScrollTrigger";
 import {PAGE_ENTER} from "@Constants/animation";
 
 export const useAnimate = (
-    el: HTMLDivElement | HTMLElement | null,
+    el: HTMLDivElement | HTMLElement | HTMLHeadingElement | null,
     onEnter: () => void,
     offsetPercent = 0,
     onSetter?: () => void,

@@ -3,7 +3,7 @@ import { useEffect, useRef} from "react";
 import {default as ScrollTrigger} from "gsap/ScrollTrigger";
 
 interface IProp {
-    trigger: HTMLDivElement | HTMLElement | null;
+    trigger: HTMLDivElement | HTMLElement | HTMLHeadingElement | null;
     start?: string | number | ((self: ScrollTrigger) => string | number);
     end?: string | number | ((self: ScrollTrigger) => string | number);
     pin?: boolean | string | HTMLElement;
