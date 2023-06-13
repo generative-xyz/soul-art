@@ -1,50 +1,50 @@
-import React, { CSSProperties, PropsWithChildren, useRef } from "react";
+import React, {CSSProperties, PropsWithChildren, useRef} from "react";
 import cs from "classnames";
-import { useTextAnim } from "@Hooks/useTextAnim";
+import {useTextAnim} from "@Hooks/useTextAnim";
 import s from "./styles.module.scss";
 
 type THeading = {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  fontWeight?: "bold" | "semibold" | "medium" | "normal" | "light" | "regular";
-  style?: CSSProperties;
-  className?: string;
-  color?: string;
-  animOption?: {
-    screen: number;
-    offset: number;
-    type: "heading" | "random" | "paragraph";
-  };
+    as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+    fontWeight?: "bold" | "semibold" | "medium" | "normal" | "light" | "regular";
+    style?: CSSProperties;
+    className?: string;
+    color?: string;
+    animOption?: {
+        screen: number;
+        offset: number;
+        type: "heading" | "random" | "paragraph";
+    };
 };
 const Heading: React.FC<PropsWithChildren<THeading>> = ({
-  as = "h1",
-  children,
-  fontWeight = "normal",
-  style,
-  color,
-  className,
-  animOption = undefined,
-  ...props
-}) => {
-  const Text = as;
-  const comp = useRef<any>(null);
-  const compNull = useRef<any>(null);
-  useTextAnim(animOption, animOption ? comp : compNull);
+                                                            as = "h1",
+                                                            children,
+                                                            fontWeight = "normal",
+                                                            style,
+                                                            color,
+                                                            className,
+                                                            animOption = undefined,
+                                                            ...props
+                                                        }) => {
 
-  return (
-    <Text
-      {...props}
-      ref={comp}
-      className={cs(
-        className,
-        s.heading,
-        `font-${fontWeight}`,
-        `text-${color}`
-      )}
-      style={{ ...style }}
-    >
-      {children}
-    </Text>
-  );
+    const comp = useRef<any>(null);
+    const Text = as;
+    useTextAnim(animOption, comp);
+
+    return (
+        <Text
+            {...props}
+            ref={comp}
+            className={cs(
+                className,
+                s.heading,
+                `font-${fontWeight}`,
+                `text-${color}`
+            )}
+            style={{...style}}
+        >
+            {children}
+        </Text>
+    );
 };
 
 export default Heading;

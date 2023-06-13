@@ -1,4 +1,4 @@
-import {useRef, useCallback} from "react";
+import {useRef, useCallback, MutableRefObject} from "react";
 import {gsap} from "gsap";
 import SplitType from "split-type";
 import {useAnimate} from "@Hooks/useAnimate";
@@ -24,10 +24,10 @@ interface IProRefDom {
 
 export const useTextAnim = (
     animOption?: IAnimOption,
-    comp: any
+    comp: MutableRefObject<any>
 ): void => {
-    const refDom = useRef<IProRefDom>({});
 
+    const refDom = useRef<IProRefDom>({});
     const onRunAnimate = useCallback(() => {
         if (comp && comp.current) {
             const delay = getDelay(animOption?.screen || 0, animOption?.offset || 0);
@@ -42,7 +42,7 @@ export const useTextAnim = (
                         stagger: .015,
                         onComplete: () => {
                             if (comp && comp.current)
-                                refDom.current.resizeObserver?.unobserve(comp.current);
+                                refDom.current.resizeObserver?.unobserve(comp.current as HTMLElement);
                         },
                     });
                     break;
@@ -65,31 +65,35 @@ export const useTextAnim = (
             switch (animOption.type) {
                 case "heading":
 
-                    comp.current.classList.add(`anim-heading`);
-                    comp.current.classList.add(`is-handle`);
+                    comp.current?.classList.add(`anim-heading`);
+                    comp.current?.classList.add(`is-handle`);
 
-                    refDom.current.texts = new SplitType(comp.current, {
-                        types: "lines, chars",
-                    });
+                    if (comp.current) {
 
-                    refDom.current.resizeObserver = new ResizeObserver(
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
-                        () => {
-                            if (refDom.current.texts && !refDom.current.runned) {
-                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                // @ts-ignore
-                                refDom.current.texts?.split();
-                                gsap.killTweensOf(refDom.current.texts.chars);
-                                gsap.set(refDom.current.texts.chars, {y: "102%"});
+                        refDom.current.texts = new SplitType(comp.current as HTMLElement, {
+                            types: "lines, chars",
+                        });
+
+                        refDom.current.resizeObserver = new ResizeObserver(
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
+                            () => {
+                                if (refDom.current.texts && !refDom.current.runned) {
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-ignore
+                                    refDom.current.texts?.split();
+                                    gsap.killTweensOf(refDom.current.texts.chars);
+                                    gsap.set(refDom.current.texts.chars, {y: "102%"});
+                                }
                             }
-                        }
-                    );
-                    refDom.current.resizeObserver.observe(comp.current);
+                        );
+                        refDom.current.resizeObserver.observe(comp.current as HTMLElement);
+                    }
+
                     break;
 
                 default:
-                    comp.current.classList.add(`is-handle`);
+                    comp.current?.classList.add(`is-handle`);
                     gsap.set(comp.current, {opacity: "0", y: 50});
                     break;
             }
@@ -100,14 +104,19 @@ export const useTextAnim = (
         if (comp && comp.current && animOption) {
             switch (animOption.type) {
                 case "heading":
-                    comp.current.classList.remove(`is-handle`);
-                    refDom.current.texts?.revert();
-                    refDom.current.resizeObserver?.unobserve(comp.current);
+                    if (refDom.current) {
+                        comp.current?.classList.remove(`is-handle`);
+                        refDom.current.texts?.revert();
+                        refDom.current.resizeObserver?.unobserve(comp.current as HTMLElement);
+                    }
                     break;
 
                 default:
-                    comp.current.classList.remove(`is-handle`);
-                    gsap.set(comp.current, {opacity: 1, y: 0});
+
+                    if (comp.current) {
+                        comp.current?.classList.remove(`is-handle`);
+                        gsap.set(comp.current, {opacity: 1, y: 0});
+                    }
                     break;
             }
         }
