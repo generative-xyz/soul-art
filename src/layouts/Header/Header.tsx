@@ -1,54 +1,54 @@
 import { CDN_URL, TC_URL } from '@/configs';
-import { ROUTE_PATH } from '@/constants/route-path';
-import Link from 'next/link';
 import { HTMLAttributes, forwardRef, useState } from 'react';
-import { Wrapper } from './Header.styled';
-import MenuMobile from './MenuMobile';
-import { AssetsContext } from '@/contexts/assets-context';
 import { formatBTCPrice, formatEthPrice } from '@/utils/format';
-import { useContext } from 'react';
-import { useSelector } from 'react-redux';
 import { getIsAuthenticatedSelector, getUserSelector } from '@/state/user/selector';
-import { useRouter } from 'next/router';
-import Jazzicon from 'react-jazzicon/dist/Jazzicon';
-import { jsNumberForAddress } from 'react-jazzicon';
-import { useWeb3React } from '@web3-react/core';
-import headerStyles from './header.module.scss';
-import cs from 'classnames';
-import { WalletContext } from '@/contexts/wallet-context';
 import { showToastError, showToastSuccess } from '@/utils/toast';
-import logger from '@/services/logger';
+
+import { AssetsContext } from '@/contexts/assets-context';
 import Button from '@/components/Button';
-import Tooltip from 'react-bootstrap/Tooltip';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import { DappsTabs } from '@/enums/tabs';
 import Dropdown from 'react-bootstrap/Dropdown';
 import IconSVG from '@/components/IconSVG';
-import { formatLongAddress } from '@trustless-computer/dapp-core';
+import Jazzicon from 'react-jazzicon/dist/Jazzicon';
+import Link from 'next/link';
+import MenuMobile from './MenuMobile';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import { ROUTE_PATH } from '@/constants/route-path';
+import Tooltip from 'react-bootstrap/Tooltip';
+import { WalletContext } from '@/contexts/wallet-context';
+import { Wrapper } from './Header.styled';
 import copy from 'copy-to-clipboard';
-import { DappsTabs } from '@/enums/tabs';
+import cs from 'classnames';
+import { formatLongAddress } from '@trustless-computer/dapp-core';
+import headerStyles from './header.module.scss';
+import { jsNumberForAddress } from 'react-jazzicon';
+import logger from '@/services/logger';
+import { useContext } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { useWeb3React } from '@web3-react/core';
 
 type NavContent = {
   title: string;
   url: string;
 };
 
-const WalletToggle = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLDivElement>
->(({ children, onClick }, ref) => (
-  <div
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault();
-      if (typeof onClick === 'function') {
-        onClick(e);
-      }
-    }}
-  >
-    {children}
-  </div>
-));
-WalletToggle.displayName = 'WalletToggle'
+const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ children, onClick }, ref) => (
+    <div
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        if (typeof onClick === 'function') {
+          onClick(e);
+        }
+      }}
+    >
+      {children}
+    </div>
+  ),
+);
+WalletToggle.displayName = 'WalletToggle';
 
 const NAV_CONTENT: NavContent[] = [
   {
@@ -64,6 +64,8 @@ const NAV_CONTENT: NavContent[] = [
     url: '/',
   },
 ];
+
+const CDN_URL_IMG = 'https://storage.googleapis.com/generative-static-prod/soul-art';
 
 const Header = ({ height }: { height: number }) => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -122,8 +124,7 @@ const Header = ({ height }: { height: number }) => {
         </div>
 
         <Link className="logo" href={ROUTE_PATH.HOME}>
-          <img alt="logo" src={`${CDN_URL}/pages/artifacts/logo-1.svg`} />
-          <h1 className="logo-title">Smart Inscriptions</h1>
+          <img alt="logo" src={`${CDN_URL_IMG}/logo.svg`} />
         </Link>
         <MenuMobile isOpen={isOpenMenu} onCloseMenu={() => setIsOpenMenu(false)} />
         <div className="rightContainer">
@@ -175,67 +176,80 @@ const Header = ({ height }: { height: number }) => {
 
               <Dropdown.Menu className={headerStyles.menu_container}>
                 <div>
-                  <div>
-                    <div>
+                  <div className={headerStyles.menu_content}>
+                    <div className={headerStyles.menu_title}>TC Address</div>
+                    <div className={headerStyles.menu_item}>
                       <IconSVG
-                        src={`${CDN_URL}/icons/logo-white.svg`}
-                        maxWidth="24"
-                        maxHeight="24"
+                        src={`${CDN_URL_IMG}/ic_tc.svg`}
+                        maxWidth="28"
+                        maxHeight="28"
                       />
                       <p>{formatLongAddress(user?.walletAddress || '')}</p>
-                    </div>
-                    <div onClick={() => onClickCopy(user?.walletAddress || '')}>
-                      <IconSVG
-                        src={`${CDN_URL}/icons/ic-copy-artifact.svg`}
-                        color="white"
-                        maxWidth="16"
-                        // type="stroke"
-                      ></IconSVG>
+                      <div onClick={() => onClickCopy(user?.walletAddress || '')}>
+                        <IconSVG
+                          src={`${CDN_URL_IMG}/ic-copy.svg`}
+                          color="white"
+                          maxWidth="16"
+                          // type="stroke"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="divider"></div>
-                  <div>
-                    <div>
+                  <div className={headerStyles.menu_content}>
+                    <div className={headerStyles.menu_title}>BTC Address</div>
+                    <div className={headerStyles.menu_item}>
                       <IconSVG
-                        src={`${CDN_URL}/icons/ic-btc.svg`}
-                        maxWidth="24"
-                        maxHeight="24"
+                        src={`${CDN_URL_IMG}/ic-btc.svg`}
+                        maxWidth="28"
+                        maxHeight="28"
                       />
                       <p>{formatLongAddress(user?.walletAddressBtcTaproot || '')}</p>
-                    </div>
-                    <div
-                      onClick={() =>
-                        onClickCopy(user?.walletAddressBtcTaproot || '')
-                      }
-                    >
-                      <IconSVG
-                        src={`${CDN_URL}/icons/ic-copy-artifact.svg`}
-                        color="white"
-                        maxWidth="16"
-                      ></IconSVG>
+                      <div
+                        onClick={() =>
+                          onClickCopy(user?.walletAddressBtcTaproot || '')
+                        }
+                      >
+                        <IconSVG
+                          src={`${CDN_URL_IMG}/ic-copy.svg`}
+                          color="white"
+                          maxWidth="16"
+                        ></IconSVG>
+                      </div>
                     </div>
                   </div>
-                  <div className="divider"></div>
-                  <div>
-                    <div
-                      onClick={() =>
-                        window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
-                      }
-                    >
-                      <IconSVG
-                        src={`${CDN_URL}/icons/ep_wallet-filled.svg`}
-                        maxWidth="20"
-                      />
-                      <p>Wallet</p>
-                    </div>
-                    <Button onClick={onDisconnect}>
-                      <IconSVG
-                        src={`${CDN_URL}/icons/basil_logout-solid.svg`}
-                        maxWidth="20"
-                      />
-                      <p>Disconnect</p>
-                    </Button>
+                  <div className={headerStyles.menu_divider}></div>
+                  <div
+                    onClick={() =>
+                      window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
+                    }
+                    className={headerStyles.menu_box}
+                  >
+                    <IconSVG
+                      src={`${CDN_URL_IMG}/profile.svg`}
+                      maxWidth="16"
+                      color={headerStyles.menu_icon}
+                    />
+                    <p>Profile</p>
                   </div>
+                  <div
+                    onClick={() =>
+                      window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
+                    }
+                    className={headerStyles.menu_box}
+                  >
+                    <IconSVG src={`${CDN_URL_IMG}/wallet.svg`} maxWidth="16" />
+                    <p>Wallet</p>
+                  </div>
+                  <div className={headerStyles.menu_divider}></div>
+                  <Button onClick={onDisconnect} className={headerStyles.menu_box}>
+                    <IconSVG
+                      src={`${CDN_URL_IMG}/disconnect.svg`}
+                      maxWidth="16"
+                      className={headerStyles.menu_icon}
+                    />
+                    <p>Disconnect</p>
+                  </Button>
                 </div>
               </Dropdown.Menu>
             </Dropdown>
