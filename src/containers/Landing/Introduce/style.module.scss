@@ -2,7 +2,8 @@
     width: 100%;
     height: 100vh;
     position: relative;
-    background: #000;
+    background: rgba($color: #000000, $alpha: 0.3);
+    z-index: 10;
 
     .introduce-box {
         position: absolute;
