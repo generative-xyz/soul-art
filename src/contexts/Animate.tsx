@@ -6,7 +6,7 @@ import React, {
     useCallback,
     useRef, PropsWithChildren, FC,
 } from "react";
-import {PageLoader} from "@Animations/PageLoader";
+// import {PageLoader} from "@Animations/PageLoader";
 import {pageScrollTop} from "@Services/Animate/AnimateMathUtil";
 import Lenis from "@studio-freight/lenis";
 import {PAGE_LOADING} from "@Constants/animation";
@@ -108,6 +108,12 @@ export const AnimateProvider: FC<PropsWithChildren> = ({children}) => {
         };
     }, []);
 
+    useEffect(() => {
+        if (pageStatus === 'PAGE_ENTER') {
+            lenis?.start();
+        }
+    }, [pageStatus, lenis])
+
     const contextValues = {
         registerLoader,
         unRegisterLoader,
@@ -128,7 +134,7 @@ export const AnimateProvider: FC<PropsWithChildren> = ({children}) => {
     };
     return (
         <AnimateContext.Provider value={contextValues}>
-            <PageLoader/>
+            {/*<PageLoader/>*/}
             {children}
         </AnimateContext.Provider>
     );
