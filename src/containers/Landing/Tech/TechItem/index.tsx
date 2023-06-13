@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import s from './style.module.scss';
+import ImageFrame from '@/components/ImageFrame';
 
 export type contentItem = {
   id: number;
@@ -21,14 +22,12 @@ const TechItem: FC<TechItemProps> = ({ item }) => {
         <p className={s['item-content_desc']}>{content}</p>
       </div>
       <div className={s['item-img']}>
-        <img
-          src={`https://storage.googleapis.com/generative-static-prod/soul-art/techitem-${id}.jpg`}
-          alt="img"
-        />
-        <span className={s['top-left']}></span>
-        <span className={s['top-right']}></span>
-        <span className={s['bottom-left']}></span>
-        <span className={s['bottom-right']}></span>
+        <ImageFrame>
+          <img
+            src={`https://storage.googleapis.com/generative-static-prod/soul-art/techitem-${id}.jpg`}
+            alt="img"
+          />
+        </ImageFrame>
       </div>
     </div>
   );

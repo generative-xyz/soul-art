@@ -1,0 +1,111 @@
+.imageFrame {
+    padding: rem(10px);
+    border: 1px solid rgba($color: #fff, $alpha: 0.2);
+    position: relative;
+
+    .top-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &::before {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 8px;
+            background: #fff;
+        }
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 1px;
+            background: #fff;
+        }
+    }
+
+    .top-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        &::before {
+            position: absolute;
+            content: '';
+            top: 0;
+            right: 0;
+            width: 1px;
+            height: 8px;
+            background: #fff;
+        }
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 1px;
+            background: #fff;
+            transform: translateX(-100%);
+        }
+    }
+
+    .bottom-left {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        &::before {
+            position: absolute;
+            content: '';
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            height: 8px;
+            background: #fff;
+        }
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 1px;
+            background: #fff;
+        }
+    }
+
+    .bottom-right {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        &::before {
+            position: absolute;
+            content: '';
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            height: 8px;
+            background: #fff;
+        }
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 1px;
+            background: #fff;
+            transform: translateX(-100%);
+        }
+    }
+}

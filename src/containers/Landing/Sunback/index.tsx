@@ -14,8 +14,8 @@ const Sunback = () => {
         </p>
 
         <div className={s.buttons}>
-          <Button className={cs(s.button, s.init)}>Example</Button>
-          <Button className={cs(s.button, s.trans)}>Example</Button>
+          <Button className={cs(s.button, s.init)}>Explore art</Button>
+          <Button className={cs(s.button, s.trans)}>Claim Souls</Button>
         </div>
       </div>
     </div>
