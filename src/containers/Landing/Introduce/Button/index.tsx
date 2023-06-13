@@ -1,7 +1,11 @@
 import s from './style.module.scss';
 
-const Button = () => {
-  return <div className={s.button}>Example</div>;
+const Button: React.FC = () => {
+  return (
+    <div className={`${s.button} ${s.init}`}>
+      <span>Example</span>
+    </div>
+  );
 };
 
 export default Button;
