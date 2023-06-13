@@ -4,6 +4,7 @@
     padding-top: rem(168px);
     overflow: hidden;
     position: relative;
+
     .background {
         position: absolute;
         top: 0;
@@ -19,39 +20,48 @@
         }
     }
 
-    .left-container {
-        .left-container_title {
-            font-size: rem(68px);
-            font-weight: 400;
-            font-style: normal;
-            line-height: 100%;
-            margin-bottom: rem(60px);
-            font-family: var(--righteous-font);
-        }
-
-        .left-container_tabs {
-            display: flex;
-            flex-direction: column;
-
-            .tab {
+    .leftContainer {
+        .wrapLeftContainer {
+            .leftContainer-title {
+                font-size: rem(68px);
                 font-weight: 400;
-                font-size: rem(20px);
-                line-height: 160%;
-                width: fit-content;
-                opacity: 0.6;
-                margin-bottom: rem(32px);
+                font-style: normal;
+                line-height: 100%;
+                margin-bottom: rem(60px);
+                font-family: var(--righteous-font);
+            }
 
-                &.active {
-                    opacity: 1;
-                }
+            .leftContainer-tabs {
+                display: flex;
+                flex-direction: column;
 
-                &:last-child {
-                    margin-bottom: 0
-                }
+                .tab {
+                    font-weight: 400;
+                    font-size: rem(20px);
+                    line-height: 160%;
+                    width: fit-content;
+                    opacity: 0.6;
+                    margin-bottom: rem(32px);
 
-                &:hover {
-                    text-decoration: none;
+                    &.active {
+                        opacity: 1;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0
+                    }
+
+                    &:hover {
+                        text-decoration: none;
+                    }
                 }
+            }
+
+            &.fixed {
+                position: fixed;
+                top: rem(168px);
+                left: 2.5%;
+                width: 41.66666667%;
             }
         }
     }

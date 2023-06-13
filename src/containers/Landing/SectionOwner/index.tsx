@@ -1,3 +1,4 @@
+import TextAnimate from '@/components/TextAnimate';
 import s from './style.module.scss';
 
 const Owner = () => {
@@ -9,7 +10,11 @@ const Owner = () => {
           doubt and uncertainty clouded the hearts of the believers, the sun&apos;s
           radiance waned, casting shadows upon the artworks.
         </p>
-        <p className={s.tag}>Lorem ipsum dolor</p>
+        <a href="" className={s.tag}>
+          <TextAnimate>
+            <span>Lorem ipsum dolor</span>
+          </TextAnimate>
+        </a>
       </div>
     </div>
   );

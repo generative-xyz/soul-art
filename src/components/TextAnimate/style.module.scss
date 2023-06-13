@@ -1,0 +1,31 @@
+.textAnimate {
+    font-size: rem(14px);
+    line-height: rem(19.6px);
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .icon1 {
+        margin-bottom: rem(6px);
+        transition: .5s $easeOutQuart;
+    }
+
+    .icon2 {
+        margin-top: rem(6px);
+        transition: .5s $easeOutQuart;
+    }
+
+    &:hover {
+        .icon1 {
+            transform: translateY(-.5rem);
+        }
+
+        .icon2 {
+            transform: translateY(.5rem);
+        }
+    }
+}

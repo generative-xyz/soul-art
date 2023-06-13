@@ -21,11 +21,14 @@
         }
 
         .tag {
-            font-size: rem(14px);
-            line-height: rem(19.6px);
-            text-transform: uppercase;
-            color: #fff;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+
+            a {
+                &:hover {
+                    text-decoration: none;
+                }
+            }
         }
     }
 }

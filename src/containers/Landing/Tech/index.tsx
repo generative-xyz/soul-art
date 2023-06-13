@@ -2,6 +2,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import TechItem from './TechItem';
 import s from './style.module.scss';
 import { contentItem } from './TechItem';
+import { useState, useEffect } from 'react';
 
 const Tech: React.FC = () => {
   const contentArray: contentItem[] = [
@@ -43,9 +44,34 @@ const Tech: React.FC = () => {
     },
   ];
 
+  const [isFixed, setIsFixed] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = document.getElementById('js-tech');
+      const sectionTop = section?.offsetTop || 0;
+      const scrollPosition = Math.floor(
+        window.pageYOffset || document.documentElement.scrollTop,
+      );
+
+      if (scrollPosition >= sectionTop) {
+        // console.log(1);
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isFixed]);
+
   return (
     <>
-      <div className={s.techSection}>
+      <div id={'js-tech'} className={s.techSection}>
         <div className={s['background']}>
           <img
             src="https://storage.googleapis.com/generative-static-prod/soul-art/tech-overlay.png"
@@ -54,21 +80,23 @@ const Tech: React.FC = () => {
         </div>
         <Container>
           <Row>
-            <Col className={s['left-container']} lg={5}>
-              <h1 className={s['left-container_title']}>
-                Technical Information Explanation
-              </h1>
+            <Col className={s['leftContainer']} lg={5}>
+              <div className={`${s.wrapLeftContainer} ${isFixed ? s.fixed : ''}`}>
+                <h1 className={s['leftContainer-title']}>
+                  Technical Information Explanation
+                </h1>
 
-              <div className={s['left-container_tabs']}>
-                <a className={s.tab} href="">
-                  State
-                </a>
-                <a className={`${s.tab} ${s.active}`} href="">
-                  Attribute
-                </a>
-                <a className={s.tab} href="">
-                  Traits
-                </a>
+                <div className={s['leftContainer-tabs']}>
+                  <a className={s.tab} href="">
+                    State
+                  </a>
+                  <a className={`${s.tab} ${s.active}`} href="">
+                    Attribute
+                  </a>
+                  <a className={s.tab} href="">
+                    Traits
+                  </a>
+                </div>
               </div>
             </Col>
             <Col className={s['right-container']} lg={7}>
