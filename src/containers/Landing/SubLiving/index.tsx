@@ -1,3 +1,4 @@
+import TextAnimate from '@/components/TextAnimate';
 import s from './style.module.scss';
 
 const SubLiving = () => {
@@ -9,7 +10,11 @@ const SubLiving = () => {
           essence danced and flourished. The more GM tokens were acquired, the
           brighter the sun shone, illuminating the path of those who dared to dream.
         </p>
-        <p className={s.tag}>Lorem ipsum dolor</p>
+        <a href="" className={s.tag}>
+          <TextAnimate>
+            <span>Lorem ipsum dolor</span>
+          </TextAnimate>
+        </a>
       </div>
     </div>
   );

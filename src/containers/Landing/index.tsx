@@ -2,7 +2,7 @@ import React from 'react';
 import {GridDebug} from '@Animations/Grid/grid';
 import {Hero} from './Hero';
 import Introduce from './Introduce';
-import Owner from './owner';
+import Owner from './SectionOwner';
 import Tech from './Tech';
 import Flare from './Flare';
 import Living from './Lingving';

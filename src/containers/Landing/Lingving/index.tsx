@@ -1,4 +1,5 @@
 import s from './style.module.scss';
+import TextAnimate from '@/components/TextAnimate';
 
 const Living = () => {
   return (
@@ -9,7 +10,11 @@ const Living = () => {
           essence danced and flourished. The more GM tokens were acquired, the
           brighter the sun shone, illuminating the path of those who dared to dream.
         </p>
-        <p className={s.tag}>Breathtaking artwork</p>
+        <a href="" className={s.tag}>
+          <TextAnimate>
+            <span>Breathtaking artwork</span>
+          </TextAnimate>
+        </a>
       </div>
     </div>
   );
