@@ -3,6 +3,7 @@ import TechItem from './TechItem';
 import s from './style.module.scss';
 import { contentItem } from './TechItem';
 import { useState, useEffect } from 'react';
+import { techOverlay } from '@/constants/url';
 
 const Tech: React.FC = () => {
   const contentArray: contentItem[] = [
@@ -73,10 +74,7 @@ const Tech: React.FC = () => {
     <>
       <div id={'js-tech'} className={s.techSection}>
         <div className={s['background']}>
-          <img
-            src="https://storage.googleapis.com/generative-static-prod/soul-art/tech-overlay.png"
-            alt="background"
-          />
+          <img src={techOverlay} alt="background" />
         </div>
         <Container>
           <Row>
