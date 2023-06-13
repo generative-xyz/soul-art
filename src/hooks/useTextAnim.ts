@@ -24,7 +24,7 @@ interface IProRefDom {
 
 export const useTextAnim = (
     animOption?: IAnimOption,
-    comp: HTMLElement | HTMLHeadingElement | null
+    comp: HTMLElement | null
 ): void => {
 
     const refDom = useRef<IProRefDom>({});
