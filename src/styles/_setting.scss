@@ -1,9 +1,9 @@
-@use "sass:math" as math;
+@use 'sass:math' as math;
 
 $grid-gutter-width: 40px;
 
 $black-primary: #000000;
-$dark-primary: #0F1B01;
+$dark-primary: #0f1b01;
 $white-primary: #ffffff;
 $green-primary: #0ac681;
 $orange-primary: #ff7e21;
@@ -17,49 +17,69 @@ $gray-4: #898989;
 $red-primary: #ff4747;
 
 $colors: (
-        "black-primary": $black-primary,
-) !default;
-$theme-colors: (
-        "black-primary": $black-primary,
+  'black-primary': $black-primary,
+  'dark-primary': $dark-primary,
+  'white-primary': $white-primary,
+  'green-primary': $green-primary,
+  'orange-primary': $orange-primary,
+  'red-primary': $red-primary,
+  'gray-primary': $gray-primary,
+  'gray-1': $gray-1,
+  'gray-2': $gray-2,
+  'gray-3': $gray-3,
+  'gray-4': $gray-4,
 ) !default;
 
+$theme-colors: (
+  'black-primary': $black-primary,
+  'dark-primary': $dark-primary,
+  'white-primary': $white-primary,
+  'green-primary': $green-primary,
+  'orange-primary': $orange-primary,
+  'red-primary': $red-primary,
+  'gray-primary': $gray-primary,
+  'gray-1': $gray-1,
+  'gray-2': $gray-2,
+  'gray-3': $gray-3,
+  'gray-4': $gray-4,
+) !default;
 
 $grid-breakpoints: (
-        xs: 0,
-        sm: 768px,
-        md: 1024px,
-        lg: 1200px,
-        xl: 1400px,
-        xxl: 1660px,
-        xxxl: 1920px
+  xs: 0,
+  sm: 768px,
+  md: 1024px,
+  lg: 1200px,
+  xl: 1400px,
+  xxl: 1660px,
+  xxxl: 1920px
 ) !default;
 
 $container-max-widths: (
-        sm: 100%,
-        md: 100%,
-        lg: 100%,
-        xl: 100%,
-        xxl: 100%,
-        xxxl: 100%,
+  sm: 100%,
+  md: 100%,
+  lg: 100%,
+  xl: 100%,
+  xxl: 100%,
+  xxxl: 100%,
 ) !default;
 
 
 $spacer: 1rem !default;
 $spacers: (
-        0: 0,
-        1: rem(10px),
-        1_16: rem(16px),
-        2: rem(30px),
-        3: rem(40px),
-        4: rem(50px),
-        5: rem(60px),
-        6: rem(80px),
-        7: rem(120px),
-        9: rem(160px),
-        10: rem(300px),
+  0: 0,
+  1: rem(10px),
+  1_16: rem(16px),
+  2: rem(30px),
+  3: rem(40px),
+  4: rem(50px),
+  5: rem(60px),
+  6: rem(80px),
+  7: rem(120px),
+  9: rem(160px),
+  10: rem(300px),
 ) !default;
 
 $easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
 $easeInOutCubic: cubic-bezier(0.65, 0, 0.35, 1);
-$easeInOutCirc : cubic-bezier(0.85, 0, 0.15, 1);
+$easeInOutCirc: cubic-bezier(0.85, 0, 0.15, 1);
 @include color-classes($colors);

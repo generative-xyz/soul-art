@@ -6,11 +6,12 @@ import Link from 'next/link';
 
 const Wrapper = styled.header`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  background-color: transparent;
+  padding: 20px 40px;
+  font-size: 16px;
+
+  > div {
+    width: 100%;
+  }
 
   .content {
     max-width: 1920px;
@@ -26,13 +27,7 @@ const Wrapper = styled.header`
   .leftContainer {
     display: flex;
     align-items: center;
-    gap: ${px2rem(40)};
-
-    .navLink {
-      @media screen and (max-width: 768px) {
-        display: none;
-      }
-    }
+    gap: ${px2rem(32)};
   }
 
   .logo {
@@ -70,7 +65,6 @@ const Wrapper = styled.header`
   }
 
   .rightContainer {
-    color: ${({ theme }: { theme: DefaultTheme }) => theme.white};
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -100,15 +94,6 @@ const Wrapper = styled.header`
       }
     }
 
-    @media screen and (min-width: 1024px) {
-      :hover {
-        .dropdown {
-          display: block;
-          z-index: 9;
-        }
-      }
-    }
-
     .btnMenuMobile {
       display: none;
 
@@ -119,41 +104,6 @@ const Wrapper = styled.header`
 
       @media screen and (max-width: 768px) {
         display: block;
-      }
-    }
-  }
-
-  .dropdown {
-    position: absolute;
-    overflow: hidden;
-    right: 0;
-    top: 100%;
-    padding-top: ${px2rem(10)};
-    width: ${px2rem(200)};
-    display: none;
-
-    .dropdownMenuItem {
-      background: ${({ theme }: { theme: DefaultTheme }) => theme.primary[333]};
-      color: ${({ theme }: { theme: DefaultTheme }) => theme.white};
-      padding: ${px2rem(10)} ${px2rem(16)};
-      font-weight: normal;
-      cursor: pointer;
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-
-      :hover {
-        background: ${({ theme }: { theme: DefaultTheme }) => theme.primary['5b']};
-      }
-
-      :first-child {
-        border-top-left-radius: 2px;
-        border-top-right-radius: 2px;
-      }
-
-      :last-child {
-        border-bottom-left-radius: 2px;
-        border-bottom-right-radius: 2px;
       }
     }
   }
@@ -322,7 +272,6 @@ const ConnectWalletButton = styled(Button)`
   font-size: ${px2rem(14)};
   line-height: ${px2rem(24)};
   font-weight: 400;
-  color: ${({ theme }: { theme: DefaultTheme }) => theme.white};
   text-transform: uppercase;
   letter-spacing: 0.1em;
 
