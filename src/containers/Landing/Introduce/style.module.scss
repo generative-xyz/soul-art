@@ -5,14 +5,14 @@
     background: rgba($color: #000000, $alpha: 0.3);
     z-index: 10;
 
-    .introduce-box {
+    .introduceBox {
         position: absolute;
         left: 10.5%;
         top: 50%;
         transform: translateY(-50%);
         max-width: rem(932px);
 
-        .introduce-box_title {
+        .introduceBox-title {
             font-family: var(--righteous-font);
             font-size: rem(68px);
             font-weight: 400;
@@ -21,7 +21,7 @@
             color: #fff;
         }
 
-        .introduce-box_desc {
+        .introduceBox-desc {
             font-size: rem(24px);
             line-height: 130%;
             font-weight: 500;
@@ -29,7 +29,7 @@
             margin-bottom: rem(40px);
         }
 
-        .introduce-box_buttons {
+        .introduceBox-buttons {
             display: flex;
             gap: rem(12px);
 
@@ -55,17 +55,35 @@
             }
         }
 
-        .introduce-video {
+        .introduceVideo {
             margin-top: rem(43px);
             padding-top: rem(43px);
             border-top: 1px solid rgba(255, 255, 255, 0.2);
 
-            .introduce-video_title {
+            .introduceVideo-title {
                 text-transform: uppercase;
                 font-weight: 400;
                 font-size: rem(14px);
                 line-height: 140%;
                 color: #fff;
+                margin-bottom: rem(12px);
+            }
+
+            .wrap-video {
+                width: 212px;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                .modalPlay {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    cursor: pointer;
+                }
             }
         }
     }
