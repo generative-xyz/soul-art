@@ -6,12 +6,18 @@
 @import '~bootstrap/scss/grid';
 @import '~bootstrap/scss/tooltip';
 @import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/accordion';
+@import '~bootstrap/scss/transitions';
 
-$utilities: ('display': (responsive: true,
+$utilities: (
+  'display': (
+    responsive: true,
     print: true,
     property: display,
     class: d,
-    values: inline inline-block block grid table table-row table-cell flex inline-flex none),
+    values: inline inline-block block grid table table-row table-cell flex
+      inline-flex none,
+  ),
   //"flex": (
   //        responsive: true,
   //        property: flex,
@@ -59,7 +65,7 @@ $utilities: ('display': (responsive: true,
       end: flex-end,
       center: center,
       //baseline: baseline,
-      //stretch: stretch,,,,,
+      //stretch: stretch,,,,,,
     ),
   ),
   //"align-content": (
@@ -291,38 +297,38 @@ $utilities: ('display': (responsive: true,
       map-merge(
         $utilities-bg-colors,
         (
-          'transparent': transparent
+          'transparent': transparent,
         )
       ),
   )
   //"bg-opacity": (
-  //        css-var: true,
-  //        class: bg-opacity,
-  //        values: (
-  //                10: .1,
-  //                25: .25,
-  //                50: .5,
-  //                75: .75,
-  //                100: 1
-  //        )
-  //),
-  //"user-select": (
-  //        property: user-select,
-  //        values: all auto none
-  //),
-  //"pointer-events": (
-  //        property: pointer-events,
-  //        class: pe,
-  //        values: none auto,
-  //),
-  //"visibility": (
-  //        property: visibility,
-  //        class: null,
-  //        values: (
-  //                visible: visible,
-  //                invisible: hidden,
-  //        )
-  //)
+//        css-var: true,
+//        class: bg-opacity,
+//        values: (
+//                10: .1,
+//                25: .25,
+//                50: .5,
+//                75: .75,
+//                100: 1
+//        )
+//),
+//"user-select": (
+//        property: user-select,
+//        values: all auto none
+//),
+//"pointer-events": (
+//        property: pointer-events,
+//        class: pe,
+//        values: none auto,
+//),
+//"visibility": (
+//        property: visibility,
+//        class: null,
+//        values: (
+//                visible: visible,
+//                invisible: hidden,
+//        )
+//),
 );
 
 @import '~bootstrap/scss/reboot';
