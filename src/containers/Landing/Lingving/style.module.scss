@@ -1,22 +1,22 @@
-.ownerSection {
+.livingArtSection {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: #000;
-    overflow: hidden;
+    background: #000000;
 
     .wrapContent {
-        max-width: rem(800px);
         position: absolute;
-        bottom: 12.6%;
+        top: 50%;
         left: 50%;
+        max-width: rem(957px);
         transform: translateX(-50%);
+        text-align: center;
 
         .sectionContent {
             color: #fff;
             font-size: rem(24px);
-            line-height: rem(31.2px);
             text-align: center;
+            line-height: rem(31px);
             margin-bottom: rem(58px);
         }
 
@@ -25,7 +25,6 @@
             line-height: rem(19.6px);
             text-transform: uppercase;
             color: #fff;
-            text-align: center;
         }
     }
 }

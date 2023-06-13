@@ -1,8 +1,8 @@
 import s from './style.module.scss';
 
-const Owner = () => {
+const Flare = () => {
   return (
-    <div className={s.ownerSection}>
+    <div className={s.flareSection}>
       <div className={s.wrapContent}>
         <p className={s.sectionContent}>
           But beware, for as with any tale, there were challenges along the way. When
@@ -15,4 +15,4 @@ const Owner = () => {
   );
 };
 
-export default Owner;
+export default Flare;
