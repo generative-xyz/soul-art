@@ -98,14 +98,12 @@ export const SoulsContainer: React.FC = () => {
           souls.map(item => {
             return (
               <SoulsCard
-                key={`token-${item.tokenId}`}
-                href={`/${item.tokenId}`}
+                key={`token-${item.token_id}`}
+                href={`/${item.token_id}`}
                 image={item.image}
                 contract={ARTIFACT_CONTRACT}
-                tokenId={item.tokenId}
-                contentType={item.contentType}
-                title1={`Smart Inscription #${item.tokenId}`}
-                fileSize={item?.size}
+                tokenId={item.token_id}
+                title={`Smart Inscription #${item.token_id}`}
                 className={soulsStyles.grid_item}
               />
             );
