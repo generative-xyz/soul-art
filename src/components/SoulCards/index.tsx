@@ -1,5 +1,3 @@
-import { IMAGE_TYPE } from '../NFTDisplayBox/constant';
-
 import soulsCardStyles from './soulscard.module.scss';
 
 import Card from 'react-bootstrap/Card';
@@ -12,10 +10,8 @@ export interface INFTCard {
   thumbnail?: string;
   contract?: string;
   tokenId?: string;
-  contentType?: IMAGE_TYPE;
-  title1?: string;
-  fileSize?: number;
   className?: string;
+  title?: string;
 }
 
 const NFTCard = ({ href, image, className }: INFTCard) => {

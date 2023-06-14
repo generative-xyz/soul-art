@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Text from "@Animations/Text";
 import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {AnimateContext} from "@Context/Animate";
-import {PAGE_ENTER, PAGE_LOADED} from "@Constants/animation";
+import {PAGE_ENTER, PAGE_LOADED, PAGE_READY} from "@Constants/animation";
 import {gsap} from "gsap";
 import loadImage from 'image-promise';
 
@@ -96,6 +96,7 @@ export const Loading = (): JSX.Element => {
         loadImage(img).then(() => {
             processing.current.imageInLoaded = true;
             setIsReady(true);
+            setPageStatus(PAGE_READY);
             unRegisterLoader();
         });
 

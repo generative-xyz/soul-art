@@ -1,36 +1,34 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Layout from '@/layouts';
-import Inscription from '@/containers/Item';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { SEO_IMAGE, SEO_TITLE } from '@/constants/seo';
 import logger from '@/services/logger';
-import { getNFTDetail } from '@/services/nft-explorer';
-import { ARTIFACT_CONTRACT } from '@/configs';
+import { getSoulDetail } from '@/services/soul';
+import SoulItem from '@/containers/SoulItem';
 
-const InscriptionPage: NextPage = () => {
+const SoulDetailPage: NextPage = () => {
   return (
     <Layout>
-      <Inscription />
+      <SoulItem />
     </Layout>
   );
 };
 
-export default InscriptionPage;
+export default SoulDetailPage;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
     const { query } = context;
     const { tokenId } = query as { tokenId: string };
-    const data = await getNFTDetail({
-      contractAddress: ARTIFACT_CONTRACT,
+    const data = await getSoulDetail({
       tokenId,
     });
 
     return {
       props: {
         seoInfo: {
-          title: `${SEO_TITLE} | Inscription #${tokenId} `,
-          image: data?.image || SEO_IMAGE,
+          title: `${SEO_TITLE} | Soul #${tokenId}`,
+          image: data.image || SEO_IMAGE,
         },
       },
     };

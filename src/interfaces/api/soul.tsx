@@ -1,20 +1,19 @@
-import { IMAGE_TYPE } from '@/components/NFTDisplayBox/constant';
-
 export interface ISoul {
-  id: string;
-  collection: string;
+  deleted_at: string | null;
+  created_at: string | null;
+  updated_at: string | null;
   name: string;
-  tokenId: string;
-  tokenUri: string;
-  attributes: [{ traitType: string; value: string }];
-  metadataType: string;
-  contentType: IMAGE_TYPE;
-  createdAt: string;
-  updatedAt: string;
-  mintedAt: number;
-  collectionAddress: string;
   owner: string;
+  tokenUri: string;
   image?: string;
-  fileSize?: number;
-  size?: number;
+  mintedAt: string;
+  attributes: [{ traitType: string; value: string }];
+  metadata: string;
+  metadata_type: string;
+  animation_file_url: string;
+  image_capture: string;
+  collection_address: string;
+  tokenId: string;
+  tokenIdInt: number;
+  is_auction: true;
 }

@@ -35,3 +35,12 @@ export const getSoulsNfts = async ({
   const res = await apiClient.get(url);
   return Object(camelCaseKeys(res));
 };
+
+export const getSoulDetail = async ({
+  tokenId,
+}: {
+  tokenId: string;
+}): Promise<ISoul> => {
+  const res = await apiClient.get(`${API_PATH}/nfts/${tokenId}`);
+  return Object(camelCaseKeys(res));
+};

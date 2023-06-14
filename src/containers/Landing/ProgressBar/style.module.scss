@@ -1,0 +1,48 @@
+.progressBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: rem(20px);
+  width: 100%;
+  height: auto;
+  padding: 0 2.5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: rem(20px);
+  z-index: 5;
+
+  .progress {
+    position: relative;
+    flex: 1;
+    --po: 0;
+    --rote: 0deg;
+
+    .line {
+      width: 100%;
+      height: 1px;
+      background: rgba(#fff, .2);
+
+      &_po{
+        height: 1px;
+        display: block;
+        background: linear-gradient(270deg, #FFFFFF 0.55%, rgba(255, 255, 255, 0) 100%);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: var(--po);
+      }
+    }
+
+    .point {
+      position: absolute;
+      top: 50%;
+      left: calc(var(--po) - #{rem(10px)});
+      transform: translateY(-50%);
+    }
+  }
+
+  .playBtn{
+    transform: rotate(var(--rote));
+  }
+}

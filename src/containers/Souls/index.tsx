@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import soulsStyles from './souls.module.scss';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ISoul } from '@/interfaces/api/soul';
@@ -24,6 +24,10 @@ export const SoulsContainer: React.FC = () => {
   };
 
   const debounceLoadMore = debounce(onLoadMoreSouls, 300);
+
+  useEffect(() => {
+    fetchSouls();
+  }, [filter, isSortLatest]);
 
   const fetchSouls = async (page = 1, isFetchMore = false) => {
     try {
@@ -103,9 +107,7 @@ export const SoulsContainer: React.FC = () => {
                 image={item.image}
                 contract={ARTIFACT_CONTRACT}
                 tokenId={item.tokenId}
-                contentType={item.contentType}
-                title1={`Smart Inscription #${item.tokenId}`}
-                fileSize={item?.size}
+                title={`Smart Inscription #${item.tokenId}`}
                 className={soulsStyles.grid_item}
               />
             );

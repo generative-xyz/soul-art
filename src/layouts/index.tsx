@@ -1,9 +1,7 @@
-import px2rem from '@/utils/px2rem';
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import Footer from './Footer';
 import Header from './Header';
-
 export const HEADER_HEIGHT = 84;
 export const FO0TER_HEIGHT = 80;
 
@@ -24,7 +22,6 @@ export const Container = styled.div`
 export const ContentWrapper = styled.div`
   min-height: calc(100vh - ${HEADER_HEIGHT}px);
   max-width: 1920px;
-  padding: 0 ${px2rem(32)};
   width: 100%;
   margin: 0 auto;
   position: relative;
