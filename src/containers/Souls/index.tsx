@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import soulsStyles from './souls.module.scss';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ISoul } from '@/interfaces/api/soul';
@@ -24,6 +24,10 @@ export const SoulsContainer: React.FC = () => {
   };
 
   const debounceLoadMore = debounce(onLoadMoreSouls, 300);
+
+  useEffect(() => {
+    fetchSouls();
+  }, [filter, isSortLatest]);
 
   const fetchSouls = async (page = 1, isFetchMore = false) => {
     try {
@@ -98,12 +102,12 @@ export const SoulsContainer: React.FC = () => {
           souls.map(item => {
             return (
               <SoulsCard
-                key={`token-${item.token_id}`}
-                href={`/${item.token_id}`}
+                key={`token-${item.tokenId}`}
+                href={`/${item.tokenId}`}
                 image={item.image}
                 contract={ARTIFACT_CONTRACT}
-                tokenId={item.token_id}
-                title={`Smart Inscription #${item.token_id}`}
+                tokenId={item.tokenId}
+                title={`Smart Inscription #${item.tokenId}`}
                 className={soulsStyles.grid_item}
               />
             );
