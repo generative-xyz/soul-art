@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import Footer from './Footer';
 import Header from './Header';
-import Banner from '@/components/Banner';
 export const HEADER_HEIGHT = 84;
 export const FO0TER_HEIGHT = 80;
 
@@ -37,7 +36,6 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <Container>
       <Header height={HEADER_HEIGHT} />
-      <Banner />
       <ContentWrapper>{children}</ContentWrapper>
       <Footer height={FO0TER_HEIGHT} />
     </Container>
