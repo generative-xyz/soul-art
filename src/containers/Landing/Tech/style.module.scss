@@ -1,4 +1,5 @@
 .techSection {
+    background: #000;
     color: #fff;
     padding-top: rem(168px);
     overflow: hidden;
@@ -56,12 +57,12 @@
                 }
             }
 
-            &.fixed {
-                position: fixed;
-                top: rem(168px);
-                left: 2.5%;
-                width: 41.66666667%;
-            }
+
+        }
+
+        &.fixed {
+            position: sticky;
+            top: rem(168px);
         }
     }
 }

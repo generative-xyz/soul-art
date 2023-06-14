@@ -1,27 +1,23 @@
 import React from 'react';
-import {GridDebug} from '@Animations/Grid/grid';
-import {Hero} from './Hero';
+import { GridDebug } from '@Animations/Grid/grid';
+import { Hero } from './Hero';
 import Owner from './SectionOwner';
 import Tech from './Tech';
 import Flare from './Flare';
-import Living from './Living';
-import SubLiving from './SubLiving';
-import Sunback from './Sunback';
-import {useSmoothScroll} from '@Hooks/useSmoothScroll';
-import {FrameTop} from "@/containers/Landing/FrameTop";
+import { useSmoothScroll } from '@Hooks/useSmoothScroll';
+import { FrameTop } from '@/containers/Landing/FrameTop';
+import s from './style.module.scss';
 
 export const LandingContainer: React.FC = () => {
-    useSmoothScroll();
-    return (
-        <>
-            <GridDebug/>
-            <Hero/>
-            <FrameTop/>
-            {/*<Living />*/}
-            {/*<SubLiving />*/}
-            {/*<Owner />*/}
-            <Flare/>
-            <Tech/>
-        </>
-    );
+  useSmoothScroll();
+  return (
+    <div className={s.landingPage}>
+      <GridDebug />
+      <Hero />
+      <FrameTop />
+      <Owner />
+      <Flare />
+      <Tech />
+    </div>
+  );
 };
