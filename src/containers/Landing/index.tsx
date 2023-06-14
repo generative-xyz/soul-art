@@ -19,7 +19,6 @@ export const LandingContainer: React.FC = () => {
       <SubLiving />
       <Owner />
       <Flare />
-      <Sunback />
       <Tech />
     </>
   );
