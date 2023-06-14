@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .claimed {
+    &_noti {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 4px 12px;
+      gap: 8px;
+      background: #ffffff;
+      box-shadow: 0px 0px 16px -6px rgba(0, 0, 0, 0.12);
+      border-radius: 100px;
+      margin-bottom: 24px;
+      &__status {
+        font-style: normal;
+        font-weight: 400;
+        font-size: rem(16px, 10px);
+        line-height: 140%;
+        text-align: right;
+        color: #000000;
+      }
+      &__icon {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #d9d9d9 !important;
+      }
+      &__time {
+        font-style: normal;
+        font-weight: 400;
+        font-size: rem(16px, 10px);
+        line-height: 140%;
+        text-align: right;
+        color: #5b5b5b;
+      }
+    }
+  }
+  .cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+    background: #ffffff;
+    box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    &_art {
+      &_image {
+        width: 400px;
+        height: 390px;
+        display: inline-block;
+      }
+    }
+    &_info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      &__artName {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 140%;
+        color: #000000;
+      }
+      &__status {
+        font-style: normal;
+        font-weight: 500;
+        font-size: rem(16px, 10px);
+        line-height: 140%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        &_success {
+          color: #0ac681;
+        }
+        &_waiting {
+          color: #ff7e21;
+        }
+      }
+    }
+  }
+}

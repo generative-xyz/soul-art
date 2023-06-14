@@ -25,7 +25,6 @@ export const ContentWrapper = styled.div`
   min-height: calc(100vh - ${HEADER_HEIGHT}px);
   max-width: 1920px;
   padding: 0 ${px2rem(32)};
-  width: 100%;
   margin: 0 auto;
   position: relative;
   z-index: 1;
