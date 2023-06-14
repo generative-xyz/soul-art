@@ -5,6 +5,11 @@ import React, { useEffect, useState } from 'react';
 import Spinner from '@/components/Spinner';
 import { ISoul } from '@/interfaces/api/soul';
 import { getSoulDetail } from '@/services/soul';
+import { Col, Container, Row } from 'react-bootstrap';
+import AuctionInfo from '../Item/AuctionInfoo';
+import DetailImg from '../Item/MiddleImg';
+import Info from '../Item/Info';
+import s from './style.module.scss';
 
 const SoulItem = ({ data }: { data?: ISoul }) => {
   const router = useRouter();
@@ -40,9 +45,21 @@ const SoulItem = ({ data }: { data?: ISoul }) => {
   }
 
   return (
-    <>
-      <img src={soulDetail.image} />
-    </>
+    <div className={s.artDetail}>
+      <Container>
+        <Row>
+          <Col lg={4}>
+            <AuctionInfo />
+          </Col>
+          <Col lg={5}>
+            <DetailImg img={soulDetail?.image} />
+          </Col>
+          <Col lg={3}>
+            <Info />
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
