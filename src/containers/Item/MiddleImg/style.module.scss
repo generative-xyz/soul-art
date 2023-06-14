@@ -1,0 +1,29 @@
+.detailImg {
+    width: 100%;
+    background: #fff;
+    padding: rem(20px);
+    box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+
+    .img {
+        width: 100%;
+        margin-bottom: rem(12px);
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .detailImg-buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: rem(12px);
+
+        .button {
+            cursor: pointer;
+            padding: rem(4px);
+        }
+    }
+}

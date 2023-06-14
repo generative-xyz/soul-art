@@ -36,9 +36,9 @@ const Introduce: React.FC = () => {
           className={s['introduceBox-desc']}
         >
           Once upon a time, in the magical land of New Bitcoin City, there was a
-          unique and extraordinary force known as GM tokens. They were more than just
-          digital assets—they were the embodiment of belief and hope for a brighter
-          future.
+          unique and extraordinary force known as GM tokens. They were more than
+          just digital assets—they were the embodiment of belief and hope for a
+          brighter future.
         </Text>
 
         <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
