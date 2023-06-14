@@ -1,5 +1,23 @@
 .detailInfo {
-    .detailInfo-title {
-        
+    .detaiInfo-title {
+        font-size: rem(24px);
+        line-height: rem(33px);
+        margin-bottom: rem(24px);
+        color: #000;
+    }
+
+    .infomation {
+        &>div {
+            padding: rem(16px) 0;
+            border-bottom: 1px solid #ECECEC;
+
+            &:first-child {
+                padding-top: unset;
+            }
+
+            &:last-child {
+                border-bottom: unset;
+            }
+        }
     }
 }
