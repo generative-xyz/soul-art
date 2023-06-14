@@ -1,67 +1,50 @@
-import React, {useContext, useEffect, useMemo, useRef} from "react";
-import {AnimateContext} from "@Context/Animate";
-import {Frames} from "@Animations/Frames";
-import s from "./styles.module.scss";
-import useWindowResize from "@Hooks/useWindowResize";
-import {PAGE_READY} from "@Constants/animation";
-import {PAGE_LOADING} from "@Constants/common";
+import React, { useContext, useRef } from 'react';
+import { AnimateContext } from '@Context/Animate';
+import { Frames } from '@Animations/Frames';
+import s from './styles.module.scss';
+import Living from '../Living';
+import SubLiving from '../SubLiving';
+import classNames from 'classnames';
+import { useFrameProcessing } from '@/hooks/useFrameProcessing';
 
-export const FrameTop: React.FC = React.memo(() => {
-    const {registerLoader, unRegisterLoader, pageStatus} = useContext(AnimateContext);
+export const FrameTop: React.FC = () => {
+  const { registerLoader, unRegisterLoader } = useContext(AnimateContext);
 
-    // const lHeading = useRef<HTMLDivElement>(null);
-    const elMain = useRef<HTMLDivElement>(null);
+  const elMain = useRef<HTMLDivElement>(null);
 
-    // const lPart1 = useRef<HTMLDivElement>(null);
-    // const lPart2 = useRef<HTMLDivElement>(null);
-    // const lPart3 = useRef<HTMLDivElement>(null);
-    // const lPart4 = useRef<HTMLDivElement>(null);
-    //
-    // const headingFrame = useFrameProcessing(lHeading, 10, 20);
-    // const part1Frame = useFrameProcessing(lPart1, 55, 65, 100, 110);
-    // const part2Frame = useFrameProcessing(lPart2, 130, 140, 170, 180);
-    // const part3Frame = useFrameProcessing(lPart3, 200, 210, 245, 255);
-    // const part4Frame = useFrameProcessing(lPart4, 270, 280);
+  const lPart1 = useRef<HTMLDivElement>(null);
+  const lPart2 = useRef<HTMLDivElement>(null);
 
-    const processing = frame => {
-        console.log('___ok');
-        // headingFrame(frame);
-        // part1Frame(frame);
-        // part2Frame(frame);
-        // part3Frame(frame);
-        // part4Frame(frame);
-    };
+  const part1Frame = useFrameProcessing(lPart1, 10, 20, 54, 64);
+  const part2Frame = useFrameProcessing(lPart2, 65, 75, 119, 129);
 
-    const {isDesktop} = useWindowResize();
-    const urlFrame = useMemo((): string => {
-        return !isDesktop
-            ? `https://storage.googleapis.com/generative-static-prod/soul-art/sould-frames/%d.jpg`
-            : `https://storage.googleapis.com/generative-static-prod/soul-art/sould-frames/%d.jpg`;
-    }, [isDesktop]);
+  const processing = (frame: number) => {
+    part1Frame(frame);
+    part2Frame(frame);
+  };
 
-    useEffect(() => {
-        registerLoader();
-        return () => {
-            unRegisterLoader();
+  return (
+    <div ref={elMain}>
+      <Frames
+        width={1920}
+        height={1080}
+        className={s.info_main}
+        urlFrame={
+          'https://storage.googleapis.com/generative-static-prod/soul-art/sould-frames/%d.jpg'
         }
-    });
-
-    return (
-        <div ref={elMain}>
-            {pageStatus !== PAGE_LOADING && <Frames
-                width={!isDesktop ? 1080 : 1920}
-                height={!isDesktop ? 1920 : 1080}
-                className={s.info_main}
-                urlFrame={urlFrame}
-                // webmFrame={`https://cdn.generative.xyz/pages/home/block-3-2/block-3-v2-%d.png.webp`}
-                totalFrames={129}
-                onProcessing={processing}
-                start={registerLoader}
-                end={unRegisterLoader}
-            >
-                dsdasdadadas
-            </Frames>
-            }
+        // webmFrame={`https://cdn.generative.xyz/pages/home/block-3-2/block-3-v2-%d.png.webp`}
+        totalFrames={129}
+        onProcessing={processing}
+        start={registerLoader}
+        end={unRegisterLoader}
+      >
+        <div ref={lPart1} className={classNames(s.livingArt, s.contentItem)}>
+          <Living />
         </div>
-    );
-});
+        <div ref={lPart2} className={classNames(s.livingArt, s.contentItem)}>
+          <SubLiving />
+        </div>
+      </Frames>
+    </div>
+  );
+};

@@ -1,6 +1,9 @@
 .frames {
+  width: 100%;
+  overflow: hidden;
+
   canvas {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     aspect-ratio: 9/16;
     object-fit: cover;

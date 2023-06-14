@@ -52,7 +52,7 @@ const Tech: React.FC = () => {
       const section = document.getElementById('js-tech');
       const sectionTop = section?.offsetTop || 0;
       const scrollPosition = Math.floor(
-        window.pageYOffset || document.documentElement.scrollTop,
+        window.pageYOffset || document.documentElement.scrollTop
       );
 
       if (scrollPosition >= sectionTop) {
@@ -78,27 +78,18 @@ const Tech: React.FC = () => {
         </div>
         <Container>
           <Row>
-            <Col className={s['leftContainer']} lg={5}>
-              <div className={`${s.wrapLeftContainer} ${isFixed ? s.fixed : ''}`}>
+            <Col
+              className={`${s.leftContainer} ${isFixed ? s.fixed : ''}`}
+              lg={5}
+            >
+              <div className={s.wrapLeftContainer}>
                 <h1 className={s['leftContainer-title']}>
                   Technical Information Explanation
                 </h1>
-
-                <div className={s['leftContainer-tabs']}>
-                  <a className={s.tab} href="">
-                    State
-                  </a>
-                  <a className={`${s.tab} ${s.active}`} href="">
-                    Attribute
-                  </a>
-                  <a className={s.tab} href="">
-                    Traits
-                  </a>
-                </div>
               </div>
             </Col>
             <Col className={s['right-container']} lg={7}>
-              {contentArray.map((item) => (
+              {contentArray.map(item => (
                 <TechItem key={item.id} item={item} />
               ))}
             </Col>

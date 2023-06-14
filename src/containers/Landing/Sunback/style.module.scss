@@ -2,7 +2,6 @@
     position: relative;
     width: 100%;
     height: 100vh;
-    background: #000;
 
     .wrapContent {
         max-width: rem(1074px);
@@ -14,7 +13,7 @@
 
         .sectionTitle {
             font-size: rem(68px);
-            line-height: rem(68px);
+            line-height: 100%;
             font-family: var(--righteous-font);
             color: #fff;
             margin-bottom: rem(24px);
@@ -23,7 +22,7 @@
         .sectionContent {
             color: #fff;
             font-size: rem(24px);
-            line-height: rem(31px);
+            line-height: 140%;
             margin-bottom: rem(40px);
         }
 
@@ -37,7 +36,7 @@
                 border-radius: 100px;
                 cursor: pointer;
                 font-size: rem(16px);
-                line-height: rem(16px);
+                line-height: 112%;
 
 
                 &.init {

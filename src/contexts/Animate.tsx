@@ -72,7 +72,7 @@ export const AnimateProvider: FC<PropsWithChildren> = ({children}) => {
     const [isHideFooter, setIsHideFooter] = useState<boolean>(false);
     const [lenis, setLenis] = useState<Lenis | null>(null);
 
-    const [pageStatus, setPageStatus] = useState<"PAGE_ENTER" | "PAGE_LOADED" | "PAGE_LOADING">(PAGE_LOADING);
+    const [pageStatus, setPageStatus] = useState<"PAGE_ENTER" | "PAGE_LOADED" | "PAGE_LOADING" | "PAGE_READY">(PAGE_LOADING);
 
     const registerLoader = useCallback(() => {
         refOption.current.counter += 1;

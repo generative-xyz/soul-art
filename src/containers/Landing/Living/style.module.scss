@@ -1,24 +1,22 @@
-.flareSection {
-    position: absolute;
+.livingArtSection {
+    position: relative;
     width: 100%;
     height: 100vh;
-    opacity: 0;
 
     .container {
-        height: 100%;
-
         .wrapContent {
-            max-width: rem(800px);
             position: absolute;
-            top: 50%;
+            top: vh(520px);
             left: 50%;
-            transform: translate(-50%, -50%);
+            max-width: rem(957px);
+            transform: translateX(-50%);
+            text-align: center;
 
             .sectionContent {
                 color: #fff;
                 font-size: rem(24px);
-                line-height: 140%;
                 text-align: center;
+                line-height: 140%;
                 margin-bottom: rem(32px);
             }
 
