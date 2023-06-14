@@ -1,4 +1,9 @@
-import React, { CSSProperties, ElementType, PropsWithChildren, useRef } from 'react';
+import React, {
+  CSSProperties,
+  ElementType,
+  PropsWithChildren,
+  useRef,
+} from 'react';
 import cs from 'classnames';
 import { useTextAnim } from '@Hooks/useTextAnim';
 import s from './styles.module.scss';
@@ -10,6 +15,7 @@ type TText = {
   size?:
     | '18'
     | '20'
+    | '24'
     | '26'
     | '30'
     | '40'
@@ -57,7 +63,7 @@ const Text: React.FC<PropsWithChildren<TText>> = ({
         s[`size-${size}`],
         `font-${fontWeight}`,
         `text-${color}`,
-        className,
+        className
       )}
       style={{ ...style }}
       onClick={onClick}
