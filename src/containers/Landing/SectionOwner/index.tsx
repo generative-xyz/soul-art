@@ -17,6 +17,9 @@ const Owner: React.FC = () => {
     part1Frame(frame);
   };
   return (
+      <div className={s.main}>
+
+
     <Frames
       width={1920}
       height={1080}
@@ -48,6 +51,7 @@ const Owner: React.FC = () => {
         </Container>
       </div>
     </Frames>
+      </div>
   );
 };
 

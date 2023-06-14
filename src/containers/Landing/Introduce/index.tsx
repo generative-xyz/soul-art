@@ -28,6 +28,7 @@ const Introduce: React.FC = () => {
           <div className={s['introduceBox']}>
             <Text
               as={'h1'}
+              color={'white-primary'}
               animOption={{ screen: 0, offset: 0, type: 'heading' }}
               className={s['introduceBox-title']}
             >
@@ -35,6 +36,7 @@ const Introduce: React.FC = () => {
             </Text>
             <Text
               as={'p'}
+              color={'white-primary'}
               animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
               className={s['introduceBox-desc']}
             >

@@ -24,7 +24,7 @@ export const FrameTop: React.FC = () => {
   };
 
   return (
-    <div ref={elMain}>
+    <div className={s.main} ref={elMain}>
       <Frames
         width={1920}
         height={1080}
