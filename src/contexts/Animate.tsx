@@ -17,7 +17,7 @@ interface IAnimateContext {
     getLoaderCounter: () => number;
 
     pageStatus: string;
-    setPageStatus: React.Dispatch<SetStateAction<"PAGE_ENTER" | "PAGE_LOADED" | "PAGE_LOADING">>;
+    setPageStatus: React.Dispatch<SetStateAction<"PAGE_ENTER" | "PAGE_LOADED" | "PAGE_LOADING" | "PAGE_READY">>;
 
     isPageScrolling: boolean;
 

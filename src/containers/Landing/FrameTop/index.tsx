@@ -1,15 +1,17 @@
-import React, { useContext, useMemo, useRef } from "react";
-import { AnimateContext } from "@Context/Animate";
-import { Frames } from "@Animations/Frames";
+import React, {useContext, useEffect, useMemo, useRef} from "react";
+import {AnimateContext} from "@Context/Animate";
+import {Frames} from "@Animations/Frames";
 import s from "./styles.module.scss";
 import useWindowResize from "@Hooks/useWindowResize";
+import {PAGE_READY} from "@Constants/animation";
+import {PAGE_LOADING} from "@Constants/common";
 
 export const FrameTop: React.FC = React.memo(() => {
-    const { registerLoader, unRegisterLoader } = useContext(AnimateContext);
+    const {registerLoader, unRegisterLoader, pageStatus} = useContext(AnimateContext);
 
     // const lHeading = useRef<HTMLDivElement>(null);
     const elMain = useRef<HTMLDivElement>(null);
-    //
+
     // const lPart1 = useRef<HTMLDivElement>(null);
     // const lPart2 = useRef<HTMLDivElement>(null);
     // const lPart3 = useRef<HTMLDivElement>(null);
@@ -30,16 +32,23 @@ export const FrameTop: React.FC = React.memo(() => {
         // part4Frame(frame);
     };
 
-    const { isDesktop } = useWindowResize();
+    const {isDesktop} = useWindowResize();
     const urlFrame = useMemo((): string => {
         return !isDesktop
             ? `https://storage.googleapis.com/generative-static-prod/soul-art/sould-frames/%d.jpg`
             : `https://storage.googleapis.com/generative-static-prod/soul-art/sould-frames/%d.jpg`;
     }, [isDesktop]);
 
+    useEffect(() => {
+        registerLoader();
+        return () => {
+            unRegisterLoader();
+        }
+    });
+
     return (
         <div ref={elMain}>
-            <Frames
+            {pageStatus !== PAGE_LOADING && <Frames
                 width={!isDesktop ? 1080 : 1920}
                 height={!isDesktop ? 1920 : 1080}
                 className={s.info_main}
@@ -50,8 +59,9 @@ export const FrameTop: React.FC = React.memo(() => {
                 start={registerLoader}
                 end={unRegisterLoader}
             >
-
+                dsdasdadadas
             </Frames>
+            }
         </div>
     );
 });
