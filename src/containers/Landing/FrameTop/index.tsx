@@ -7,8 +7,9 @@ import Living from '../Living';
 import SubLiving from '../SubLiving';
 import SectionOwner from '../SectionOwner';
 import Flare from '../Flare';
+import classNames from "classnames";
 
-export const FrameTop: React.FC = () => {
+export const FrameTop: React.FC = React.memo(() => {
   const { registerLoader, unRegisterLoader } = useContext(AnimateContext);
 
   // const lHeading = useRef<HTMLDivElement>(null);
@@ -34,39 +35,28 @@ export const FrameTop: React.FC = () => {
     // part4Frame(frame);
   };
 
-  const { isDesktop } = useWindowResize();
-  const urlFrame = useMemo((): string => {
-    return !isDesktop
-      ? `https://storage.googleapis.com/generative-static-prod/soul-art/sould-frames/%d.jpg`
-      : `https://storage.googleapis.com/generative-static-prod/soul-art/sould-frames/%d.jpg`;
-  }, [isDesktop]);
-
   return (
     <div ref={elMain}>
       <Frames
-        width={!isDesktop ? 1080 : 1920}
-        height={!isDesktop ? 1920 : 1080}
-        className={s.info_main}
-        urlFrame={urlFrame}
+        width={1920}
+        height={1080}
+        urlFrame={'https://storage.googleapis.com/generative-static-prod/soul-art/sould-frames/%d.jpg'}
         // webmFrame={`https://cdn.generative.xyz/pages/home/block-3-2/block-3-v2-%d.png.webp`}
         totalFrames={129}
         onProcessing={processing}
         start={registerLoader}
         end={unRegisterLoader}
       >
-        <div className={s.livingArt}>
+        <div className={classNames(s.livingArt, s.contentItem)}>
           <Living />
         </div>
-        <div className={s.subLiving}>
+        <div className={classNames(s.livingArt, s.contentItem)}>
           <SubLiving />
         </div>
-        <div className={s.owner}>
+        <div className={classNames(s.livingArt, s.contentItem)}>
           <SectionOwner />
-        </div>
-        <div className={s.flare}>
-          <Flare />
         </div>
       </Frames>
     </div>
   );
-};
+});

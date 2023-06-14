@@ -60,7 +60,7 @@ export const Frames: React.FC<IProps> = ({
 
     const loadImages = async () => {
         const promises: any = [];
-        Promise.reject();
+        // Promise.reject();
 
         if (!refDom.current.currentUrlFrame) {
             refDom.current.currentUrlFrame =
