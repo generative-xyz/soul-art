@@ -1,18 +1,19 @@
+import { Col, Container, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+
 // import IconSVG from '@/components/IconSVG';
 // import NFTDisplayBox from '@/components/NFTDisplayBox';
 import { ARTIFACT_CONTRACT } from '@/configs';
+import AuctionInfo from './AuctionInfoo';
+import DetailImg from './MiddleImg';
+import { IInscription } from '@/interfaces/api/inscription';
+import Info from './Info';
 // import { BLOCK_CHAIN_FILE_LIMIT } from '@/constants/file';
 import { ROUTE_PATH } from '@/constants/route-path';
-import { IInscription } from '@/interfaces/api/inscription';
-import logger from '@/services/logger';
-import { getNFTDetail } from '@/services/nft-explorer';
-// import {  refreshMetadata } from '@/services/nft-explorer';
-// import { formatTimeStamp } from '@/utils/time';
-// import { prettyPrintBytes } from '@/utils/units';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
 // import {useContext} from 'react'
 import Spinner from '@/components/Spinner';
+import { getNFTDetail } from '@/services/nft-explorer';
+import logger from '@/services/logger';
 // import UploadFooter from '../Artifacts/UploadFooter';
 // import ModalUpload from '../Artifacts/ModalUpload';
 // import { useSelector } from 'react-redux';
@@ -20,9 +21,10 @@ import Spinner from '@/components/Spinner';
 // import { WalletContext } from '@/contexts/wallet-context';
 // import { showToastError } from '@/utils/toast';
 import s from './style.module.scss';
-import { Col, Container, Row } from 'react-bootstrap';
-import DetailImg from './MiddleImg';
-import Info from './Info';
+// import {  refreshMetadata } from '@/services/nft-explorer';
+// import { formatTimeStamp } from '@/utils/time';
+// import { prettyPrintBytes } from '@/utils/units';
+import { useRouter } from 'next/router';
 
 const Inscription = ({ data }: { data?: IInscription }) => {
   const router = useRouter();
@@ -148,7 +150,9 @@ const Inscription = ({ data }: { data?: IInscription }) => {
     <div className={s.artDetail}>
       <Container>
         <Row>
-          <Col lg={4}></Col>
+          <Col lg={4}>
+            <AuctionInfo />
+          </Col>
           <Col lg={5}>
             <DetailImg img={inscription.image} />
           </Col>

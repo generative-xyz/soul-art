@@ -7,6 +7,7 @@
 @import '~bootstrap/scss/dropdown';
 @import '~bootstrap/scss/accordion';
 @import '~bootstrap/scss/transitions';
+@import '~bootstrap/scss/_nav.scss';
 
 $utilities: (
   'display': (
@@ -64,7 +65,7 @@ $utilities: (
       end: flex-end,
       center: center,
       //baseline: baseline,
-      //stretch: stretch,,,,,,
+      //stretch: stretch,,,,,,,
     ),
   ),
   //"align-content": (
@@ -327,7 +328,7 @@ $utilities: (
 //                visible: visible,
 //                invisible: hidden,
 //        )
-//),
+//),,
 );
 
 @import '~bootstrap/scss/reboot';
