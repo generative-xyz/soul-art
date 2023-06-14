@@ -10,4 +10,24 @@
       position: relative;
     }
   }
+  &_link {
+    &:hover {
+      text-decoration: none;
+      -webkit-text-decoration: none;
+    }
+  }
+  &_label {
+    font-size: rem(14px);
+    opacity: 0.6;
+    margin-bottom: 4px;
+    font-size: 400;
+  }
+  &_body {
+    &__content {
+      p {
+        font-size: rem(20px);
+        font-weight: 500;
+      }
+    }
+  }
 }
