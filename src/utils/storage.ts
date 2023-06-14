@@ -1,32 +1,32 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import store from "store2";
+import store from 'store2';
 
 export const LOCALSTORAGE_CONFIG = {
-  SHIPPING_INFO_DATA: "SHIPPING_INFO_DATA",
-  CHECKOUT_SUCCESS: "CHECKOUT_SUCCESS",
-  eppUser: "__epp_u",
-  user: "__u_id",
-  userEmail: "__u_email",
-  referralCode: "__epp_referral_code",
-  b2bWelcomePopup: "B2B_WELCOME_POPUP",
-  eppDiscountPercent: "__epp_discount",
-  pageAddToCart: "__page_add_to_cart",
-  historyUserInSite: "__history_user_in_site",
-  externalId: "__external_id__fbcm",
-  dataDetectIp: "__dataDetectIp__fbcm",
-  dataDetectIpMonthLimit: "__dataDetectIp_monthLimit__fbcm",
-  referralInviteCode: "__epp_invite_code",
-  eppIsNotShowTooltipLogin: "__epp_is_not_show_login_tooltip",
-  isNewEppUser: "__epp_new_user",
-  BF_NEXT_URL: "BF_NEXT_URL",
-  inputWorkingEmail: "__input_working_email",
-  sessionFirstPage: "__session_first_page",
-  sessionEppContactTooltip: "__session_epp_contact_tooltip",
-  recentlyUsageFilter: "__recently_usage_filter",
+  SHIPPING_INFO_DATA: 'SHIPPING_INFO_DATA',
+  CHECKOUT_SUCCESS: 'CHECKOUT_SUCCESS',
+  eppUser: '__epp_u',
+  user: '__u_id',
+  userEmail: '__u_email',
+  referralCode: '__epp_referral_code',
+  b2bWelcomePopup: 'B2B_WELCOME_POPUP',
+  eppDiscountPercent: '__epp_discount',
+  pageAddToCart: '__page_add_to_cart',
+  historyUserInSite: '__history_user_in_site',
+  externalId: '__external_id__fbcm',
+  dataDetectIp: '__dataDetectIp__fbcm',
+  dataDetectIpMonthLimit: '__dataDetectIp_monthLimit__fbcm',
+  referralInviteCode: '__epp_invite_code',
+  eppIsNotShowTooltipLogin: '__epp_is_not_show_login_tooltip',
+  isNewEppUser: '__epp_new_user',
+  BF_NEXT_URL: 'BF_NEXT_URL',
+  inputWorkingEmail: '__input_working_email',
+  sessionFirstPage: '__session_first_page',
+  sessionEppContactTooltip: '__session_epp_contact_tooltip',
+  recentlyUsageFilter: '__recently_usage_filter',
 };
 
 export const storageUtil =
-  typeof window === "undefined"
+  typeof window === 'undefined'
     ? store
     : {
         set(name: string, value: any): void {
@@ -46,7 +46,7 @@ export const storageUtil =
             return false;
           } catch (error) {
             // eslint-disable-next-line no-console
-            console.error("storageUtil get", error);
+            console.error('storageUtil get', error);
             return false;
           }
         },
@@ -84,7 +84,7 @@ export const storageUtil =
               return false;
             } catch (error) {
               // eslint-disable-next-line no-console
-              console.error("storageUtil get", error);
+              console.error('storageUtil get', error);
               return false;
             }
           },
@@ -119,7 +119,7 @@ export const getWithExpiry = (key: string): any => {
     return item.value;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("getWithExpiry", error);
+    console.error('getWithExpiry', error);
     return null;
   }
 };
