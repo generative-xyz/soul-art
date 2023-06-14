@@ -7,6 +7,7 @@ import { debounce } from 'lodash';
 import { ARTIFACT_CONTRACT } from '@/configs';
 import SoulsCard from '@/components/SoulCards';
 import { getSoulsNfts } from '@/services/soul';
+import AttributeSort from '../Attribute';
 
 const LIMIT_PAGE = 32;
 
@@ -113,6 +114,7 @@ export const SoulsContainer: React.FC = () => {
             );
           })}
       </div>
+      <AttributeSort />
     </InfiniteScroll>
   );
 };
