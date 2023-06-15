@@ -83,6 +83,7 @@ export const AnimateProvider: FC<PropsWithChildren> = ({children}) => {
     }, [refOption.current]);
 
     const getLoaderCounter = useCallback((): number => {
+        // console.log('___refOption.current.counter', refOption.current.counter);
         return refOption.current.counter;
     }, [refOption.current]);
 

@@ -1,8 +1,10 @@
-import React, {ReactNode, useLayoutEffect, useRef} from 'react';
+import React, {ReactNode, useContext, useLayoutEffect, useRef} from 'react';
 import classNames from 'classnames';
 import {useScrollTrigger} from '@Hooks/useScrollTrigger';
 import {MathLerp, MathMap, webpSupported} from '@Services/Animate/AnimateMathUtil';
 import s from './Frames.module.scss';
+import {AnimateContext} from "@Context/Animate";
+import {PAGE_READY, PAGE_ENTER} from "@Constants/animation";
 
 interface IProps {
     className: string;
@@ -47,6 +49,9 @@ export const Frames: React.FC<IProps> = ({
                                              end,
                                              formatFrameUrl,
                                          }) => {
+
+    const {pageStatus} = useContext(AnimateContext);
+
     const comp = useRef<HTMLDivElement | null>(null);
     const refCanvas = useRef<HTMLCanvasElement | null>(null);
     const refDom = useRef<IRefDomFrames>({
@@ -60,7 +65,7 @@ export const Frames: React.FC<IProps> = ({
 
     const loadImages = async () => {
         const promises: any = [];
-        // Promise.reject();
+        Promise.reject();
 
         if (!refDom.current.currentUrlFrame) {
             refDom.current.currentUrlFrame =
@@ -176,12 +181,14 @@ export const Frames: React.FC<IProps> = ({
     };
 
     useLayoutEffect(() => {
-        if (refDom.current.timeOut) clearTimeout(refDom.current.timeOut);
-        refDom.current.timeOut = setTimeout(async () => {
-            await preLoadFrame();
-            runCanvas();
-        }, 200);
-    }, [urlFrame]);
+        if(pageStatus === PAGE_READY || pageStatus === PAGE_ENTER ){
+            if (refDom.current.timeOut) clearTimeout(refDom.current.timeOut);
+            refDom.current.timeOut = setTimeout(async () => {
+                await preLoadFrame();
+                runCanvas();
+            }, 200);
+        }
+    }, [urlFrame, pageStatus]);
 
     return (
         <div className={classNames(className, s.frames)} ref={comp}>

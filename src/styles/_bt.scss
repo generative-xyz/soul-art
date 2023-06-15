@@ -7,7 +7,7 @@
 @import '~bootstrap/scss/dropdown';
 @import '~bootstrap/scss/accordion';
 @import '~bootstrap/scss/transitions';
-@import '~bootstrap/scss/_nav.scss';
+@import '~bootstrap/scss/nav';
 
 $utilities: (
   'display': (
@@ -331,6 +331,7 @@ $utilities: (
 //),,
 );
 
+@import '~bootstrap/scss/root';
 @import '~bootstrap/scss/reboot';
 // Helpers
 //@import "~bootstrap/scss/helpers";

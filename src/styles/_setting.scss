@@ -1,7 +1,6 @@
 @use 'sass:math' as math;
 
 $grid-gutter-width: 40px;
-
 $black-primary: #000000;
 $dark-primary: #0f1b01;
 $white-primary: #ffffff;
@@ -28,7 +27,7 @@ $colors: (
   'gray-2': $gray-2,
   'gray-3': $gray-3,
   'gray-4': $gray-4,
-) !default;
+);
 
 $theme-colors: (
   'black-primary': $black-primary,
@@ -42,7 +41,7 @@ $theme-colors: (
   'gray-2': $gray-2,
   'gray-3': $gray-3,
   'gray-4': $gray-4,
-) !default;
+);
 
 $grid-breakpoints: (
   xs: 0,
@@ -52,7 +51,7 @@ $grid-breakpoints: (
   xl: 1400px,
   xxl: 1660px,
   xxxl: 1920px
-) !default;
+);
 
 $container-max-widths: (
   sm: 100%,
@@ -61,7 +60,7 @@ $container-max-widths: (
   xl: 100%,
   xxl: 100%,
   xxxl: 100%,
-) !default;
+);
 
 
 $spacer: 1rem !default;
@@ -77,7 +76,7 @@ $spacers: (
   7: rem(120px),
   9: rem(160px),
   10: rem(300px),
-) !default;
+);
 
 $easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);
 $easeInOutCubic: cubic-bezier(0.65, 0, 0.35, 1);

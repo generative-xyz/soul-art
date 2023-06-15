@@ -6,6 +6,7 @@ import {AnimateContext} from "@Context/Animate";
 import {PAGE_ENTER, PAGE_LOADED, PAGE_READY} from "@Constants/animation";
 import {gsap} from "gsap";
 import loadImage from 'image-promise';
+// import {useParallax} from "@Hooks/useParallax";
 
 interface IProcessing {
     value: number;
@@ -20,6 +21,11 @@ interface IProcessing {
 export const Loading = (): JSX.Element => {
 
     const {setPageStatus, getLoaderCounter, registerLoader, unRegisterLoader} = useContext(AnimateContext);
+
+    const refLoadingWrapper = useRef<HTMLDivElement | null>(null);
+    const refMain = useRef<HTMLDivElement | null>(null);
+    const refPara = useRef<HTMLImageElement | null>(null);
+
     const refLoading = useRef<HTMLDivElement | null>(null);
     const refPersent = useRef<HTMLSpanElement | null>(null);
     const processing = useRef<IProcessing>({
@@ -33,6 +39,7 @@ export const Loading = (): JSX.Element => {
 
     const [isReady, setIsReady] = useState<boolean>(false);
 
+    // useParallax(refMain, refPara, .5);
     const loadingComplete = useCallback(() => {
         setPageStatus(PAGE_LOADED);
         gsap.to(refLoading.current, {
@@ -61,10 +68,10 @@ export const Loading = (): JSX.Element => {
 
         if (refPersent.current) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                refPersent.current.textContent = `${Math.floor(
-                    processing.current.persen
-                )}%`;
+            // @ts-ignore
+            refPersent.current.textContent = `${Math.floor(
+                processing.current.persen
+            )}%`;
         }
 
         if (processing.current.persen >= 100) {
@@ -72,6 +79,7 @@ export const Loading = (): JSX.Element => {
             loadingComplete();
         }
 
+        // console.log('___getLoaderCounter()', getLoaderCounter())
         if (getLoaderCounter() > 0) {
             processing.current.delta *= 0.8;
             processing.current.onHold += 0.0001;
@@ -92,13 +100,17 @@ export const Loading = (): JSX.Element => {
 
 
         registerLoader();
-        const img = document.querySelectorAll('img');
-        loadImage(img).then(() => {
-            processing.current.imageInLoaded = true;
-            setIsReady(true);
-            setPageStatus(PAGE_READY);
-            unRegisterLoader();
-        });
+        if(refLoadingWrapper.current){
+            const img = refLoadingWrapper.current?.querySelectorAll('img');
+            loadImage(img).finally(() => {
+                document.body.classList.add("is-loading-ready");
+                processing.current.imageInLoaded = true;
+                setIsReady(true);
+                setPageStatus(PAGE_READY);
+                // console.log('___PAGE_READY');
+                unRegisterLoader();
+            });
+        }
 
         return () => {
             unRegisterLoader();
@@ -106,11 +118,12 @@ export const Loading = (): JSX.Element => {
             gsap.ticker.remove(looper);
             loadContent.revert();
         };
-    }, []);
+    }, [refLoadingWrapper]);
 
-    return <div className={classNames(s.loading, isReady ? s.isReady : '')}>
-        <div className={s.loading_bg}>
-            <img src="https://storage.googleapis.com/generative-static-prod/soul-art/hero-bg-min.jpeg" alt="loading"/>
+    return <div ref={refLoadingWrapper} className={classNames(s.loading, isReady ? s.isReady : '')}>
+        <div ref={refMain} className={s.loading_bg}>
+            <img ref={refPara} src="https://storage.googleapis.com/generative-static-prod/soul-art/hero-bg-min.jpeg"
+                 alt="loading"/>
         </div>
         <div className={s.loading_wrapper} ref={refLoading}>
             <div className={classNames(s.loading_over)}>

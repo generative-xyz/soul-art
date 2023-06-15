@@ -5,12 +5,15 @@
   bottom: rem(20px);
   width: 100%;
   height: auto;
-  padding: 0 2.5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: rem(20px);
   z-index: 5;
+
+  &_inner{
+    padding: 0 2.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: rem(20px);
+  }
 
   .progress {
     position: relative;
