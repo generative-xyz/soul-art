@@ -7,8 +7,8 @@ import ImageFrame from '@/components/ImageFrame';
 import IconSVG from '@/components/IconSVG';
 import HeroModal from './Modal';
 import { useState } from 'react';
-import { IMG_HERO_URL, modalPlay } from '@/constants/url';
 import { Col, Container } from 'react-bootstrap';
+import { IMG_HERO_URL, modalPlay } from '@/constants/asset';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
