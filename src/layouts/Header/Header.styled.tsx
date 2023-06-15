@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const Wrapper = styled.header`
   display: flex;
-  padding: 20px 40px;
+  padding: 22px 48px;
   font-size: 16px;
 
   > div {

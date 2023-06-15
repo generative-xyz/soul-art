@@ -7,14 +7,5 @@
 
   &_item {
     box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
-
-    &:nth-child(even) {
-      grid-row: span 2;
-    }
-
-    &:nth-child(odd) {
-      grid-row: span 1;
-      height: 500px; /* Set the specific height for odd items */
-    }
   }
 }

@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from 'react';
-import Footer from './Footer';
 import Header from './Header';
 import layoutStyles from './layout.module.scss';
 
@@ -11,7 +10,6 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
     <div className={layoutStyles.container}>
       <Header height={HEADER_HEIGHT} />
       <div className={layoutStyles.content_wrapper}>{children}</div>
-      <Footer height={FO0TER_HEIGHT} />
     </div>
   );
 };
