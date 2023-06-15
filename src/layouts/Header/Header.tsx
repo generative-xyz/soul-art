@@ -58,15 +58,15 @@ WalletToggle.displayName = 'WalletToggle';
 const NAV_CONTENT: NavContent[] = [
   {
     title: 'Story',
-    url: '/souls',
+    url: '/',
   },
   {
     title: 'Art',
-    url: '/',
+    url: '/art',
   },
   {
     title: 'FAQs',
-    url: '/',
+    url: '/faq',
   },
 ];
 
@@ -126,11 +126,8 @@ const Header = ({
               <Link
                 key={title}
                 href={url}
-                target="_blank"
-                className={cs(
-                  headerStyles.nav_item,
-                  router.pathname === url && headerStyles.active
-                )}
+                className={`${headerStyles.nav_item}
+                  ${router.pathname === url ? headerStyles.active : ''}`}
               >
                 {title}
               </Link>
