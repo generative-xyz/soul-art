@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 // import IconSVG from '@/components/IconSVG';
 // import NFTDisplayBox from '@/components/NFTDisplayBox';
 import { ARTIFACT_CONTRACT } from '@/configs';
-import AuctionInfo from './AuctionInfoo';
+import AuctionInfo from './AuctionInfo';
 import DetailImg from './MiddleImg';
 import { IInscription } from '@/interfaces/api/inscription';
 import Info from './Info';
@@ -151,7 +151,7 @@ const Inscription = ({ data }: { data?: IInscription }) => {
       <Container>
         <Row>
           <Col lg={4}>
-            <AuctionInfo />
+            <AuctionInfo img={inscription.image}/>
           </Col>
           <Col lg={5}>
             <DetailImg img={inscription.image} />
