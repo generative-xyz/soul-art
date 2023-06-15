@@ -151,7 +151,7 @@ const Inscription = ({ data }: { data?: IInscription }) => {
       <Container>
         <Row>
           <Col lg={4}>
-            <AuctionInfo />
+            <AuctionInfo img={inscription.image}/>
           </Col>
           <Col lg={5}>
             <DetailImg img={inscription.image} />
