@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import s from './style.module.scss';
 import IconSVG from '../IconSVG';
-import { textAnimateIcon1, textAnimateIcon2 } from '@/constants/url';
+import { textAnimateIcon1, textAnimateIcon2 } from '@/constants/asset';
 
 const TextAnimate: FC<PropsWithChildren> = (props) => {
   return (
