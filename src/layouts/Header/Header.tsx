@@ -284,7 +284,7 @@ const Header = ({
               <img
                 alt="wallet_icon"
                 className={headerStyles.wallet_icon}
-                src={`${CDN_URL}/pages/artifacts/heroicons_wallet-solid.svg`}
+                src={`${CDN_URL}/heroicons_wallet-solid.svg`}
               />
               {isConnecting ? 'Connecting...' : 'Connect wallet'}
             </Button>
