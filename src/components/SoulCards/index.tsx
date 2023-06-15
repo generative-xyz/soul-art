@@ -25,7 +25,7 @@ const NFTCard = ({ href, image, className }: INFTCard) => {
             className={soulsCardStyles.card_image}
           />
         </div>
-        <Card.Body>
+        <Card.Body className={soulsCardStyles.card_body}>
           <Card.Text className={soulsCardStyles.card_label}>
             Highest bid
           </Card.Text>

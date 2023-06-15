@@ -23,6 +23,8 @@
     font-size: 400;
   }
   &_body {
+    display: none;
+
     &__content {
       p {
         font-size: rem(20px);
