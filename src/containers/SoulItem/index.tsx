@@ -1,15 +1,16 @@
-import { ROUTE_PATH } from '@/constants/route-path';
-import logger from '@/services/logger';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import Spinner from '@/components/Spinner';
-import { ISoul } from '@/interfaces/api/soul';
-import { getSoulDetail } from '@/services/soul';
 import { Col, Container, Row } from 'react-bootstrap';
-import AuctionInfo from '../Item/AuctionInfoo';
+import React, { useEffect, useState } from 'react';
+
+import AuctionInfo from '../Item/AuctionInfo';
 import DetailImg from '../Item/MiddleImg';
+import { ISoul } from '@/interfaces/api/soul';
 import Info from '../Item/Info';
+import { ROUTE_PATH } from '@/constants/route-path';
+import Spinner from '@/components/Spinner';
+import { getSoulDetail } from '@/services/soul';
+import logger from '@/services/logger';
 import s from './style.module.scss';
+import { useRouter } from 'next/router';
 
 const SoulItem = ({ data }: { data?: ISoul }) => {
   const router = useRouter();
@@ -49,7 +50,7 @@ const SoulItem = ({ data }: { data?: ISoul }) => {
       <Container>
         <Row>
           <Col lg={4}>
-            <AuctionInfo />
+            <AuctionInfo img={soulDetail?.image} />
           </Col>
           <Col lg={5}>
             <DetailImg img={soulDetail?.image} />
