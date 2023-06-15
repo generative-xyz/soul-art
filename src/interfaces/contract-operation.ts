@@ -5,6 +5,7 @@ export enum DAppType {
   ERC20 = 'Token', // Tokens
   BFS = 'Artifact', // Artifactx
   BNS = 'Name', // Name
+  SOUL = 'Soul',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -7,13 +7,13 @@ type IStatusProps = {
 };
 
 const Status: React.FC<IStatusProps> = ({ type }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const TimeComp = () => {
     return (
       <div className={s.timeLeft}>
         <div className={s.node}>
           <span></span>
         </div>
-        <p className={s.nodeText}>2d : 16h : 12m</p>
       </div>
     );
   };
@@ -38,7 +38,6 @@ const Status: React.FC<IStatusProps> = ({ type }) => {
 
   return (
     <div className={s.status}>
-      {type === 'time' ? <TimeComp /> : ''}
       {type === 'success' ? <Received /> : ''}
       {type === 'waiting' ? <Waiting /> : ''}
     </div>
