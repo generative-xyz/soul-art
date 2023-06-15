@@ -1,7 +1,7 @@
 import IconSVG from '@/components/IconSVG';
 import s from './style.module.scss';
 import { FC } from 'react';
-import { detailExpand, detailRefresh } from '@/constants/url';
+import { detailExpand, detailRefresh } from '@/constants/asset';
 
 type DetailImgProps = {
   img: string | undefined;

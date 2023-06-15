@@ -1,0 +1,58 @@
+.timeLeft {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+
+    .node {
+        position: relative;
+        width: rem(16px);
+        height: rem(16px);
+        background: rgba(10, 198, 129, 0.2);
+        border-radius: 100px;
+
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: rem(10px);
+            height: rem(10px);
+            background: #0AC681;
+            border-radius: rem(5px);
+        }
+    }
+
+    .nodeText {
+        color: #000;
+        font-weight: 500;
+        font-size: rem(20px);
+        line-height: 140%;
+        margin-bottom: unset;
+    }
+}
+
+.received {
+    display: flex;
+    align-items: center;
+    gap: rem(6px);
+
+    span {
+        color: #0AC681;
+        font-weight: 500;
+        font-size: rem(16px);
+        line-height: 140%;
+    }
+}
+
+.wait {
+    display: flex;
+    align-items: center;
+    gap: rem(6px);
+
+    span {
+        color: #FF7E21;
+        font-weight: 500;
+        font-size: rem(16px);
+        line-height: 140%;
+    }
+}

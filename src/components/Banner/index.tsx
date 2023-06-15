@@ -1,7 +1,7 @@
+import { ARROW_URL } from '@/constants/asset';
 import Button from '../Button';
 import IconSVG from '../IconSVG';
 import s from './style.module.scss';
-import { ARROW_URL } from '@/constants/url';
 
 const Banner = () => {
   return (
