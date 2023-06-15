@@ -1,1 +1,3 @@
-export const MAIN_AUDIO = 'https://storage.googleapis.com/generative-static-prod/soul-art/Aylex%20-%20Technology%20Corporate.mp3'
+import { CDN_URL } from '@/configs';
+
+export const MAIN_AUDIO = `${CDN_URL}/Aylex%20-%20Technology%20Corporate.mp3`;

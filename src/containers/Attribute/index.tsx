@@ -5,6 +5,7 @@ import AccordionComponent from './Accordion';
 import IconSVG from '@/components/IconSVG';
 import attributeStyles from './attribute.module.scss';
 import { IAttribute } from '@/interfaces/attributes';
+import { CDN_URL } from '@/configs';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -22,9 +23,6 @@ const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   )
 );
 FilterToggle.displayName = 'FilterToggle';
-
-const CDN_URL_IMG =
-  'https://storage.googleapis.com/generative-static-prod/soul-art';
 
 type AttributeSortProps = {
   attributes: IAttribute[];
@@ -60,7 +58,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 {selectedOption ? selectedOption : 'Top Rarity'}
                 <div className={attributeStyles.attribute_chevronUp}>
                   <IconSVG
-                    src={`${CDN_URL_IMG}/ic-dropdown.svg`}
+                    src={`${CDN_URL}/ic-dropdown.svg`}
                     maxWidth="8"
                     maxHeight="8"
                   />
@@ -89,14 +87,14 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
             <Dropdown.Toggle as={FilterToggle} id="dropdown-custom-components">
               <div className={attributeStyles.attribute_filter}>
                 <IconSVG
-                  src={`${CDN_URL_IMG}/ic-filter.svg`}
+                  src={`${CDN_URL}/ic-filter.svg`}
                   maxWidth="15"
                   maxHeight="10"
                 />
                 <p>Attributes</p>
                 <div className={attributeStyles.attribute_iconLive}>
                   <IconSVG
-                    src={`${CDN_URL_IMG}/ellipse-live.svg`}
+                    src={`${CDN_URL}/ellipse-live.svg`}
                     maxWidth="8"
                     maxHeight="8"
                   />
