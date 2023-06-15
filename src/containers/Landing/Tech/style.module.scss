@@ -1,68 +1,69 @@
 .techSection {
-    background: #000;
-    color: #fff;
-    padding-top: rem(168px);
-    overflow: hidden;
-    position: relative;
+  background: #000;
+  color: #fff;
+  position: relative;
+  --padding-top: #{rem(168px)};
+   padding-top:var(--padding-top);
 
-    .background {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 0;
-        width: 100%;
-        height: auto;
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    width: 100%;
+    height: auto;
 
-        img {
-            width: 100%;
-            height: auto;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .leftContainer {
+    .wrapLeftContainer {
+      position: sticky;
+      top: calc(var(--padding-top) / 2);
+
+      .leftContainer-title {
+        font-size: rem(68px);
+        font-weight: 400;
+        font-style: normal;
+        line-height: 100%;
+        margin-bottom: rem(60px);
+        font-family: var(--righteous-font);
+      }
+
+      .leftContainer-tabs {
+        display: flex;
+        flex-direction: column;
+
+        .tab {
+          font-weight: 400;
+          font-size: rem(20px);
+          line-height: 160%;
+          width: fit-content;
+          opacity: 0.6;
+          margin-bottom: rem(32px);
+
+          &.active {
+            opacity: 1;
+          }
+
+          &:last-child {
+            margin-bottom: 0
+          }
+
+          &:hover {
+            text-decoration: none;
+          }
         }
+      }
     }
 
-    .leftContainer {
-        .wrapLeftContainer {
-            .leftContainer-title {
-                font-size: rem(68px);
-                font-weight: 400;
-                font-style: normal;
-                line-height: 100%;
-                margin-bottom: rem(60px);
-                font-family: var(--righteous-font);
-            }
-
-            .leftContainer-tabs {
-                display: flex;
-                flex-direction: column;
-
-                .tab {
-                    font-weight: 400;
-                    font-size: rem(20px);
-                    line-height: 160%;
-                    width: fit-content;
-                    opacity: 0.6;
-                    margin-bottom: rem(32px);
-
-                    &.active {
-                        opacity: 1;
-                    }
-
-                    &:last-child {
-                        margin-bottom: 0
-                    }
-
-                    &:hover {
-                        text-decoration: none;
-                    }
-                }
-            }
-
-
-        }
-
-        &.fixed {
-            position: sticky;
-            top: rem(168px);
-        }
+    &.fixed {
+      position: sticky;
+      top: rem(168px);
     }
+  }
 }

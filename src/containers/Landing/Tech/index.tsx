@@ -2,7 +2,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import TechItem from './TechItem';
 import s from './style.module.scss';
 import { contentItem } from './TechItem';
-import { useState, useEffect } from 'react';
 import { techOverlay } from '@/constants/asset';
 
 const Tech: React.FC = () => {
@@ -45,31 +44,6 @@ const Tech: React.FC = () => {
     },
   ];
 
-  const [isFixed, setIsFixed] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const section = document.getElementById('js-tech');
-      const sectionTop = section?.offsetTop || 0;
-      const scrollPosition = Math.floor(
-        window.pageYOffset || document.documentElement.scrollTop
-      );
-
-      if (scrollPosition >= sectionTop) {
-        // console.log(1);
-        setIsFixed(true);
-      } else {
-        setIsFixed(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isFixed]);
-
   return (
     <>
       <div id={'js-tech'} className={s.techSection}>
@@ -79,7 +53,7 @@ const Tech: React.FC = () => {
         <Container>
           <Row>
             <Col
-              className={`${s.leftContainer} ${isFixed ? s.fixed : ''}`}
+              className={`${s.leftContainer}`}
               lg={5}
             >
               <div className={s.wrapLeftContainer}>
