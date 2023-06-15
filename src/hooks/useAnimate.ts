@@ -6,7 +6,7 @@ import {
 } from "react";
 import {AnimateContext} from "@Context/Animate";
 import {useScrollTrigger} from "@Hooks/useScrollTrigger";
-import {PAGE_ENTER} from "@Constants/animation";
+import {PAGE_ENTER} from "@Constants/common";
 
 export const useAnimate = (
     el: MutableRefObject<HTMLDivElement | HTMLElement | HTMLHeadingElement | null>,

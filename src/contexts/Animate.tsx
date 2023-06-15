@@ -9,7 +9,6 @@ import React, {
 // import {PageLoader} from "@Animations/PageLoader";
 import {pageScrollTop} from "@Services/Animate/AnimateMathUtil";
 import Lenis from "@studio-freight/lenis";
-import {PAGE_LOADING} from "@Constants/animation";
 
 interface IAnimateContext {
     registerLoader: () => void;
@@ -29,6 +28,9 @@ interface IAnimateContext {
 
     setIsHideFooter: React.Dispatch<SetStateAction<boolean>>;
     isHideFooter: boolean;
+
+    setAudioPlaying: React.Dispatch<SetStateAction<boolean>>;
+    audioPlaying: boolean
 }
 
 export const AnimateContext = createContext<IAnimateContext>({
@@ -40,7 +42,7 @@ export const AnimateContext = createContext<IAnimateContext>({
     },
     getLoaderCounter: () => 1,
 
-    pageStatus: PAGE_LOADING,
+    pageStatus: "PAGE_LOADING",
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setPageStatus: _ => {
         return
@@ -63,6 +65,10 @@ export const AnimateContext = createContext<IAnimateContext>({
         return
     },
     isHideFooter: false,
+    audioPlaying: false,
+    setAudioPlaying: _ => {
+        return
+    },
 });
 
 export const AnimateProvider: FC<PropsWithChildren> = ({children}) => {
@@ -70,9 +76,10 @@ export const AnimateProvider: FC<PropsWithChildren> = ({children}) => {
     const [isPageScrolling, setIsPageScrolling] = useState<boolean>(false);
     const [isHideHeader, setIsHideHeader] = useState<boolean>(false);
     const [isHideFooter, setIsHideFooter] = useState<boolean>(false);
+    const [audioPlaying, setAudioPlaying] = useState<boolean>(false);
     const [lenis, setLenis] = useState<Lenis | null>(null);
 
-    const [pageStatus, setPageStatus] = useState<"PAGE_ENTER" | "PAGE_LOADED" | "PAGE_LOADING" | "PAGE_READY">(PAGE_LOADING);
+    const [pageStatus, setPageStatus] = useState<"PAGE_ENTER" | "PAGE_LOADED" | "PAGE_LOADING" | "PAGE_READY">("PAGE_LOADING");
 
     const registerLoader = useCallback(() => {
         refOption.current.counter += 1;
@@ -132,6 +139,8 @@ export const AnimateProvider: FC<PropsWithChildren> = ({children}) => {
         setLenis,
         isHideFooter,
         setIsHideFooter,
+        audioPlaying,
+        setAudioPlaying
     };
     return (
         <AnimateContext.Provider value={contextValues}>

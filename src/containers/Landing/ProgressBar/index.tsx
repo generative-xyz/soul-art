@@ -1,15 +1,19 @@
 import IconSVG from '@Components/IconSVG';
 import s from './style.module.scss';
-import {useContext, useEffect, useState, useCallback} from "react";
+import {useContext, useEffect, useState, useCallback, useRef} from "react";
 import {AnimateContext} from "@Context/Animate";
 import {MathMap} from "@Services/Animate/AnimateMathUtil";
-import { progressPlay, progressPoint, progressZoom } from '@/constants/asset';
+import {progressPlay, progressPoint, progressZoom} from '@/constants/asset';
 import {AnimFade} from '@Animations/Fade';
+import {MAIN_AUDIO} from "@Constants/common";
 
 const ProgressBar = () => {
+
+    const {lenis, audioPlaying, setAudioPlaying} = useContext(AnimateContext);
+
     const [po, setPo] = useState<number>(0);
     const [rote, setRote] = useState<number>(0);
-    const {lenis} = useContext(AnimateContext);
+    const refAudio = useRef<HTMLAudioElement | null>(null);
 
     const getPo = useCallback(
         () => {
@@ -26,6 +30,18 @@ const ProgressBar = () => {
         }
     }, [lenis, getPo]);
 
+    useEffect(() => {
+        if (audioPlaying) {
+            refAudio.current?.play();
+        } else {
+            refAudio.current?.pause();
+        }
+    }, [audioPlaying]);
+
+    const toggleAudio = useCallback(() => {
+        setAudioPlaying(!audioPlaying);
+    }, [audioPlaying, setAudioPlaying]);
+
     return (
         <div className={s.progressBar} style={{
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -37,7 +53,7 @@ const ProgressBar = () => {
                     src={progressPlay}
                     maxWidth={'48'}
                     maxHeight={'48'}
-                    className={`${s.playBtn} ${s.btn}`}
+                    className={`${s.playBtn}`}
                 />
                 <div className={s.progress} style={{
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -54,12 +70,14 @@ const ProgressBar = () => {
                     <div className={s.line_po}/>
                 </div>
                 <IconSVG
+                    onClick={toggleAudio}
                     src={progressZoom}
                     maxWidth={'36'}
                     maxHeight={'36'}
-                    className={`${s.zoomBtn} ${s.btn}`}
                 />
             </AnimFade>
+            <audio ref={refAudio}
+                   src={MAIN_AUDIO}/>
         </div>
     );
 };

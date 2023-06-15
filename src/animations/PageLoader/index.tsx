@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useEffect, useCallback } from "react";
 import { gsap } from "gsap";
 import { AnimateContext } from "@Context/Animate";
-import { PAGE_LOADED, PAGE_ENTER } from "@Constants/animation";
+import { PAGE_LOADED, PAGE_ENTER } from "@Constants/common";
 import s from "./styles.module.scss";
 
 interface IProcessing {

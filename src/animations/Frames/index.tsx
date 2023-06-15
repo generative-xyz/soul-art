@@ -4,7 +4,7 @@ import {useScrollTrigger} from '@Hooks/useScrollTrigger';
 import {MathLerp, MathMap, webpSupported} from '@Services/Animate/AnimateMathUtil';
 import s from './Frames.module.scss';
 import {AnimateContext} from "@Context/Animate";
-import {PAGE_READY, PAGE_ENTER} from "@Constants/animation";
+import {PAGE_READY, PAGE_ENTER} from "@Constants/common";
 
 interface IProps {
     className: string;
