@@ -8,15 +8,14 @@
 @import '~bootstrap/scss/accordion';
 @import '~bootstrap/scss/transitions';
 @import '~bootstrap/scss/nav';
+@import '~bootstrap/scss/modal.scss';
 
-$utilities: (
-  'display': (
-    responsive: true,
+
+$utilities: ('display': (responsive: true,
     print: true,
     property: display,
     class: d,
-    values: inline inline-block block grid table table-row table-cell flex
-      inline-flex none,
+    values: inline inline-block block grid table table-row table-cell flex inline-flex none,
   ),
   //"flex": (
   //        responsive: true,
@@ -261,42 +260,37 @@ $utilities: (
     class: bg,
     local-vars: ('bg-opacity': 1,
     ),
-    values:
-      map-merge(
-        $utilities-bg-colors,
-        (
-          'transparent': transparent,
-        )
-      ),
-  )
-  //"bg-opacity": (
-//        css-var: true,
-//        class: bg-opacity,
-//        values: (
-//                10: .1,
-//                25: .25,
-//                50: .5,
-//                75: .75,
-//                100: 1
-//        )
-//),
-//"user-select": (
-//        property: user-select,
-//        values: all auto none
-//),
-//"pointer-events": (
-//        property: pointer-events,
-//        class: pe,
-//        values: none auto,
-//),
-//"visibility": (
-//        property: visibility,
-//        class: null,
-//        values: (
-//                visible: visible,
-//                invisible: hidden,
-//        )
-//),,
+    values: map-merge($utilities-bg-colors,
+      ('transparent': transparent,
+      )),
+  ) //"bg-opacity": (
+  //        css-var: true,
+  //        class: bg-opacity,
+  //        values: (
+  //                10: .1,
+  //                25: .25,
+  //                50: .5,
+  //                75: .75,
+  //                100: 1
+  //        )
+  //),
+  //"user-select": (
+  //        property: user-select,
+  //        values: all auto none
+  //),
+  //"pointer-events": (
+  //        property: pointer-events,
+  //        class: pe,
+  //        values: none auto,
+  //),
+  //"visibility": (
+  //        property: visibility,
+  //        class: null,
+  //        values: (
+  //                visible: visible,
+  //                invisible: hidden,
+  //        )
+  //),,
 );
 
 @import '~bootstrap/scss/root';

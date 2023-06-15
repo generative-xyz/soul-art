@@ -75,12 +75,12 @@
       font-size: rem(16px);
       line-height: rem(18px);
       margin: rem(12px) 0 rem(32px) 0;
-      transition: .3s linear;
+      transition: .5s $easeOutQuart;
 
       &:hover {
         background: #fff;
         color: #000;
-        transition: .3s linear;
+        transition: .5s $easeOutQuart;
         border: 1px solid #000;
       }
     }
