@@ -1,6 +1,7 @@
 .accordion {
   &_item {
-    h2>button {
+    border: none;
+    h2 > button {
       background: none !important;
       padding: 0;
       outline: none;
@@ -73,8 +74,8 @@
       justify-content: space-between;
       flex-direction: row;
       line-height: 100%;
-      background: #FFFFFF;
-      border: 1px solid #ECECEC;
+      background: #ffffff;
+      border: 1px solid #ececec;
       box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.08);
       border-radius: 8px;
       color: black;
@@ -88,14 +89,14 @@
       justify-content: space-between;
       flex-direction: row;
       line-height: 100%;
-      background: #FFFFFF;
+      background: #ffffff;
       border: 1px solid #000;
       box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.08);
       border-radius: 8px;
       color: black;
       border-radius: 8px;
       padding: 8px;
-      transition: .2s ease-in-out;
+      transition: 0.2s ease-in-out;
     }
 
     &_checkbox {
@@ -104,7 +105,7 @@
       flex-direction: row;
       align-items: center;
 
-      &>div {
+      & > div {
         margin-left: 8px;
         font-weight: 400;
         font-size: 14px;
@@ -119,9 +120,9 @@
     &_percent {
       padding: 2px 8px;
       border-radius: 20px;
-      background: #F6F6F6;
+      background: #f6f6f6;
       font-size: 14px;
-      color: #5B5B5B;
+      color: #5b5b5b;
     }
   }
 }
