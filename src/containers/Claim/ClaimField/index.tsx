@@ -1,5 +1,7 @@
 // import IconSVG from '@/components/IconSVG';
+import IconSVG from '@/components/IconSVG';
 import s from './style.module.scss';
+import { notiReceive } from '@/constants/asset';
 // import { notiReceive } from '@/constants/asset';
 type IClainFeildProps = {
   handleClaimed: () => void;
@@ -12,15 +14,15 @@ const ClaimField: React.FC<IClainFeildProps> = ({
   isConnectedWallet,
   isReceiveAble,
 }) => {
-  //Notification Smart Contract
-  // const NotificationConnectWallet: React.FC = () => {
-  //   return (
-  //     <div className={s.noti}>
-  //       <IconSVG src={notiReceive} maxHeight={'44'} maxWidth={'44'} />
-  //       <span>Your wallet is not on the list to receive Soul.</span>
-  //     </div>
-  //   );
-  // };
+  // Notification Smart Contract
+  const NotificationConnectWallet: React.FC = () => {
+    return (
+      <div className={s.noti}>
+        <IconSVG src={notiReceive} maxHeight={'44'} maxWidth={'44'} />
+        <span>Your wallet is not on the list to receive Soul.</span>
+      </div>
+    );
+  };
 
   const ContentConnected: React.FC = () => {
     return (
@@ -40,7 +42,7 @@ const ClaimField: React.FC<IClainFeildProps> = ({
   return (
     <div className={s.claimField}>
       {isConnectedWallet ? <ContentConnected /> : <ContentNotConnected />}
-      {/* {isReceiveAble ? '' : <NotificationConnectWallet />} */}
+      {isReceiveAble ? '' : <NotificationConnectWallet />}
     </div>
   );
 };

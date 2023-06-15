@@ -23,14 +23,32 @@ export interface IClaimParams {
 }
 
 const useSoul: ContractOperationHook<IClaimParams, Transaction | null> = () => {
-  const { account, provider } = useWeb3React();
   const contract = useContract(SOUL_CONTRACT, SoulJson.abi, true);
   const { btcBalance, feeRate } = useContext(AssetsContext);
+  const { account, provider } = useWeb3React();
 
+  const estimateGas = useCallback(
+    async (params: IClaimParams): Promise<string> => {
+      if (account && provider && contract) {
+        const { address, totalGM, signature } = params;
+        const gasLimit = await contract.estimateGas.mint(
+          address,
+          totalGM,
+          signature
+        );
+        const gasLimitBN = new BigNumber(gasLimit.toString());
+        const gasBuffer = gasLimitBN.times(1.1).decimalPlaces(0);
+        logger.debug('useMint estimate gas', gasBuffer.toString());
+        return gasBuffer.toString();
+      }
+      return '500000';
+    },
+    [contract, provider, account]
+  );
   const call = useCallback(
     async (params: IClaimParams): Promise<Transaction | null> => {
       if (account && provider && contract) {
-        logger.debug('usePreserveChunks', params);
+        logger.debug('useMint', params);
 
         const { address, txSuccessCallback } = params;
 
@@ -50,12 +68,16 @@ const useSoul: ContractOperationHook<IClaimParams, Transaction | null> = () => {
           );
         }
 
-        const signatureBuff = Buffer.from(params.signature);
+        const gasLimit = await estimateGas({
+          address,
+          totalGM: params.totalGM,
+          signature: params.signature,
+        });
 
         const transaction = await contract
           .connect(provider.getSigner())
-          .mint(address, params.totalGM, signatureBuff, {
-            gasLimit: 500000,
+          .mint(address, params.totalGM, params.signature, {
+            gasLimit: gasLimit,
           });
 
         if (txSuccessCallback) {
@@ -72,7 +94,7 @@ const useSoul: ContractOperationHook<IClaimParams, Transaction | null> = () => {
 
   return {
     call: call,
-
+    estimateGas: estimateGas,
     dAppType: DAppType.SOUL,
     operationName: 'Soul',
   };

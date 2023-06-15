@@ -1,51 +1,97 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState, useEffect, useContext } from 'react';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
 import { Col, Container } from 'react-bootstrap';
 import ClaimField from './ClaimField';
 import { generateSignature } from '@/services/signature';
-import useSoul from '@/hooks/contract-operations/soul/useMint';
+import useSoul, {
+  IClaimParams,
+} from '@/hooks/contract-operations/soul/useMint';
+import useContractOperation from '@/hooks/contract-operations/useContractOperation';
+import { Transaction } from 'ethers';
+import { useWeb3React } from '@web3-react/core';
 
-const ClaimPage = () => {
-  const [isClaimed, _setClaimed] = useState(false);
-  const [isWalletConnected, setWalletConnected] = useState(true);
-  const [showAlert, setShowAlert] = useState(false);
-  const [claimStatus, setClaimStatus] = useState('waiting');
-
-  const { call } = useSoul();
-
-
+import { WalletContext } from '@/contexts/wallet-context';
+import { useSelector } from 'react-redux';
+import { getIsAuthenticatedSelector } from '@/state/user/selector';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { useRouter } from 'next/router';
+import { showToastError } from '@/utils/toast';
+import logger from '@/services/logger';
 
 const ClaimPage = () => {
   const [isClaimed, setClaimed] = useState<boolean>(false);
-  const [isWalletConnected, setWalletConnected] = useState<boolean>(false);
-  const [isReceiveAble, setIsReceiveAble] = useState<boolean>(false);
+  const [isWalletConnected, setWalletConnected] = useState<boolean>(
+    localStorage.getItem('isWalletConnected') === 'false' // Retrieve the value from localStorage on initial render
+  );
+  const [isReceiveAble, setIsReceiveAble] = useState<boolean>(true);
   const [claimStatus, setClaimStatus] = useState<string>('time');
+  const { onConnect, requestBtcAddress, onDisconnect } =
+    useContext(WalletContext);
+  const isAuthenticated = useSelector(getIsAuthenticatedSelector);
+  const router = useRouter();
+  const [isConnecting, setIsConnecting] = useState(false);
+  const { account } = useWeb3React();
+  const [status, setStatus] = useState();
+  const { run: call } = useContractOperation<IClaimParams, Transaction | null>({
+    operation: useSoul,
+    inscribeable: true,
+  });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- delete this line when done logic
-  const handleConnectWallet = () => {
-    setWalletConnected(true);
-    setIsReceiveAble(true);
+  const handleConnectWallet = async () => {
+    try {
+      setIsConnecting(true);
+      await onConnect();
+      await requestBtcAddress();
+    } catch (err) {
+      showToastError({
+        message: (err as Error).message,
+      });
+      logger.error(err);
+      setWalletConnected(false); // Set the state to false if connection fails
+      onDisconnect();
+    } finally {
+      setIsConnecting(false);
+    }
   };
 
   useEffect(() => {
-    if (isClaimed) {
-      setClaimStatus('waiting');
+    if (account) {
+      if (!isConnecting) {
+        setWalletConnected(true);
+
+        localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
+      }
+    } else {
+      setWalletConnected(false);
+      localStorage.setItem('isWalletConnected', 'false'); // Update localStorage when the wallet is connected
     }
-  }, [isClaimed]);
-
+  }, [account]);
   const handleClaimed = async () => {
-    setClaimed(true);
+    if (!account) {
+      handleConnectWallet();
+    }
 
-    const data = await generateSignature({
-      wallet_address: '0xa733E6b35922221D5358b5C7d314c1589be92A5f',
-    });
-    call({
-      address: '0xa733E6b35922221D5358b5C7d314c1589be92A5f',
-      totalGM: Number(data.gm),
-      signature: data.signature,
-    });
+    // (async () => {
+    //   const result = await generateSignature({
+    //     wallet_address: '0xDF1B860C0e0e3D33306106249933495bC037565D',
+    //   });
+    //   console.log(result);
+    // })();
+
+    // console.log(mintPermission);
+
+    // const data = await generateSignature({
+    //   wallet_address: account,
+    // });
+
+    // call({
+    //   address: account!,
+    //   totalGM: Number(data.gm),
+    //   signature: data.signature,
+    // });
   };
 
   return (

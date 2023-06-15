@@ -1,7 +1,10 @@
 import { SupportedChainId } from '@/constants/chains';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { ContractOperationHook } from '@/interfaces/contract-operation';
-import { getIsAuthenticatedSelector, getUserSelector } from '@/state/user/selector';
+import {
+  getIsAuthenticatedSelector,
+  getUserSelector,
+} from '@/state/user/selector';
 import { capitalizeFirstLetter, switchChain } from '@/utils';
 import { useWeb3React } from '@web3-react/core';
 import { useRouter } from 'next/router';
@@ -20,7 +23,7 @@ interface IContractOperationReturn<P, R> {
 }
 
 const useContractOperation = <P, R>(
-  args: IParams<P, R>,
+  args: IParams<P, R>
 ): IContractOperationReturn<P, R> => {
   const {
     operation,
@@ -46,7 +49,9 @@ const useContractOperation = <P, R>(
       // It delegates error to caller
 
       if (!isAuthenticated || !user?.walletAddress) {
-        router.push(`${ROUTE_PATH.CONNECT_WALLET}?next=${window.location.href}`);
+        router.push(
+          `${ROUTE_PATH.CONNECT_WALLET}?next=${window.location.href}`
+        );
         throw Error('Please connect wallet to continue.');
       }
 
@@ -76,7 +81,7 @@ const useContractOperation = <P, R>(
         dappURL: window.location.href,
         isRedirect: true,
         target: '_self',
-        isMainnet: true,
+        isMainnet: false,
       });
 
       return tx;

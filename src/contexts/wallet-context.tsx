@@ -1,4 +1,9 @@
-import React, { PropsWithChildren, useCallback, useEffect, useMemo } from 'react';
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { useAppDispatch } from '@/state/hooks';
 import {
@@ -32,9 +37,9 @@ export interface IWalletContext {
 }
 
 const initialValue: IWalletContext = {
-  onDisconnect: () => new Promise<void>((r) => r()),
-  onConnect: () => new Promise<null>((r) => r(null)),
-  requestBtcAddress: () => new Promise<void>((r) => r()),
+  onDisconnect: () => new Promise<void>(r => r()),
+  onConnect: () => new Promise<null>(r => r(null)),
+  requestBtcAddress: () => new Promise<void>(r => r()),
 };
 
 export const WalletContext = React.createContext<IWalletContext>(initialValue);
@@ -82,7 +87,7 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
         const signature = await web3Provider.eth.personal.sign(
           Web3.utils.fromUtf8(data),
           evmWalletAddress,
-          '',
+          ''
         );
         const { token: accessToken, refreshToken } = await verifyNonceMessage({
           address: evmWalletAddress,
@@ -102,14 +107,14 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
       method: TC_SDK.RequestMethod.account,
       redirectURL: window.location.origin + window.location.pathname,
       target: '_self',
-      isMainnet: true,
+      isMainnet: false,
     });
   }, []);
 
   useEffect(() => {
     if (user?.walletAddress && !user.walletAddressBtcTaproot) {
       const taprootAddress = bitcoinStorage.getUserTaprootAddress(
-        user?.walletAddress,
+        user?.walletAddress
       );
       if (!taprootAddress) return;
       dispatch(updateTaprootWallet(taprootAddress));
@@ -163,7 +168,7 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
     if (tpAddress) {
       dispatch(updateTaprootWallet(tpAddress));
       bitcoinStorage.setUserTaprootAddress(tcAddress, tpAddress);
-      router.push(ROUTE_PATH.HOME);
+      router.push(ROUTE_PATH.CLAIM);
     }
   }, [router, dispatch]);
 
@@ -176,6 +181,8 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
   }, [disconnect, connect, requestBtcAddress]);
 
   return (
-    <WalletContext.Provider value={contextValues}>{children}</WalletContext.Provider>
+    <WalletContext.Provider value={contextValues}>
+      {children}
+    </WalletContext.Provider>
   );
 };
