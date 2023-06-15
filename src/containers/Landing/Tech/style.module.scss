@@ -23,7 +23,7 @@
   .leftContainer {
     .wrapLeftContainer {
       position: sticky;
-      top: calc(var(--padding-top) / 2);
+      top: var(--padding-top);
 
       .leftContainer-title {
         font-size: rem(68px);
@@ -32,6 +32,7 @@
         line-height: 100%;
         margin-bottom: rem(60px);
         font-family: var(--righteous-font);
+        width: 102%;
       }
 
       .leftContainer-tabs {

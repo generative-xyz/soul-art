@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import s from './style.module.scss';
 import ImageFrame from '@/components/ImageFrame';
+import Text from '@Animations/Text';
 
 export type contentItem = {
   id: number;
@@ -18,7 +19,7 @@ const TechItem: FC<TechItemProps> = ({ item }) => {
   return (
     <div className={s.techItem}>
       <div className={s['item-content']}>
-        <h5 className={s['item-content_title']}>{title}</h5>
+        <Text as={'h5'} animOption={{offset: .1, screen: 0, type: 'paragraph'}}  className={s['item-content_title']}>{title}</Text>
         <p className={s['item-content_desc']}>{content}</p>
       </div>
       <div className={s['item-img']}>

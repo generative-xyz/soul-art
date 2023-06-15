@@ -1,5 +1,6 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import TechItem from './TechItem';
+import Text from '@Animations/Text';
 import s from './style.module.scss';
 import { contentItem } from './TechItem';
 import { techOverlay } from '@/constants/asset';
@@ -57,9 +58,9 @@ const Tech: React.FC = () => {
               lg={5}
             >
               <div className={s.wrapLeftContainer}>
-                <h1 className={s['leftContainer-title']}>
+                <Text size={'d0'} color={'primary-white'} animOption={{screen: 0, offset: 0, type: 'heading'}} className={s['leftContainer-title']}>
                   Technical Information Explanation
-                </h1>
+                </Text>
               </div>
             </Col>
             <Col className={s['right-container']} lg={7}>
