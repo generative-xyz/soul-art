@@ -44,7 +44,7 @@ const Introduce: React.FC = () => {
             >
               Once upon a time, in the magical land of New Bitcoin City, there
               was a unique and extraordinary force known as GM tokens. They were
-              more than just digital assets—they were the embodiment of belief
+              more than just digital assets— they were the embodiment of belief
               and hope for a brighter future.
             </Text>
 

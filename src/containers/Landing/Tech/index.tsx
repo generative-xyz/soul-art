@@ -51,14 +51,16 @@ const Tech: React.FC = () => {
         <div className={s['background']}>
           <img src={techOverlay} alt="background" />
         </div>
-        <Container>
+        <Container className={s.container}>
           <Row>
-            <Col
-              className={`${s.leftContainer}`}
-              lg={5}
-            >
+            <Col className={`${s.leftContainer}`} lg={5}>
               <div className={s.wrapLeftContainer}>
-                <Text size={'d0'} color={'primary-white'} animOption={{screen: 0, offset: 0, type: 'heading'}} className={s['leftContainer-title']}>
+                <Text
+                  size={'d0'}
+                  color={'primary-white'}
+                  animOption={{ screen: 0, offset: 0, type: 'heading' }}
+                  className={s['leftContainer-title']}
+                >
                   Technical Information Explanation
                 </Text>
               </div>

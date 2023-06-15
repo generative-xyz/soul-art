@@ -5,9 +5,9 @@
   bottom: rem(20px);
   width: 100%;
   height: auto;
-  z-index: 5;
+  z-index: 3;
 
-  &_inner{
+  &_inner {
     padding: 0 2.5%;
     display: flex;
     justify-content: space-between;
@@ -26,7 +26,7 @@
       height: 1px;
       background: rgba(#fff, .2);
 
-      &_po{
+      &_po {
         height: 1px;
         display: block;
         background: linear-gradient(270deg, #FFFFFF 0.55%, rgba(255, 255, 255, 0) 100%);
@@ -45,7 +45,7 @@
     }
   }
 
-  .playBtn{
+  .playBtn {
     transform: rotate(var(--rote));
   }
 }
