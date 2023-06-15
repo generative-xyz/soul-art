@@ -1,3 +1,5 @@
+import { IAttribute } from '../attributes';
+
 export interface ISoul {
   deleted_at: string | null;
   created_at: string | null;
@@ -7,7 +9,7 @@ export interface ISoul {
   tokenUri: string;
   image?: string;
   mintedAt: string;
-  attributes: [{ traitType: string; value: string }];
+  attributes: IAttribute[];
   metadata: string;
   metadata_type: string;
   animation_file_url: string;

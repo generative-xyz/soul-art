@@ -2,10 +2,14 @@ import { camelCaseKeys } from '@/utils/helpers';
 import { apiClient } from '.';
 import { constructURL } from '@/utils/url';
 import { ISoul } from '@/interfaces/api/soul';
+import { IAttribute } from '@/interfaces/attributes';
 
 const API_PATH = '/soul';
 
+const HARD_CONTRACT_ADDRESS = '0x9841faa1133da03b9ae09e8daa1a725bc15575f0';
+
 export const getSoulsNfts = async ({
+  attributes,
   limit = 10,
   page = 1,
   owner = '',
@@ -14,6 +18,7 @@ export const getSoulsNfts = async ({
   sortBy,
   sort,
 }: {
+  attributes?: string;
   limit?: number;
   page?: number;
   owner?: string;
@@ -32,7 +37,11 @@ export const getSoulsNfts = async ({
     sort,
   });
 
-  const res = await apiClient.get(url);
+  const res = await apiClient.get(url, {
+    params: {
+      attributes: attributes ? encodeURI(attributes) : undefined,
+    },
+  });
   return Object(camelCaseKeys(res));
 };
 
@@ -42,5 +51,12 @@ export const getSoulDetail = async ({
   tokenId: string;
 }): Promise<ISoul> => {
   const res = await apiClient.get(`${API_PATH}/nfts/${tokenId}`);
+  return Object(camelCaseKeys(res));
+};
+
+export const getSoulAttributes = async (): Promise<IAttribute[]> => {
+  const res = await apiClient.get(
+    `/marketplace/collections/${HARD_CONTRACT_ADDRESS}/attributes`
+  );
   return Object(camelCaseKeys(res));
 };

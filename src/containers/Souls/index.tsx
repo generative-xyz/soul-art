@@ -1,22 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import soulsStyles from './souls.module.scss';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ISoul } from '@/interfaces/api/soul';
 import { Spinner } from 'react-bootstrap';
-import { debounce } from 'lodash';
+import { debounce, pick } from 'lodash';
 import { ARTIFACT_CONTRACT } from '@/configs';
 import SoulsCard from '@/components/SoulCards';
-import { getSoulsNfts } from '@/services/soul';
+import { getSoulAttributes, getSoulsNfts } from '@/services/soul';
 import AttributeSort from '../Attribute';
+import { useRouter } from 'next/router';
+import { IAttribute } from '@/interfaces/attributes';
 
 const LIMIT_PAGE = 32;
 
 export const SoulsContainer: React.FC = () => {
+  const router = useRouter();
   const [isFetching, setIsFetching] = useState(false);
-
   const [souls, setSouls] = useState<ISoul[]>([]);
-  const [filter, _setFilter] = useState<number | null>(null);
-  const [isSortLatest, _setIsSortLatest] = useState<boolean>(true);
+  const [attributes, setAttributes] = useState<IAttribute[]>();
+  const [isFetchSuccessAttributes, setIsSuccessAttributes] = useState(false);
+
+  const fetchAttributes = async () => {
+    try {
+      const attributesData = await getSoulAttributes();
+      setAttributes(attributesData);
+      setIsSuccessAttributes(true);
+    } catch (error) {
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    fetchAttributes();
+  }, []);
 
   const onLoadMoreSouls = () => {
     if (isFetching || souls.length % LIMIT_PAGE !== 0) return;
@@ -26,62 +42,71 @@ export const SoulsContainer: React.FC = () => {
 
   const debounceLoadMore = debounce(onLoadMoreSouls, 300);
 
+  const fetchSouls = useCallback(
+    async (page = 1, isFetchMore = false) => {
+      try {
+        setIsFetching(true);
+
+        const query: {
+          page: number;
+          limit: number;
+          owner?: string;
+          isShowAll?: boolean;
+          isBigFile?: boolean;
+          sortBy?: string;
+          sort?: number;
+        } = {
+          page,
+          limit: LIMIT_PAGE,
+          isShowAll: undefined,
+          isBigFile: undefined,
+          sortBy: undefined,
+          sort: 1,
+        };
+        let attributesQuery;
+
+        if (attributes) {
+          attributesQuery = pick(router.query, [
+            ...attributes?.map(att => att.traitName),
+          ]);
+        }
+
+        const attributesFilter: string[] = [];
+
+        if (attributesQuery) {
+          for (const [trail, value] of Object.entries(attributesQuery)) {
+            if (typeof value === 'string') {
+              const AttributeValueArr = value.split(',');
+              AttributeValueArr.map(trailValue => {
+                attributesFilter.push(`${trail}:${trailValue}`);
+              });
+            }
+          }
+        }
+
+        const data = await getSoulsNfts({
+          attributes: attributesFilter.toString(),
+          ...query,
+        });
+
+        if (isFetchMore) {
+          setSouls(prev => [...prev, ...data]);
+        } else {
+          setSouls(data);
+        }
+      } catch (error) {
+      } finally {
+        setIsFetching(false);
+      }
+    },
+    [router.query, attributes]
+  );
+
   useEffect(() => {
-    fetchSouls();
-  }, [filter, isSortLatest]);
-
-  const fetchSouls = async (page = 1, isFetchMore = false) => {
-    try {
-      setIsFetching(true);
-
-      const query: {
-        page: number;
-        limit: number;
-        owner?: string;
-        isShowAll?: boolean;
-        isBigFile?: boolean;
-        sortBy?: string;
-        sort?: number;
-      } = {
-        page,
-        limit: LIMIT_PAGE,
-        isShowAll: undefined,
-        isBigFile: undefined,
-        sortBy: undefined,
-        sort: isSortLatest ? -1 : 1,
-      };
-
-      switch (filter) {
-        case 1:
-          query.isShowAll = true;
-          break;
-        case 2:
-          query.isShowAll = undefined;
-          query.isBigFile = true;
-          break;
-        case 3:
-          query.isShowAll = undefined;
-          query.isBigFile = false;
-          break;
-        default:
-          query.isShowAll = false;
-          break;
-      }
-
-      const data = await getSoulsNfts({
-        ...query,
-      });
-
-      if (isFetchMore) {
-        setSouls(prev => [...prev, ...data]);
-      } else {
-        setSouls(data);
-      }
-    } catch (error) {
-    } finally {
-      setIsFetching(false);
+    if (isFetchSuccessAttributes && attributes) {
+      fetchSouls();
     }
-  };
+  }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
   return (
     <InfiniteScroll
@@ -114,7 +139,7 @@ export const SoulsContainer: React.FC = () => {
             );
           })}
       </div>
-      <AttributeSort />
+      <AttributeSort attributes={attributes || []} />
     </InfiniteScroll>
   );
 };
