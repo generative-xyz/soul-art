@@ -1,12 +1,13 @@
-import { Button, Tab, Tabs } from 'react-bootstrap';
-
 import AuctionInfoStyles from './style.module.scss';
+import { Button } from 'react-bootstrap';
 import IconSVG from '@/components/IconSVG';
 import React from 'react';
+import TabsComponent from './Tabs';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
 
 const CDN_URL_IMG =
   'https://storage.googleapis.com/generative-static-prod/soul-art';
+
 const AuctionInfo = () => {
   return (
     <div className={AuctionInfoStyles.container}>
@@ -45,194 +46,7 @@ const AuctionInfo = () => {
       <Button className={AuctionInfoStyles.content_auction_adoptButton}>
         Adopt
       </Button>
-      <Tabs
-        defaultActiveKey="1"
-        className={AuctionInfoStyles.content_auction_tabs}
-      >
-        <Tab
-          eventKey="1"
-          title="Live auction"
-          className={AuctionInfoStyles.content_auction_tabsDivide}
-        >
-          <div className={AuctionInfoStyles.content_auction_tabsContent}>
-            <div className={AuctionInfoStyles.content_auction_tabsLeft}>
-              <div className={AuctionInfoStyles.content_auction_tabsLeftIcon}>
-                <IconSVG
-                  src={`${CDN_URL_IMG}/img-user.svg`}
-                  maxWidth="80"
-                  maxHeight="80"
-                ></IconSVG>
-              </div>
-              <div
-                className={AuctionInfoStyles.content_auction_tabsLeftAddress}
-              >
-                {formatLongAddress('012831236821763812638')}
-              </div>
-            </div>
-            <div className={AuctionInfoStyles.content_auction_tabsRight}>
-              <p className={AuctionInfoStyles.content_auction_tabsRightPrice}>
-                1.5 BTC
-              </p>
-              <p className={AuctionInfoStyles.content_auction_tabsRightTime}>
-                Jan 18, 2022 at 6:25pm
-              </p>
-            </div>
-          </div>
-          <div className={AuctionInfoStyles.content_auction_tabsContent}>
-            <div className={AuctionInfoStyles.content_auction_tabsLeft}>
-              <div className={AuctionInfoStyles.content_auction_tabsLeftIcon}>
-                <IconSVG
-                  src={`${CDN_URL_IMG}/img-user.svg`}
-                  maxWidth="80"
-                  maxHeight="80"
-                ></IconSVG>
-              </div>
-              <div
-                className={AuctionInfoStyles.content_auction_tabsLeftAddress}
-              >
-                {formatLongAddress('012831236821763812638')}
-              </div>
-            </div>
-            <div className={AuctionInfoStyles.content_auction_tabsRight}>
-              <p className={AuctionInfoStyles.content_auction_tabsRightPrice}>
-                1.5 BTC
-              </p>
-              <p className={AuctionInfoStyles.content_auction_tabsRightTime}>
-                Jan 18, 2022 at 6:25pm
-              </p>
-            </div>
-          </div>
-          <div className={AuctionInfoStyles.content_auction_tabsContent}>
-            <div className={AuctionInfoStyles.content_auction_tabsLeft}>
-              <div className={AuctionInfoStyles.content_auction_tabsLeftIcon}>
-                <IconSVG
-                  src={`${CDN_URL_IMG}/img-user.svg`}
-                  maxWidth="80"
-                  maxHeight="80"
-                ></IconSVG>
-              </div>
-              <div
-                className={AuctionInfoStyles.content_auction_tabsLeftAddress}
-              >
-                {formatLongAddress('012831236821763812638')}
-              </div>
-            </div>
-            <div className={AuctionInfoStyles.content_auction_tabsRight}>
-              <p className={AuctionInfoStyles.content_auction_tabsRightPrice}>
-                1.5 BTC
-              </p>
-              <p className={AuctionInfoStyles.content_auction_tabsRightTime}>
-                Jan 18, 2022 at 6:25pm
-              </p>
-            </div>
-          </div>
-          <div className={AuctionInfoStyles.content_auction_tabsContent}>
-            <div className={AuctionInfoStyles.content_auction_tabsLeft}>
-              <div className={AuctionInfoStyles.content_auction_tabsLeftIcon}>
-                <IconSVG
-                  src={`${CDN_URL_IMG}/img-user.svg`}
-                  maxWidth="80"
-                  maxHeight="80"
-                ></IconSVG>
-              </div>
-              <div
-                className={AuctionInfoStyles.content_auction_tabsLeftAddress}
-              >
-                {formatLongAddress('012831236821763812638')}
-              </div>
-            </div>
-            <div className={AuctionInfoStyles.content_auction_tabsRight}>
-              <p className={AuctionInfoStyles.content_auction_tabsRightPrice}>
-                1.5 BTC
-              </p>
-              <p className={AuctionInfoStyles.content_auction_tabsRightTime}>
-                Jan 18, 2022 at 6:25pm
-              </p>
-            </div>
-          </div>
-          <div className={AuctionInfoStyles.content_auction_tabsContent}>
-            <div className={AuctionInfoStyles.content_auction_tabsLeft}>
-              <div className={AuctionInfoStyles.content_auction_tabsLeftIcon}>
-                <IconSVG
-                  src={`${CDN_URL_IMG}/img-user.svg`}
-                  maxWidth="80"
-                  maxHeight="80"
-                ></IconSVG>
-              </div>
-              <div
-                className={AuctionInfoStyles.content_auction_tabsLeftAddress}
-              >
-                {formatLongAddress('012831236821763812638')}
-              </div>
-            </div>
-            <div className={AuctionInfoStyles.content_auction_tabsRight}>
-              <p className={AuctionInfoStyles.content_auction_tabsRightPrice}>
-                1.5 BTC
-              </p>
-              <p className={AuctionInfoStyles.content_auction_tabsRightTime}>
-                Jan 18, 2022 at 6:25pm
-              </p>
-            </div>
-          </div>
-          <div className={AuctionInfoStyles.content_auction_tabsContent}>
-            <div className={AuctionInfoStyles.content_auction_tabsLeft}>
-              <div className={AuctionInfoStyles.content_auction_tabsLeftIcon}>
-                <IconSVG
-                  src={`${CDN_URL_IMG}/img-user.svg`}
-                  maxWidth="80"
-                  maxHeight="80"
-                ></IconSVG>
-              </div>
-              <div
-                className={AuctionInfoStyles.content_auction_tabsLeftAddress}
-              >
-                {formatLongAddress('012831236821763812638')}
-              </div>
-            </div>
-            <div className={AuctionInfoStyles.content_auction_tabsRight}>
-              <p className={AuctionInfoStyles.content_auction_tabsRightPrice}>
-                1.5 BTC
-              </p>
-              <p className={AuctionInfoStyles.content_auction_tabsRightTime}>
-                Jan 18, 2022 at 6:25pm
-              </p>
-            </div>
-          </div>
-          <div className={AuctionInfoStyles.content_auction_tabsContent}>
-            <div className={AuctionInfoStyles.content_auction_tabsLeft}>
-              <div className={AuctionInfoStyles.content_auction_tabsLeftIcon}>
-                <IconSVG
-                  src={`${CDN_URL_IMG}/img-user.svg`}
-                  maxWidth="80"
-                  maxHeight="80"
-                ></IconSVG>
-              </div>
-              <div
-                className={AuctionInfoStyles.content_auction_tabsLeftAddress}
-              >
-                {formatLongAddress('012831236821763812638')}
-              </div>
-            </div>
-            <div className={AuctionInfoStyles.content_auction_tabsRight}>
-              <p className={AuctionInfoStyles.content_auction_tabsRightPrice}>
-                1.5 BTC
-              </p>
-              <p className={AuctionInfoStyles.content_auction_tabsRightTime}>
-                Jan 18, 2022 at 6:25pm
-              </p>
-            </div>
-          </div>
-        </Tab>
-        <Tab eventKey="2" title="Description">
-          Description
-        </Tab>
-        <Tab eventKey="3" title="Attributes">
-          Attributes
-        </Tab>
-        <Tab eventKey="4" title="Interaction">
-          Interaction
-        </Tab>
-      </Tabs>
+      <TabsComponent />
     </div>
   );
 };
