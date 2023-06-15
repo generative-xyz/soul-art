@@ -4,12 +4,20 @@
   left: 0;
   z-index: 5;
   width: 100%;
+  --text-color: #000;
+  --filter: black;
+
+  &.dark {
+    --text-color: #fff;
+    --filter: white
+  }
 }
 
 .nav_container {
   display: flex;
   align-items: center;
   gap: 32px;
+  color: var(--text-color);
 
   .nav_item {
     opacity: 0.6;
@@ -24,15 +32,26 @@
   }
 }
 
+.logo {
+  &_svg {
+    svg {
+      path {
+        fill: var(--filter)
+      }
+    }
+  }
+}
+
 .connect_button {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border: 1px solid $gray-2;
   font-size: 14px;
   line-height: 18px;
   backdrop-filter: blur(2px);
+  color: var(--text-color);
 }
 
 .wallet_icon {
