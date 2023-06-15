@@ -5,12 +5,16 @@ import c from './style.module.scss';
 import Claimed from './Claimed';
 import Status from './ClaimStatus';
 import ClaimSlider from './ClaimSlider';
+import { generateSignature } from '@/services/signature';
+import useSoul from '@/hooks/contract-operations/soul/useMint';
 
 const ClaimPage = () => {
-  const [isClaimed, setClaimed] = useState(false);
+  const [isClaimed, _setClaimed] = useState(false);
   const [isWalletConnected, setWalletConnected] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const [claimStatus, setClaimStatus] = useState('waiting');
+
+  const { call } = useSoul();
 
   const handleConnectWallet = () => {
     setWalletConnected(true);
@@ -27,9 +31,17 @@ const ClaimPage = () => {
     }
   }, [isClaimed]);
 
-  const handleClaimed = () => {
-    setClaimed(true);
+  const handleClaimed = async () => {
+    const data = await generateSignature({
+      wallet_address: '0xa733E6b35922221D5358b5C7d314c1589be92A5f',
+    });
+    call({
+      address: '0xa733E6b35922221D5358b5C7d314c1589be92A5f',
+      totalGM: Number(data.gm),
+      signature: data.signature,
+    });
   };
+
   return (
     <>
       {isClaimed ? (

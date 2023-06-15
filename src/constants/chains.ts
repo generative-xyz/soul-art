@@ -4,7 +4,7 @@ export enum SupportedChainId {
   MAINNET = 1,
   GOERLI = 5,
   POLYGON_MUMBAI = 80001,
-  TRUSTLESS_COMPUTER = 22213,
+  TRUSTLESS_COMPUTER = 42069,
 }
 
 export const TRUSTLESS_COMPUTER_CHAIN_INFO = {
