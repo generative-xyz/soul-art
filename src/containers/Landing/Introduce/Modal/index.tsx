@@ -1,7 +1,7 @@
 import s from './style.module.scss';
 import IconSVG from '@/components/IconSVG';
 import ImageFrame from '@/components/ImageFrame';
-import { modalClose, videoSrc } from '@/constants/url';
+import { modalClose, videoSrc } from '@/constants/asset';
 import { useEffect } from 'react';
 
 type ModalProps = {
@@ -12,7 +12,7 @@ type ModalProps = {
 const HeroModal: React.FC<ModalProps> = ({ showModal, closeModal }) => {
   useEffect(() => {
     const backdrop = document.getElementById('js-modal');
-    backdrop?.addEventListener('click', (e) => {
+    backdrop?.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
       closeModal();

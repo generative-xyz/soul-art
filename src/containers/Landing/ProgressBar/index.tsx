@@ -1,9 +1,9 @@
-import {progressPlay, progressPoint, progressZoom} from '@/constants/url';
 import IconSVG from '@Components/IconSVG';
 import s from './style.module.scss';
 import {useContext, useEffect, useState, useCallback} from "react";
 import {AnimateContext} from "@Context/Animate";
 import {MathMap} from "@Services/Animate/AnimateMathUtil";
+import { progressPlay, progressPoint, progressZoom } from '@/constants/asset';
 import {AnimFade} from '@Animations/Fade';
 
 const ProgressBar = () => {

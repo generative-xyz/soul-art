@@ -3,7 +3,7 @@ import TechItem from './TechItem';
 import s from './style.module.scss';
 import { contentItem } from './TechItem';
 import { useState, useEffect } from 'react';
-import { techOverlay } from '@/constants/url';
+import { techOverlay } from '@/constants/asset';
 
 const Tech: React.FC = () => {
   const contentArray: contentItem[] = [
