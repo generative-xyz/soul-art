@@ -3,65 +3,7 @@ import React, { ReactNode } from 'react';
 import { Accordion } from 'react-bootstrap';
 import AccordionCheckBox from '../AccordionCheckbox';
 import accordionStyles from './accordion.module.scss';
-
-const accordionData = [
-  { headerContent: 'Activation Function (1)' },
-  { headerContent: 'Birth Year' },
-  { headerContent: 'Color Palette (3)' },
-];
-
-const accordionCheckboxData = [
-  [
-    {
-      title: 'Slgmoid',
-      labelData: '11',
-    },
-    {
-      title: 'Slgmoid',
-      labelData: '11',
-    },
-    {
-      title: 'Slgmoid',
-      labelData: '11',
-    },
-  ],
-  [
-    {
-      title: '1934',
-      labelData: '11',
-    },
-    {
-      title: '1940',
-      labelData: '11',
-    },
-    {
-      title: '1970',
-      labelData: '11',
-    },
-    {
-      title: '1984',
-      labelData: '11',
-    },
-  ],
-  [
-    {
-      title: 'Red',
-      labelData: '11',
-    },
-    {
-      title: 'Green',
-      labelData: '11',
-    },
-    {
-      title: 'Blue',
-      labelData: '11',
-    },
-    {
-      title: 'Pink',
-      labelData: '11',
-    },
-  ],
-];
+import { IAttribute } from '@/interfaces/attributes';
 
 type AccordionContentProps = {
   eventKey: string;
@@ -73,16 +15,25 @@ type AccordionComponentProps = {
   eventKey: string;
   headerContent?: ReactNode | string;
   bodyContent?: ReactNode | string;
+  attributes: IAttribute[];
 };
 
-const AccordionContent: React.FC<AccordionContentProps> = ({
+export const AccordionContent: React.FC<AccordionContentProps> = ({
   eventKey,
   headerContent,
+  bodyContent,
 }) => {
   return (
-    <Accordion.Item eventKey={eventKey} className={accordionStyles.accordion_item}>
-      <Accordion.Header className={accordionStyles.filterAttribute_accordionHeader}>
-        <div className={accordionStyles.filterAttribute_title}>{headerContent}</div>
+    <Accordion.Item
+      eventKey={eventKey}
+      className={accordionStyles.accordion_item}
+    >
+      <Accordion.Header
+        className={accordionStyles.filterAttribute_accordionHeader}
+      >
+        <div className={accordionStyles.filterAttribute_title}>
+          {headerContent}
+        </div>
       </Accordion.Header>
       <Accordion.Body
         className={
@@ -91,35 +42,41 @@ const AccordionContent: React.FC<AccordionContentProps> = ({
         }
       >
         <div className={accordionStyles.filterAttribute_content}>
-          {accordionCheckboxData.map((data, indexData) => {
-            return (
-              <React.Fragment key={indexData}>
-                {eventKey === String(indexData) &&
-                  data.map((checkboxData, index) => (
-                    <AccordionCheckBox
-                      key={index}
-                      title={checkboxData.title}
-                      labelData={checkboxData.labelData}
-                    />
-                  ))}
-              </React.Fragment>
-            );
-          })}
+          {bodyContent}
         </div>
       </Accordion.Body>
     </Accordion.Item>
   );
 };
 
-const AccordionComponent: React.FC<AccordionComponentProps> = ({ bodyContent }) => {
+const AccordionComponent: React.FC<AccordionComponentProps> = ({
+  attributes,
+}) => {
   return (
     <Accordion defaultActiveKey="0" alwaysOpen>
-      {accordionData.map(({ headerContent }, index) => (
+      {attributes?.map(({ traitName, traitValuesStat }, index) => (
         <AccordionContent
           key={index}
           eventKey={String(index)}
-          headerContent={headerContent}
-          bodyContent={bodyContent}
+          headerContent={`${traitName}${
+            traitValuesStat.length ? ` (${traitValuesStat.length})` : ''
+          }`}
+          bodyContent={
+            <>
+              {traitValuesStat.map(({ value, rarity }, indexData) => {
+                return (
+                  <React.Fragment key={indexData}>
+                    <AccordionCheckBox
+                      traitName={traitName}
+                      key={index}
+                      title={value}
+                      labelData={Math.round(rarity)}
+                    />
+                  </React.Fragment>
+                );
+              })}
+            </>
+          }
         />
       ))}
     </Accordion>
