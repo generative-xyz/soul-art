@@ -80,7 +80,7 @@ const Header = ({
   theme?: string;
 }) => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const { btcBalance, tcBalance } = useContext(AssetsContext);
+  const { btcBalance, tcBalance, gmBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
 
   const router = useRouter();
@@ -172,7 +172,7 @@ const Header = ({
                         headerStyles.warning
                       )}
                     >
-                      {formatEthPrice(tcBalance)} GM
+                      {gmBalance} GM
                     </div>
                   </OverlayTrigger>
 
