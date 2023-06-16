@@ -19,7 +19,7 @@ interface IParams<P, R> {
 }
 
 interface IContractOperationReturn<P, R> {
-  run: (p: P) => Promise<R>;
+  run: (p: P) => Promise<R | Error>;
 }
 
 const useContractOperation = <P, R>(
@@ -43,7 +43,7 @@ const useContractOperation = <P, R>(
     }
   };
 
-  const run = async (params: P): Promise<R> => {
+  const run = async (params: P): Promise<R | Error> => {
     try {
       // This function does not handle error
       // It delegates error to caller
@@ -87,7 +87,7 @@ const useContractOperation = <P, R>(
       return tx;
     } catch (err) {
       if (Object(err).reason) {
-        throw Error(capitalizeFirstLetter(Object(err).reason));
+        return Error(capitalizeFirstLetter(Object(err).reason));
       }
       throw err;
     }

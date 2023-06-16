@@ -81,31 +81,34 @@
             background: #fff;
         }
     }
+.bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
-    .bottom-right {
+    &::before {
         position: absolute;
+        content: '';
         bottom: 0;
-        right: 0;
+        left: 0;
+        width: 1px;
+        height: 8px;
+        background: #fff;
+    }
 
-        &::before {
-            position: absolute;
-            content: '';
-            bottom: 0;
-            left: 0;
-            width: 1px;
-            height: 8px;
-            background: #fff;
-        }
+    &::after {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        width: 8px;
+        height: 1px;
+        background: #fff;
+        transform: translateX(-100%);
+    }
+}
 
-        &::after {
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 1px;
-            background: #fff;
-            transform: translateX(-100%);
-        }
+&.small {
+    padding: rem(5px);
     }
 }

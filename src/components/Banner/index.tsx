@@ -5,19 +5,29 @@ import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { CDN_URL } from '@/configs';
 
-const Banner = () => {
+type IBannerProps = {
+  type: string;
+};
+
+const Banner: React.FC<IBannerProps> = ({ type }) => {
   return (
     <div className={s.banner}>
-      <p className={s.bannerText}>
-        Posuere dolor adipiscing est et potenti odio condimentum euismod
-        lobortis.{' '}
-      </p>
+      {type === 'claim' ? (
+        <p className={s.bannerText}>
+          Experience the first soulbound art on-chain
+        </p>
+      ) : (
+        <p className={s.bannerText}>
+          Posuere dolor adipiscing est et potenti odio condimentum euismod
+          lobortis.
+        </p>
+      )}
       <Button borderRadius="100px" className={s.bannerButton}>
         <Link href={`${ROUTE_PATH.CLAIM}`} className={s.banner_link}>
           Claim Souls
           <IconSVG
             src={`${CDN_URL}/bannerArrow.svg`}
-            maxWidth="12"
+            maxWidth="11"
             maxHeight="8"
           />
         </Link>

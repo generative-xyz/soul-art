@@ -1,16 +1,17 @@
 .banner {
-    position: fixed;
-    top: rem(84px);
-    left: 50%;
-    transform: translate(-50%);
-    width: 100%;
-    padding: rem(12px) 0;
-    background: #F6F6F6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: rem(16px);
-    z-index: 5;
+  position: fixed;
+  top: rem(84px);
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  padding: rem(12px) 0;
+  background: #F6F6F6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: rem(16px);
+  z-index: 5;
+  backdrop-filter: blur(2px);
 
   .bannerText {
     margin-bottom: unset;
@@ -28,10 +29,14 @@
     gap: rem(8px);
     padding: rem(8px) rem(12px);
   }
+
   &_link {
     display: flex;
     gap: 8px;
     align-items: center;
+    font-size: rem(14px);
+    line-height: 129%;
+
     &:hover {
       text-decoration: none;
     }

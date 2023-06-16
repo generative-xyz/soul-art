@@ -4,6 +4,7 @@ import { constructURL } from '@/utils/url';
 import { ISoul } from '@/interfaces/api/soul';
 import { IAttribute } from '@/interfaces/attributes';
 import {SOUL_CONTRACT} from "@/configs";
+
 const API_PATH = '/soul';
 
 export const getSoulsNfts = async ({
@@ -55,6 +56,16 @@ export const getSoulDetail = async ({
 export const getSoulAttributes = async (): Promise<IAttribute[]> => {
   const res = await apiClient.get(
     `/marketplace/collections/${SOUL_CONTRACT}/attributes`
+  );
+  return Object(camelCaseKeys(res));
+};
+
+export const getListContractNFTsByToken = async (
+  token_id: string
+): Promise<ISoul[]> => {
+  const res = await apiClient.get(
+    `/marketplace/collections/${SOUL_CONTRACT}/nfts`,
+    { params: { token_id } }
   );
   return Object(camelCaseKeys(res));
 };

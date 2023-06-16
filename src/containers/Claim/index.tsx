@@ -3,42 +3,50 @@ import React, { useState, useEffect, useContext } from 'react';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
-import { Col, Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import ClaimField from './ClaimField';
-import { generateSignature } from '@/services/signature';
-import useSoul, {
-  IClaimParams,
-} from '@/hooks/contract-operations/soul/useMint';
-import useContractOperation from '@/hooks/contract-operations/useContractOperation';
-import { Transaction } from 'ethers';
-import { useWeb3React } from '@web3-react/core';
 
+import { Transaction } from 'ethers';
+import useMint, { IMintParams } from '@/hooks/soul/useMint';
+import { useWeb3React } from '@web3-react/core';
+import { generateSignature } from '@/services/signature';
+import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import { WalletContext } from '@/contexts/wallet-context';
-import { useSelector } from 'react-redux';
-import { getIsAuthenticatedSelector } from '@/state/user/selector';
-import { ROUTE_PATH } from '@/constants/route-path';
-import { useRouter } from 'next/router';
-import { showToastError } from '@/utils/toast';
 import logger from '@/services/logger';
+import { showToastError } from '@/utils/toast';
+import { AssetsContext } from '@/contexts/assets-context';
+import BigNumber from 'bignumber.js';
 
 const ClaimPage = () => {
-  const [isClaimed, setClaimed] = useState<boolean>(false);
-  const [isWalletConnected, setWalletConnected] = useState<boolean>(
-    localStorage.getItem('isWalletConnected') === 'false' // Retrieve the value from localStorage on initial render
-  );
+  const [isClaimed, setIsClaimed] = useState<boolean>(false);
+  const [isWalletConnected, setWalletConnected] = useState<boolean>(false);
+  const [isWalletConnected_localhost, setWalletConnected_localhost] =
+    useState<any>();
   const [isReceiveAble, setIsReceiveAble] = useState<boolean>(true);
   const [claimStatus, setClaimStatus] = useState<string>('time');
-  const { onConnect, requestBtcAddress, onDisconnect } =
-    useContext(WalletContext);
-  const isAuthenticated = useSelector(getIsAuthenticatedSelector);
-  const router = useRouter();
-  const [isConnecting, setIsConnecting] = useState(false);
   const { account } = useWeb3React();
-  const [status, setStatus] = useState();
-  const { run: call } = useContractOperation<IClaimParams, Transaction | null>({
-    operation: useSoul,
+  const [totalGM, setTotalGM] = useState<number>(0);
+  const [signature, setSignature] = useState<string>('');
+  const [isWaitingForConfirm, setIsWaitingForConfirm] =
+    useState<boolean>(false);
+  const { onDisconnect, onConnect, requestBtcAddress } =
+    useContext(WalletContext);
+  const { btcBalance, tcBalance } = useContext(AssetsContext);
+
+  const { run: call } = useContractOperation<IMintParams, Transaction | null>({
+    operation: useMint,
     inscribeable: true,
   });
+
+  useEffect(() => {
+    setWalletConnected_localhost(localStorage.getItem('isWalletConnected'));
+  }, []);
+
+  useEffect(() => {
+    setWalletConnected(isWalletConnected_localhost === 'true');
+  }, [isWalletConnected_localhost]);
+
+  const [isConnecting, setIsConnecting] = useState(false);
 
   const handleConnectWallet = async () => {
     try {
@@ -46,83 +54,171 @@ const ClaimPage = () => {
       await onConnect();
       await requestBtcAddress();
     } catch (err) {
+      logger.error(err);
+      setWalletConnected(false);
+      onDisconnect();
+      localStorage.setItem('isWalletConnected', 'false');
+
       showToastError({
         message: (err as Error).message,
       });
-      logger.error(err);
-      setWalletConnected(false); // Set the state to false if connection fails
-      onDisconnect();
     } finally {
       setIsConnecting(false);
+      setWalletConnected(true);
+    }
+  };
+
+  const handleClaimed = async () => {
+    try {
+      setIsWaitingForConfirm(true);
+      if (isWalletConnected) {
+        await call({
+          address: account as string,
+          totalGM: totalGM,
+          signature: signature,
+        });
+      } else {
+        handleConnectWallet();
+      }
+    } catch (err) {
+      logger.error(err);
+    } finally {
+      setIsWaitingForConfirm(false);
     }
   };
 
   useEffect(() => {
-    if (account) {
-      if (!isConnecting) {
-        setWalletConnected(true);
-
-        localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
-      }
+    if (account && !isConnecting) {
+      setWalletConnected(true);
+      localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
     } else {
       setWalletConnected(false);
-      localStorage.setItem('isWalletConnected', 'false'); // Update localStorage when the wallet is connected
+      setIsReceiveAble(true);
+      setIsClaimed(false);
+      setClaimStatus('time');
+      localStorage.setItem('isWalletConnected', 'false'); // Update localStorage when the wallet is disconnected
     }
-  }, [account]);
-  const handleClaimed = async () => {
-    if (!account) {
-      handleConnectWallet();
+  }, [account, isConnecting]);
+
+  useEffect(() => {
+    if (account) {
+      (async () => {
+        let res: any;
+        try {
+          const userTcBalance = new BigNumber(tcBalance);
+          const userBtcBalance = new BigNumber(btcBalance);
+          if (userTcBalance.isGreaterThan(0) && userBtcBalance.isGreaterThan(0))
+            res = await generateSignature({
+              wallet_address: account,
+            });
+        } catch (err) {
+          logger.error(err);
+        } finally {
+          if (res) setIsReceiveAble(true);
+          else {
+            setIsReceiveAble(false);
+          }
+
+          if (!account || isConnecting) {
+            setIsReceiveAble(true);
+          }
+        }
+      })();
     }
+  }, [account, isConnecting, btcBalance, tcBalance]);
 
-    // (async () => {
-    //   const result = await generateSignature({
-    //     wallet_address: '0xDF1B860C0e0e3D33306106249933495bC037565D',
-    //   });
-    //   console.log(result);
-    // })();
+  useEffect(() => {
+    (async () => {
+      if (signature) {
+        let res: any;
+        try {
+          // setIsClaimed(true);
+          setIsWaitingForConfirm(true);
+          res = await call({
+            address: account as string,
+            totalGM: totalGM,
+            signature: signature,
+          });
+        } catch (err) {
+          logger.error(err);
+        } finally {
+          setIsWaitingForConfirm(false);
+          if (res.toString().includes('User rejected transaction')) {
+            // setIsClaimed(false);
+            setClaimStatus('time');
+          }
+        }
+      }
+    })();
+  }, [signature]);
 
-    // console.log(mintPermission);
+  // useEffect(() => {
+  //   if (isWalletConnected && signature) {
+  //     setIsReceiveAble(true);
+  //   } else {
+  //     setIsReceiveAble(false);
+  //     handleConnectWallet();
+  //   }
+  // }, [account, handleConnectWallet, isWalletConnected, signature]);
 
-    // const data = await generateSignature({
-    //   wallet_address: account,
-    // });
+  useEffect(() => {
+    if (isClaimed) {
+      setClaimStatus('waiting');
+    }
+  });
 
-    // call({
-    //   address: account!,
-    //   totalGM: Number(data.gm),
-    //   signature: data.signature,
-    // });
-  };
+  useEffect(() => {
+    (async () => {
+      let res: any;
+      try {
+        const userTcBalance = new BigNumber(tcBalance);
+        const userBtcBalance = new BigNumber(btcBalance);
+        if (userTcBalance.isGreaterThan(0) && userBtcBalance.isGreaterThan(0))
+          res = await generateSignature({
+            wallet_address: account,
+          });
+      } catch (err) {
+        logger.error(err);
+      } finally {
+        setSignature(res?.signature);
+        setTotalGM(Number(res?.gm));
+      }
+    })();
+  }, [account, btcBalance, tcBalance]);
 
   return (
     <div className={s.claimPage}>
       <Container className={s.container}>
-        <Col lg={{ span: 4, offset: 4 }} className={s.column}>
-          <div className={s.wrapBox}>
-            <div className={s.successNoti}>
-              <p className={s.status}>Claim success</p>
-              <span className={s.dot}></span>
-              <p className={s.date}>Jan 18, 2022 at 6:25pm</p>
+        <Row className={s.row}>
+          <Col lg={{ span: 4, offset: 4 }} className={s.column}>
+            <div className={s.wrapBox}>
+              <div className={s.successNoti}>
+                <p className={s.status}>Claim success</p>
+                <span className={s.dot}></span>
+                <p className={s.date}>Jan 18, 2022 at 6:25pm</p>
+              </div>
+              <div
+                className={`${s.claimBox} ${
+                  claimStatus === 'success' ? s.success : ''
+                }`}
+              >
+                <ClaimImg isClaimed={isClaimed} />
+                <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
+                {!isClaimed ? (
+                  <ClaimField
+                    isWaitingForConfirm={isWaitingForConfirm}
+                    handleClaimed={handleClaimed}
+                    handleConnectWallet={handleConnectWallet}
+                    isConnectedWallet={isWalletConnected}
+                    isReceiveAble={isReceiveAble}
+                  />
+                ) : (
+                  ''
+                )}
+              </div>
             </div>
-            <div
-              className={`${s.claimBox} ${
-                claimStatus === 'success' ? s.success : ''
-              }`}
-            >
-              <ClaimImg isClaimed={isClaimed} />
-              <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
-              {!isClaimed ? (
-                <ClaimField
-                  handleClaimed={handleClaimed}
-                  isConnectedWallet={isWalletConnected}
-                  isReceiveAble={isReceiveAble}
-                />
-              ) : (
-                ''
-              )}
-            </div>
-          </div>
-        </Col>
+          </Col>
+        </Row>
       </Container>
     </div>
   );

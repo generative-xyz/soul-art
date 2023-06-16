@@ -71,5 +71,15 @@
         top: rem(168px);
       }
     }
+
+    .rightContainer {
+      >div {
+        margin-bottom: rem(60px);
+
+        &:last-child {
+          margin-bottom: unset;
+        }
+      }
+    }
   }
 }

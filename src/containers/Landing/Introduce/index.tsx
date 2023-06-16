@@ -6,15 +6,18 @@ import cs from 'classnames';
 import ImageFrame from '@/components/ImageFrame';
 import IconSVG from '@/components/IconSVG';
 import HeroModal from './Modal';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Col, Container } from 'react-bootstrap';
 import { IMG_HERO_URL, modalPlay } from '@/constants/asset';
+import { AnimateContext } from '@/contexts/Animate';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
+  const { setAudioPlaying } = useContext(AnimateContext);
 
   const handleOpenModal = () => {
     setIsShow(true);
+    setAudioPlaying(false);
   };
 
   const handleCloseModal = () => {
@@ -22,7 +25,7 @@ const Introduce: React.FC = () => {
   };
 
   return (
-    <div className={s.introduce}>
+    <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>
       <Container className={s.container}>
         <Col lg={{ span: 6, offset: 1 }} className={s.column}>
           <div className={s['introduceBox']}>
@@ -56,7 +59,7 @@ const Introduce: React.FC = () => {
             <AnimFade className={s['introduceVideo']} screen={1}>
               <h5 className={s['introduceVideo-title']}>Watch video story</h5>
               <div className={s['wrap-video']}>
-                <ImageFrame>
+                <ImageFrame type={'small'}>
                   <img src={IMG_HERO_URL} alt="videoplay" />
                   <IconSVG
                     src={modalPlay}

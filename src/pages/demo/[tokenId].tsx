@@ -4,7 +4,7 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import { SEO_IMAGE, SEO_TITLE } from '@/constants/seo';
 import logger from '@/services/logger';
 import { getSoulDetail } from '@/services/soul';
-import SoulItem from '@/containers/SoulItem';
+import SoulItem from '@/containers/SoulItemDemo';
 import Banner from '@/components/Banner';
 
 const SoulDetailPage: NextPage = () => {

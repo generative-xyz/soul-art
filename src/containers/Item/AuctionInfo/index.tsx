@@ -2,15 +2,16 @@ import { Button, Modal } from 'react-bootstrap';
 import React, { useState } from 'react';
 
 import AuctionInfoStyles from './style.module.scss';
+import { CDN_URL } from '@/configs';
 import IconSVG from '@/components/IconSVG';
 import TabsComponent from './Tabs';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
-import { CDN_URL } from '@/configs';
 
 type AuctionImgProps = {
   img: string | undefined;
 };
-const AuctionInfo: React.FC<AuctionImgProps> = ({ img }) => {
+const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
+
   const [show, setShow] = useState<boolean>(false);
 
   const handleClose = () => setShow(false);
@@ -21,10 +22,10 @@ const AuctionInfo: React.FC<AuctionImgProps> = ({ img }) => {
         <p className={AuctionInfoStyles.content_title}>Solaris #123</p>
         <div className={AuctionInfoStyles.content_warning}>
           <div className={AuctionInfoStyles.content_warning_iconUser}>
-            <IconSVG
+           <IconSVG
               src={`${CDN_URL}/img-user.svg`}
-              maxWidth="50"
-              maxHeight="50"
+              maxWidth={"50"}
+              maxHeight={"50"}
             ></IconSVG>
             <div className={AuctionInfoStyles.content_warning_iconWarning}>
               <IconSVG src={`${CDN_URL}/ic-warning.svg`}></IconSVG>
@@ -42,7 +43,7 @@ const AuctionInfo: React.FC<AuctionImgProps> = ({ img }) => {
               Highest bid
             </p>
             <p className={AuctionInfoStyles.content_auctionLeft_price}>
-              1.5 PM
+              1.5 GM
             </p>
           </div>
           <div className={AuctionInfoStyles.content_auctionRight}>
@@ -81,7 +82,11 @@ const AuctionInfo: React.FC<AuctionImgProps> = ({ img }) => {
                 className={AuctionInfoStyles.modal_header_buttonClose}
                 onClick={handleClose}
               >
-                &times;
+                <IconSVG
+                  src={`${CDN_URL}/ic-vector.svg`}
+                  maxWidth={"15.34"}
+                  maxHeight={"15.34"}
+                ></IconSVG>
               </div>
             </Modal.Title>
           </Modal.Header>
@@ -111,8 +116,8 @@ const AuctionInfo: React.FC<AuctionImgProps> = ({ img }) => {
                     <div>
                       <IconSVG
                         src={`${CDN_URL}/img-user.svg`}
-                        maxWidth="32"
-                        maxHeight="32"
+                        maxWidth={"32"}
+                        maxHeight={"32"}
                       ></IconSVG>
                     </div>
                     <p>{formatLongAddress('012831236821763812638')}</p>

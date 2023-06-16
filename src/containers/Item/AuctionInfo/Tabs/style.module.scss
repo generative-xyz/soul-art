@@ -53,157 +53,6 @@
     margin: rem(22px) 0 rem(24px) 0;
   }
 
-  &_auction {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-direction: row;
-
-    &_adoptButton {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: rem(50px);
-      background: #000000;
-      border-radius: 100px;
-      color: #fff;
-      gap: rem(10px);
-      padding: rem(16px) rem(40px);
-      font-weight: 500;
-      font-size: rem(16px);
-      line-height: rem(18px);
-      margin: rem(12px) 0 rem(32px) 0;
-      transition: .5s $easeOutQuart;
-
-      &:hover {
-        background: #fff;
-        color: #000;
-        transition: .5s $easeOutQuart;
-        border: 1px solid #000;
-      }
-    }
-
-    &_tabs {
-      width: 100%;
-
-      li>button {
-        position: relative;
-        font-size: rem(16px);
-        line-height: 140%;
-        width: 100%;
-        color: #898989;
-        font-size: rem(16px);
-        border-top: none !important;
-        border-left: none !important;
-        border-right: none !important;
-        text-align: left;
-        padding-left: 0;
-        padding-right: rem(24px);
-
-        &.active::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          height: 1px;
-          width: 100%;
-          background: #000;
-        }
-      }
-    }
-
-    &_tab {
-      position: relative;
-
-      &:after {
-        content: "";
-        position: absolute;
-        height: 10px;
-        width: 100%;
-        top: 0px;
-        left: 0;
-        right: 0;
-        background: #fff;
-        z-index: 2;
-      }
-    }
-
-    &_tabBox {
-      height: 100%;
-      max-height: 400px;
-      overflow: scroll;
-      margin-bottom: 15px;
-    }
-
-    &_tabContent {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      line-height: 100%;
-      flex-direction: row;
-      padding: 0;
-      margin-bottom: 5px;
-
-      &:first-child {
-        margin-top: 15px;
-      }
-    }
-
-    &_tabLeft {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: row;
-    }
-
-    &_tabLeftIcon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: rem(58px);
-      width: rem(48px);
-      overflow: hidden;
-      object-fit: cover;
-      margin-left: - rem(4px);
-    }
-
-    &_tabLeftAddress {
-      margin-left: rem(8px);
-      font-weight: 400;
-      font-size: rem(16px);
-      line-height: 140%;
-      color: #000;
-      margin-bottom: 8px;
-    }
-
-    &_tabRight {
-      display: flex;
-      align-items: flex-end;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    &_tabRightPrice {
-      font-weight: 600;
-      font-size: rem(16px);
-      line-height: 140%;
-      text-align: right;
-      color: #000;
-    }
-
-    &_tabRightTime {
-      font-size: rem(14px);
-      line-height: 19.6px;
-      text-align: right;
-      font-weight: 400;
-      color: #000;
-      opacity: .6;
-    }
-  }
-
   &_auctionLeft {
     flex-direction: column;
     justify-content: flex-start;
@@ -255,6 +104,299 @@
       font-weight: 500;
       line-height: 140%;
       color: #000;
+    }
+  }
+
+  &_auction {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: row;
+
+    &_adoptButton {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: rem(50px);
+      background: #000000;
+      border-radius: 100px;
+      color: #fff;
+      gap: rem(10px);
+      padding: rem(16px) rem(40px);
+      font-weight: 500;
+      font-size: rem(16px);
+      line-height: rem(18px);
+      margin: rem(12px) 0 rem(32px) 0;
+      transition: .5s $easeOutQuart;
+
+      &:hover {
+        background: #fff;
+        color: #000;
+        transition: .5s $easeOutQuart;
+        border: 1px solid #000;
+      }
+    }
+
+    &_tabs {
+      width: 100%;
+
+      li {
+        padding-right: rem(24px);
+      }
+
+
+      li>button {
+        position: relative;
+        line-height: 140%;
+        font-size: rem(16px);
+        font-style: medium;
+        width: 100%;
+        color: #898989;
+        font-size: rem(16px);
+        text-align: left;
+        padding-left: 0;
+        display: inline;
+        padding-right: 0;
+      }
+
+      :global(.nav-link) {
+        display: block;
+        border: none;
+        max-width: 100%;
+        position: relative;
+
+        &:hover {
+          color: #1C1C1C;
+        }
+      }
+
+      :global(.nav-link.active) {
+        color: #1C1C1C;
+
+        &::before {
+          content: "";
+          position: absolute;
+          background: #1C1C1C;
+          height: 2px;
+          width: 100%;
+          bottom: 0;
+          left: 0;
+        }
+      }
+    }
+
+    &_tab {
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        top: 0px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        z-index: 2;
+      }
+    }
+
+    &_tabBox {
+      height: 100%;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+
+    &_tabLive {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: 100%;
+      flex-direction: row;
+      padding: 0;
+      margin-bottom: 5px;
+
+      &:first-child {
+        margin-top: 15px;
+      }
+    }
+
+    &_tabLiveLeft {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+    }
+
+    &_tabLiveLeftIcon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: rem(48px);
+      width: rem(48px);
+      overflow: hidden;
+      object-fit: cover;
+      margin-left: -4px;
+    }
+
+    &_tabLiveLeftAddress {
+      margin-left: rem(8px);
+      font-weight: 400;
+      font-size: rem(16px);
+      line-height: 140%;
+      color: #000;
+      margin-bottom: 8px;
+    }
+
+    &_tabLiveRight {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    &_tabLiveRightPrice {
+      font-weight: 600;
+      font-size: rem(16px);
+      line-height: 140%;
+      text-align: right;
+      color: #000;
+      margin-bottom: 0;
+    }
+
+    &_tabLiveRightTime {
+      font-size: rem(14px);
+      line-height: 19.6px;
+      text-align: right;
+      font-weight: 400;
+      color: #000;
+      opacity: .6;
+    }
+
+    &_tabDesc {
+      margin: rem(16px) 0;
+    }
+
+    &_tabDescHead {
+      background: #F6F6F6;
+      width: 100%;
+      border-radius: rem(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      padding: rem(19px) 0;
+      margin-bottom: rem(20px);
+
+      &>div:nth-child(1) {
+        width: rem(40px);
+        height: rem(40px);
+      }
+
+      &>p {
+        font-size: rem(16px);
+        line-height: 140%;
+        margin: 0 rem(16px) 0 rem(8px);
+        color: #000;
+      }
+    }
+
+    &_tabDescHeadButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: rem(14px);
+      font-weight: 500;
+      line-height: rem(18px);
+      gap: rem(8px);
+      padding: rem(8px) rem(12px);
+      background: #fff;
+      color: #000;
+      offset: 0px,
+        0px rgba(0, 0, 0, 0.12);
+      box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
+      border-radius: rem(24px);
+    }
+
+    &_tabDescText {
+      line-height: 140%;
+      font-size: rem(16px);
+      color: #000;
+    }
+
+    &_tabAttr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+      margin: rem(16px) 0;
+    }
+
+    &_tabAttrType {
+      font-size: rem(14px);
+      margin-bottom: rem(4px);
+      line-height: 140%;
+      opacity: .6;
+      text-transform: capitalize;
+    }
+
+    &_tabAttrTypeName {
+      font-size: rem(16px);
+      margin-bottom: 0;
+      line-height: 140%;
+      color: #000000;
+      font-weight: 500;
+    }
+
+    &_tabAttrRare {
+      font-weight: 500;
+      text-align: center;
+      width: rem(40px);
+      offset: 0px,
+        0px rgba(0, 0, 0, 0.08);
+      border-radius: rem(16px);
+      background: #FFFFFF;
+      padding: rem(2px) rem(8px);
+      font-size: rem(14px);
+      margin-bottom: rem(4px);
+      line-height: 140%;
+      box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
+    }
+
+    &_tabInter {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-direction: row;
+      margin: rem(16px) 0;
+    }
+
+    &_tabInterKeyText {
+      background: #FFFFFF;
+      width: rem(32px);
+      height: rem(32px);
+      text-align: center;
+      font-size: rem(16px);
+      border-radius: rem(8px);
+      font-weight: 600;
+      line-height: 140%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      offset: 0px,
+        0px rgba(0, 0, 0, 0.12);
+      box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
+      margin-right: rem(16px);
+    }
+
+    &_tabInterKeyDesc {
+      font-size: rem(16px);
+      line-height: 140%;
     }
   }
 }

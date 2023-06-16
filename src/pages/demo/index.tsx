@@ -1,5 +1,5 @@
 import Banner from '@/components/Banner';
-import { SoulsContainer } from '@/containers/Souls';
+import { SoulsContainer } from '@/containers/SoulsDemo';
 import Layout from '@/layouts';
 import { FC } from 'react';
 
