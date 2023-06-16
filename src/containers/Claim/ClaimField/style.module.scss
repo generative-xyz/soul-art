@@ -1,39 +1,42 @@
 .claimField {
+  margin-top: rem(24px);
+
+  .textButton {
+    width: 100%;
+    padding: rem(16px) 0;
+    background: #000000;
+    border-radius: 100px;
+    cursor: pointer;
+    text-align: center;
+
+    span {
+      color: #fff;
+      font-size: rem(16px);
+      font-weight: 500;
+      line-height: 112%;
+    }
+
+    &.false {
+      background: #f4f4f4;
+      pointer-events: none;
+
+      span {
+        color: #898989;
+      }
+    }
+  }
+
+  .noti {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
     margin-top: rem(24px);
 
-    .textButton {
-        width: 100%;
-        padding: rem(16px) 0;
-        background: #000000;
-        border-radius: 100px;
-        cursor: pointer;
-        text-align: center;
-
-        span {
-            color: #fff;
-            font-size: rem(16px);
-            font-weight: 500;
-            line-height: 112%;
-        }
-
-        .false {
-            background: #F4F4F4;
-            color: #898989;
-            pointer-events: none;
-        }
+    span {
+      color: #ff4747;
+      font-weight: 500;
+      font-size: rem(16px);
+      line-height: 140%;
     }
-
-    .noti {
-        display: flex;
-        align-items: center;
-        gap: rem(8px);
-        margin-top: rem(24px);
-
-        span {
-            color: #FF4747;
-            font-weight: 500;
-            font-size: rem(16px);
-            line-height: 140%;
-        }
-    }
+  }
 }

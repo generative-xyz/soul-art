@@ -99,7 +99,7 @@ const ModalInscribeChunk = (props: Props) => {
 
   const isBigFile = useMemo(
     () => (file?.size ? file?.size > BLOCK_CHAIN_FILE_LIMIT : false),
-    [file?.size],
+    [file?.size]
   );
 
   const { run: storeChunks } = useContractOperation<
@@ -116,13 +116,15 @@ const ModalInscribeChunk = (props: Props) => {
   }, [file]);
 
   const handleInscribeNextChunk = async (
-    evt: React.MouseEvent<HTMLButtonElement>,
+    evt: React.MouseEvent<HTMLButtonElement>
   ) => {
     evt.stopPropagation();
 
     try {
       if (!account) {
-        router.push(`${ROUTE_PATH.CONNECT_WALLET}?next=${window.location.href}`);
+        router.push(
+          `${ROUTE_PATH.CONNECT_WALLET}?next=${window.location.href}`
+        );
         return;
       }
 
@@ -236,7 +238,12 @@ const ModalInscribeChunk = (props: Props) => {
   }, [calculateEstTcFee, chunkFile]);
 
   return (
-    <StyledModalInscribeChunk show={show} onHide={handleClose} centered size="lg">
+    <StyledModalInscribeChunk
+      show={show}
+      onHide={handleClose}
+      centered
+      size="lg"
+    >
       <Modal.Header>
         <IconSVG
           className="cursor-pointer hover-opacity"
@@ -277,7 +284,9 @@ const ModalInscribeChunk = (props: Props) => {
             disabled={processing}
           >
             <p>
-              {processing ? 'Processing...' : `Upload pack ${finishedChunk + 1}`}
+              {processing
+                ? 'Processing...'
+                : `Upload pack ${finishedChunk + 1}`}
             </p>
           </ArtifactButton>
         </div>
