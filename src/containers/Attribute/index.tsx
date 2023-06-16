@@ -2,10 +2,10 @@ import { Button, Dropdown } from 'react-bootstrap';
 import React, { HTMLAttributes, forwardRef, useState } from 'react';
 
 import AccordionComponent from './Accordion';
+import { CDN_URL } from '@/configs';
+import { IAttribute } from '@/interfaces/attributes';
 import IconSVG from '@/components/IconSVG';
 import attributeStyles from './attribute.module.scss';
-import { IAttribute } from '@/interfaces/attributes';
-import { CDN_URL } from '@/configs';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -59,8 +59,8 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 <div className={attributeStyles.attribute_chevronUp}>
                   <IconSVG
                     src={`${CDN_URL}/ic-dropdown.svg`}
-                    maxWidth="8"
-                    maxHeight="8"
+                    maxWidth={"8"}
+                    maxHeight={"4"}
                   />
                 </div>
               </div>
@@ -107,7 +107,9 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
               <p className={attributeStyles.filterAttribute_header}>
                 Attributes
               </p>
-              <AccordionComponent eventKey="1" attributes={attributes} />
+            <div className={(attributeStyles.filterAttribute_boxComponent,attributeStyles.filterAttribute_component)}>
+              <AccordionComponent eventKey="1" attributes={attributes}  />
+            </div>
             </Dropdown.Menu>
           </Dropdown>
         </div>

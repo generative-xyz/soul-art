@@ -61,6 +61,7 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
           ? accordionCheckboxStyles.filterAttribute_content_itemChecked
           : accordionCheckboxStyles.filterAttribute_content_item
       }
+      onClick = {handleCheckboxChange}
     >
       <span
         className={accordionCheckboxStyles.filterAttribute_content_checkbox}
@@ -70,7 +71,6 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
             <input
               type="checkbox"
               checked={isChecked}
-              onChange={handleCheckboxChange}
             />
             <span
               className={accordionCheckboxStyles.container_checkmark}
@@ -80,7 +80,7 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
         <div>{title}</div>
       </span>
       <div className={accordionCheckboxStyles.filterAttribute_content_percent}>
-        {labelData}
+        {labelData}&#37;
       </div>
     </div>
   );

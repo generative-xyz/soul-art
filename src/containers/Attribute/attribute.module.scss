@@ -37,7 +37,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
 
     &_dropdownToggle::after {
       content: none !important;
@@ -116,7 +115,7 @@
     height: 24px;
     width: 1px;
     border: 1px solid #ececec;
-    margin: 0 18px;
+    margin: 0 rem(18.5px) 0 rem(22px);
   }
 
   &_filter {
@@ -135,9 +134,7 @@
   }
 
   &_chevronUp {
-    width: 20px;
-    height: 20px;
-    margin-left: 8px;
+    margin-left: rem(14px);
   }
 
   &_iconLive {
@@ -164,27 +161,34 @@
 }
 
 .filterAttribute {
-  &_accordionHeader .accordion-button {
-    color: inherit !important;
-    background-color: transparent !important;
-    border: none !important;
-    outline: none !important;
-  }
-
   &_container {
+    overflow: hidden;
+    height: auto;
+    max-height: 460px;
     width: 740px;
-    margin-right: -10px;
+    margin-right: rem(-10px);
     border: 1px solid #ececec;
     box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 25px;
+    border-radius: rem(20px);
+    padding: rem(20px);
+    margin-bottom: rem(25px);
+  }
+
+  &_boxComponent {
+    height: 100%;
+    width: 100%;
+  }
+
+  &_component {
+    height: 100%;
+    max-height: 440px;
+    overflow-y: auto;
   }
 
   &_header {
-    font-size: 20px;
+    font-size: rem(20px);
     font-weight: 400;
     line-height: 140%;
-    margin-bottom: 20px;
+    margin-bottom: rem(24px);
   }
 }
