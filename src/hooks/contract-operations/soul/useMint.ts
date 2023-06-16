@@ -1,11 +1,12 @@
-import SoulJson from '@/abis/soul.json';
-import { SOUL_CONTRACT, TRANSFER_TX_SIZE } from '@/configs';
+import soul from '@/abis/soul.json';
+import { SOUL_ADDRESS, TRANSFER_TX_SIZE } from '@/configs';
 import { AssetsContext } from '@/contexts/assets-context';
 import { useContract } from '@/hooks/useContract';
 import {
   ContractOperationHook,
   DAppType,
 } from '@/interfaces/contract-operation';
+// import { compressFileAndGetSize } from '@/services/file';
 import logger from '@/services/logger';
 import { formatBTCPrice } from '@/utils/format';
 import { useWeb3React } from '@web3-react/core';
@@ -14,21 +15,21 @@ import { Transaction } from 'ethers';
 import { useCallback, useContext } from 'react';
 import * as TC_SDK from 'trustless-computer-sdk';
 
-export interface IClaimParams {
+export interface IMintParams {
   address: string;
+  user?: string;
   totalGM: number;
   signature: string;
-
   txSuccessCallback?: (_tx: Transaction | null) => Promise<void>;
 }
 
-const useSoul: ContractOperationHook<IClaimParams, Transaction | null> = () => {
-  const contract = useContract(SOUL_CONTRACT, SoulJson.abi, true);
-  const { btcBalance, feeRate } = useContext(AssetsContext);
+const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
   const { account, provider } = useWeb3React();
+  const contract = useContract(SOUL_ADDRESS, soul.abi, true);
+  const { btcBalance, feeRate } = useContext(AssetsContext);
 
   const estimateGas = useCallback(
-    async (params: IClaimParams): Promise<string> => {
+    async (params: IMintParams): Promise<string> => {
       if (account && provider && contract) {
         const { address, totalGM, signature } = params;
         const gasLimit = await contract.estimateGas.mint(
@@ -38,15 +39,16 @@ const useSoul: ContractOperationHook<IClaimParams, Transaction | null> = () => {
         );
         const gasLimitBN = new BigNumber(gasLimit.toString());
         const gasBuffer = gasLimitBN.times(1.1).decimalPlaces(0);
-        logger.debug('useMint estimate gas', gasBuffer.toString());
+        logger.debug('Mint estimate gas', gasBuffer.toString());
         return gasBuffer.toString();
       }
       return '500000';
     },
     [contract, provider, account]
   );
+
   const call = useCallback(
-    async (params: IClaimParams): Promise<Transaction | null> => {
+    async (params: IMintParams): Promise<Transaction | null> => {
       if (account && provider && contract) {
         logger.debug('useMint', params);
 
@@ -69,7 +71,7 @@ const useSoul: ContractOperationHook<IClaimParams, Transaction | null> = () => {
         }
 
         const gasLimit = await estimateGas({
-          address,
+          address: params.address,
           totalGM: params.totalGM,
           signature: params.signature,
         });
@@ -93,11 +95,11 @@ const useSoul: ContractOperationHook<IClaimParams, Transaction | null> = () => {
   );
 
   return {
-    call: call,
     estimateGas: estimateGas,
+    call: call,
     dAppType: DAppType.SOUL,
-    operationName: 'Soul',
+    operationName: 'Mint',
   };
 };
 
-export default useSoul;
+export default useMint;

@@ -31,6 +31,8 @@
     }
 
     &.true {
+        width: rem(400px);
+        height: rem(400px);
         .backgroundImg {
             display: none;
         }
