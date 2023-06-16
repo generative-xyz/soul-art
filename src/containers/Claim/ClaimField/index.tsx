@@ -7,6 +7,7 @@ type IClainFeildProps = {
   isConnectedWallet: boolean;
   isReceiveAble: boolean;
   isWaitingForConfirm: boolean;
+  isConnecting: boolean;
 };
 
 const ClaimField: React.FC<IClainFeildProps> = ({
@@ -15,6 +16,7 @@ const ClaimField: React.FC<IClainFeildProps> = ({
   isConnectedWallet,
   isReceiveAble,
   isWaitingForConfirm,
+  isConnecting,
 }) => {
   //Notification Smart Contract
   const NotificationConnectWallet: React.FC = () => {
@@ -27,18 +29,26 @@ const ClaimField: React.FC<IClainFeildProps> = ({
   };
 
   const ContentConnected: React.FC = () => {
-    return (
+    return isWaitingForConfirm ? (
+      <div className={`${s.textButton} ${s.false}`}>
+        <span>Claiming...</span>
+      </div>
+    ) : (
       <div
         className={`${s.textButton} ${isReceiveAble ? '' : s.false}`}
         onClick={handleClaimed}
       >
-        {isWaitingForConfirm ? (
-          <span>Wait for your confirmation...</span>
-        ) : (
-          <span>Claim Soul</span>
-        )}
+        <span>Claim Soul</span>
       </div>
     );
+
+    // <div
+    //   className={`${s.textButton} ${isReceiveAble ? '' : s.false}`}
+    //   onClick={handleClaimed}
+    // >
+    //   {isWaitingForConfirm ? <span>Claiming...</span> : <span>Claim Soul</span>}
+    // </div>;
+    // );
   };
   const ContentNotConnected: React.FC = () => {
     return (
@@ -51,7 +61,7 @@ const ClaimField: React.FC<IClainFeildProps> = ({
   return (
     <div className={s.claimField}>
       {isConnectedWallet ? <ContentConnected /> : <ContentNotConnected />}
-      {!isReceiveAble && isConnectedWallet ? (
+      {!isReceiveAble && isConnectedWallet && !isConnecting ? (
         <NotificationConnectWallet />
       ) : null}
     </div>

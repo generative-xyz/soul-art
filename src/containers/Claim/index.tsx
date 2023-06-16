@@ -18,6 +18,8 @@ import BigNumber from 'bignumber.js';
 import useAsyncEffect from 'use-async-effect';
 import { getListTokensByWallet } from '@Services/soul';
 import { SoulEventType } from '@/enums/soul';
+// import { getUserSelector } from '@/state/user/selector';
+// import { useSelector } from 'react-redux';
 
 const ClaimPage = () => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -35,6 +37,7 @@ const ClaimPage = () => {
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const { btcBalance, tcBalance } = useContext(AssetsContext);
+  // const user = useSelector(getUserSelector);
 
   //todo add type kevin
   const [soulToken, setSoulToken] = useState<any | null>(null);
@@ -43,14 +46,6 @@ const ClaimPage = () => {
     operation: useMint,
     inscribeable: true,
   });
-
-  useEffect(() => {
-    setWalletConnected_localhost(localStorage.getItem('isWalletConnected'));
-  }, []);
-
-  useEffect(() => {
-    setWalletConnected(isWalletConnected_localhost === 'true');
-  }, [isWalletConnected_localhost]);
 
   const [isConnecting, setIsConnecting] = useState(false);
 
@@ -95,6 +90,24 @@ const ClaimPage = () => {
       setIsWaitingForConfirm(false);
     }
   };
+
+  useEffect(() => {
+    setWalletConnected_localhost(localStorage.getItem('isWalletConnected'));
+  }, []);
+
+  useEffect(() => {
+    setWalletConnected(isWalletConnected_localhost === 'true');
+  }, [isWalletConnected_localhost]);
+
+  useEffect(() => {
+    if (!transactionHash) {
+      if (!account) {
+        setWalletConnected(false);
+        setClaimStatus('');
+        setTransactionHash('');
+      }
+    }
+  }, [account, transactionHash]);
 
   useEffect(() => {
     if (account && !isConnecting) {
@@ -190,40 +203,52 @@ const ClaimPage = () => {
   }, [account, btcBalance, tcBalance]);
 
   useEffect(() => {
-    if (!transactionHash) return;
-    if (provider) {
-      provider
-        .getTransactionReceipt(transactionHash)
-        .then((receipt: any) => {
-          if (receipt.status === 1) {
-            setIsClaimed(true);
-            setClaimStatus('success');
-          } else if (receipt.status === 0) {
-            setIsClaimed(false);
-            setClaimStatus('time');
-          } else if (receipt.status === null || receipt.status === undefined) {
-            setIsClaimed(false);
-            setClaimStatus('waiting');
-          } else {
-            // console.log('Transaction status unknown');
-            setIsClaimed(false);
-            setClaimStatus('time');
+    if (account && !isConnecting) {
+      const fetchTransactionStatus = async () => {
+        try {
+          if (!isWalletConnected) return;
+          if (provider) {
+            const receipt = await provider.getTransactionReceipt(
+              transactionHash
+            );
+            if (receipt.status === 1) {
+              setIsClaimed(true);
+              setClaimStatus('success');
+            } else if (receipt.status === 0) {
+              setIsClaimed(false);
+              setClaimStatus('');
+            } else if (
+              receipt.status === null ||
+              receipt.status === undefined
+            ) {
+              setIsClaimed(false);
+              setClaimStatus('waiting');
+            } else {
+              setIsClaimed(false);
+              setClaimStatus('');
+            }
           }
-        })
-        .catch((error: any) => {
+        } catch (error) {
           logger.error('Error retrieving transaction receipt:', error);
-        });
+        }
+      };
+
+      fetchTransactionStatus();
+
+      const intervalId = setInterval(() => {
+        fetchTransactionStatus();
+      }, 10000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
     }
-  }, [provider, transactionHash]);
+  }, [provider, transactionHash, isWalletConnected]);
 
   useEffect(() => {
     const storageKey = `${SoulEventType.MINT}_${account}`;
     const txHash = localStorage.getItem(storageKey) || '';
     setTransactionHash(txHash.toString());
-
-    // setTransactionHash(
-    //   '0x5954443be0b8487ebb6ef1fed5f1c4d15e50101077fda63e883d2c87f2fecd7c'
-    // );
   }, [account]);
 
   useAsyncEffect(async () => {
@@ -231,7 +256,6 @@ const ClaimPage = () => {
       const { items } = await getListTokensByWallet(account || '');
       if (items.length) {
         setSoulToken(items[0] || null);
-        console.log(soulToken);
       }
     } catch (e) {
       logger.error('Error get tokens:', e);
@@ -263,6 +287,7 @@ const ClaimPage = () => {
                     handleConnectWallet={handleConnectWallet}
                     isConnectedWallet={isWalletConnected}
                     isReceiveAble={isReceiveAble}
+                    isConnecting={isConnecting}
                   />
                 ) : (
                   ''
