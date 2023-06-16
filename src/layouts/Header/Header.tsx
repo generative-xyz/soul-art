@@ -297,19 +297,20 @@ const Header = ({
   return (
     <Wrapper
       className={classNames(
-        'container',
         headerStyles.header,
         theme ? headerStyles[theme] : ''
       )}
       style={{ height }}
     >
-      {isAnimation ? (
-        <AnimFade>
+      <div className="container">
+        {isAnimation ? (
+          <AnimFade>
+            <ContentHader />
+          </AnimFade>
+        ) : (
           <ContentHader />
-        </AnimFade>
-      ) : (
-        <ContentHader />
-      )}
+        )}
+      </div>
     </Wrapper>
   );
 };
