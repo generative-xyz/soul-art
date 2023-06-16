@@ -9,9 +9,11 @@ import { showToastError } from '@/utils/toast';
 import ArtifactButton from '@/components/ArtifactButton';
 import { CDN_URL } from '@/configs';
 import logger from '@/services/logger';
+import styles from './ConnectWallet.module.scss';
 
 const ConnectWallet: React.FC = (): React.ReactElement => {
-  const { onConnect, requestBtcAddress, onDisconnect } = useContext(WalletContext);
+  const { onConnect, requestBtcAddress, onDisconnect } =
+    useContext(WalletContext);
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const router = useRouter();
   const [isConnecting, setIsConnecting] = useState(false);
@@ -42,13 +44,25 @@ const ConnectWallet: React.FC = (): React.ReactElement => {
     <Wrapper>
       <div className="mainContent">
         <h1 className="title">Connect Wallet</h1>
-        <p className="desc">
-          Connect your wallet to access Artifacts
-        </p>
-        <ArtifactButton className='button-container' variant="transparent-wide" width={280} height={48}>
-          <ConnectWalletButton disabled={isConnecting} onClick={handleConnectWallet}>
-            <img alt='wallet-icon' className='wallet-icon' src={`${CDN_URL}/pages/artifacts/heroicons_wallet-solid.svg`}></img>
-            <span>{isConnecting ? 'Connecting...' : 'Trustless Computer'}</span>
+        <p className="desc">Connect your wallet to access Artifacts</p>
+        <ArtifactButton
+          className="button-container"
+          variant="transparent-wide"
+          width={280}
+          height={48}
+        >
+          <ConnectWalletButton
+            disabled={isConnecting}
+            onClick={handleConnectWallet}
+          >
+            <img
+              alt="wallet-icon"
+              className="wallet-icon"
+              src={`${CDN_URL}/heroicons_wallet-solid.svg`}
+            ></img>
+            <span className={styles.connectWalletButton}>
+              {isConnecting ? 'Connecting...' : 'Trustless Computer'}
+            </span>
           </ConnectWalletButton>
         </ArtifactButton>
       </div>

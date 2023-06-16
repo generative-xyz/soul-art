@@ -1,40 +1,40 @@
-import {camelCaseKeys} from '@/utils/helpers';
-import {apiClient} from '.';
-import {constructURL} from '@/utils/url';
-import {ISoul} from '@/interfaces/api/soul';
-import {IAttribute} from '@/interfaces/attributes';
-import {SOUL_CONTRACT} from '@/configs';
+import { camelCaseKeys } from '@/utils/helpers';
+import { apiClient } from '.';
+import { constructURL } from '@/utils/url';
+import { ISoul } from '@/interfaces/api/soul';
+import { IAttribute } from '@/interfaces/attributes';
+import {SOUL_CONTRACT} from "@/configs";
 
 const API_PATH = '/soul';
 
 export const getSoulsNfts = async ({
-                                       attributes,
-                                       limit = 10,
-                                       page = 1,
-                                       owner = '',
-                                       isShowAll,
-                                       isBigFile,
-                                       sortBy,
-                                       sort,
-                                   }: {
-    attributes?: string;
-    limit?: number;
-    page?: number;
-    owner?: string;
-    isShowAll?: boolean;
-    isBigFile?: boolean;
-    sortBy?: string;
-    sort?: number;
+  attributes,
+  limit = 10,
+  page = 1,
+  owner = '',
+  isShowAll,
+  isBigFile,
+  sortBy,
+  sort,
+}: {
+  attributes?: string;
+  limit?: number;
+  page?: number;
+  owner?: string;
+  isShowAll?: boolean;
+  isBigFile?: boolean;
+  sortBy?: string;
+  sort?: number;
 }): Promise<ISoul[]> => {
-    const url = constructURL(`${API_PATH}/nfts`, {
-        limit,
-        page,
-        owner,
-        allow_empty: isShowAll,
-        is_big_file: isBigFile,
-        sort_by: sortBy,
-        sort,
-    });
+  const url = constructURL(`${API_PATH}/nfts`, {
+    limit,
+    page,
+    owner,
+    allow_empty: isShowAll,
+    is_big_file: isBigFile,
+    sort_by: sortBy,
+    sort,
+  });
 
     const res = await apiClient.get(url, {
         params: {

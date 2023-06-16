@@ -54,7 +54,7 @@ const ArtifactButton = ({
         break;
 
       case 'transparent-wide':
-        setButton('button-transparent-wide.svg');
+        setButton('button-bg.svg');
         return;
 
       case 'transparent-sm':
@@ -81,7 +81,7 @@ const ArtifactButton = ({
       {...rest}
     >
       <img
-        src={`${CDN_URL}/pages/artifacts/${button}`}
+        src={`${CDN_URL}/${button}`}
         className="btn-bg"
         alt="button bg"
         width={width}
