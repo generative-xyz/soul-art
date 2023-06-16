@@ -146,6 +146,11 @@
     justify-content: center;
     border: 1px solid #000;
     border-radius: 50%;
+    opacity: 0;
+
+    &_active {
+      opacity: 1;
+    }
   }
 }
 
