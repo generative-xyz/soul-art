@@ -16,6 +16,7 @@ import logger from '@/services/logger';
 import { showToastError } from '@/utils/toast';
 import { AssetsContext } from '@/contexts/assets-context';
 import BigNumber from 'bignumber.js';
+import { SoulEventType } from '@/enums/soul';
 
 const ClaimPage = () => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -24,11 +25,12 @@ const ClaimPage = () => {
     useState<any>();
   const [isReceiveAble, setIsReceiveAble] = useState<boolean>(true);
   const [claimStatus, setClaimStatus] = useState<string>('time');
-  const { account } = useWeb3React();
+  const { account, provider } = useWeb3React();
   const [totalGM, setTotalGM] = useState<number>(0);
   const [signature, setSignature] = useState<string>('');
   const [isWaitingForConfirm, setIsWaitingForConfirm] =
     useState<boolean>(false);
+  const [transactionHash, setTransactionHash] = useState<string>('');
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const { btcBalance, tcBalance } = useContext(AssetsContext);
@@ -76,6 +78,7 @@ const ClaimPage = () => {
           address: account as string,
           totalGM: totalGM,
           signature: signature,
+          txSuccessCallback: txSuccessCallback,
         });
       } else {
         handleConnectWallet();
@@ -127,6 +130,14 @@ const ClaimPage = () => {
     }
   }, [account, isConnecting, btcBalance, tcBalance]);
 
+  const txSuccessCallback = async (transaction: Transaction | null) => {
+    if (!transaction || !account) return;
+    const txHash = transaction.hash;
+    if (!txHash) return;
+    const storageKey = `${SoulEventType.MINT}_${account}`;
+    localStorage.setItem(storageKey, txHash);
+  };
+
   useEffect(() => {
     (async () => {
       if (signature) {
@@ -138,6 +149,7 @@ const ClaimPage = () => {
             address: account as string,
             totalGM: totalGM,
             signature: signature,
+            txSuccessCallback: txSuccessCallback,
           });
         } catch (err) {
           logger.error(err);
@@ -151,21 +163,6 @@ const ClaimPage = () => {
       }
     })();
   }, [signature]);
-
-  // useEffect(() => {
-  //   if (isWalletConnected && signature) {
-  //     setIsReceiveAble(true);
-  //   } else {
-  //     setIsReceiveAble(false);
-  //     handleConnectWallet();
-  //   }
-  // }, [account, handleConnectWallet, isWalletConnected, signature]);
-
-  useEffect(() => {
-    if (isClaimed) {
-      setClaimStatus('waiting');
-    }
-  });
 
   useEffect(() => {
     (async () => {
@@ -185,6 +182,45 @@ const ClaimPage = () => {
       }
     })();
   }, [account, btcBalance, tcBalance]);
+
+  useEffect(() => {
+    if (!transactionHash) return;
+    if (provider) {
+      provider
+        .getTransactionReceipt(transactionHash)
+        .then((receipt: any) => {
+          if (receipt.status === 1) {
+            setIsClaimed(true);
+            setClaimStatus('success');
+          } else if (receipt.status === 0) {
+            setIsClaimed(false);
+            setClaimStatus('time');
+          } else if (receipt.status === null || receipt.status === undefined) {
+            setIsClaimed(false);
+            setClaimStatus('waiting');
+          } else {
+            // console.log('Transaction status unknown');
+            setIsClaimed(false);
+            setClaimStatus('time');
+          }
+        })
+        .catch((error: any) => {
+          logger.error('Error retrieving transaction receipt:', error);
+        });
+    }
+  }, [provider]);
+
+  useEffect(() => {
+    const storageKey = `${SoulEventType.MINT}_${account}`;
+    const txHash = localStorage.getItem(storageKey);
+    setTransactionHash(txHash);
+
+    // setTransactionHash(
+    //   '0x5954443be0b8487ebb6ef1fed5f1c4d15e50101077fda63e883d2c87f2fecd7c'
+    // );
+  }, [account]);
+
+  useEffect(() => {}, [transactionHash]);
 
   return (
     <div className={s.claimPage}>
