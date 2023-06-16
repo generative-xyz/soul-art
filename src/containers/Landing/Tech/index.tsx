@@ -47,7 +47,7 @@ const Tech: React.FC = () => {
 
   return (
     <>
-      <div id={'js-tech'} className={s.techSection}>
+      <div className={s.techSection}>
         <div className={s['background']}>
           <img src={techOverlay} alt="background" />
         </div>
