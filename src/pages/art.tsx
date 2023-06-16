@@ -6,7 +6,7 @@ import { FC } from 'react';
 const SoulsPage: FC = () => {
   return (
     <Layout>
-      <Banner />
+      <Banner type={'normal'} />
       <SoulsContainer />
     </Layout>
   );

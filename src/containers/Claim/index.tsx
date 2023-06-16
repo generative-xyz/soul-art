@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
-import { Col, Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import ClaimField from './ClaimField';
 import { generateSignature } from '@/services/signature';
 import useSoul, {
@@ -97,32 +97,34 @@ const ClaimPage = () => {
   return (
     <div className={s.claimPage}>
       <Container className={s.container}>
-        <Col lg={{ span: 4, offset: 4 }} className={s.column}>
-          <div className={s.wrapBox}>
-            <div className={s.successNoti}>
-              <p className={s.status}>Claim success</p>
-              <span className={s.dot}></span>
-              <p className={s.date}>Jan 18, 2022 at 6:25pm</p>
+        <Row className={s.row}>
+          <Col lg={{ span: 4, offset: 4 }} className={s.column}>
+            <div className={s.wrapBox}>
+              <div className={s.successNoti}>
+                <p className={s.status}>Claim success</p>
+                <span className={s.dot}></span>
+                <p className={s.date}>Jan 18, 2022 at 6:25pm</p>
+              </div>
+              <div
+                className={`${s.claimBox} ${
+                  claimStatus === 'success' ? s.success : ''
+                }`}
+              >
+                <ClaimImg isClaimed={isClaimed} />
+                <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
+                {!isClaimed ? (
+                  <ClaimField
+                    handleClaimed={handleClaimed}
+                    isConnectedWallet={isWalletConnected}
+                    isReceiveAble={isReceiveAble}
+                  />
+                ) : (
+                  ''
+                )}
+              </div>
             </div>
-            <div
-              className={`${s.claimBox} ${
-                claimStatus === 'success' ? s.success : ''
-              }`}
-            >
-              <ClaimImg isClaimed={isClaimed} />
-              <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
-              {!isClaimed ? (
-                <ClaimField
-                  handleClaimed={handleClaimed}
-                  isConnectedWallet={isWalletConnected}
-                  isReceiveAble={isReceiveAble}
-                />
-              ) : (
-                ''
-              )}
-            </div>
-          </div>
-        </Col>
+          </Col>
+        </Row>
       </Container>
     </div>
   );
