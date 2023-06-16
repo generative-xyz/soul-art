@@ -23,6 +23,7 @@
       width: 100%;
 
       &_iconUser {
+        margin-left: -10px;
         position: relative;
         display: flex;
         align-items: center;
@@ -86,112 +87,6 @@
           transition: .5s $easeOutQuart;
           border: 1px solid #000;
         }
-      }
-
-      &_tabs {
-        width: 100%;
-
-        li>button {
-          font-size: rem(16px);
-          line-height: 140%;
-          color: #898989;
-          font-size: rem(16px);
-          border-top: none;
-          border-left: none;
-          border-right: none;
-          text-align: left;
-          padding-left: 0;
-          padding-right: rem(24px);
-        }
-      }
-
-      &_tab {
-        position: relative;
-
-        &:after {
-          content: "";
-          position: absolute;
-          height: 10px;
-          width: 100%;
-          top: 0px;
-          left: 0;
-          right: 0;
-          background: #fff;
-          z-index: 2;
-        }
-      }
-
-      &_tabBox {
-        height: 100%;
-        max-height: 400px;
-        overflow: scroll;
-        margin-bottom: 15px;
-      }
-
-      &_tabContent {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        line-height: 100%;
-        flex-direction: row;
-        padding: 0;
-        margin-bottom: 5px;
-
-        &:first-child {
-          margin-top: 15px;
-        }
-      }
-
-      &_tabLeft {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: row;
-      }
-
-      &_tabLeftIcon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: rem(58px);
-        width: rem(48px);
-        overflow: hidden;
-        object-fit: cover;
-        margin-left: - rem(4px);
-      }
-
-      &_tabLeftAddress {
-        margin-left: rem(8px);
-        font-weight: 400;
-        font-size: rem(16px);
-        line-height: 140%;
-        color: #000;
-        margin-bottom: 8px;
-      }
-
-      &_tabRight {
-        display: flex;
-        align-items: flex-end;
-        flex-direction: column;
-        justify-content: flex-end;
-      }
-
-      &_tabRightPrice {
-        font-weight: 600;
-        font-size: rem(16px);
-        line-height: 140%;
-        text-align: right;
-        color: #000;
-      }
-
-      &_tabRightTime {
-        font-size: rem(14px);
-        line-height: 19.6px;
-        text-align: right;
-        font-weight: 400;
-        color: #000;
-        opacity: .6;
       }
     }
 
@@ -260,10 +155,18 @@
     width: 100% !important;
   }
 
+  :global(.modal-header) {
+    border-bottom: none;
+  }
+
+  :global(.modal-footer) {
+    border-top: none;
+  }
+
   &_divide {
-    border: 1px solid #ECECEC;
-    height: 0;
+    height: 1px;
     width: 100%;
+    background: #ECECEC;
   }
 
   &_container {
@@ -302,8 +205,8 @@
       position: absolute;
       width: 20px;
       height: 20px;
-      top: rem(4px);
-      right: rem(24px);
+      top: 22.33px;
+      right: 26.33px;
       font-size: rem(40px);
       height: 0;
       opacity: .7;
