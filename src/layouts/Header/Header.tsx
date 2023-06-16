@@ -297,6 +297,7 @@ const Header = ({
   return (
     <Wrapper
       className={classNames(
+        'container',
         headerStyles.header,
         theme ? headerStyles[theme] : ''
       )}
