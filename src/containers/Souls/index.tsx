@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import soulsStyles from './souls.module.scss';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ISoul } from '@/interfaces/api/soul';
-import { Spinner } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 import { debounce, pick } from 'lodash';
 import { ARTIFACT_CONTRACT } from '@/configs';
 import SoulsCard from '@/components/SoulCards';
@@ -122,22 +122,24 @@ export const SoulsContainer: React.FC = () => {
       }
       next={debounceLoadMore}
     >
-      <div className={soulsStyles.grid_container}>
-        {souls &&
-          souls.length > 0 &&
-          souls.map(item => {
-            return (
-              <SoulsCard
-                key={`token-${item.tokenId}`}
-                href={`/${item.tokenId}`}
-                image={item.image}
-                contract={ARTIFACT_CONTRACT}
-                tokenId={item.tokenId}
-                title={`Smart Inscription #${item.tokenId}`}
-                className={soulsStyles.grid_item}
-              />
-            );
-          })}
+      <div className={soulsStyles.art}>
+        <Container className={soulsStyles.grid_container}>
+          {souls &&
+            souls.length > 0 &&
+            souls.map(item => {
+              return (
+                <SoulsCard
+                  key={`token-${item.tokenId}`}
+                  href={`/${item.tokenId}`}
+                  image={item.image}
+                  contract={ARTIFACT_CONTRACT}
+                  tokenId={item.tokenId}
+                  title={`Smart Inscription #${item.tokenId}`}
+                  className={soulsStyles.grid_item}
+                />
+              );
+            })}
+        </Container>
       </div>
       <AttributeSort attributes={attributes || []} />
     </InfiniteScroll>

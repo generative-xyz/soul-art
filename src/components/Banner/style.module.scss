@@ -1,4 +1,8 @@
 .banner {
+    position: fixed;
+    top: rem(84px);
+    left: 50%;
+    transform: translate(-50%);
     width: 100%;
     padding: rem(12px) 0;
     background: #F6F6F6;
@@ -6,6 +10,7 @@
     justify-content: center;
     align-items: center;
     gap: rem(16px);
+    z-index: 5;
 
     .bannerText {
         margin-bottom: unset;
