@@ -3,7 +3,7 @@
     height: 100vh;
     position: relative;
     background: rgba($color: #000000, $alpha: 0.3);
-    z-index: 4;
+    z-index: 3;
 
     .container {
         height: 100%;
@@ -85,5 +85,9 @@
                 }
             }
         }
+    }
+
+    &.popupOpen {
+        z-index: 4;
     }
 }

@@ -1,7 +1,8 @@
 .accordion {
   &_item {
     border: none;
-    h2 > button {
+
+    h2>button {
       background: none !important;
       padding: 0;
       outline: none;
@@ -25,16 +26,11 @@
   }
 }
 
-.accordion-button:not(.collapsed) {
-  box-shadow: none !important;
-}
-
 .filterAttribute {
-  &_accordionHeader .accordion-button {
-    color: inherit !important;
-    background-color: transparent !important;
-    border: none !important;
-    outline: none !important;
+  &_accordionHeader {
+    :global(.accordion-button:not(.collapsed)) {
+      box-shadow: none !important;
+    }
   }
 
   &_container {
@@ -105,7 +101,7 @@
       flex-direction: row;
       align-items: center;
 
-      & > div {
+      &>div {
         margin-left: 8px;
         font-weight: 400;
         font-size: 14px;

@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 
 import { Accordion } from 'react-bootstrap';
 import AccordionCheckBox from '../AccordionCheckbox';
-import accordionStyles from './accordion.module.scss';
 import { IAttribute } from '@/interfaces/attributes';
+import accordionStyles from './accordion.module.scss';
 
 type AccordionContentProps = {
   eventKey: string;
@@ -31,17 +31,14 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
       <Accordion.Header
         className={accordionStyles.filterAttribute_accordionHeader}
       >
-        <div className={accordionStyles.filterAttribute_title}>
+        <div className={accordionStyles.filterAttribute_title} id={eventKey === "0" ? "panelsStayOpen-headingOne" : ""}>
           {headerContent}
         </div>
       </Accordion.Header>
       <Accordion.Body
-        className={
-          (accordionStyles.filterAttribute_accordionBody,
-          accordionStyles.accordion_body)
-        }
+        className={ accordionStyles.accordion_body}
       >
-        <div className={accordionStyles.filterAttribute_content}>
+        <div className={accordionStyles.filterAttribute_content} id={eventKey === "0" ? "panelsStayOpen-headingOne" : ""}>
           {bodyContent}
         </div>
       </Accordion.Body>
