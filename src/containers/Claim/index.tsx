@@ -37,6 +37,7 @@ const ClaimPage = () => {
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const { btcBalance, tcBalance } = useContext(AssetsContext);
+  const [haveEnoughBalance, setHaveEnoughBalance] = useState<boolean>(false);
   // const user = useSelector(getUserSelector);
 
   //todo add type kevin
@@ -110,44 +111,72 @@ const ClaimPage = () => {
   }, [account, transactionHash]);
 
   useEffect(() => {
-    if (account && !isConnecting) {
-      setWalletConnected(true);
-      localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
-    } else {
-      setWalletConnected(false);
-      setIsReceiveAble(true);
-      setIsClaimed(false);
-      setClaimStatus('time');
-      localStorage.setItem('isWalletConnected', 'false'); // Update localStorage when the wallet is disconnected
+    const userTcBalance = new BigNumber(tcBalance);
+    const userBtcBalance = new BigNumber(btcBalance);
+    if (
+      userTcBalance.isGreaterThan(0) &&
+      userBtcBalance.isGreaterThan(0) &&
+      account
+    ) {
+      setHaveEnoughBalance(true);
     }
-  }, [account, isConnecting]);
+  }, [account, btcBalance, tcBalance]);
 
   useEffect(() => {
-    if (account) {
-      (async () => {
-        let res: any;
-        try {
-          const userTcBalance = new BigNumber(tcBalance);
-          const userBtcBalance = new BigNumber(btcBalance);
-          if (userTcBalance.isGreaterThan(0) && userBtcBalance.isGreaterThan(0))
-            res = await generateSignature({
-              wallet_address: account,
-            });
-        } catch (err) {
-          logger.error(err);
-        } finally {
-          if (res) setIsReceiveAble(true);
-          else {
-            setIsReceiveAble(false);
-          }
+    // if (account) {
+    //   (async () => {
+    //     let res: any;
+    //     try {
+    //       const userTcBalance = new BigNumber(tcBalance);
+    //       const userBtcBalance = new BigNumber(btcBalance);
+    //       if (userTcBalance.isGreaterThan(0) && userBtcBalance.isGreaterThan(0))
+    //         res = await generateSignature({
+    //           wallet_address: account,
+    //         });
+    //       console.log(res);
+    //     } catch (err) {
+    //       logger.error(err);
+    //     } finally {
+    //       if (res) setIsReceiveAble(true);
+    //       else {
+    //         setIsReceiveAble(false);
+    //       }
 
-          if (!account || isConnecting) {
-            setIsReceiveAble(true);
-          }
+    //       if (!account || isConnecting) {
+    //         setIsReceiveAble(true);
+    //       }
+    //     }
+    //   })();
+    // }
+    if (account) {
+      // check if this account is in list
+      if (signature) {
+        // check if this account have enough balance
+        if (haveEnoughBalance) {
+          setIsReceiveAble(true);
+        } else {
+          setHaveEnoughBalance(false);
         }
-      })();
+      } else {
+        setIsReceiveAble(false);
+      }
+
+      if (!account || isConnecting) {
+        setIsReceiveAble(true);
+      }
+
+      if (account && !isConnecting) {
+        setWalletConnected(true);
+        localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
+      } else {
+        setWalletConnected(false);
+        setIsReceiveAble(true);
+        setIsClaimed(false);
+        setClaimStatus('time');
+        localStorage.setItem('isWalletConnected', 'false'); // Update localStorage when the wallet is disconnected
+      }
     }
-  }, [account, isConnecting, btcBalance, tcBalance]);
+  }, [account, isConnecting, signature, haveEnoughBalance]);
 
   const txSuccessCallback = async (transaction: Transaction | null) => {
     if (!transaction || !account) return;
@@ -174,25 +203,27 @@ const ClaimPage = () => {
           logger.error(err);
         } finally {
           setIsWaitingForConfirm(false);
-          if (res.toString().includes('User rejected transaction')) {
-            // setIsClaimed(false);
-            setClaimStatus('time');
+          if (res) {
+            if (res.toString().includes('User rejected transaction')) {
+              // setIsClaimed(false);
+              setClaimStatus('');
+            }
           }
         }
       }
     })();
-  }, [signature]);
+  }, [signature, account, haveEnoughBalance]);
 
   useEffect(() => {
     (async () => {
       let res: any;
       try {
-        const userTcBalance = new BigNumber(tcBalance);
-        const userBtcBalance = new BigNumber(btcBalance);
-        if (userTcBalance.isGreaterThan(0) && userBtcBalance.isGreaterThan(0))
-          res = await generateSignature({
-            wallet_address: account,
-          });
+        // const userTcBalance = new BigNumber(tcBalance);
+        // const userBtcBalance = new BigNumber(btcBalance);
+        // if (userTcBalance.isGreaterThan(0) && userBtcBalance.isGreaterThan(0))
+        res = await generateSignature({
+          wallet_address: account,
+        });
       } catch (err) {
         logger.error(err);
       } finally {
@@ -200,7 +231,7 @@ const ClaimPage = () => {
         setTotalGM(Number(res?.gm));
       }
     })();
-  }, [account, btcBalance, tcBalance]);
+  }, [account]);
 
   useEffect(() => {
     if (account && !isConnecting) {
@@ -243,7 +274,14 @@ const ClaimPage = () => {
         clearInterval(intervalId);
       };
     }
-  }, [provider, transactionHash, isWalletConnected]);
+  }, [
+    provider,
+    transactionHash,
+    isWalletConnected,
+    account,
+    isConnecting,
+    haveEnoughBalance,
+  ]);
 
   useEffect(() => {
     const storageKey = `${SoulEventType.MINT}_${account}`;
@@ -288,6 +326,7 @@ const ClaimPage = () => {
                     isConnectedWallet={isWalletConnected}
                     isReceiveAble={isReceiveAble}
                     isConnecting={isConnecting}
+                    haveEnoughBalance={haveEnoughBalance}
                   />
                 ) : (
                   ''
