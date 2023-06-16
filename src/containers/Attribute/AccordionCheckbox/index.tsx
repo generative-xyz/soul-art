@@ -2,6 +2,8 @@ import React, { FC, ReactNode, useMemo } from 'react';
 
 import accordionCheckboxStyles from './accordion-checkbox.module.scss';
 import { useRouter } from 'next/router';
+import { Field, useFormikContext } from 'formik';
+import { ISubmitValues } from '..';
 
 type AccordionCheckboxProps = {
   title: string;
@@ -14,6 +16,10 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
   labelData,
 }) => {
   const router = useRouter();
+
+  const { submitForm, values } = useFormikContext<ISubmitValues>();
+
+  const { setFieldValue } = useFormikContext();
 
   const isChecked = useMemo(() => {
     if (typeof router.query[traitName] !== 'string') return false;
@@ -31,8 +37,17 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
       attributesArray = attributesArray.filter(
         attribute => attribute !== title
       );
+
+      setFieldValue(
+        'attributes',
+        values?.attributes?.filter(attr => attr !== `${traitName}-${title}`)
+      );
     } else {
       attributesArray.push(title);
+      setFieldValue('attributes', [
+        ...values?.attributes,
+        `${traitName}-${title}`,
+      ]);
     }
 
     const queries = {
@@ -45,6 +60,8 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
     if (attributesArray.length == 0) {
       delete queries[traitName];
     }
+
+    submitForm();
     router.push(
       {
         query: queries,
@@ -61,16 +78,16 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
           ? accordionCheckboxStyles.filterAttribute_content_itemChecked
           : accordionCheckboxStyles.filterAttribute_content_item
       }
+      onClick = {handleCheckboxChange}
     >
       <span
         className={accordionCheckboxStyles.filterAttribute_content_checkbox}
       >
         <div>
           <label className={accordionCheckboxStyles.container_checkbox}>
-            <input
+            <Field
               type="checkbox"
               checked={isChecked}
-              onChange={handleCheckboxChange}
             />
             <span
               className={accordionCheckboxStyles.container_checkmark}
@@ -80,7 +97,7 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
         <div>{title}</div>
       </span>
       <div className={accordionCheckboxStyles.filterAttribute_content_percent}>
-        {labelData}
+        {labelData}&#37;
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ type MoreSectionProps = {
 
 const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
   return (
-    <section className={moreSectionStyles.container}>
+    <section className={'container'}>
       <h4 className={moreSectionStyles.heading}>
         More from this collection
         <Button className={moreSectionStyles.button}>

@@ -27,7 +27,7 @@ const HeroModal: React.FC<ModalProps> = ({ showModal, closeModal }) => {
             <IconSVG src={modalClose} maxWidth={'15'} maxHeight={'15'} />
             <span>Close</span>
           </div>
-          <ImageFrame>
+          <ImageFrame type={'normal'}>
             <video src={videoSrc}></video>
           </ImageFrame>
         </div>
