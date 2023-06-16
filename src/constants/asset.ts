@@ -8,7 +8,7 @@ export const textAnimateIcon1 = `${CDN_URL}/textIcon1.svg`;
 export const textAnimateIcon2 = `${CDN_URL}/textIcon2.svg`;
 
 export const videoSrc = 'https://www.youtube.com/watch?v=PEM0Vs8jf1w';
-export const progressPlay = `${CDN_URL}/progressPlay.svg`;
+export const progressPlay = `${CDN_URL}/ic-sun.svg`;
 export const progressPoint = `${CDN_URL}/progressPoint.svg`;
 export const progressZoom = `${CDN_URL}/progressZoom.svg`;
 export const detailExpand = `${CDN_URL}/detailExpand.svg`;
