@@ -1,11 +1,22 @@
 import { Button, Dropdown } from 'react-bootstrap';
-import React, { HTMLAttributes, forwardRef, useState } from 'react';
+import React, {
+  HTMLAttributes,
+  forwardRef,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import AccordionComponent from './Accordion';
 import { CDN_URL } from '@/configs';
 import { IAttribute } from '@/interfaces/attributes';
 import IconSVG from '@/components/IconSVG';
 import attributeStyles from './attribute.module.scss';
+import { Formik } from 'formik';
+import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -27,12 +38,33 @@ FilterToggle.displayName = 'FilterToggle';
 type AttributeSortProps = {
   attributes: IAttribute[];
 };
+
+export interface ISubmitValues {
+  attributes: string[];
+}
+
 const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const router = useRouter();
+
+  const [isEnabledAttributesFilter, setIsEnabledAttributesFilter] =
+    useState(false);
 
   const handleSelect = (eventKey: string | null) => {
     setSelectedOption(eventKey);
   };
+
+  const handleOnSubmit = useCallback((submitVal: ISubmitValues) => {
+    setIsEnabledAttributesFilter(!!submitVal.attributes.length);
+  }, []);
+
+  const syncAttributesState = useMemo<boolean>(() => {
+    return attributes.some(attr => router.query[attr.traitName]);
+  }, [attributes]);
+
+  useEffect(() => {
+    setIsEnabledAttributesFilter(syncAttributesState);
+  }, [syncAttributesState]);
 
   return (
     <div className={attributeStyles.attribute_box}>
@@ -59,8 +91,8 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 <div className={attributeStyles.attribute_chevronUp}>
                   <IconSVG
                     src={`${CDN_URL}/ic-dropdown.svg`}
-                    maxWidth={"8"}
-                    maxHeight={"4"}
+                    maxWidth={'8'}
+                    maxHeight={'4'}
                   />
                 </div>
               </div>
@@ -92,7 +124,13 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                   maxHeight="10"
                 />
                 <p>Attributes</p>
-                <div className={attributeStyles.attribute_iconLive}>
+                <div
+                  className={classNames(
+                    attributeStyles.attribute_iconLive,
+                    isEnabledAttributesFilter &&
+                      attributeStyles.attribute_iconLive_active
+                  )}
+                >
                   <IconSVG
                     src={`${CDN_URL}/ellipse-live.svg`}
                     maxWidth="8"
@@ -107,9 +145,21 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
               <p className={attributeStyles.filterAttribute_header}>
                 Attributes
               </p>
-            <div className={(attributeStyles.filterAttribute_boxComponent,attributeStyles.filterAttribute_component)}>
-              <AccordionComponent eventKey="1" attributes={attributes}  />
-            </div>
+              <div
+                className={
+                  (attributeStyles.filterAttribute_boxComponent,
+                  attributeStyles.filterAttribute_component)
+                }
+              >
+                <Formik
+                  initialValues={{
+                    attributes: [],
+                  }}
+                  onSubmit={handleOnSubmit}
+                >
+                  <AccordionComponent eventKey="1" attributes={attributes} />
+                </Formik>
+              </div>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -118,4 +168,4 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   );
 };
 
-export default AttributeSort;
+export default memo(AttributeSort);
