@@ -13,14 +13,18 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
     return (
       <div className={s.claimDesc}>
         <p className={s.desc}>
-          Lorem ipsum dolor sit amet consectetur. Curabitur in est sem tempus
-          consectetur vulputate et. In nisl diam rhoncus adipiscing tellus
-          molestie facilisis.
+          Explore Souls, the first on-chain soulbound art that merges in a
+          collective performance, reflecting human emotions such as fear, greed,
+          and belief.
         </p>
         <p className={s.desc}>
-          Lorem ipsum dolor sit amet consectetur. Curabitur in est sem tempus
-          consectetur vulputate et. In nisl diam rhoncus adipiscing tellus
-          molestie facilisis.
+          These Souls are personalised and irreplaceable, requiring ongoing care
+          from their owners. If you have no joy with them, they will leave you
+          in search of a better match.
+        </p>
+        <p className={s.desc}>
+          Enjoy this collection, which will help you understand the
+          interconnected nature of our New Bitcoin City community.
         </p>
       </div>
     );
