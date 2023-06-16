@@ -7,6 +7,7 @@ import {
 } from '@/state/user/selector';
 import { showToastError, showToastSuccess } from '@/utils/toast';
 
+import { AnimFade } from '@Animations/Fade';
 import { AssetsContext } from '@/contexts/assets-context';
 import Button from '@/components/Button';
 import { DappsTabs } from '@/enums/tabs';
@@ -20,6 +21,7 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { WalletContext } from '@/contexts/wallet-context';
 import { Wrapper } from './Header.styled';
+import classNames from 'classnames';
 import copy from 'copy-to-clipboard';
 import cs from 'classnames';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
@@ -30,8 +32,6 @@ import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { useWeb3React } from '@web3-react/core';
-import { AnimFade } from '@Animations/Fade';
-import classNames from 'classnames';
 
 type NavContent = {
   title: string;
@@ -154,12 +154,11 @@ const Header = ({
                 <div className={headerStyles.profile_container}>
                   <OverlayTrigger
                     overlay={
-                      <Tooltip id={'warning-gm'} placement="bottom">
+                      <Tooltip id={'warning-gm'} placement="bottom" className={headerStyles.tooltip_body}>
                         <div className={headerStyles.tooltip_content}>
                           <p>You are not owning over 1GM</p>
                           <p>
-                            Your art will be adopted by someone else at any
-                            time.
+                            Your art will be adopted by someone else at any time.
                           </p>
                         </div>
                       </Tooltip>
@@ -172,7 +171,8 @@ const Header = ({
                         headerStyles.warning
                       )}
                     >
-                      {gmBalance} GM
+                      <IconSVG src={`${CDN_URL}/ic-warning.svg`} maxWidth={"20"} maxHeight={"20"}></IconSVG>
+                            {gmBalance} GM
                     </div>
                   </OverlayTrigger>
 
@@ -197,24 +197,25 @@ const Header = ({
                   </div>
                 </div>
               </Dropdown.Toggle>
-
               <Dropdown.Menu className={headerStyles.menu_container}>
                 <div>
                   <div className={headerStyles.menu_content}>
                     <div className={headerStyles.menu_title}>TC Address</div>
                     <div className={headerStyles.menu_item}>
+                    <div className={headerStyles.menu_item_address}>
                       <IconSVG
                         src={`${CDN_URL}/ic_tc.svg`}
                         maxWidth="28"
                         maxHeight="28"
                       />
                       <p>{formatLongAddress(user?.walletAddress || '')}</p>
+                      </div>
                       <div
                         onClick={() => onClickCopy(user?.walletAddress || '')}
                       >
                         <IconSVG
                           src={`${CDN_URL}/ic-copy.svg`}
-                          color="white"
+                          color={"#5B5B5B"}
                           maxWidth="16"
                           // type="stroke"
                         />
@@ -225,14 +226,16 @@ const Header = ({
                   <div className={headerStyles.menu_content}>
                     <div className={headerStyles.menu_title}>BTC Address</div>
                     <div className={headerStyles.menu_item}>
-                      <IconSVG
-                        src={`${CDN_URL}/ic-btc.svg`}
-                        maxWidth="28"
-                        maxHeight="28"
-                      />
+                      <div className={headerStyles.menu_item_address}>
+                        <IconSVG
+                          src={`${CDN_URL}/ic-btc.svg`}
+                          maxWidth="28"
+                          maxHeight="28"
+                        />
                       <p>
                         {formatLongAddress(user?.walletAddressBtcTaproot || '')}
                       </p>
+                      </div>
                       <div
                         onClick={() =>
                           onClickCopy(user?.walletAddressBtcTaproot || '')
