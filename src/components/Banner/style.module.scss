@@ -27,5 +27,8 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }

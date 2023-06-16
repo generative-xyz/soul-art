@@ -1,6 +1,5 @@
 import { CDN_URL } from '@/configs';
 
-export const ARROW_URL = `${CDN_URL}/bannerArrow.svg`;
 export const IMG_HERO_URL = `${CDN_URL}/mdImg.jpg`;
 export const modalPlay = `${CDN_URL}/mdPlay.svg`;
 export const modalClose = `${CDN_URL}/mdClose.svg`;

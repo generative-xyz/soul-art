@@ -133,7 +133,7 @@ export const SoulsContainer: React.FC = () => {
                 image={item.image}
                 contract={ARTIFACT_CONTRACT}
                 tokenId={item.tokenId}
-                title={`Smart Inscription #${item.tokenId}`}
+                title={`Souls Art #${item.tokenId}`}
                 className={soulsStyles.grid_item}
               />
             );
