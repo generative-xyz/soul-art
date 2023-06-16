@@ -3,10 +3,8 @@ import { apiClient } from '.';
 import { constructURL } from '@/utils/url';
 import { ISoul } from '@/interfaces/api/soul';
 import { IAttribute } from '@/interfaces/attributes';
-
+import {SOUL_CONTRACT} from "@/configs";
 const API_PATH = '/soul';
-
-const HARD_CONTRACT_ADDRESS = '0x9841faa1133da03b9ae09e8daa1a725bc15575f0';
 
 export const getSoulsNfts = async ({
   attributes,
@@ -56,7 +54,7 @@ export const getSoulDetail = async ({
 
 export const getSoulAttributes = async (): Promise<IAttribute[]> => {
   const res = await apiClient.get(
-    `/marketplace/collections/${HARD_CONTRACT_ADDRESS}/attributes`
+    `/marketplace/collections/${SOUL_CONTRACT}/attributes`
   );
   return Object(camelCaseKeys(res));
 };
