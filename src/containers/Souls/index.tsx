@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import soulsStyles from './souls.module.scss';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { ISoul } from '@/interfaces/api/soul';
 import { Container, Spinner } from 'react-bootstrap';
+import React, { useCallback, useEffect, useState } from 'react';
 import { debounce, pick } from 'lodash';
-import { ARTIFACT_CONTRACT } from '@/configs';
-import SoulsCard from '@/components/SoulCards';
 import { getSoulAttributes, getSoulsNfts } from '@/services/soul';
+
+import { ARTIFACT_CONTRACT } from '@/configs';
 import AttributeSort from '../Attribute';
-import { useRouter } from 'next/router';
 import { IAttribute } from '@/interfaces/attributes';
+import { ISoul } from '@/interfaces/api/soul';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import SoulsCard from '@/components/SoulCards';
+import soulsStyles from './souls.module.scss';
+import { useRouter } from 'next/router';
 
 const LIMIT_PAGE = 32;
 
@@ -109,6 +110,7 @@ export const SoulsContainer: React.FC = () => {
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
   return (
+   <>
     <InfiniteScroll
       className="list"
       dataLength={souls?.length || 0}
@@ -141,7 +143,8 @@ export const SoulsContainer: React.FC = () => {
             })}
         </Container>
       </div>
-      <AttributeSort attributes={attributes || []} />
+     
     </InfiniteScroll>
+     <AttributeSort attributes={attributes || []} /></>
   );
 };
