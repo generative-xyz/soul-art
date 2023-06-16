@@ -10,7 +10,7 @@ import Banner from '@/components/Banner';
 const SoulDetailPage: NextPage = () => {
   return (
     <Layout>
-      <Banner />
+      <Banner type={'normal'} />
       <SoulItem />
     </Layout>
   );

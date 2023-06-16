@@ -8,10 +8,10 @@ const ClaimImg: React.FC<IClaimImgProps> = ({ isClaimed }) => {
   return (
     <div className={`${s.claimImg} ${isClaimed ? s.true : ''}`}>
       <div className={s.backgroundImg}>
-        <span></span>
+        <img src={`${CDN_URL}/claim-bg.jpg`} alt="claim background" />
       </div>
       <div className={s.img}>
-        <img src={`${CDN_URL}/claimImg.jpg'`} alt="claim image" />
+        <img src={`${CDN_URL}/claimImg.jpg`} alt="claim image" />
       </div>
     </div>
   );
