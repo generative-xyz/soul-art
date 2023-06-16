@@ -37,7 +37,7 @@ const TechItem: FC<TechItemProps> = ({ item }) => {
         </Text>
       </div>
       <AnimFade offset={0.35} className={s['item-img']}>
-        <ImageFrame>
+        <ImageFrame type={'normal'}>
           <img src={`${CDN_URL}/techitem-${id}.jpg`} alt="img" />
         </ImageFrame>
       </AnimFade>

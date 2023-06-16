@@ -8,7 +8,6 @@
   z-index: 3;
 
   &_inner {
-    padding: 0 2.5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,5 +47,80 @@
   .playBtn {
     transform: rotate(var(--rote));
     color: #fff;
+  }
+
+  .audioBtn {
+    cursor: pointer;
+    position: relative;
+
+    .audioIcon {
+      svg {
+        path {
+          display: none;
+        }
+      }
+    }
+
+    .audioIconAnimate {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: rem(12px);
+      height: rem(18px);
+      display: flex;
+      align-items: end;
+      gap: calc(100% / 5);
+
+      span {
+        width: calc(100% / 5);
+        background: #fff;
+        transition: .5s $easeOutQuart;
+
+        &.audioIconAnimate_line1 {
+          height: 50%;
+        }
+
+        &.audioIconAnimate_line2 {
+          height: 70%;
+        }
+
+        &.audioIconAnimate_line3 {
+          height: 100%;
+        }
+      }
+
+      @keyframes heightAnimation {
+        0% {
+          height: 50%
+        }
+
+        50% {
+          height: 100%;
+        }
+
+        100% {
+          height: 50%;
+        }
+      }
+
+      &.activeAnimation {
+        span {
+          &.audioIconAnimate_line1 {
+            animation: heightAnimation 1.5s infinite;
+            animation-delay: 0.5s;
+          }
+
+          &.audioIconAnimate_line2 {
+            animation: heightAnimation 1.5s infinite;
+            animation-delay: 0.75s;
+          }
+
+          &.audioIconAnimate_line3 {
+            animation: heightAnimation 1.5s infinite;
+          }
+        }
+      }
+    }
   }
 }

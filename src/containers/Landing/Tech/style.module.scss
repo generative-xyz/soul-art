@@ -4,6 +4,7 @@
   position: relative;
   --padding-top: #{rem(168px)};
   padding-top: var(--padding-top);
+  padding-bottom: rem(159px);
 
   .background {
     position: absolute;
@@ -68,6 +69,16 @@
       &.fixed {
         position: sticky;
         top: rem(168px);
+      }
+    }
+
+    .rightContainer {
+      >div {
+        margin-bottom: rem(60px);
+
+        &:last-child {
+          margin-bottom: unset;
+        }
       }
     }
   }
