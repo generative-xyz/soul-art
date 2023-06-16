@@ -4,6 +4,7 @@ import IconSVG from '@/components/IconSVG';
 import React from 'react';
 import TabsStyles from './style.module.scss';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
+import { CDN_URL } from '@/configs';
 
 // const auctionInfoData = [
 //   [
@@ -68,8 +69,6 @@ const auctionTabHeader = [
   },
 ];
 
-const CDN_URL_IMG =
-  'https://storage.googleapis.com/generative-static-prod/soul-art';
 const TabsComponent = () => {
   return (
     <Tabs defaultActiveKey="1" className={TabsStyles.content_auction_tabs}>
@@ -86,7 +85,7 @@ const TabsComponent = () => {
                 <div className={TabsStyles.content_auction_tabLeft}>
                   <div className={TabsStyles.content_auction_tabLeftIcon}>
                     <IconSVG
-                      src={`${CDN_URL_IMG}/img-user.svg`}
+                      src={`${CDN_URL}/img-user.svg`}
                       maxWidth="65"
                       maxHeight="65"
                     ></IconSVG>

@@ -1,32 +1,18 @@
-export const ARROW_URL =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/bannerArrow.svg';
-export const IMG_HERO_URL =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/mdImg.jpg';
-export const modalPlay =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/mdPlay.svg';
-export const modalClose =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/mdClose.svg';
-export const techOverlay =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/tech-overlay.png';
-export const textAnimateIcon1 =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/textIcon1.svg';
-export const textAnimateIcon2 =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/textIcon2.svg';
+import { CDN_URL } from '@/configs';
+
+export const IMG_HERO_URL = `${CDN_URL}/mdImg.jpg`;
+export const modalPlay = `${CDN_URL}/mdPlay.svg`;
+export const modalClose = `${CDN_URL}/mdClose.svg`;
+export const techOverlay = `${CDN_URL}/tech-overlay.png`;
+export const textAnimateIcon1 = `${CDN_URL}/textIcon1.svg`;
+export const textAnimateIcon2 = `${CDN_URL}/textIcon2.svg`;
 
 export const videoSrc = 'https://www.youtube.com/watch?v=PEM0Vs8jf1w';
-export const progressPlay =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/progressPlay.svg';
-export const progressPoint =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/progressPoint.svg';
-export const progressZoom =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/progressZoom.svg';
-export const detailExpand =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/detailExpand.svg';
-export const detailRefresh =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/detailRefresh.svg';
-export const notiReceive =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/notiReceive.svg';
-export const successIcon =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/successIcon(1).svg';
-export const waitIcon =
-  'https://storage.googleapis.com/generative-static-prod/soul-art/waitIcon(1).svg';
+export const progressPlay = `${CDN_URL}/progressPlay.svg`;
+export const progressPoint = `${CDN_URL}/progressPoint.svg`;
+export const progressZoom = `${CDN_URL}/progressZoom.svg`;
+export const detailExpand = `${CDN_URL}/detailExpand.svg`;
+export const detailRefresh = `${CDN_URL}/detailRefresh.svg`;
+export const notiReceive = `${CDN_URL}/notiReceive.svg`;
+export const successIcon = `${CDN_URL}/successIcon(1).svg`;
+export const waitIcon = `${CDN_URL}/waitIcon(1).svg`;

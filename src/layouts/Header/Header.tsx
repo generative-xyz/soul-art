@@ -70,9 +70,6 @@ const NAV_CONTENT: NavContent[] = [
   },
 ];
 
-const CDN_URL_IMG =
-  'https://storage.googleapis.com/generative-static-prod/soul-art';
-
 const Header = ({
   height,
   isAnimation,
@@ -137,7 +134,7 @@ const Header = ({
 
         <Link className="logo" href={ROUTE_PATH.HOME}>
           <IconSVG
-            src={`${CDN_URL_IMG}/logo.svg`}
+            src={`${CDN_URL}/logo.svg`}
             maxHeight={'32'}
             maxWidth={'32'}
             className={headerStyles.logo_svg}
@@ -207,7 +204,7 @@ const Header = ({
                     <div className={headerStyles.menu_title}>TC Address</div>
                     <div className={headerStyles.menu_item}>
                       <IconSVG
-                        src={`${CDN_URL_IMG}/ic_tc.svg`}
+                        src={`${CDN_URL}/ic_tc.svg`}
                         maxWidth="28"
                         maxHeight="28"
                       />
@@ -216,7 +213,7 @@ const Header = ({
                         onClick={() => onClickCopy(user?.walletAddress || '')}
                       >
                         <IconSVG
-                          src={`${CDN_URL_IMG}/ic-copy.svg`}
+                          src={`${CDN_URL}/ic-copy.svg`}
                           color="white"
                           maxWidth="16"
                           // type="stroke"
@@ -229,7 +226,7 @@ const Header = ({
                     <div className={headerStyles.menu_title}>BTC Address</div>
                     <div className={headerStyles.menu_item}>
                       <IconSVG
-                        src={`${CDN_URL_IMG}/ic-btc.svg`}
+                        src={`${CDN_URL}/ic-btc.svg`}
                         maxWidth="28"
                         maxHeight="28"
                       />
@@ -242,7 +239,7 @@ const Header = ({
                         }
                       >
                         <IconSVG
-                          src={`${CDN_URL_IMG}/ic-copy.svg`}
+                          src={`${CDN_URL}/ic-copy.svg`}
                           color="white"
                           maxWidth="16"
                         />
@@ -256,7 +253,7 @@ const Header = ({
                     }
                     className={headerStyles.menu_box}
                   >
-                    <IconSVG src={`${CDN_URL_IMG}/profile.svg`} maxWidth="16" />
+                    <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
                     <p>Profile</p>
                   </div>
                   <div
@@ -265,7 +262,7 @@ const Header = ({
                     }
                     className={headerStyles.menu_box}
                   >
-                    <IconSVG src={`${CDN_URL_IMG}/wallet.svg`} maxWidth="16" />
+                    <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
                     <p>Wallet</p>
                   </div>
                   <div className={headerStyles.menu_divider} />
@@ -273,10 +270,7 @@ const Header = ({
                     onClick={onDisconnect}
                     className={headerStyles.menu_box}
                   >
-                    <IconSVG
-                      src={`${CDN_URL_IMG}/disconnect.svg`}
-                      maxWidth="16"
-                    />
+                    <IconSVG src={`${CDN_URL}/disconnect.svg`} maxWidth="16" />
                     <p>Disconnect</p>
                   </Button>
                 </div>
@@ -290,7 +284,7 @@ const Header = ({
               <img
                 alt="wallet_icon"
                 className={headerStyles.wallet_icon}
-                src={`${CDN_URL}/pages/artifacts/heroicons_wallet-solid.svg`}
+                src={`${CDN_URL}/heroicons_wallet-solid.svg`}
               />
               {isConnecting ? 'Connecting...' : 'Connect wallet'}
             </Button>

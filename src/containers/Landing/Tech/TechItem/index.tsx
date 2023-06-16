@@ -3,6 +3,7 @@ import s from './style.module.scss';
 import ImageFrame from '@/components/ImageFrame';
 import Text from '@Animations/Text';
 import { AnimFade } from '@/animations/Fade';
+import { CDN_URL } from '@/configs';
 
 export type contentItem = {
   id: number;
@@ -37,10 +38,7 @@ const TechItem: FC<TechItemProps> = ({ item }) => {
       </div>
       <AnimFade offset={0.35} className={s['item-img']}>
         <ImageFrame>
-          <img
-            src={`https://storage.googleapis.com/generative-static-prod/soul-art/techitem-${id}.jpg`}
-            alt="img"
-          />
+          <img src={`${CDN_URL}/techitem-${id}.jpg`} alt="img" />
         </ImageFrame>
       </AnimFade>
     </div>

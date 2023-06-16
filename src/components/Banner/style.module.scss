@@ -12,20 +12,28 @@
     gap: rem(16px);
     z-index: 5;
 
-    .bannerText {
-        margin-bottom: unset;
-        font-size: rem(16px);
-        line-height: 140%;
-        font-weight: 400;
-        color: #000;
-    }
+  .bannerText {
+    margin-bottom: unset;
+    font-size: rem(16px);
+    line-height: 140%;
+    font-weight: 400;
+    color: #000;
+  }
 
-    .bannerButton {
-        display: flex;
-        align-items: center;
-        background: #000;
-        color: #fff;
-        gap: rem(8px);
-        padding: rem(8px) rem(12px);
+  .bannerButton {
+    display: flex;
+    align-items: center;
+    background: #000;
+    color: #fff;
+    gap: rem(8px);
+    padding: rem(8px) rem(12px);
+  }
+  &_link {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    &:hover {
+      text-decoration: none;
     }
+  }
 }
