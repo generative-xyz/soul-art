@@ -6,6 +6,7 @@ export enum DAppType {
   BFS = 'Artifact', // Artifactx
   BNS = 'Name', // Name
   SOUL = 'Soul',
+  GM = 'Gm',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
