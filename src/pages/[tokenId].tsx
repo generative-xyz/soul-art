@@ -5,10 +5,12 @@ import { SEO_IMAGE, SEO_TITLE } from '@/constants/seo';
 import logger from '@/services/logger';
 import { getSoulDetail } from '@/services/soul';
 import SoulItem from '@/containers/SoulItem';
+import Banner from '@/components/Banner';
 
 const SoulDetailPage: NextPage = () => {
   return (
     <Layout>
+      <Banner />
       <SoulItem />
     </Layout>
   );

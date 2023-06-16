@@ -7,14 +7,12 @@
 
 .content_wrapper {
   min-height: rem(84px);
-  padding-top: rem(84px);
-  max-width: 1920px;
   width: 100%;
   margin: 0 auto;
   position: relative;
   z-index: 1;
 
-  > div {
+  >div {
     width: 100%;
   }
 }

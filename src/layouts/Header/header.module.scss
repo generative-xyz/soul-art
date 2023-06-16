@@ -4,12 +4,15 @@
   left: 0;
   z-index: 5;
   width: 100%;
+  background: var(--background);
   --text-color: #000;
   --filter: black;
+  --background: #fff;
 
   &.dark {
     --text-color: #fff;
-    --filter: white
+    --filter: white;
+    --background: transparent;
   }
 }
 
