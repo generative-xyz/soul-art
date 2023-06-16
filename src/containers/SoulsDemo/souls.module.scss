@@ -1,0 +1,16 @@
+.art {
+  width: 100%;
+  padding-top: rem(182px);
+
+  .grid {
+    &_container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 40px;
+    }
+
+    &_item {
+      box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
+    }
+  }
+}
