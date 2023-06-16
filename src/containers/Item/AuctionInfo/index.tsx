@@ -5,15 +5,12 @@ import AuctionInfoStyles from './style.module.scss';
 import IconSVG from '@/components/IconSVG';
 import TabsComponent from './Tabs';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
+import { CDN_URL } from '@/configs';
 
-const CDN_URL_IMG =
-  'https://storage.googleapis.com/generative-static-prod/soul-art';
-
-  type AuctionImgProps = {
+type AuctionImgProps = {
   img: string | undefined;
 };
-const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
-
+const AuctionInfo: React.FC<AuctionImgProps> = ({ img }) => {
   const [show, setShow] = useState<boolean>(false);
 
   const handleClose = () => setShow(false);
@@ -25,12 +22,12 @@ const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
         <div className={AuctionInfoStyles.content_warning}>
           <div className={AuctionInfoStyles.content_warning_iconUser}>
             <IconSVG
-              src={`${CDN_URL_IMG}/img-user.svg`}
+              src={`${CDN_URL}/img-user.svg`}
               maxWidth="50"
               maxHeight="50"
             ></IconSVG>
             <div className={AuctionInfoStyles.content_warning_iconWarning}>
-              <IconSVG src={`${CDN_URL_IMG}/ic-warning.svg`}></IconSVG>
+              <IconSVG src={`${CDN_URL}/ic-warning.svg`}></IconSVG>
             </div>
           </div>
           <div className={AuctionInfoStyles.content_warning_showAddress}>
@@ -113,7 +110,7 @@ const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
                   >
                     <div>
                       <IconSVG
-                        src={`${CDN_URL_IMG}/img-user.svg`}
+                        src={`${CDN_URL}/img-user.svg`}
                         maxWidth="32"
                         maxHeight="32"
                       ></IconSVG>
