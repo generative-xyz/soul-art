@@ -1,41 +1,42 @@
 .claimContent {
-    margin-top: rem(32px);
+  margin-top: rem(32px);
 
-    .claimContent_top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  .claimContent_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        .claimContent_title {
-            font-size: rem(28px);
-            line-height: 140%;
-            font-weight: 500;
-            color: #000;
-            margin-bottom: unset;
+    .claimContent_title {
+      font-size: rem(28px);
+      line-height: 140%;
+      font-weight: 500;
+      color: #000;
+      margin-bottom: unset;
 
-            &.true {
-                font-size: rem(20px);
-            }
-        }
+      &.true {
+        font-size: rem(20px);
+      }
     }
+  }
 
-    .claimDesc {
-        margin-top: rem(8px);
+  .claimDesc {
+    width: 100%;
+    margin-top: rem(8px);
 
-        .desc {
-            font-weight: 400;
-            font-size: rem(16px);
-            line-height: 140%;
-            color: #2E2E2E;
-            margin-bottom: rem(8px);
+    .desc {
+      font-weight: 400;
+      font-size: rem(16px);
+      line-height: 140%;
+      color: #2e2e2e;
+      margin-bottom: rem(18px);
 
-            &:last-child {
-                margin-bottom: unset
-            }
-        }
+      &:last-child {
+        margin-bottom: unset;
+      }
     }
+  }
 
-    &.true {
-        margin-top: rem(16px);
-    }
+  &.true {
+    margin-top: rem(16px);
+  }
 }
