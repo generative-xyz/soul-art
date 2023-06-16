@@ -15,8 +15,8 @@ import logger from '@/services/logger';
 import {showToastError} from '@/utils/toast';
 import {AssetsContext} from '@/contexts/assets-context';
 import BigNumber from 'bignumber.js';
-import useAsyncEffect from "use-async-effect";
-import {getListTokensByWallet} from "@Services/soul";
+// import useAsyncEffect from "use-async-effect";
+// import {getListTokensByWallet} from "@Services/soul";
 import {SoulEventType} from '@/enums/soul';
 
 const ClaimPage = () => {
@@ -32,13 +32,12 @@ const ClaimPage = () => {
     const [isWaitingForConfirm, setIsWaitingForConfirm] =
         useState<boolean>(false);
     const [transactionHash, setTransactionHash] = useState<string>('');
+
     const {onDisconnect, onConnect, requestBtcAddress} =
         useContext(WalletContext);
     const {btcBalance, tcBalance} = useContext(AssetsContext);
 
-    //todo add type kevin
-    const [soulToken, setSoulToken] = useState<any | null>(null);
-
+    const [soulToken, _setSoulToken] = useState<any | null>(null);
     const {run: call} = useContractOperation<IMintParams, Transaction | null>({
         operation: useMint,
         inscribeable: true,
@@ -147,7 +146,6 @@ const ClaimPage = () => {
             if (signature) {
                 let res: any;
                 try {
-                    // setIsClaimed(true);
                     setIsWaitingForConfirm(true);
                     res = await call({
                         address: account as string,
@@ -160,7 +158,6 @@ const ClaimPage = () => {
                 } finally {
                     setIsWaitingForConfirm(false);
                     if (res.toString().includes('User rejected transaction')) {
-                        // setIsClaimed(false);
                         setClaimStatus('time');
                     }
                 }
@@ -203,7 +200,6 @@ const ClaimPage = () => {
                         setIsClaimed(false);
                         setClaimStatus('waiting');
                     } else {
-                        // console.log('Transaction status unknown');
                         setIsClaimed(false);
                         setClaimStatus('time');
                     }
@@ -218,23 +214,19 @@ const ClaimPage = () => {
         const storageKey = `${SoulEventType.MINT}_${account}`;
         const txHash = localStorage.getItem(storageKey) || '';
         setTransactionHash(txHash.toString());
-
-        // setTransactionHash(
-        //   '0x5954443be0b8487ebb6ef1fed5f1c4d15e50101077fda63e883d2c87f2fecd7c'
-        // );
     }, [account]);
 
-    useAsyncEffect(async () => {
-        try {
-            const {items} = await getListTokensByWallet(account || '');
-            if (items.length) {
-                setSoulToken(items[0] || null);
-            }
-        } catch (e) {
-            logger.error('Error get tokens:', e);
-        }
-
-    }, [account])
+    // useAsyncEffect(async () => {
+    //     try {
+    //         const {items} = await getListTokensByWallet(account || '');
+    //         if (items.length) {
+    //             setSoulToken(items[0] || null);
+    //         }
+    //     } catch (e) {
+    //         logger.error('Error get tokens:', e);
+    //     }
+    //
+    // }, [account])
 
     return (
         <div className={s.claimPage}>
