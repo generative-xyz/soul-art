@@ -244,7 +244,7 @@ const ClaimPage = () => {
                   claimStatus === 'success' ? s.success : ''
                 }`}
               >
-                <ClaimImg isClaimed={isClaimed} soulToken={soulToken} />
+                <ClaimImg isClaimed={isClaimed} soulToken={soulToken} claimStatus={claimStatus}/>
                 <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
                 {!isClaimed ? (
                   <ClaimField
