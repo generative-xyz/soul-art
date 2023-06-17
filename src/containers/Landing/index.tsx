@@ -1,5 +1,4 @@
 import React from 'react';
-import { GridDebug } from '@Animations/Grid/grid';
 import Tech from './Tech';
 import Flare from './Flare';
 import { useSmoothScroll } from '@Hooks/useSmoothScroll';
@@ -23,7 +22,6 @@ export const LandingContainer: React.FC = () => {
       <SectionFlys />
       <Tech />
       <ProgressBarCs />
-      <GridDebug />
     </div>
   );
 };
