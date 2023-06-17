@@ -20,7 +20,7 @@ const SectionFlys = (): JSX.Element => {
 
   useEffect(() => {
     if (pageStatus === PAGE_READY) {
-      registerLoader();
+      registerLoader('___useEffect_SectionFlys');
       const imgs: string[] = [];
       for (let i = 1; i <= 22; i++) {
         imgs.push(`${CDN_URL}/souls/1%20(${i}).jpg`);

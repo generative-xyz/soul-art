@@ -16,7 +16,7 @@ interface IProps {
   width: number;
   onProcessing?: (n: number) => void;
   onEnter?: () => void;
-  start?: () => void;
+  start?: (s?:string) => void;
   end?: () => void;
   formatFrameUrl?: (s: string, i: number) => string;
 }
@@ -168,7 +168,7 @@ export const Frames: React.FC<IProps> = ({
   });
 
   const preLoadFrame = async () => {
-    start && start();
+    start && start('___preLoadFrame_Frames');
     loadImages().then(() => {
       refDom.current.lastFrame = 1;
       refDom.current.currentFrame = 1;

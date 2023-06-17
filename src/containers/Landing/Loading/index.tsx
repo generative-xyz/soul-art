@@ -123,7 +123,7 @@ export const Loading = (): JSX.Element => {
 
   useEffect(() => {
     if (isReady) {
-      registerLoader();
+      registerLoader('__useEffect_loading');
       const imgs = [];
       for (let i = 1; i <= 172; i++) {
         imgs.push(`${CDN_URL}/video-intro/output_${i}.jpg`);

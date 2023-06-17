@@ -11,7 +11,7 @@ import { pageScrollTop } from '@Services/Animate/AnimateMathUtil';
 import Lenis from '@studio-freight/lenis';
 
 interface IAnimateContext {
-  registerLoader: () => void;
+  registerLoader: (s?: string) => void;
   unRegisterLoader: () => void;
   getLoaderCounter: () => number;
 
@@ -37,7 +37,7 @@ interface IAnimateContext {
 }
 
 export const AnimateContext = createContext<IAnimateContext>({
-  registerLoader: () => {
+  registerLoader: (_) => {
     return;
   },
   unRegisterLoader: () => {
@@ -88,7 +88,9 @@ export const AnimateProvider: FC<PropsWithChildren> = ({ children }) => {
   const [lenis, setLenis] = useState<Lenis | null>(null);
   const [pageStatus, setPageStatus] = useState<'PAGE_ENTER' | 'PAGE_LOADED' | 'PAGE_LOADING' | 'PAGE_READY'>('PAGE_LOADING');
 
-  const registerLoader = useCallback(() => {
+  const registerLoader = useCallback((s?: string) => {
+    // eslint-disable-next-line no-console
+    s && console.log('____function', s);
     refOption.current.counter += 1;
   }, [refOption.current]);
 
