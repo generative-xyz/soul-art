@@ -6,18 +6,17 @@ const Living = () => {
         <div className={s.livingArtSection}>
             <div className={s.container}>
                 <div className={s.wrapContent}>
+
                     <p className={s.sectionContent}>
                         {
-                            `Souls react to the owner's GM balance and trading behavior. As the owner acquires more GM
-                        tokens, the Soul grows in size. It also mimics the patterns of the owner's trading style,
-                        whether it's a steady hand guiding the brushstrokes or a flurry of dynamic lines.`
+                            `Souls are not static art but dynamic entities that reflect human behavior. They react to market dynamics, mirroring feelings of fear, greed, and belief. The interconnected nature of the Souls is fascinating, as one soul's changes can affect another soul within the collective.`
                         }
                     </p>
-                    <a href="" className={s.tag}>
+                    <div className={s.tag}>
                         <TextAnimate>
-                            <span>Each Soul familiarizes itself to its owner</span>
+                            <span>Collective performance art that reflects human behavior</span>
                         </TextAnimate>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>

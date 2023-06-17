@@ -1,5 +1,5 @@
-import IconSVG from '@Components/IconSVG';
 import s from './style.module.scss';
+import IconSVG from '@Components/IconSVG';
 import { useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { AnimateContext } from '@Context/Animate';
 import { MathMap } from '@Services/Animate/AnimateMathUtil';
@@ -7,9 +7,10 @@ import { progressPlay, progressPoint, progressZoom } from '@/constants/asset';
 import { AnimFade } from '@Animations/Fade';
 import { MAIN_AUDIO } from '@Constants/common';
 import { Container } from 'react-bootstrap';
+import classNames from 'classnames';
 
-const ProgressBar = () => {
-  const { lenis, audioPlaying, setAudioPlaying } = useContext(AnimateContext);
+const ProgressBarCs = (): JSX.Element => {
+  const { lenis, audioPlaying, setAudioPlaying, isShowProgress } = useContext(AnimateContext);
 
   const [po, setPo] = useState<number>(0);
   const [rote, setRote] = useState<number>(0);
@@ -39,9 +40,10 @@ const ProgressBar = () => {
     setAudioPlaying(!audioPlaying);
   }, [audioPlaying, setAudioPlaying]);
 
+
   return (
     <div
-      className={s.progressBar}
+      className={classNames(s.progressBar, isShowProgress ? s.isShow : '')}
       style={{
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -87,9 +89,9 @@ const ProgressBar = () => {
                 audioPlaying ? s.activeAnimation : ''
               }`}
             >
-              <span className={s.audioIconAnimate_line1}></span>
-              <span className={s.audioIconAnimate_line2}></span>
-              <span className={s.audioIconAnimate_line3}></span>
+              <span className={s.audioIconAnimate_line1} />
+              <span className={s.audioIconAnimate_line2} />
+              <span className={s.audioIconAnimate_line3} />
             </div>
           </div>
         </AnimFade>
@@ -99,4 +101,4 @@ const ProgressBar = () => {
   );
 };
 
-export default ProgressBar;
+export default ProgressBarCs;

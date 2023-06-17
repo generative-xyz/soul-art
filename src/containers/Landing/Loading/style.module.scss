@@ -1,5 +1,5 @@
 .loading {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -8,6 +8,12 @@
   opacity: 0;
   overflow: hidden;
   background-color: #FFFFFF;
+
+  p{
+    max-width: rem(700px);
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   &.isReady {
     opacity: 1;

@@ -14,14 +14,14 @@ export const useFrameProcessing = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
 
-  const {startIn, endIn, startOut, endOut} = motion;
+  const { startIn, endIn, startOut, endOut } = motion;
 
   useLayoutEffect(() => {
-    if(startIn && endIn) {
-      comp && gsap.set(comp.current, { opacity: 0 });
+    if (startIn && endIn) {
+      comp && gsap.set(comp.current, { opacity: 0, pointerEvents: 'none' });
     }
     return () => {
-      comp && gsap.set(comp.current, { opacity: 1 });
+      comp && gsap.set(comp.current, { opacity: 1, pointerEvents: 'auto' });
     };
   }, [comp]);
 
@@ -32,12 +32,22 @@ export const useFrameProcessing = (
         const poIn = MathMap(frame, startIn, endIn, 0, 1);
         if (poIn <= 1) {
           tmpCom.current.style.opacity = `${Math.min(poIn, 1)}`;
+          if (poIn <= 0) {
+            tmpCom.current.style.pointerEvents = 'none';
+          } else {
+            tmpCom.current.style.pointerEvents = 'auto';
+          }
         }
       }
       if (startOut && endOut) {
         const poOut = MathMap(frame, startOut, endOut, 1, 0);
         if (poOut <= 1) {
           tmpCom.current.style.opacity = `${Math.max(poOut, 0)}`;
+          if (poOut <= 0) {
+            tmpCom.current.style.pointerEvents = 'none';
+          } else {
+            tmpCom.current.style.pointerEvents = 'auto';
+          }
         }
       }
     }
