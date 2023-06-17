@@ -195,7 +195,7 @@ export const Loading = (): JSX.Element => {
               <Text as={'p'} size={'d2'} className={'mb-1_16'}>
                 Welcome to New Bitcoin City
               </Text>
-              <Text as={'p'} size={'20'}>
+              <Text as={'p'} className={s.desc} size={'20'} fontWeight={'regular'}>
                 Within the realm of your GM tokens resides a sacred energy—a collective essence known as The Souls.
               </Text>
             </div>
