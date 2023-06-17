@@ -1,7 +1,10 @@
 .imageFrame {
-    padding: rem(10px);
-    border: 1px solid rgba($color: #fff, $alpha: 0.2);
     position: relative;
+    padding: rem(10px);
+
+    >span {
+        transition: .5s $easeOutQuart;
+    }
 
     .top-left {
         position: absolute;
@@ -81,34 +84,109 @@
             background: #fff;
         }
     }
-.bottom-right {
-    position: absolute;
-    bottom: 0;
-    right: 0;
 
-    &::before {
+    .bottom-right {
         position: absolute;
-        content: '';
         bottom: 0;
-        left: 0;
-        width: 1px;
-        height: 8px;
-        background: #fff;
+        right: 0;
+
+        &::before {
+            position: absolute;
+            content: '';
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            height: 8px;
+            background: #fff;
+        }
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 1px;
+            background: #fff;
+            transform: translateX(-100%);
+        }
     }
 
-    &::after {
+    .line-top {
         position: absolute;
-        content: '';
         top: 0;
         left: 0;
-        width: 8px;
+        width: 100%;
         height: 1px;
-        background: #fff;
-        transform: translateX(-100%);
+        background: rgba(#fff, 0.2);
     }
-}
 
-&.small {
-    padding: rem(5px);
+    .line-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: rgba(#fff, 0.2);
+    }
+
+    .line-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        background: rgba(#fff, 0.2);
+    }
+
+    .line-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 1px;
+        height: 100%;
+        background: rgba(#fff, 0.2);
+    }
+
+    &.small {
+        padding: rem(5px);
+
+        &:hover {
+            .line-top {
+                top: 5px;
+            }
+
+            .line-bottom {
+                bottom: 5px;
+            }
+
+            .line-right {
+                right: 5px;
+            }
+
+            .line-left {
+                left: 5px;
+            }
+
+            .top-left {
+                top: 5px;
+                left: 5px;
+            }
+
+            .top-right {
+                top: 5px;
+                right: 5px;
+            }
+
+            .bottom-left {
+                bottom: 5px;
+                left: 5px;
+            }
+
+            .bottom-right {
+                bottom: 5px;
+                right: 5px;
+            }
+        }
     }
 }

@@ -13,5 +13,6 @@ export const ROUTE_PATH = {
   BIG_FILE_PROMO: '/420',
   EXPLORE: '/explore',
   CLAIM: '/claim',
+  ART: '/art',
   DEMO: '/demo',
 };

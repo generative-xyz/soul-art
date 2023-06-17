@@ -20,6 +20,8 @@ import { getListTokensByWallet } from '@Services/soul';
 import { SoulEventType } from '@/enums/soul';
 import { getUserSelector } from '@/state/user/selector';
 import { useSelector } from 'react-redux';
+// import useAsyncEffect from "use-async-effect";
+// import {getListTokensByWallet} from "@Services/soul";
 
 const ClaimPage = () => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -263,11 +265,10 @@ const ClaimPage = () => {
       <Container className={s.container}>
         <Row className={s.row}>
           <Col lg={{ span: 4, offset: 4 }} className={s.column}>
-            <div className={s.wrapBox}>
+            <div className={`${s.wrapBox} ${isClaimed ? s.isClaimed : ''}`}>
               <div className={s.successNoti}>
                 <p className={s.status}>Claim success</p>
                 <span className={s.dot}></span>
-                {/* <p className={s.date}>Jan 18, 2022 at 6:25pm</p> */}
                 <p className={s.date}>{mintAt}</p>
               </div>
               <div

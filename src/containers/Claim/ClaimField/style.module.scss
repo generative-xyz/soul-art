@@ -5,15 +5,18 @@
     width: 100%;
     padding: rem(16px) 0;
     background: #000000;
+    border: 1px solid #000;
     border-radius: 100px;
     cursor: pointer;
     text-align: center;
+    transition: 0.5s $easeOutQuart;
 
     span {
       color: #fff;
       font-size: rem(16px);
       font-weight: 500;
       line-height: 112%;
+      transition: 0.5s $easeOutQuart;
     }
 
     &.false {
@@ -27,20 +30,28 @@
 
     .hide {
       display: none;
+
+      &:hover {
+        background: #fff;
+
+        span {
+          color: #000;
+        }
+      }
     }
-  }
 
-  .noti {
-    display: flex;
-    align-items: center;
-    gap: rem(8px);
-    margin-top: rem(24px);
+    .noti {
+      display: flex;
+      align-items: center;
+      gap: rem(8px);
+      margin-top: rem(24px);
 
-    span {
-      color: #ff4747;
-      font-weight: 500;
-      font-size: rem(16px);
-      line-height: 140%;
+      span {
+        color: #ff4747;
+        font-weight: 500;
+        font-size: rem(16px);
+        line-height: 140%;
+      }
     }
   }
 }

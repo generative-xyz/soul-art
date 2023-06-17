@@ -1,18 +1,25 @@
-import { MutableRefObject, useLayoutEffect } from "react";
-import { gsap } from "gsap";
-import { MathMap } from "@Services/Animate/AnimateMathUtil";
+import { MutableRefObject, useLayoutEffect } from 'react';
+import { gsap } from 'gsap';
+import { MathMap } from '@Services/Animate/AnimateMathUtil';
 
 export const useFrameProcessing = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comp: MutableRefObject<any>,
-  startIn?: number,
-  endIn?: number,
-  startOut?: number,
-  endOut?: number
+  motion: {
+    startIn?: number,
+    endIn?: number,
+    startOut?: number,
+    endOut?: number
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
+
+  const {startIn, endIn, startOut, endOut} = motion;
+
   useLayoutEffect(() => {
-    comp && gsap.set(comp.current, { opacity: 0 });
+    if(startIn && endIn) {
+      comp && gsap.set(comp.current, { opacity: 0 });
+    }
     return () => {
       comp && gsap.set(comp.current, { opacity: 1 });
     };
