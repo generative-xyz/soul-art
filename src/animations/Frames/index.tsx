@@ -161,6 +161,7 @@ export const Frames: React.FC<IProps> = ({
     },
     onToggle: (self: ScrollTrigger) => {
       if (self.isActive) {
+        runFrame();
         onEnter && onEnter();
       }
     },

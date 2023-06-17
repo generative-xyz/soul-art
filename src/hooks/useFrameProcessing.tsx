@@ -31,7 +31,7 @@ export const useFrameProcessing = (
       if (startIn && endIn) {
         const poIn = MathMap(frame, startIn, endIn, 0, 1);
         if (poIn <= 1) {
-          tmpCom.current.style.opacity = `${Math.min(poIn, 1)}`;
+          tmpCom.current.style.opacity = `${Math.max(Math.min(poIn, 1), 0)}`;
           if (poIn <= 0) {
             tmpCom.current.style.pointerEvents = 'none';
           } else {
@@ -42,7 +42,7 @@ export const useFrameProcessing = (
       if (startOut && endOut) {
         const poOut = MathMap(frame, startOut, endOut, 1, 0);
         if (poOut <= 1) {
-          tmpCom.current.style.opacity = `${Math.max(poOut, 0)}`;
+          tmpCom.current.style.opacity = `${Math.min(Math.max(poOut, 0), 1)}`;
           if (poOut <= 0) {
             tmpCom.current.style.pointerEvents = 'none';
           } else {
