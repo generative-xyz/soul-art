@@ -18,14 +18,15 @@ import BigNumber from 'bignumber.js';
 import useAsyncEffect from 'use-async-effect';
 import { getListTokensByWallet } from '@Services/soul';
 import { SoulEventType } from '@/enums/soul';
-// import { getUserSelector } from '@/state/user/selector';
-// import { useSelector } from 'react-redux';
+import { getUserSelector } from '@/state/user/selector';
+import { useSelector } from 'react-redux';
 
 const ClaimPage = () => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
   const [isWalletConnected, setWalletConnected] = useState<boolean>(false);
-  const [isWalletConnected_localhost, setWalletConnected_localhost] =
+  const [_isWalletConnected_localhost, setWalletConnected_localhost] =
     useState<any>();
+  const [isConnecting, setIsConnecting] = useState(false);
   const [isReceiveAble, setIsReceiveAble] = useState<boolean>(true);
   const [claimStatus, setClaimStatus] = useState<string>('time');
   const { account, provider } = useWeb3React();
@@ -38,7 +39,9 @@ const ClaimPage = () => {
     useContext(WalletContext);
   const { btcBalance, tcBalance } = useContext(AssetsContext);
   const [haveEnoughBalance, setHaveEnoughBalance] = useState<boolean>(false);
-  // const user = useSelector(getUserSelector);
+  const user = useSelector(getUserSelector);
+  const [mintAt, setMintAt] = useState<string | number>('');
+  const [isFetchingApi, setIsFetchingApi] = useState<boolean>(false);
 
   //todo add type kevin
   const [soulToken, setSoulToken] = useState<any | null>(null);
@@ -47,8 +50,6 @@ const ClaimPage = () => {
     operation: useMint,
     inscribeable: true,
   });
-
-  const [isConnecting, setIsConnecting] = useState(false);
 
   const handleConnectWallet = async () => {
     try {
@@ -92,24 +93,102 @@ const ClaimPage = () => {
     }
   };
 
-  useEffect(() => {
-    setWalletConnected_localhost(localStorage.getItem('isWalletConnected'));
-  }, []);
+  const txSuccessCallback = async (transaction: Transaction | null) => {
+    if (!transaction || !account) return;
+    const txHash = transaction.hash;
+    if (!txHash) return;
+    const storageKey = `${SoulEventType.MINT}_${account}`;
+    localStorage.setItem(storageKey, txHash);
+  };
 
+  // Connect wallet
   useEffect(() => {
-    setWalletConnected(isWalletConnected_localhost === 'true');
-  }, [isWalletConnected_localhost]);
+    const walletConnectedValue = localStorage.getItem('isWalletConnected');
+    const walletConnected = walletConnectedValue === 'true';
 
-  useEffect(() => {
-    if (!transactionHash) {
-      if (!account) {
-        setWalletConnected(false);
-        setClaimStatus('');
-        setTransactionHash('');
-      }
+    setWalletConnected_localhost(walletConnectedValue);
+    setWalletConnected(walletConnected);
+
+    if (account && !isConnecting) {
+      setWalletConnected(true);
+      localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
+    } else {
+      setWalletConnected(false);
+      setIsReceiveAble(true);
+      setIsClaimed(false);
+      setClaimStatus('');
+      localStorage.setItem('isWalletConnected', 'false'); // Update localStorage when the wallet is disconnected
     }
-  }, [account, transactionHash]);
+  }, [account, isConnecting, user?.walletAddress]);
 
+  // Check if this account is minted
+  useAsyncEffect(async () => {
+    try {
+      setIsFetchingApi(true);
+      if (!isConnecting) {
+        const { items } = await getListTokensByWallet(account as string);
+        if (items.length) {
+          setSoulToken(items[0] || null);
+          setIsClaimed(true);
+          setClaimStatus('success');
+
+          if (items[0].mintAt && Date.parse(items[0].mintAt)) {
+            const date = new Date(items[0].mint);
+            setMintAt(
+              date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true,
+              })
+            );
+          }
+        }
+      }
+    } catch (e) {
+      logger.error('Error get tokens:', e);
+    } finally {
+      setTimeout(async () => {
+        setIsFetchingApi(false);
+      }, 5000);
+    }
+  }, [account]);
+
+  // Find transaction hash in localstorage
+  useEffect(() => {
+    try {
+      if (!soulToken) {
+        const storageKey = `${SoulEventType.MINT}_${account}`;
+        const txHash = localStorage.getItem(storageKey) || '';
+        setTransactionHash(txHash.toString());
+      }
+    } catch (e) {
+      logger.error('Error get transaction hash:', e);
+    }
+  }, [soulToken]);
+
+  //
+  useAsyncEffect(async () => {
+    let res: any;
+    try {
+      res = await generateSignature({
+        wallet_address: account,
+      });
+    } catch (err) {
+      logger.error(err);
+    } finally {
+      setSignature(res?.signature);
+      setTotalGM(Number(res?.gm));
+    }
+  }, [account]);
+
+  useEffect(() => {
+    setIsReceiveAble(!!signature);
+  }, [signature]);
+
+  // Check balance
   useEffect(() => {
     const userTcBalance = new BigNumber(tcBalance);
     const userBtcBalance = new BigNumber(btcBalance);
@@ -122,117 +201,7 @@ const ClaimPage = () => {
     }
   }, [account, btcBalance, tcBalance]);
 
-  useEffect(() => {
-    // if (account) {
-    //   (async () => {
-    //     let res: any;
-    //     try {
-    //       const userTcBalance = new BigNumber(tcBalance);
-    //       const userBtcBalance = new BigNumber(btcBalance);
-    //       if (userTcBalance.isGreaterThan(0) && userBtcBalance.isGreaterThan(0))
-    //         res = await generateSignature({
-    //           wallet_address: account,
-    //         });
-    //       console.log(res);
-    //     } catch (err) {
-    //       logger.error(err);
-    //     } finally {
-    //       if (res) setIsReceiveAble(true);
-    //       else {
-    //         setIsReceiveAble(false);
-    //       }
-
-    //       if (!account || isConnecting) {
-    //         setIsReceiveAble(true);
-    //       }
-    //     }
-    //   })();
-    // }
-    if (account) {
-      // check if this account is in list
-      if (signature) {
-        // check if this account have enough balance
-        if (haveEnoughBalance) {
-          setIsReceiveAble(true);
-        } else {
-          setHaveEnoughBalance(false);
-        }
-      } else {
-        setIsReceiveAble(false);
-      }
-
-      if (!account || isConnecting) {
-        setIsReceiveAble(true);
-      }
-
-      if (account && !isConnecting) {
-        setWalletConnected(true);
-        localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
-      } else {
-        setWalletConnected(false);
-        setIsReceiveAble(true);
-        setIsClaimed(false);
-        setClaimStatus('time');
-        localStorage.setItem('isWalletConnected', 'false'); // Update localStorage when the wallet is disconnected
-      }
-    }
-  }, [account, isConnecting, signature, haveEnoughBalance]);
-
-  const txSuccessCallback = async (transaction: Transaction | null) => {
-    if (!transaction || !account) return;
-    const txHash = transaction.hash;
-    if (!txHash) return;
-    const storageKey = `${SoulEventType.MINT}_${account}`;
-    localStorage.setItem(storageKey, txHash);
-  };
-
-  useEffect(() => {
-    (async () => {
-      if (signature) {
-        let res: any;
-        try {
-          // setIsClaimed(true);
-          setIsWaitingForConfirm(true);
-          res = await call({
-            address: account as string,
-            totalGM: totalGM,
-            signature: signature,
-            txSuccessCallback: txSuccessCallback,
-          });
-        } catch (err) {
-          logger.error(err);
-        } finally {
-          setIsWaitingForConfirm(false);
-          if (res) {
-            if (res.toString().includes('User rejected transaction')) {
-              // setIsClaimed(false);
-              setClaimStatus('');
-            }
-          }
-        }
-      }
-    })();
-  }, [signature, account, haveEnoughBalance]);
-
-  useEffect(() => {
-    (async () => {
-      let res: any;
-      try {
-        // const userTcBalance = new BigNumber(tcBalance);
-        // const userBtcBalance = new BigNumber(btcBalance);
-        // if (userTcBalance.isGreaterThan(0) && userBtcBalance.isGreaterThan(0))
-        res = await generateSignature({
-          wallet_address: account,
-        });
-      } catch (err) {
-        logger.error(err);
-      } finally {
-        setSignature(res?.signature);
-        setTotalGM(Number(res?.gm));
-      }
-    })();
-  }, [account]);
-
+  // Check transaction status
   useEffect(() => {
     if (account && !isConnecting) {
       const fetchTransactionStatus = async () => {
@@ -289,17 +258,6 @@ const ClaimPage = () => {
     setTransactionHash(txHash.toString());
   }, [account]);
 
-  useAsyncEffect(async () => {
-    try {
-      const { items } = await getListTokensByWallet(account || '');
-      if (items.length) {
-        setSoulToken(items[0] || null);
-      }
-    } catch (e) {
-      logger.error('Error get tokens:', e);
-    }
-  }, [account]);
-
   return (
     <div className={s.claimPage}>
       <Container className={s.container}>
@@ -309,7 +267,8 @@ const ClaimPage = () => {
               <div className={s.successNoti}>
                 <p className={s.status}>Claim success</p>
                 <span className={s.dot}></span>
-                <p className={s.date}>Jan 18, 2022 at 6:25pm</p>
+                {/* <p className={s.date}>Jan 18, 2022 at 6:25pm</p> */}
+                <p className={s.date}>{mintAt}</p>
               </div>
               <div
                 className={`${s.claimBox} ${
@@ -327,6 +286,8 @@ const ClaimPage = () => {
                     isReceiveAble={isReceiveAble}
                     isConnecting={isConnecting}
                     haveEnoughBalance={haveEnoughBalance}
+                    isClaimed={isClaimed}
+                    isFetchingApi={isFetchingApi}
                   />
                 ) : (
                   ''
