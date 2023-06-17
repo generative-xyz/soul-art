@@ -12,20 +12,20 @@ const Sunback = () => {
       <div className={s.sunbackSection}>
         <div className={s.wrapContent}>
           <Text
-            animOption={{ screen: 0, offset: 0.3, type: 'heading' }}
+            animOption={{ screen: 0, offset: 0, type: 'heading' }}
             className={s.sectionTitle}
           >
             Lorem ipsum dolo sit amet consectetur.
           </Text>
           <Text
-            animOption={{ screen: 0, offset: 0.5, type: 'paragraph' }}
+            animOption={{ screen: 0, offset: 0.1, type: 'paragraph' }}
             className={s.sectionContent}
           >
             Welcome to New Bitcoin City, where the sun&apos;s enchantment and
             the belief in GM tokens guide us toward a future brighter than we
             can ever imagine.
           </Text>
-          <AnimFade offset={0.6}>
+          <AnimFade offset={0.2}>
             <div className={s.buttons}>
               <Button className={cs(s.button, s.init)}>Explore art</Button>
               <Button className={cs(s.button, s.trans)}>Claim Souls</Button>

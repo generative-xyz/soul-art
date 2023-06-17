@@ -7,7 +7,7 @@ import {AnimateContext} from "@Context/Animate";
 import {PAGE_READY, PAGE_ENTER} from "@Constants/common";
 
 interface IProps {
-    className: string;
+    className?: string;
     urlFrame: string;
     webmFrame?: string;
     totalFrames: number;
@@ -26,7 +26,6 @@ interface IRefDomFrames {
     images: { image: HTMLImageElement; frame: number; isError: boolean }[];
     lastFrame: number;
     progress: number;
-    framesFirstLoad: number;
     currentUrlFrame?: string;
     ctx: CanvasRenderingContext2D | null;
     canvas?: HTMLCanvasElement;
@@ -59,13 +58,11 @@ export const Frames: React.FC<IProps> = ({
         images: [],
         lastFrame: 1,
         progress: 0,
-        framesFirstLoad: 25,
         ctx: null,
     });
 
     const loadImages = async () => {
         const promises: any = [];
-        Promise.reject();
 
         if (!refDom.current.currentUrlFrame) {
             refDom.current.currentUrlFrame =
@@ -83,7 +80,6 @@ export const Frames: React.FC<IProps> = ({
                     resolve();
                 };
                 image.onerror = () => {
-                    resolve();
                     refDom.current.images[i].isError = true;
                     reject();
                 };

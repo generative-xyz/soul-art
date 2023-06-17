@@ -1,6 +1,7 @@
 import s from './style.module.scss';
-import {ReactNode} from "react";
+import {ReactNode, useRef} from "react";
 import classNames from "classnames";
+import {useParallax} from "@Hooks/useParallax";
 
 interface IVideoBg {
     children: ReactNode
@@ -12,10 +13,14 @@ interface IVideoBg {
 }
 
 const VideoBg = ({children, videoUrls, className = ''}: IVideoBg): JSX.Element => {
+    const refBox = useRef<HTMLDivElement>(null);
+    const refElement = useRef<HTMLDivElement>(null);
+
+    useParallax(refBox, refElement, .5);
     return (
-        <div className={classNames(s.videoBg, className)}>
-            <div className={s.videoBg_bg}>
-                <video muted playsInline autoPlay>
+        <div ref={refBox} className={classNames(s.videoBg, className)}>
+            <div ref={refElement} className={s.videoBg_bg}>
+                <video muted playsInline autoPlay loop>
                     {
                         videoUrls.webm && <source src={videoUrls.webm} type="video/webm"/>
                     }
