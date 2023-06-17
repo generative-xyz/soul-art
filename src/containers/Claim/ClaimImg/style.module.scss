@@ -31,8 +31,8 @@
     }
 
     &.true {
-        width: rem(400px);
-        height: rem(400px);
+        width: 100%;
+
         .backgroundImg {
             display: none;
         }
@@ -42,6 +42,11 @@
             top: unset;
             left: unset;
             transform: unset;
+        }
+
+        iframe {
+            width: 100%;
+            height: auto;
         }
     }
 }
