@@ -144,6 +144,18 @@
 
       li {
         padding-right: rem(24px);
+
+        @include pcSmall {
+          padding-right: rem(14px);
+        }
+
+        @include pcMid {
+          padding-right: rem(20px);
+        }
+
+        @include pcWide {
+          padding-right: rem(24px);
+        }
       }
 
 
@@ -205,9 +217,21 @@
 
     &_tabBox {
       height: 100%;
-      max-height: 400px;
+      max-height: rem(400px);
       overflow-y: auto;
       margin-bottom: 15px;
+
+      @include pcSmall {
+        max-height: rem(180px);
+      }
+
+      @include pcMid {
+        max-height: rem(230px);
+      }
+
+      @include pcWide {
+        max-height: rem(400px);
+      }
     }
 
     &_tabLive {

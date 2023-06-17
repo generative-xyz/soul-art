@@ -42,11 +42,29 @@
             top: unset;
             left: unset;
             transform: unset;
+            width: 100%;
         }
 
         iframe {
             width: 100%;
             height: auto;
+        }
+    }
+
+    &.wait {
+        .img {
+            position: relative;
+
+            &::before {
+                position: absolute;
+                content: '';
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.2);
+                backdrop-filter: blur(6px);
+            }
         }
     }
 }

@@ -1,6 +1,14 @@
 .container {
   width: 100%;
 
+  @include mobile {
+    display: none;
+  }
+
+  @include pcSmall {
+    display: block;
+  }
+
   .content {
     display: flex;
     align-items: left;

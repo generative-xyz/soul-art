@@ -1,29 +1,47 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 50px;
-  margin-bottom: 83px;
+  gap: rem(50px);
+  margin-bottom: rem(83px);
+
+  @include mobile {
+    grid-template-columns: repeat(1, 1fr);
+
+  }
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include pcSmall {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.container {
+  margin-top: rem(70px);
 }
 
 .heading {
   font-size: rem(24px);
-  margin-bottom: 32px;
+  margin-bottom: rem(32px);
   display: flex;
-  gap: 12px;
+  gap: rem(12px);
   align-items: center;
 }
 
 .button {
   backdrop-filter: blur(2px);
   background-color: $gray-5;
-  font-size: 14px;
-  padding: 8px 12px;
+  font-size: rem(14px);
+  padding: rem(8px) rem(12px);
 }
 
 .link {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: rem(8px);
+
   &:hover {
     text-decoration: none;
   }

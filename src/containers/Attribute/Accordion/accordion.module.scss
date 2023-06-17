@@ -22,7 +22,7 @@
 
   &_body {
     padding: 0 !important;
-    margin: 16px 0 !important;
+    margin: rem(16px) 0 !important;
   }
 }
 
@@ -59,10 +59,30 @@
   }
 
   &_content {
-    font-size: 14px;
+    font-size: rem(14px);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 20px;
+    grid-gap: rem(20px);
+
+    @include mobile {
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: rem(10px);
+    }
+
+    @include tablet {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: rem(20px);
+    }
+
+    @include pcSmall {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: rem(20px);
+    }
+
+    @include pcS2M {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: rem(20px);
+    }
 
     &_item {
       display: flex;
