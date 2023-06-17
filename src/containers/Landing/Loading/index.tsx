@@ -7,7 +7,6 @@ import { PAGE_ENTER, PAGE_LOADED, PAGE_READY } from '@Constants/common';
 import { gsap } from 'gsap';
 import loadImage from 'image-promise';
 import { CDN_URL } from '@/configs';
-import logger from '@/services/logger';
 
 interface IProcessing {
   value: number;
@@ -82,7 +81,8 @@ export const Loading = (): JSX.Element => {
     }
 
 
-    logger.log(getLoaderCounter().toString());
+    // eslint-disable-next-line no-console
+    console.log('____counter', getLoaderCounter().toString());
     if (getLoaderCounter() > 0) {
       processing.current.delta *= 0.8;
       processing.current.onHold += 0.0001;
