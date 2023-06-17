@@ -4,44 +4,43 @@ import Text from '@Animations/Text';
 import s from './style.module.scss';
 import { contentItem } from './TechItem';
 import { techOverlay } from '@/constants/asset';
+import { CDN_URL } from '@/configs';
 
 const Tech: React.FC = () => {
   const contentArray: contentItem[] = [
-    {
-      id: 1,
-      title: 'Sun top down',
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Erat tincidunt feugiat egestas accumsan orci mauris integer rutrum nec. Et tincidunt enim ultrices facilisis nullam sed. Nisl urna pellentesque ut volutpat. Tellus mattis porttitor donec ac sed.',
-    },
+
     {
       id: 2,
-      title: 'Sun big small',
+      title: 'Sun Size',
+      img: `${CDN_URL}/solagif/sunbig.gif`,
       content:
-        'Lorem ipsum dolor sit amet consectetur. Erat tincidunt feugiat egestas accumsan orci mauris integer rutrum nec. Et tincidunt enim ultrices facilisis nullam sed. Nisl urna pellentesque ut volutpat. Tellus mattis porttitor donec ac sed.',
-    },
-    {
-      id: 3,
-      title: 'Wave',
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Erat tincidunt feugiat egestas accumsan orci mauris integer rutrum nec. Et tincidunt enim ultrices facilisis nullam sed. Nisl urna pellentesque ut volutpat. Tellus mattis porttitor donec ac sed.',
-    },
-    {
-      id: 4,
-      title: 'Foreground',
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Erat tincidunt feugiat egestas accumsan orci mauris integer rutrum nec. Et tincidunt enim ultrices facilisis nullam sed. Nisl urna pellentesque ut volutpat. Tellus mattis porttitor donec ac sed.',
+        'The size of the sun in the artwork is directly influenced by the GM balance. As the GM balance increases, the sun expands, symbolizing the growing strength and significance of the Souls within the New Bitcoin City',
     },
     {
       id: 5,
-      title: 'Flare',
+      title: 'Brushwork',
+      img: `${CDN_URL}/solagif/Brushwork.gif`,
+      content: `The brushwork in the artwork represents the stability of the Souls. A higher trading rate and increased GM balance result in more precise and stable brushwork, reflecting the confidence and active engagement of the owners in the ecosystem.`
+    },
+    {
+      id: 1,
+      title: 'Sun Height',
+      img: `${CDN_URL}/solagif/sunrise.gif`,
       content:
-        'Lorem ipsum dolor sit amet consectetur. Erat tincidunt feugiat egestas accumsan orci mauris integer rutrum nec. Et tincidunt enim ultrices facilisis nullam sed. Nisl urna pellentesque ut volutpat. Tellus mattis porttitor donec ac sed.',
+        'When the GM token price rises, the Souls soar higher in the sky, symbolizing the collective optimism and excitement within the community.',
+    },
+    {
+      id: 1,
+      title: 'Weather',
+      img: `${CDN_URL}/solagif/event.gif`,
+      content:`The artwork's weather reflects the community's emotions. Fear (FUD) brings stormy clouds, caution, and uncertainty. Belief (HOLD) creates a clear and sunny sky, representing optimism. In moments of greed (FOMO), enchanting effects like rainbows, sun flares, and sun pillars appear, adding excitement to the scene.
+`
     },
     {
       id: 6,
-      title: 'Clound',
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Erat tincidunt feugiat egestas accumsan orci mauris integer rutrum nec. Et tincidunt enim ultrices facilisis nullam sed. Nisl urna pellentesque ut volutpat. Tellus mattis porttitor donec ac sed.',
+      title: 'SoulDeparture',
+      img: `${CDN_URL}/solagif/SoulDeparture.gif`,
+      content:`When a Soul is about to leave its owner, indicated by the GM balance falling below a threshold (currently set at 1 $GM), a remarkable transformation takes place. The sun disappears, leaving behind a momentary void and the artwork undergoes a glitch effect. A reminder of the transient nature of ownership and the need for active engagement and care in nurturing the Souls.`,
     },
   ];
 
@@ -61,7 +60,7 @@ const Tech: React.FC = () => {
                   animOption={{ screen: 0, offset: 0, type: 'heading' }}
                   className={s['leftContainer-title']}
                 >
-                  Technical Information Explanation
+                  The Art of Emotions
                 </Text>
               </div>
             </Col>

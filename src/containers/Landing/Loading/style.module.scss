@@ -1,18 +1,22 @@
 .loading {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 2;
+  z-index: 999;
   opacity: 0;
   overflow: hidden;
   background-color: #FFFFFF;
 
+  p{
+    max-width: rem(700px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   &.isReady {
     opacity: 1;
-    z-index: 0;
-    background: unset;
   }
 
   &_bg {

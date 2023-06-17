@@ -7,7 +7,6 @@ import { PAGE_ENTER, PAGE_LOADED, PAGE_READY } from '@Constants/common';
 import { gsap } from 'gsap';
 import loadImage from 'image-promise';
 import { CDN_URL } from '@/configs';
-// import {useParallax} from "@Hooks/useParallax";
 
 interface IProcessing {
   value: number;
@@ -19,8 +18,10 @@ interface IProcessing {
 }
 
 export const Loading = (): JSX.Element => {
-  const { setPageStatus, getLoaderCounter, registerLoader, unRegisterLoader } =
+  const { setPageStatus, getLoaderCounter, registerLoader, unRegisterLoader, pageStatus } =
     useContext(AnimateContext);
+
+  const [bg, setBg] = useState<string>(`${CDN_URL}/video-intro/output_1.jpg`);
 
   const refLoadingWrapper = useRef<HTMLDivElement | null>(null);
   const refMain = useRef<HTMLDivElement | null>(null);
@@ -38,15 +39,13 @@ export const Loading = (): JSX.Element => {
   });
 
   const [isReady, setIsReady] = useState<boolean>(false);
-
-  // useParallax(refMain, refPara, .5);
   const loadingComplete = useCallback(() => {
     setPageStatus(PAGE_LOADED);
     gsap.to(refLoading.current, {
       opacity: 0,
-      delay: 0.2,
+      delay: 0.5,
       ease: 'power3.inOut',
-      duration: 0.3,
+      duration: 0.5,
       onComplete: () => {
         if (refLoading.current) {
           refLoading.current?.style.setProperty('display', 'none');
@@ -54,8 +53,6 @@ export const Loading = (): JSX.Element => {
         document.body.classList.remove('is-loading');
       },
     });
-
-    setTimeout(() => setPageStatus(PAGE_ENTER), 500);
   }, [setPageStatus]);
 
   const looper = () => {
@@ -74,7 +71,7 @@ export const Loading = (): JSX.Element => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       refPersent.current.textContent = `${Math.floor(
-        processing.current.persen
+        processing.current.persen,
       )}%`;
     }
 
@@ -83,7 +80,6 @@ export const Loading = (): JSX.Element => {
       loadingComplete();
     }
 
-    // console.log('___getLoaderCounter()', getLoaderCounter())
     if (getLoaderCounter() > 0) {
       processing.current.delta *= 0.8;
       processing.current.onHold += 0.0001;
@@ -110,7 +106,6 @@ export const Loading = (): JSX.Element => {
         processing.current.imageInLoaded = true;
         setIsReady(true);
         setPageStatus(PAGE_READY);
-        // console.log('___PAGE_READY');
         unRegisterLoader();
       });
     }
@@ -123,6 +118,34 @@ export const Loading = (): JSX.Element => {
     };
   }, [refLoadingWrapper]);
 
+  useEffect(() => {
+    if (isReady) {
+      registerLoader();
+      const imgs = [];
+      for (let i = 1; i <= 172; i++) {
+        imgs.push(`${CDN_URL}/video-intro/output_${i}.jpg`);
+      }
+      loadImage(imgs).finally(() => {
+        unRegisterLoader();
+      });
+    }
+  }, [isReady, registerLoader, unRegisterLoader]);
+
+  useEffect(() => {
+    if (pageStatus === PAGE_LOADED) {
+      const frames = { value: 1 };
+      gsap.to(frames, {
+        value: 172, ease: 'steps(172)', duration: 172 / 24, onUpdate: () => {
+          setBg(`${CDN_URL}/video-intro/output_${Math.floor(frames.value)}.jpg`);
+        },
+        onComplete: () => {
+          refLoadingWrapper.current?.style.setProperty('display', 'none');
+          setPageStatus(PAGE_ENTER);
+        },
+      });
+    }
+  }, [pageStatus, setPageStatus]);
+
   return (
     <div
       ref={refLoadingWrapper}
@@ -132,24 +155,24 @@ export const Loading = (): JSX.Element => {
         ref={refMain}
         className={classNames(s.loading_bg, isReady ? s.isReady : '')}
       >
-        <img ref={refPara} src={`${CDN_URL}/block-1/block-1_1.jpg`} alt="loading" />
+        <img ref={refPara} src={bg} alt='loading' />
       </div>
       <div className={s.loading_wrapper} ref={refLoading}>
         <div className={classNames(s.loading_over)}>
-          <img src={`${CDN_URL}/loading-left-min.png`} alt="loading-left-min" />
+          <img src={`${CDN_URL}/loading-left-min.png`} alt='loading-left-min' />
         </div>
         <div className={classNames(s.loading_over, s.loading_over__right)}>
           <img
             src={`${CDN_URL}/loading-right-min.png`}
-            alt="loading-right-min"
+            alt='loading-right-min'
           />
         </div>
         <img
           className={s.loading_over_overlay}
           src={`${CDN_URL}/overlay-hero-min.png`}
-          alt="overlay-hero-min"
+          alt='overlay-hero-min'
         />
-        <div className="container">
+        <div className='container'>
           <div className={s.container_inner}>
             <div className={s.loading_icon}>
               <span className={s.loading_icon_text}>
@@ -157,7 +180,7 @@ export const Loading = (): JSX.Element => {
                 <span
                   className={classNames(
                     s.loading_icon_text_counter,
-                    'text-black'
+                    'text-black',
                   )}
                   ref={refPersent}
                 >
@@ -165,15 +188,15 @@ export const Loading = (): JSX.Element => {
                 </span>
               </span>
               <div className={s.loading_icon_inner}>
-                <img src={`${CDN_URL}/ic-loading-dark.svg`} alt="ic-loading" />
+                <img src={`${CDN_URL}/ic-loading-dark.svg`} alt='ic-loading' />
               </div>
             </div>
             <div className={s.loading_inner}>
               <Text as={'p'} size={'d2'} className={'mb-1_16'}>
                 Welcome to New Bitcoin City
               </Text>
-              <Text as={'p'} size={'20'} className={'text-'}>
-                Let the tale of Souls inspire you.
+              <Text as={'p'} size={'20'}>
+                Within the realm of your GM tokens resides a sacred energy—a collective essence known as The Souls.
               </Text>
             </div>
           </div>

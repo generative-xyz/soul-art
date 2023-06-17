@@ -1,15 +1,15 @@
 import React from 'react';
-import { GridDebug } from '@Animations/Grid/grid';
 import Tech from './Tech';
 import Flare from './Flare';
 import { useSmoothScroll } from '@Hooks/useSmoothScroll';
 import { FrameTop } from '@/containers/Landing/FrameTop';
-import ProgressBar from './ProgressBar';
 import s from './style.module.scss';
 import { HEADER_HEIGHT } from '@/layouts';
 import Header from '@/layouts/Header';
-import Sunback from '@/containers/Landing/Sunback';
 import { useWeb3React } from '@web3-react/core';
+import ProgressBarCs from '@/containers/Landing/ProgressBarCs';
+import { Loading } from '@/containers/Landing/Loading';
+import SectionFlys from '@/containers/Landing/SectionFlys';
 
 export const LandingContainer: React.FC = () => {
   const { account } = useWeb3React();
@@ -23,12 +23,12 @@ export const LandingContainer: React.FC = () => {
   return (
     <div className={s.landingPage}>
       <Header height={HEADER_HEIGHT} isAnimation={true} theme={'dark'} />
+      <Loading />
       <FrameTop />
       <Flare />
-      <Sunback />
+      <SectionFlys />
       <Tech />
-      <ProgressBar />
-      <GridDebug />
+      <ProgressBarCs />
     </div>
   );
 };
