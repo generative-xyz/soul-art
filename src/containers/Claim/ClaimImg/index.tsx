@@ -1,10 +1,11 @@
 import { CDN_URL } from '@/configs';
 import s from './style.module.scss';
 import { Explorer } from '@Components/Expoler';
+import { Token } from '@/interfaces/token';
 
 type IClaimImgProps = {
   isClaimed: boolean;
-  soulToken: any;
+  soulToken: Token | null;
   claimStatus: string;
 };
 

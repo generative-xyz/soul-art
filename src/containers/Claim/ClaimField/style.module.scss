@@ -9,14 +9,14 @@
     border-radius: 100px;
     cursor: pointer;
     text-align: center;
-    transition: .5s $easeOutQuart;
+    transition: 0.5s $easeOutQuart;
 
     span {
       color: #fff;
       font-size: rem(16px);
       font-weight: 500;
       line-height: 112%;
-      transition: .5s $easeOutQuart;
+      transition: 0.5s $easeOutQuart;
     }
 
     &.false {
@@ -28,15 +28,18 @@
       }
     }
 
-    &:hover {
-      background: #fff;
+    .hide {
+      display: none;
 
-      span {
-        color: #000;
+      &:hover {
+        background: #fff;
+
+        span {
+          color: #000;
+        }
       }
     }
   }
-
   .noti {
     display: flex;
     align-items: center;

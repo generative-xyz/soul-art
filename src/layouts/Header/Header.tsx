@@ -154,11 +154,16 @@ const Header = ({
                 <div className={headerStyles.profile_container}>
                   <OverlayTrigger
                     overlay={
-                      <Tooltip id={'warning-gm'} placement="bottom" className={headerStyles.tooltip_body}>
+                      <Tooltip
+                        id={'warning-gm'}
+                        placement="bottom"
+                        className={headerStyles.tooltip_body}
+                      >
                         <div className={headerStyles.tooltip_content}>
                           <p>You are not owning over 1GM</p>
                           <p>
-                            Your art will be adopted by someone else at any time.
+                            Your art will be adopted by someone else at any
+                            time.
                           </p>
                         </div>
                       </Tooltip>
@@ -171,16 +176,20 @@ const Header = ({
                         headerStyles.warning
                       )}
                     >
-                      <IconSVG src={`${CDN_URL}/ic-warning.svg`} maxWidth={"20"} maxHeight={"20"}></IconSVG>
-                            {gmBalance} GM
+                      <IconSVG
+                        src={`${CDN_URL}/ic-warning.svg`}
+                        maxWidth={'20'}
+                        maxHeight={'20'}
+                      ></IconSVG>
+                      {gmBalance}&nbsp;GM
                     </div>
                   </OverlayTrigger>
 
                   <div className={headerStyles.profile_amount}>
-                    {formatEthPrice(tcBalance)} TC
+                    {formatEthPrice(tcBalance)}&nbsp;TC
                   </div>
                   <div className={headerStyles.profile_amount}>
-                    {formatBTCPrice(btcBalance)} BTC
+                    {formatBTCPrice(btcBalance)}&nbsp;BTC
                   </div>
                   <div className={headerStyles.profile_avatar}>
                     {account ? (
@@ -202,20 +211,20 @@ const Header = ({
                   <div className={headerStyles.menu_content}>
                     <div className={headerStyles.menu_title}>TC Address</div>
                     <div className={headerStyles.menu_item}>
-                    <div className={headerStyles.menu_item_address}>
-                      <IconSVG
-                        src={`${CDN_URL}/ic_tc.svg`}
-                        maxWidth="28"
-                        maxHeight="28"
-                      />
-                      <p>{formatLongAddress(user?.walletAddress || '')}</p>
+                      <div className={headerStyles.menu_item_address}>
+                        <IconSVG
+                          src={`${CDN_URL}/ic_tc.svg`}
+                          maxWidth="28"
+                          maxHeight="28"
+                        />
+                        <p>{formatLongAddress(user?.walletAddress || '')}</p>
                       </div>
                       <div
                         onClick={() => onClickCopy(user?.walletAddress || '')}
                       >
                         <IconSVG
                           src={`${CDN_URL}/ic-copy.svg`}
-                          color={"#5B5B5B"}
+                          color={'#5B5B5B'}
                           maxWidth="16"
                           // type="stroke"
                         />
@@ -232,9 +241,11 @@ const Header = ({
                           maxWidth="28"
                           maxHeight="28"
                         />
-                      <p>
-                        {formatLongAddress(user?.walletAddressBtcTaproot || '')}
-                      </p>
+                        <p>
+                          {formatLongAddress(
+                            user?.walletAddressBtcTaproot || ''
+                          )}
+                        </p>
                       </div>
                       <div
                         onClick={() =>
