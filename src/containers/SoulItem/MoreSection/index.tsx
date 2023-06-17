@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { FC, memo } from 'react';
 import moreSectionStyles from './moreSection.module.scss';
 import SoulsCard from '@/components/SoulCards';
+import { Container } from 'react-bootstrap';
 
 type MoreSectionProps = {
   soulItems: ISoul[];
@@ -14,7 +15,7 @@ type MoreSectionProps = {
 
 const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
   return (
-    <section className={'container'}>
+    <Container className={moreSectionStyles.container}>
       <h4 className={moreSectionStyles.heading}>
         More from this collection
         <Button className={moreSectionStyles.button}>
@@ -39,7 +40,7 @@ const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
           />
         ))}
       </div>
-    </section>
+    </Container>
   );
 };
 
