@@ -20,6 +20,7 @@ import { getListTokensByWallet } from '@Services/soul';
 import { SoulEventType } from '@/enums/soul';
 import { getUserSelector } from '@/state/user/selector';
 import { useSelector } from 'react-redux';
+import { Token } from '@/interfaces/token';
 // import useAsyncEffect from "use-async-effect";
 // import {getListTokensByWallet} from "@Services/soul";
 
@@ -46,7 +47,7 @@ const ClaimPage = () => {
   const [isFetchingApi, setIsFetchingApi] = useState<boolean>(false);
 
   //todo add type kevin
-  const [soulToken, setSoulToken] = useState<any | null>(null);
+  const [soulToken, setSoulToken] = useState<Token | null>(null);
 
   const { run: call } = useContractOperation<IMintParams, Transaction | null>({
     operation: useMint,
@@ -111,7 +112,7 @@ const ClaimPage = () => {
     setWalletConnected_localhost(walletConnectedValue);
     setWalletConnected(walletConnected);
 
-    if (account && !isConnecting) {
+    if (account && user?.walletAddress && !isConnecting) {
       setWalletConnected(true);
       localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
     } else {
@@ -152,9 +153,7 @@ const ClaimPage = () => {
     } catch (e) {
       logger.error('Error get tokens:', e);
     } finally {
-      setTimeout(async () => {
-        setIsFetchingApi(false);
-      }, 5000);
+      setIsFetchingApi(false);
     }
   }, [account]);
 

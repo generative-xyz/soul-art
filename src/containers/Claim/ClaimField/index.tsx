@@ -53,7 +53,7 @@ const ClaimField: React.FC<IClainFeildProps> = ({
     ) : (
       <div
         className={`${s.textButton} ${
-          (isReceiveAble && haveEnoughBalance) || isFetchingApi ? '' : s.false
+          isReceiveAble && haveEnoughBalance && !isFetchingApi ? '' : s.false
         }`}
         onClick={handleClaimed}
       >
