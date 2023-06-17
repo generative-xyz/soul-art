@@ -37,18 +37,30 @@
                 cursor: pointer;
                 font-size: rem(16px);
                 line-height: 112%;
-
+                transition: .5s $easeOutQuart;
 
                 &.init {
                     border: 1px solid #fff;
                     background: #fff;
                     color: #000;
+
+                    &:hover {
+                        border: 1px solid #000;
+                        background: #000;
+                        color: #fff;
+                    }
                 }
 
                 &.trans {
                     border: 1px solid rgba(255, 255, 255, 0.2);
                     background: rgba(255, 255, 255, 0.05);
                     color: #fff;
+
+                    &:hover {
+                        border: 1px solid #fff;
+                        background: #fff;
+                        color: #000;
+                    }
                 }
             }
         }

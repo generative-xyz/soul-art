@@ -58,7 +58,7 @@ const Introduce: React.FC = () => {
 
             <AnimFade className={s['introduceVideo']} screen={1}>
               <h5 className={s['introduceVideo-title']}>Watch video story</h5>
-              <div className={s['wrap-video']}>
+              <div className={s['wrap-video']} onClick={handleOpenModal}>
                 <ImageFrame type={'small'}>
                   <img src={IMG_HERO_URL} alt="videoplay" />
                   <IconSVG
@@ -66,7 +66,6 @@ const Introduce: React.FC = () => {
                     maxWidth={'40'}
                     maxHeight={'40'}
                     className={s.modalPlay}
-                    onClick={handleOpenModal}
                   />
                 </ImageFrame>
               </div>

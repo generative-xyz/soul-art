@@ -1,7 +1,5 @@
 .claimPage {
   width: 100%;
-  margin-top: rem(84px);
-  height: calc(100vh - rem(84px));
 
   .container {
     height: 100%;
@@ -15,8 +13,7 @@
 
         .wrapBox {
           position: relative;
-          top: 50%;
-          transform: translateY(-50%);
+          top: rem(210px);
 
           .claimBox {
             position: relative;
@@ -72,7 +69,14 @@
               margin-bottom: unset;
             }
           }
+
+          &.isClaimed {
+            top: 50%;
+            transform: translateY(-50%);
+          }
         }
+
+
       }
     }
   }
