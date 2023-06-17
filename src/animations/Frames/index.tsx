@@ -17,7 +17,7 @@ interface IProps {
   onProcessing?: (n: number) => void;
   onEnter?: () => void;
   start?: (s?: string) => void;
-  end?: () => void;
+  end?: (s?: string) => void;
   formatFrameUrl?: (s: string, i: number) => string;
 }
 
@@ -173,7 +173,7 @@ export const Frames: React.FC<IProps> = ({
       refDom.current.lastFrame = 1;
       refDom.current.currentFrame = 1;
       runCanvas();
-      end && end();
+      end && end('___k_preLoadFrame_Frames');
     });
   };
 

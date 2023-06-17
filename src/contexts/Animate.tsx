@@ -12,7 +12,7 @@ import Lenis from '@studio-freight/lenis';
 
 interface IAnimateContext {
   registerLoader: (s?: string) => void;
-  unRegisterLoader: () => void;
+  unRegisterLoader: (s?: string) => void;
   getLoaderCounter: () => number;
 
   pageStatus: string;
@@ -40,7 +40,7 @@ export const AnimateContext = createContext<IAnimateContext>({
   registerLoader: (_) => {
     return;
   },
-  unRegisterLoader: () => {
+  unRegisterLoader: (_) => {
     return;
   },
   getLoaderCounter: () => 1,
@@ -89,19 +89,24 @@ export const AnimateProvider: FC<PropsWithChildren> = ({ children }) => {
   const [pageStatus, setPageStatus] = useState<'PAGE_ENTER' | 'PAGE_LOADED' | 'PAGE_LOADING' | 'PAGE_READY'>('PAGE_LOADING');
 
   const registerLoader = useCallback((s?: string) => {
-    // eslint-disable-next-line no-console
-    s && console.log('____function', s);
-    refOption.current.counter += 1;
-  }, [refOption.current]);
 
-  const unRegisterLoader = useCallback(() => {
+
+    refOption.current.counter += 1;
+    // eslint-disable-next-line no-console
+    s && console.log('____function', s, refOption.current.counter);
+  }, []);
+
+  const unRegisterLoader = useCallback((s?: string) => {
+
     refOption.current.counter -= 1;
-  }, [refOption.current]);
+    // eslint-disable-next-line no-console
+    s && console.log('____function', s, refOption.current.counter);
+  }, []);
 
   const getLoaderCounter = useCallback((): number => {
     // console.log('___refOption.current.counter', refOption.current.counter);
     return refOption.current.counter;
-  }, [refOption.current]);
+  }, []);
 
   const handlePageScroll = () => {
     if (pageScrollTop() > 100) {

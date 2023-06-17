@@ -47,7 +47,7 @@ export const FrameTop: React.FC = () => {
   useEffect(()=>{
     registerLoader('__useEffect_FrameTo');
     return ()=>{
-      unRegisterLoader();
+      unRegisterLoader('__k_useEffect_FrameTo');
     }
   })
 

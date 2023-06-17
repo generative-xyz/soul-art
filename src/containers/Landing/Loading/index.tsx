@@ -101,7 +101,7 @@ export const Loading = (): JSX.Element => {
       gsap.ticker.add(looper);
     }, refLoading);
 
-    registerLoader();
+    registerLoader('___useEffect_loading');
     if (refLoadingWrapper.current) {
       const img = refLoadingWrapper.current?.querySelectorAll('img');
       loadImage(img).finally(() => {
@@ -109,12 +109,12 @@ export const Loading = (): JSX.Element => {
         processing.current.imageInLoaded = true;
         setIsReady(true);
         setPageStatus(PAGE_READY);
-        unRegisterLoader();
+        unRegisterLoader('___k_1_useEffect_loading');
       });
     }
 
     return () => {
-      unRegisterLoader();
+      unRegisterLoader('___k_2_useEffect_loading');
       document.body.classList.remove('is-loading');
       gsap.ticker.remove(looper);
       loadContent.revert();
@@ -123,19 +123,19 @@ export const Loading = (): JSX.Element => {
 
   useEffect(() => {
     if (isReady) {
-      registerLoader('__useEffect_loading');
+      registerLoader('__useEffect_isReady_loading');
       const imgs = [];
       for (let i = 1; i <= 172; i++) {
         imgs.push(`${CDN_URL}/video-intro/output_${i}.jpg`);
       }
       loadImage(imgs).finally(() => {
-        unRegisterLoader();
+        unRegisterLoader('__k_1_useEffect_isReady_loading');
       });
     }
 
     return () => {
       if (isReady) {
-        unRegisterLoader();
+        unRegisterLoader('__k_2_useEffect_isReady_loading');
       }
     };
   }, [isReady, registerLoader, unRegisterLoader]);

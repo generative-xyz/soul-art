@@ -26,14 +26,14 @@ const SectionFlys = (): JSX.Element => {
         imgs.push(`${CDN_URL}/souls/1%20(${i}).jpg`);
       }
       loadImage(imgs).finally(() => {
-        unRegisterLoader();
+        unRegisterLoader('__k_1_useEffect_SectionFlys');
         setUrls(imgs);
       });
     }
 
     return ()=>{
       if (pageStatus === PAGE_READY) {
-        unRegisterLoader();
+        unRegisterLoader('__k_2_useEffect_SectionFlys');
       }
     }
   }, [pageStatus, registerLoader, unRegisterLoader]);
