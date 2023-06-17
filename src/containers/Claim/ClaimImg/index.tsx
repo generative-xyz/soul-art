@@ -16,7 +16,7 @@ const ClaimImg: React.FC<IClaimImgProps> = ({
   return (
     <div
       className={`${s.claimImg} ${isClaimed ? s.true : ''} ${
-        claimStatus === 'waiting' ? s.waitClaim : ''
+        claimStatus === 'waiting' ? s.wait : ''
       }`}
     >
       {soulToken ? (
