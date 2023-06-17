@@ -168,12 +168,12 @@ export const Frames: React.FC<IProps> = ({
   });
 
   const preLoadFrame = async () => {
-    start && start('___preLoadFrame_Frames');
+    start && start();
     loadImages().then(() => {
       refDom.current.lastFrame = 1;
       refDom.current.currentFrame = 1;
       runCanvas();
-      end && end('___k_preLoadFrame_Frames');
+      end && end();
     });
   };
 

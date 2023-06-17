@@ -78,6 +78,7 @@ export const AnimateContext = createContext<IAnimateContext>({
   },
 });
 
+
 export const AnimateProvider: FC<PropsWithChildren> = ({ children }) => {
   const refOption = useRef<any>({ counter: 0 });
   const [isPageScrolling, setIsPageScrolling] = useState<boolean>(false);
@@ -88,23 +89,15 @@ export const AnimateProvider: FC<PropsWithChildren> = ({ children }) => {
   const [lenis, setLenis] = useState<Lenis | null>(null);
   const [pageStatus, setPageStatus] = useState<'PAGE_ENTER' | 'PAGE_LOADED' | 'PAGE_LOADING' | 'PAGE_READY'>('PAGE_LOADING');
 
-  const registerLoader = useCallback((s?: string) => {
-
-
+  const registerLoader = useCallback(() => {
     refOption.current.counter += 1;
-    // eslint-disable-next-line no-console
-    s && console.log('____function', s, refOption.current.counter);
   }, []);
 
-  const unRegisterLoader = useCallback((s?: string) => {
-
+  const unRegisterLoader = useCallback(() => {
     refOption.current.counter -= 1;
-    // eslint-disable-next-line no-console
-    s && console.log('____function', s, refOption.current.counter);
   }, []);
 
   const getLoaderCounter = useCallback((): number => {
-    // console.log('___refOption.current.counter', refOption.current.counter);
     return refOption.current.counter;
   }, []);
 

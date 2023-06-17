@@ -80,9 +80,6 @@ export const Loading = (): JSX.Element => {
       loadingComplete();
     }
 
-
-    // eslint-disable-next-line no-console
-    console.log('____counter', getLoaderCounter().toString());
     if (getLoaderCounter() > 0) {
       processing.current.delta *= 0.8;
       processing.current.onHold += 0.0001;
@@ -101,7 +98,7 @@ export const Loading = (): JSX.Element => {
       gsap.ticker.add(looper);
     }, refLoading);
 
-    registerLoader('___useEffect_loading');
+    registerLoader();
     if (refLoadingWrapper.current) {
       const img = refLoadingWrapper.current?.querySelectorAll('img');
       loadImage(img).finally(() => {
@@ -109,12 +106,12 @@ export const Loading = (): JSX.Element => {
         processing.current.imageInLoaded = true;
         setIsReady(true);
         setPageStatus(PAGE_READY);
-        unRegisterLoader('___k_1_useEffect_loading');
+        unRegisterLoader();
       });
     }
 
     return () => {
-      unRegisterLoader('___k_2_useEffect_loading');
+      unRegisterLoader();
       document.body.classList.remove('is-loading');
       gsap.ticker.remove(looper);
       loadContent.revert();

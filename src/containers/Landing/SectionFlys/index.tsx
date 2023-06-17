@@ -20,20 +20,20 @@ const SectionFlys = (): JSX.Element => {
 
   useEffect(() => {
     if (pageStatus === PAGE_READY) {
-      registerLoader('___useEffect_SectionFlys');
+      registerLoader();
       const imgs: string[] = [];
       for (let i = 1; i <= 22; i++) {
         imgs.push(`${CDN_URL}/souls/1%20(${i}).jpg`);
       }
       loadImage(imgs).finally(() => {
-        unRegisterLoader('__k_1_useEffect_SectionFlys');
+        unRegisterLoader();
         setUrls(imgs);
       });
     }
 
     return ()=>{
       if (pageStatus === PAGE_READY) {
-        unRegisterLoader('__k_2_useEffect_SectionFlys');
+        unRegisterLoader();
       }
     }
   }, [pageStatus, registerLoader, unRegisterLoader]);

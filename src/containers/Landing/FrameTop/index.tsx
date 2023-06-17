@@ -46,7 +46,6 @@ export const FrameTop: React.FC = () => {
 
   return (
     <div className={s.main} ref={elMain}>
-
       {
         <Frames
           width={1920}
