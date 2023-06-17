@@ -1,4 +1,3 @@
-import Button from '@/components/Button';
 import Text from '@Animations/Text';
 import { AnimFade } from '@Animations/Fade';
 import s from './style.module.scss';
@@ -10,6 +9,8 @@ import { useContext, useState } from 'react';
 import { Col, Container } from 'react-bootstrap';
 import { IMG_HERO_URL, modalPlay } from '@/constants/asset';
 import { AnimateContext } from '@/contexts/Animate';
+import Link from 'next/link';
+import { ROUTE_PATH } from '@/constants/route-path';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -52,8 +53,12 @@ const Introduce: React.FC = () => {
             </Text>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
-              <Button className={cs(s.button, s.init)}>Explore art</Button>
-              <Button className={cs(s.button, s.trans)}>Claim Souls</Button>
+              <Link href={ROUTE_PATH.ART} className={cs(s.button, s.init)}>
+                Explore art
+              </Link>
+              <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.trans)}>
+                Claim Souls
+              </Link>
             </AnimFade>
 
             <AnimFade className={s['introduceVideo']} screen={1}>

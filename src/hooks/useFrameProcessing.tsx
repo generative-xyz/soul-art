@@ -1,6 +1,6 @@
-import { MutableRefObject, useLayoutEffect } from "react";
-import { gsap } from "gsap";
-import { MathMap } from "@Services/Animate/AnimateMathUtil";
+import { MutableRefObject, useLayoutEffect } from 'react';
+import { gsap } from 'gsap';
+import { MathMap } from '@Services/Animate/AnimateMathUtil';
 
 export const useFrameProcessing = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

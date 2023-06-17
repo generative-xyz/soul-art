@@ -128,7 +128,10 @@ export const Loading = (): JSX.Element => {
       ref={refLoadingWrapper}
       className={classNames(s.loading, isReady ? s.isReady : '')}
     >
-      <div ref={refMain} className={s.loading_bg}>
+      <div
+        ref={refMain}
+        className={classNames(s.loading_bg, isReady ? s.isReady : '')}
+      >
         <img ref={refPara} src={`${CDN_URL}/hero-bg-min.jpeg`} alt="loading" />
       </div>
       <div className={s.loading_wrapper} ref={refLoading}>
