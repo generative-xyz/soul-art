@@ -42,18 +42,18 @@ export const Loading = (): JSX.Element => {
   // useParallax(refMain, refPara, .5);
   const loadingComplete = useCallback(() => {
     setPageStatus(PAGE_LOADED);
-    gsap.to(refLoading.current, {
-      opacity: 0,
-      delay: 0.2,
-      ease: 'power3.inOut',
-      duration: 0.3,
-      onComplete: () => {
-        if (refLoading.current) {
-          refLoading.current?.style.setProperty('display', 'none');
-        }
-        document.body.classList.remove('is-loading');
-      },
-    });
+    // gsap.to(refLoading.current, {
+    //   opacity: 0,
+    //   delay: 0.2,
+    //   ease: 'power3.inOut',
+    //   duration: 0.3,
+    //   onComplete: () => {
+    //     if (refLoading.current) {
+    //       refLoading.current?.style.setProperty('display', 'none');
+    //     }
+    //     document.body.classList.remove('is-loading');
+    //   },
+    // });
 
     setTimeout(() => setPageStatus(PAGE_ENTER), 500);
   }, [setPageStatus]);

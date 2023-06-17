@@ -8,7 +8,6 @@ import ProgressBar from './ProgressBar';
 import s from './style.module.scss';
 import { HEADER_HEIGHT } from '@/layouts';
 import Header from '@/layouts/Header';
-import Sunback from "@/containers/Landing/Sunback";
 
 export const LandingContainer: React.FC = () => {
   useSmoothScroll();
@@ -18,7 +17,6 @@ export const LandingContainer: React.FC = () => {
       <Header height={HEADER_HEIGHT} isAnimation={true} theme={'dark'} />
       <FrameTop />
       <Flare />
-      <Sunback />
       <Tech />
       <ProgressBar />
       <GridDebug />
