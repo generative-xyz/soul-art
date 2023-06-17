@@ -16,7 +16,7 @@ interface IProps {
   width: number;
   onProcessing?: (n: number) => void;
   onEnter?: () => void;
-  start?: (s?:string) => void;
+  start?: (s?: string) => void;
   end?: () => void;
   formatFrameUrl?: (s: string, i: number) => string;
 }
@@ -185,6 +185,11 @@ export const Frames: React.FC<IProps> = ({
         runCanvas();
       }, 200);
     }
+    return () => {
+      if (pageStatus === PAGE_READY) {
+        end && end();
+      }
+    };
   }, [urlFrame, pageStatus]);
 
   return (

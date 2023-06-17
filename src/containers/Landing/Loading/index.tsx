@@ -132,6 +132,12 @@ export const Loading = (): JSX.Element => {
         unRegisterLoader();
       });
     }
+
+    return () => {
+      if (isReady) {
+        unRegisterLoader();
+      }
+    };
   }, [isReady, registerLoader, unRegisterLoader]);
 
   useEffect(() => {

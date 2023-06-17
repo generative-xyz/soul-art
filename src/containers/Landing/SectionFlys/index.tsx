@@ -30,6 +30,12 @@ const SectionFlys = (): JSX.Element => {
         setUrls(imgs);
       });
     }
+
+    return ()=>{
+      if (pageStatus === PAGE_READY) {
+        unRegisterLoader();
+      }
+    }
   }, [pageStatus, registerLoader, unRegisterLoader]);
 
   useScrollFixed(refBox, 22 * 100, (self) => {
