@@ -49,7 +49,7 @@ export const FrameTop: React.FC = () => {
     return ()=>{
       unRegisterLoader('__k_useEffect_FrameTo');
     }
-  })
+  }, [registerLoader, unRegisterLoader])
 
   return (
     <div className={s.main} ref={elMain}>
