@@ -39,19 +39,18 @@
         }
       }
     }
+  }
+  .noti {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+    margin-top: rem(24px);
 
-    .noti {
-      display: flex;
-      align-items: center;
-      gap: rem(8px);
-      margin-top: rem(24px);
-
-      span {
-        color: #ff4747;
-        font-weight: 500;
-        font-size: rem(16px);
-        line-height: 140%;
-      }
+    span {
+      color: #ff4747;
+      font-weight: 500;
+      font-size: rem(16px);
+      line-height: 140%;
     }
   }
 }

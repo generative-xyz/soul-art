@@ -31,7 +31,7 @@ const ClaimPage = () => {
     useState<any>();
   const [isConnecting, setIsConnecting] = useState(false);
   const [isReceiveAble, setIsReceiveAble] = useState<boolean>(true);
-  const [claimStatus, setClaimStatus] = useState<string>('time');
+  const [claimStatus, setClaimStatus] = useState<string>('');
   const { account, provider } = useWeb3React();
   const [totalGM, setTotalGM] = useState<number>(0);
   const [signature, setSignature] = useState<string>('');
@@ -222,7 +222,7 @@ const ClaimPage = () => {
               receipt.status === null ||
               receipt.status === undefined
             ) {
-              setIsClaimed(false);
+              setIsClaimed(true);
               setClaimStatus('waiting');
             } else {
               setIsClaimed(false);
@@ -275,7 +275,11 @@ const ClaimPage = () => {
                   claimStatus === 'success' ? s.success : ''
                 }`}
               >
-                <ClaimImg isClaimed={isClaimed} soulToken={soulToken} />
+                <ClaimImg
+                  isClaimed={isClaimed}
+                  soulToken={soulToken}
+                  claimStatus={claimStatus}
+                />
                 <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
                 {!isClaimed ? (
                   <ClaimField
