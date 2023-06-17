@@ -8,10 +8,17 @@ import ProgressBar from './ProgressBar';
 import s from './style.module.scss';
 import { HEADER_HEIGHT } from '@/layouts';
 import Header from '@/layouts/Header';
-import Sunback from "@/containers/Landing/Sunback";
+import Sunback from '@/containers/Landing/Sunback';
+import { useWeb3React } from '@web3-react/core';
 
 export const LandingContainer: React.FC = () => {
+  const { account } = useWeb3React();
+
   useSmoothScroll();
+
+  React.useEffect(() => {
+    localStorage.setItem('isWalletConnected', (!!account).toString());
+  }, [account]);
 
   return (
     <div className={s.landingPage}>
