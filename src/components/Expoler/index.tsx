@@ -6,7 +6,7 @@ export const Explorer = ({url}: {url: string}):JSX.Element =>{
         <ClientOnly>
             <iframe
                 sandbox={'allow-same-origin allow-scripts'}
-                style={{ width: '100vw', height: '100vh' }}
+                style={{ width: '100%', height: '100vh' }}
                 src={url}
             />
         </ClientOnly>

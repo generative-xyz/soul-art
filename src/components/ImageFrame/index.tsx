@@ -13,6 +13,10 @@ const ImageFrame: React.FC<IImageFrameProps> = ({ children, type }) => {
       <span className={s['top-right']}></span>
       <span className={s['bottom-left']}></span>
       <span className={s['bottom-right']}></span>
+      <span className={s['line-top']}></span>
+      <span className={s['line-right']}></span>
+      <span className={s['line-bottom']}></span>
+      <span className={s['line-left']}></span>
     </div>
   );
 };
