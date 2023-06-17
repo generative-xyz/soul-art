@@ -9,9 +9,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: rem(16px);
   z-index: 5;
   backdrop-filter: blur(2px);
+
+  @include tabletWide {
+    flex-direction: row;
+    gap: rem(16px);
+  }
+
+  @include min-tablet {
+    flex-direction: row;
+    gap: rem(16px);
+  }
+
+  @include mobile {
+    gap: rem(8px);
+    flex-direction: column;
+  }
 
   .bannerText {
     margin-bottom: unset;
@@ -19,6 +33,12 @@
     line-height: 140%;
     font-weight: 400;
     color: #000;
+
+    @include mobile {
+      text-align: center;
+      padding-left: rem(8px);
+      padding-right: rem(8px);
+    }
   }
 
   .bannerButton {

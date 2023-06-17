@@ -1,4 +1,6 @@
 .attribute {
+  width: 100%;
+
   &_box {
     width: 100%;
     min-height: 100vh;
@@ -12,47 +14,132 @@
   &_container {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     margin: 0 auto;
-    max-width: 740px;
     position: fixed;
-    bottom: 32px;
-    padding: 8px;
-    border-radius: 100px;
     box-shadow: 0px 0px 32px -6px #0000001a;
     background: #ffffff;
     border: 1px solid #ececec;
-    gap: 8px;
+
+    @include mobile {
+      flex-direction: column;
+      justify-content: flex-start;
+      bottom: rem(16px);
+      border-radius: rem(40px);
+      max-width: 98%;
+      gap: rem(4px);
+      padding: rem(12px);
+    }
+
+    @include tabletMid {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      bottom: rem(24px);
+      border-radius: rem(100px);
+      max-width: rem(740px);
+      gap: rem(8px);
+      padding: rem(8px);
+    }
+
+    @include tablet {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      bottom: rem(32px);
+      border-radius: rem(100px);
+      max-width: rem(740px);
+      gap: rem(8px);
+      padding: rem(8px);
+    }
+
+    @include pcSmall {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      bottom: rem(32px);
+      border-radius: rem(100px);
+      max-width: rem(740px);
+      padding: rem(8px);
+      gap: rem(8px);
+    }
+
+    @include pcS2M {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      bottom: rem(32px);
+      border-radius: rem(100px);
+      max-width: rem(740px);
+      gap: rem(8px);
+      padding: rem(8px);
+    }
   }
 
   &_leftContainer {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 8px;
+
+    @include mobile {
+      gap: 0;
+      justify-content: space-between;
+      padding: 0 rem(10px);
+    }
+
+    @include tablet {
+      gap: rem(8px);
+    }
+
+    @include pcSmall {
+      gap: rem(8px);
+    }
+
+    @include pcS2M {
+      gap: rem(8px);
+    }
   }
 
   &_rightContainer {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+
+    &_dropdownToggle {
+      width: 100%;
+    }
 
     &_dropdownToggle::after {
       content: none !important;
+    }
+
+    @include mobile {
+      justify-content: space-between;
+      padding: 0 rem(12px);
+    }
+
+    @include min-tablet {
+      justify-content: space-around;
+      justify-content: flex-end;
+    }
+
+    @include pcSmall {
+      justify-content: flex-end;
+    }
+
+    @include pcS2M {
+      justify-content: flex-end;
     }
   }
 
   &_button {
     text-align: center;
-    padding: 12px 24px;
+    padding: rem(12px) rem(24px);
     color: #000;
     background: #f6f6f6;
     text-align: center;
-    border-radius: 100px;
-    font-size: 14px;
-    line-height: 18px;
-    transition: all 0.3s ease-in-out;
+    border-radius: rem(100px);
+    font-size: rem(14px);
+    line-height: rem(18px);
+    transition: .5s $easeOutQuart;
     cursor: pointer;
 
     &:first-child {
@@ -63,7 +150,7 @@
     &:hover {
       color: #f6f6f6;
       background: #000;
-      transition: all 0.3s ease-in-out;
+      transition: .5s $easeOutQuart;
     }
   }
 
@@ -72,8 +159,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: rem(14px);
+    line-height: rem(18px);
 
     p {
       margin-bottom: 0;
@@ -81,16 +168,16 @@
   }
 
   &_rarity {
-    height: 200px;
+    height: rem(200px);
 
     &_container {
-      width: 150px;
+      width: rem(150px);
       background: #fff;
       position: absolute;
-      margin-bottom: 25px;
-      padding: 8px;
-      border-radius: 16px;
-      box-shadow: 0px 0px 32px -6px #0000001a;
+      margin-bottom: rem(25px);
+      padding: rem(8px);
+      border-radius: rem(16px);
+      box-shadow: 0px 0px rem(32px) rem(-6px) #0000001a;
       background: #ffffff;
     }
 
@@ -116,6 +203,22 @@
     width: 1px;
     border: 1px solid #ececec;
     margin: 0 rem(18.5px) 0 rem(22px);
+
+    @include mobile {
+      display: none;
+    }
+
+    @include tablet {
+      display: block;
+    }
+
+    @include pcSmall {
+      display: block;
+    }
+
+    @include pcS2M {
+      display: block;
+    }
   }
 
   &_filter {
@@ -166,17 +269,88 @@
 }
 
 .filterAttribute {
+  width: 100%;
+
   &_container {
+    position: relative;
     overflow: hidden;
-    height: auto;
-    max-height: 460px;
-    width: 740px;
     margin-right: rem(-10px);
     border: 1px solid #ececec;
     box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
     border-radius: rem(20px);
     padding: rem(20px);
     margin-bottom: rem(25px);
+    width: 100%;
+
+    &:after {
+      height: 3%;
+      width: 100%;
+      position: absolute;
+      content: "";
+      background: #fff;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    @include mobile {
+      height: auto;
+      width: auto;
+      max-height: 370px;
+      transform: translate3d(-242px, -56px, 0px) !important;
+      width: 373px;
+    }
+
+    @include tablet {
+      height: auto;
+      max-height: 460px;
+      width: 100%;
+      transform: translate3d(10px, -20px, 0px) !important;
+    }
+
+    @include tabletMid {
+      height: auto;
+      max-height: 460px;
+      width: 740px;
+      transform: translate3d(10px, -20px, 0px) !important;
+    }
+
+    @include tabletWide {
+      height: auto;
+      max-height: 460px;
+      width: 740px;
+      transform: translate3d(10px, -20px, 0px) !important;
+    }
+
+    @include pcSmall {
+      width: auto;
+      max-height: 460px;
+      width: 740px;
+      transform: translate3d(10px, -20px, 0px) !important;
+    }
+
+    @include pcMid {
+      width: auto;
+      max-height: 460px;
+      width: 740px;
+      transform: translate3d(10px, -20px, 0px) !important;
+    }
+
+    @include pcWide {
+      width: auto;
+      max-height: 460px;
+      width: 740px;
+      transform: translate3d(10px, -20px, 0px) !important;
+    }
+
+    @include pcS2M {
+      height: auto;
+      max-height: 460px;
+      width: 740px;
+      transform: translate3d(10px, -20px, 0px) !important;
+    }
+
+
   }
 
   &_boxComponent {
@@ -188,6 +362,7 @@
     height: 100%;
     max-height: 440px;
     overflow-y: auto;
+    overflow-x: hidden;
   }
 
   &_header {

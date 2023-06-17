@@ -1,4 +1,12 @@
 .detailInfo {
+    @include mobile {
+        display: none;
+    }
+
+    @include pcSmall {
+        display: block;
+    }
+
     .detaiInfo-title {
         font-size: rem(24px);
         line-height: rem(33px);
