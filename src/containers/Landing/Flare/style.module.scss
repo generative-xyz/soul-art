@@ -1,42 +1,56 @@
 .main {
-    overflow: hidden;
-    width: 100%;
+  overflow: hidden;
+  width: 100%;
 }
 
 
 .flareSection {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
 
-    .container {
-        height: 100%;
+  .container {
+    height: 100%;
 
-        .wrapSectionContent {
-            max-width: rem(800px);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+    .wrapSectionContent {
+      max-width: rem(800px);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
-            .sectionContent {
-                color: #fff;
-                font-size: rem(24px);
-                line-height: 140%;
-                text-align: center;
-                margin-bottom: rem(32px);
-            }
 
-            .tag {
-                display: flex;
-                justify-content: center;
+      &_inner {
+        position: relative;
+        margin-bottom: rem(32px);
+      }
 
-                a {
-                    &:hover {
-                        text-decoration: none;
-                    }
-                }
-            }
+      &_item:nth-child(2) {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        transform: translateX(-50%);
+
+      }
+
+      .sectionContent {
+        color: #fff;
+        font-size: rem(24px);
+        line-height: 140%;
+        text-align: center;
+      }
+
+      .tag {
+        display: flex;
+        justify-content: center;
+
+        a {
+          &:hover {
+            text-decoration: none;
+          }
         }
+      }
     }
+  }
 }

@@ -3,11 +3,11 @@ import s from './style.module.scss';
 import ImageFrame from '@/components/ImageFrame';
 import Text from '@Animations/Text';
 import { AnimFade } from '@/animations/Fade';
-import { CDN_URL } from '@/configs';
 
 export type contentItem = {
   id: number;
   title: string;
+  img: string;
   content: string;
 };
 
@@ -16,7 +16,7 @@ type TechItemProps = {
 };
 
 const TechItem: FC<TechItemProps> = ({ item }) => {
-  const { id, title, content } = item;
+  const { title, content, img } = item;
 
   return (
     <div className={s.techItem}>
@@ -38,7 +38,7 @@ const TechItem: FC<TechItemProps> = ({ item }) => {
       </div>
       <AnimFade offset={0.35} className={s['item-img']}>
         <ImageFrame type={'normal'}>
-          <img src={`${CDN_URL}/techitem-${id}.jpg`} alt="img" />
+          <img src={img} alt="img" />
         </ImageFrame>
       </AnimFade>
     </div>

@@ -1,5 +1,12 @@
-html{
+html {
+
   font-size: 10px !important;
+  @include pcSmall {
+    font-size: vw(10px) !important;
+  }
+  @include pcWide {
+    font-size: 10px !important;
+  }
 }
 
 .cursor-pointer {
@@ -56,11 +63,10 @@ html{
     border: 1px solid transparent;
     pointer-events: none !important;
     background: linear-gradient(
-        138.24deg,
-        rgba(120, 170, 143, 0.8) 1.72%,
-        rgba(2, 47, 22, 0.64) 101.88%
-      )
-      border-box;
+                    138.24deg,
+                    rgba(120, 170, 143, 0.8) 1.72%,
+                    rgba(2, 47, 22, 0.64) 101.88%
+    ) border-box;
     -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
@@ -93,6 +99,6 @@ html{
   margin-right: auto;
 }
 
-.row{
- --bs-gutter-x: #{rem(40px)};
+.row {
+  --bs-gutter-x: #{rem(40px)};
 }
