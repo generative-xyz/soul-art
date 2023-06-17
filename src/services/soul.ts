@@ -3,7 +3,7 @@ import { apiClient } from '.';
 import { constructURL } from '@/utils/url';
 import { ISoul } from '@/interfaces/api/soul';
 import { IAttribute } from '@/interfaces/attributes';
-import { SOUL_CONTRACT } from '@/configs';
+import {SOUL_CONTRACT} from "@/configs";
 
 const API_PATH = '/soul';
 

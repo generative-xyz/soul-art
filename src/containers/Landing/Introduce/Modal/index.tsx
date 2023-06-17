@@ -1,8 +1,9 @@
 import s from './style.module.scss';
 import IconSVG from '@/components/IconSVG';
 import ImageFrame from '@/components/ImageFrame';
-import { modalClose, videoSrc } from '@/constants/asset';
+import { modalClose } from '@/constants/asset';
 import { useEffect } from 'react';
+import { CDN_URL } from '@/configs';
 
 type ModalProps = {
   showModal: boolean;
@@ -27,8 +28,11 @@ const HeroModal: React.FC<ModalProps> = ({ showModal, closeModal }) => {
             <IconSVG src={modalClose} maxWidth={'15'} maxHeight={'15'} />
             <span>Close</span>
           </div>
-          <ImageFrame type={'normal'}>
-            <video src={videoSrc}></video>
+          <ImageFrame>
+            <video controls>
+              <source src={`${CDN_URL}/output.webm`} type="video/webm" />
+              <source src={`${CDN_URL}/output.mp4`} type="video/mp4" />
+            </video>
           </ImageFrame>
         </div>
       </div>

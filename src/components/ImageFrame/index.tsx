@@ -2,7 +2,7 @@ import s from './style.module.scss';
 
 type IImageFrameProps = {
   children: React.ReactNode;
-  type: string;
+  type?: string;
 };
 
 const ImageFrame: React.FC<IImageFrameProps> = ({ children, type }) => {

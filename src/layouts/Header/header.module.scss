@@ -24,6 +24,7 @@
 
   .nav_item {
     opacity: 0.6;
+    transition: opacity .4s $easeOutQuart;
 
     &.active {
       opacity: 1;
@@ -31,6 +32,7 @@
 
     &:hover {
       text-decoration: none;
+      opacity: 1;
     }
   }
 }

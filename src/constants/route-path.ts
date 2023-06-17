@@ -14,4 +14,5 @@ export const ROUTE_PATH = {
   EXPLORE: '/explore',
   CLAIM: '/claim',
   ART: '/art',
+  DEMO: '/demo',
 };
