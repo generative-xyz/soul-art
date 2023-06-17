@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { AnimateContext } from '@Context/Animate';
 import { Frames } from '@Animations/Frames';
 import s from './styles.module.scss';
@@ -43,13 +43,6 @@ export const FrameTop: React.FC = () => {
     part2Frame(frame);
     part3Frame(frame);
   };
-
-  useEffect(()=>{
-    registerLoader('__useEffect_FrameTo');
-    return ()=>{
-      unRegisterLoader('__k_useEffect_FrameTo');
-    }
-  }, [registerLoader, unRegisterLoader])
 
   return (
     <div className={s.main} ref={elMain}>
