@@ -28,26 +28,11 @@
 
 .filterAttribute {
   &_accordionHeader {
+    font-size: rem(16px);
+
     :global(.accordion-button:not(.collapsed)) {
       box-shadow: none !important;
     }
-  }
-
-  &_container {
-    width: 740px;
-    margin-right: -10px;
-    border: 1px solid #ececec;
-    box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 25px;
-  }
-
-  &_header {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 140%;
-    margin-bottom: 20px;
   }
 
   &_title {
@@ -82,63 +67,6 @@
     @include pcS2M {
       grid-template-columns: repeat(3, 1fr);
       grid-gap: rem(20px);
-    }
-
-    &_item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-direction: row;
-      line-height: 100%;
-      background: #ffffff;
-      border: 1px solid #ececec;
-      box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.08);
-      border-radius: 8px;
-      color: black;
-      border-radius: 8px;
-      padding: 8px;
-    }
-
-    &_itemChecked {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-direction: row;
-      line-height: 100%;
-      background: #ffffff;
-      border: 1px solid #000;
-      box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.08);
-      border-radius: 8px;
-      color: black;
-      border-radius: 8px;
-      padding: 8px;
-      transition: 0.2s ease-in-out;
-    }
-
-    &_checkbox {
-      display: flex;
-      justify-content: center;
-      flex-direction: row;
-      align-items: center;
-
-      &>div {
-        margin-left: 8px;
-        font-weight: 400;
-        font-size: 14px;
-
-        input {
-          width: 15px;
-          height: 15px;
-        }
-      }
-    }
-
-    &_percent {
-      padding: 2px 8px;
-      border-radius: 20px;
-      background: #f6f6f6;
-      font-size: 14px;
-      color: #5b5b5b;
     }
   }
 }
