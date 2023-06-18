@@ -40,6 +40,11 @@ const ProgressBarCs = (): JSX.Element => {
     setAudioPlaying(!audioPlaying);
   }, [audioPlaying, setAudioPlaying]);
 
+  useEffect(() => {
+    if (refAudio.current)
+      refAudio.current.volume = 0.3;
+  }, []);
+
 
   return (
     <div
