@@ -3,7 +3,7 @@ import Layout from '@/layouts';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { SEO_IMAGE, SEO_TITLE } from '@/constants/seo';
 import logger from '@/services/logger';
-import { getSoulDetail } from '@/services/soul';
+import { getSoulDemoDetail } from '@/services/demoSoul';
 import SoulItem from '@/containers/SoulItemDemo';
 import Banner from '@/components/Banner';
 
@@ -22,7 +22,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
     const { query } = context;
     const { tokenId } = query as { tokenId: string };
-    const data = await getSoulDetail({
+    const data = await getSoulDemoDetail({
       tokenId,
     });
 
