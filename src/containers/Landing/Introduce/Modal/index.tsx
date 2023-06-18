@@ -32,7 +32,12 @@ const HeroModal: React.FC<ModalProps> = ({ showModal, closeModal }) => {
       <div className={s.wrapVideo}>
         <div className={s.videoBox}>
           <div onClick={closeModal} className={s.closeModal}>
-            <IconSVG src={modalClose} maxWidth={'15'} maxHeight={'15'} />
+            <IconSVG
+              src={modalClose}
+              maxWidth={'15'}
+              maxHeight={'15'}
+              className={s.iconClose}
+            />
             <span>Close</span>
           </div>
           <ImageFrame>

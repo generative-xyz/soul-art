@@ -11,11 +11,14 @@
 
   p {
     max-width: rem(700px);
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
+
+    @include mobile {
+      width: 90%;
+    }
   }
 
-  .desc{
+  .desc {
     color: rgba(#0F1B01, .7);
   }
 
@@ -89,9 +92,24 @@
 
     &_inner {
       position: relative;
-      width: fit-content;
+      width: rem(80px);
+      height: rem(80px);
       animation: rotateLoop 4s infinite linear;
       will-change: transform;
+
+      img {
+        width: 100%;
+      }
+
+      // @include mobile {
+ //   width: rem(40px);
+ //   height: rem(40px);
+ // }
+
+ // @include min-tablet {
+ //   width: rem(80px);
+ //   height: rem(80px);
+ // }
     }
 
     &_dark {
@@ -121,8 +139,23 @@
       span {
         color: rgba(0, 0, 0, 0.4);
       }
+
+      @include mobile {
+        font-size: rem(10px);
+      }
+
+      @include min-tablet {
+        font-size: rem(14px);
+      }
     }
 
+    @include mobile {
+      bottom: rem(20px);
+    }
+
+    @include min-tablet {
+      bottom: rem(40px);
+    }
   }
 
   &_inner {
@@ -131,6 +164,18 @@
     width: 100%;
     text-align: center;
     z-index: 3;
+
+    @include mobile {
+      bottom: unset;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @include min-tablet {
+      bottom: rem(48px);
+      top: unset;
+      transform: unset;
+    }
   }
 }
 

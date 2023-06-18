@@ -1,6 +1,6 @@
 import TextAnimate from '@/components/TextAnimate';
 import s from './style.module.scss';
-import { Container } from 'react-bootstrap';
+import { Col, Container } from 'react-bootstrap';
 import VideoBg from '../VideoBg';
 import Text from '@/animations/Text';
 import { AnimFade } from '@/animations/Fade';
@@ -21,18 +21,20 @@ const Flare: React.FC = () => {
     startOut: 30,
     endOut: 40,
   });
-  const part2Frame = useFrameProcessing(lPart2,
-    {
-      startIn: 50,
-      endIn: 60,
-      startOut: 100,
-      endOut: 100,
-    });
+  const part2Frame = useFrameProcessing(lPart2, {
+    startIn: 50,
+    endIn: 60,
+    startOut: 100,
+    endOut: 100,
+  });
 
-  const onUpdate = useCallback((seft: any) => {
-    part1Frame(seft.progress * 100);
-    part2Frame(seft.progress * 100);
-  }, [part1Frame, part2Frame]);
+  const onUpdate = useCallback(
+    (seft: any) => {
+      part1Frame(seft.progress * 100);
+      part2Frame(seft.progress * 100);
+    },
+    [part1Frame, part2Frame]
+  );
 
   useScrollFixed(refBox, 1200, onUpdate);
   return (
@@ -40,35 +42,33 @@ const Flare: React.FC = () => {
       <VideoBg videoUrls={{ mp4: `${CDN_URL}/block-2-min.mp4` }}>
         <div className={s.flareSection}>
           <Container className={s.container}>
-            <div className={s.wrapSectionContent}>
+            <Col
+              xs={{ span: 10, offset: 1 }}
+              md={{ span: 10, offset: 1 }}
+              lg={{ span: 10, offset: 1 }}
+              className={s.column}
+            >
+              <div className={s.wrapSectionContent}>
+                <div className={s.wrapSectionContent_inner}>
+                  <div ref={lPart1} className={s.wrapSectionContent_item}>
+                    <Text className={s.sectionContent}>
+                      {`In the world of SOULS, ownership takes on a unique meaning. Souls cannot be sold or transferred—representing a deep personal connection to your beliefs. When a Soul feels a decline in your attention, it seeks a new connection with someone whose belief burns bright. `}
+                    </Text>
+                  </div>
 
-              <div className={s.wrapSectionContent_inner}>
-                <div ref={lPart1} className={s.wrapSectionContent_item}>
-                  <Text
-                    className={s.sectionContent}
-                  >
-                    {
-                      `In the world of SOULS, ownership takes on a unique meaning. Souls cannot be sold or transferred—representing a deep personal connection to your beliefs. When a Soul feels a decline in your attention, it seeks a new connection with someone whose belief burns bright. `
-                    }
-                  </Text>
+                  <div ref={lPart2} className={s.wrapSectionContent_item}>
+                    <Text className={s.sectionContent}>
+                      {`The adoption process allows you to welcome a Soul into your digital realm, with the funds going to the SOULS DAO. This decentralized, autonomous organization supports the community and future projects. `}
+                    </Text>
+                  </div>
                 </div>
-
-                <div ref={lPart2} className={s.wrapSectionContent_item}>
-                  <Text
-                    className={s.sectionContent}
-                  >
-                    {
-                      `The adoption process allows you to welcome a Soul into your digital realm, with the funds going to the SOULS DAO. This decentralized, autonomous organization supports the community and future projects. `
-                    }
-                  </Text>
-                </div>
+                <AnimFade offset={0.2} className={s.tag}>
+                  <TextAnimate>
+                    <span>A one-of-a-kind ownership system</span>
+                  </TextAnimate>
+                </AnimFade>
               </div>
-              <AnimFade offset={0.2} className={s.tag}>
-                <TextAnimate>
-                  <span>A one-of-a-kind ownership system</span>
-                </TextAnimate>
-              </AnimFade>
-            </div>
+            </Col>
           </Container>
         </div>
       </VideoBg>

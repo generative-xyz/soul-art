@@ -25,6 +25,14 @@
                 .introduceBox-desc {
                     margin-bottom: rem(40px);
                     color: #fff;
+
+                    @include mobile {
+                        margin-bottom: rem(20px);
+                    }
+
+                    @include min-tablet {
+                        margin-bottom: rem(40px);
+                    }
                 }
 
                 .introduceBox-buttons {
@@ -38,6 +46,7 @@
                         font-size: rem(16px);
                         line-height: 112%;
                         transition: .5s $easeOutQuart;
+                        text-decoration: none;
 
                         &.init {
                             border: 1px solid #fff;
@@ -62,6 +71,16 @@
                                 color: #000;
                             }
                         }
+
+                        @include mobile {
+                            font-size: rem(8px);
+                            padding: rem(8px) rem(20px);
+                        }
+
+                        @include min-tablet {
+                            font-size: rem(16px);
+                            padding: rem(16px) rem(40px);
+                        }
                     }
                 }
 
@@ -77,6 +96,16 @@
                         line-height: 140%;
                         color: #fff;
                         margin-bottom: rem(12px);
+
+                        @include mobile {
+                            font-size: rem(10px);
+                            margin-bottom: rem(10px);
+                        }
+
+                        @include min-tablet {
+                            font-size: rem(14px);
+                            margin-bottom: rem(12px);
+                        }
                     }
 
                     .wrap-video {
@@ -100,6 +129,35 @@
                             .modalPlay {
                                 transform: translate(-50%, -50%) scale(1.2);
                             }
+                        }
+                    }
+
+                    @include mobile {
+                        margin-top: rem(15px);
+                        padding-top: rem(15px);
+
+                        .wrap-video {
+                            width: 50%;
+                        }
+                    }
+
+                    @include tablet {
+                        margin-top: rem(43px);
+                        padding-top: rem(43px);
+
+                        .wrap-video {
+                            width: 40%;
+                        }
+                    }
+
+                    @include min-tablet {
+                        margin-top: rem(43px);
+                        padding-top: rem(43px);
+                    }
+
+                    @include pcSmall {
+                        .wrap-video {
+                            width: rem(212px);
                         }
                     }
                 }

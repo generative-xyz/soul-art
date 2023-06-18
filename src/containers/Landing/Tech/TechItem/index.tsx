@@ -23,6 +23,7 @@ const TechItem: FC<TechItemProps> = ({ item }) => {
       <div className={s['item-content']}>
         <Text
           as={'h5'}
+          size={'32'}
           animOption={{ offset: 0.2, screen: 0, type: 'paragraph' }}
           className={s['item-content_title']}
         >

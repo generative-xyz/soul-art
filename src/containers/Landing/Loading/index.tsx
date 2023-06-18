@@ -18,8 +18,13 @@ interface IProcessing {
 }
 
 export const Loading = (): JSX.Element => {
-  const { setPageStatus, getLoaderCounter, registerLoader, unRegisterLoader, pageStatus } =
-    useContext(AnimateContext);
+  const {
+    setPageStatus,
+    getLoaderCounter,
+    registerLoader,
+    unRegisterLoader,
+    pageStatus,
+  } = useContext(AnimateContext);
 
   const [bg, setBg] = useState<string>(`${CDN_URL}/video-intro/output_1.jpg`);
 
@@ -71,7 +76,7 @@ export const Loading = (): JSX.Element => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       refPersent.current.textContent = `${Math.floor(
-        processing.current.persen,
+        processing.current.persen
       )}%`;
     }
 
@@ -141,8 +146,13 @@ export const Loading = (): JSX.Element => {
     if (pageStatus === PAGE_LOADED) {
       const frames = { value: 1 };
       gsap.to(frames, {
-        value: 172, ease: 'steps(172)', duration: 172 / 24, onUpdate: () => {
-          setBg(`${CDN_URL}/video-intro/output_${Math.floor(frames.value)}.jpg`);
+        value: 172,
+        ease: 'steps(172)',
+        duration: 172 / 24,
+        onUpdate: () => {
+          setBg(
+            `${CDN_URL}/video-intro/output_${Math.floor(frames.value)}.jpg`
+          );
         },
         onComplete: () => {
           refLoadingWrapper.current?.style.setProperty('display', 'none');
@@ -161,24 +171,24 @@ export const Loading = (): JSX.Element => {
         ref={refMain}
         className={classNames(s.loading_bg, isReady ? s.isReady : '')}
       >
-        <img ref={refPara} src={bg} alt='loading' />
+        <img ref={refPara} src={bg} alt="loading" />
       </div>
       <div className={s.loading_wrapper} ref={refLoading}>
         <div className={classNames(s.loading_over)}>
-          <img src={`${CDN_URL}/loading-left-min.png`} alt='loading-left-min' />
+          <img src={`${CDN_URL}/loading-left-min.png`} alt="loading-left-min" />
         </div>
         <div className={classNames(s.loading_over, s.loading_over__right)}>
           <img
             src={`${CDN_URL}/loading-right-min.png`}
-            alt='loading-right-min'
+            alt="loading-right-min"
           />
         </div>
         <img
           className={s.loading_over_overlay}
           src={`${CDN_URL}/overlay-hero-min.png`}
-          alt='overlay-hero-min'
+          alt="overlay-hero-min"
         />
-        <div className='container'>
+        <div className="container">
           <div className={s.container_inner}>
             <div className={s.loading_icon}>
               <span className={s.loading_icon_text}>
@@ -186,7 +196,7 @@ export const Loading = (): JSX.Element => {
                 <span
                   className={classNames(
                     s.loading_icon_text_counter,
-                    'text-black',
+                    'text-black'
                   )}
                   ref={refPersent}
                 >
@@ -194,15 +204,21 @@ export const Loading = (): JSX.Element => {
                 </span>
               </span>
               <div className={s.loading_icon_inner}>
-                <img src={`${CDN_URL}/ic-loading-dark.svg`} alt='ic-loading' />
+                <img src={`${CDN_URL}/ic-loading-dark.svg`} alt="ic-loading" />
               </div>
             </div>
             <div className={s.loading_inner}>
               <Text as={'p'} size={'d2'} className={'mb-1_16'}>
                 Welcome to New Bitcoin City
               </Text>
-              <Text as={'p'} className={s.desc} size={'20'} fontWeight={'regular'}>
-                Within the realm of your GM tokens resides a sacred energy—a collective essence known as The Souls.
+              <Text
+                as={'p'}
+                className={s.desc}
+                size={'20'}
+                fontWeight={'regular'}
+              >
+                Within the realm of your GM tokens resides a sacred energy—a
+                collective essence known as The Souls.
               </Text>
             </div>
           </div>

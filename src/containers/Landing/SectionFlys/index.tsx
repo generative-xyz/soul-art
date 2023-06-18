@@ -10,9 +10,11 @@ import { CDN_URL } from '@/configs';
 import { AnimateContext } from '@Context/Animate';
 import loadImage from 'image-promise';
 import { MathMap } from '@Services/Animate/AnimateMathUtil';
+import { Col, Container } from 'react-bootstrap';
 
 const SectionFlys = (): JSX.Element => {
-  const { pageStatus, registerLoader, unRegisterLoader } = useContext(AnimateContext);
+  const { pageStatus, registerLoader, unRegisterLoader } =
+    useContext(AnimateContext);
   const refBox = useRef<HTMLDivElement | null>(null);
   const refImages = useRef<HTMLDivElement | null>(null);
   const refCurrent = useRef<number>(-1);
@@ -31,81 +33,119 @@ const SectionFlys = (): JSX.Element => {
       });
     }
 
-    return ()=>{
+    return () => {
       if (pageStatus === PAGE_READY) {
         unRegisterLoader();
       }
-    }
+    };
   }, [pageStatus, registerLoader, unRegisterLoader]);
 
-  useScrollFixed(refBox, 22 * 100, (self) => {
+  useScrollFixed(refBox, 22 * 100, self => {
     const m = self.progress * 100;
     const index = Math.floor(MathMap(m, 0, 100, 0, 21));
 
     if (refCurrent.current !== index) {
-
       if (refCurrent.current < index) {
         const current = refImages.current?.children[index];
         const prev = refImages.current?.children[index - 1];
         if (current) {
-          gsap.fromTo(current, { y: window.innerHeight, opacity: 0 }, {
-            opacity: 1,
-            y: 0,
-            duration: .5,
-            ease: 'power3.out',
-            zIndex: index,
-          });
+          gsap.fromTo(
+            current,
+            { y: window.innerHeight, opacity: 0 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: 'power3.out',
+              zIndex: index,
+            }
+          );
         }
 
         if (prev)
-          gsap.to(prev, { opacity: 0, y: -window.innerHeight, duration: .5, ease: 'power3.out', zIndex: index });
+          gsap.to(prev, {
+            opacity: 0,
+            y: -window.innerHeight,
+            duration: 0.5,
+            ease: 'power3.out',
+            zIndex: index,
+          });
       } else {
         const current = refImages.current?.children[index];
         const prev = refImages.current?.children[index + 1];
         if (current) {
-          gsap.fromTo(current, { y: -window.innerHeight, opacity: 0 }, {
-            opacity: 1,
-            y: 0,
-            duration: .5,
-            ease: 'power3.out',
-            zIndex: index,
-          });
+          gsap.fromTo(
+            current,
+            { y: -window.innerHeight, opacity: 0 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: 'power3.out',
+              zIndex: index,
+            }
+          );
         }
 
         if (prev)
-          gsap.to(prev, { opacity: 0, y: 1000, duration: .5, ease: 'power3.out', zIndex: index });
+          gsap.to(prev, {
+            opacity: 0,
+            y: 1000,
+            duration: 0.5,
+            ease: 'power3.out',
+            zIndex: index,
+          });
       }
 
       refCurrent.current = index;
     }
-
   });
 
   return (
     <div ref={refBox} className={s.livingArtSection}>
-      <div ref={refImages} className={s.livingArtSection_images}>
-        {
-          urls.map(url => {
-            return <>
-              <img src={url} alt='img' />
-            </>;
-          })
-        }
-      </div>
-      <div className={s.container}>
-        <div className={s.wrapContent}>
-          <Text animOption={{ offset: 0, screen: 0, type: 'paragraph' }} className={s.sectionContent}>
-            {
-              `Souls are not static art but dynamic entities that reflect human behavior. They react to market dynamics, mirroring feelings of fear, greed, and belief. The interconnected nature of the Souls is fascinating, as one soul's changes can affect another soul within the collective.`
-            }
-          </Text>
-          <AnimFade className={s.tag} offset={.2}>
-            <TextAnimate>
-              <span>Collective performance art that reflects human behavior</span>
-            </TextAnimate>
-          </AnimFade>
-        </div>
-      </div>
+      <Container className={s.containerTop}>
+        <Col
+          xs={{ span: 8, offset: 2 }}
+          md={{ span: 8, offset: 2 }}
+          lg={{ span: 8, offset: 2 }}
+          className={s.columnTop}
+        >
+          <div ref={refImages} className={s.livingArtSection_images}>
+            {urls.map(url => {
+              return (
+                <>
+                  <img src={url} alt="img" />
+                </>
+              );
+            })}
+          </div>
+        </Col>
+      </Container>
+
+      <Container className={s.container}>
+        <Col
+          xs={{ span: 10, offset: 1 }}
+          md={{ span: 10, offset: 1 }}
+          lg={{ span: 10, offset: 1 }}
+          className={s.column}
+        >
+          <div className={s.wrapContent}>
+            <Text
+              animOption={{ offset: 0, screen: 0, type: 'paragraph' }}
+              className={s.sectionContent}
+            >
+              {`Souls are not static art but dynamic entities that reflect human behavior. They react to market dynamics, mirroring feelings of fear, greed, and belief. The interconnected nature of the Souls is fascinating, as one soul's changes can affect another soul within the collective.`}
+            </Text>
+            <AnimFade className={s.tag} offset={0.2}>
+              <TextAnimate>
+                <span>
+                  Collective performance art that reflects human behavior
+                </span>
+              </TextAnimate>
+            </AnimFade>
+          </div>
+        </Col>
+      </Container>
     </div>
   );
 };
