@@ -12,11 +12,47 @@
     .icon1 {
         margin-bottom: rem(6px);
         transition: .5s $easeOutQuart;
+
+        @include mobile {
+            margin-bottom: rem(3px);
+
+            svg {
+                width: rem(23px);
+                height: rem(10px);
+            }
+        }
+
+        @include min-tablet {
+            margin-bottom: rem(6px);
+
+            svg {
+                width: rem(46px);
+                height: rem(20px);
+            }
+        }
     }
 
     .icon2 {
         margin-top: rem(6px);
         transition: .5s $easeOutQuart;
+
+        @include mobile {
+            margin-bottom: rem(3px);
+
+            svg {
+                width: rem(23px);
+                height: rem(10px);
+            }
+        }
+
+        @include min-tablet {
+            margin-bottom: rem(6px);
+
+            svg {
+                width: rem(46px);
+                height: rem(20px);
+            }
+        }
     }
 
     &:hover {
@@ -31,5 +67,13 @@
         .icon2 {
             transform: translateY(.5rem);
         }
+    }
+
+    @include mobile {
+        font-size: rem(8px);
+    }
+
+    @include min-tablet {
+        font-size: rem(14px);
     }
 }

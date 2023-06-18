@@ -48,12 +48,44 @@
       top: 50%;
       left: calc(var(--po) - #{rem(10px)});
       transform: translateY(-50%);
+
+      @include mobile {
+        left: var(--po);
+
+        svg {
+          width: rem(10px);
+          height: rem(10px);
+        }
+      }
+
+      @include min-tablet {
+        left: calc(var(--po) - #{rem(10px)});
+
+        svg {
+          width: rem(20px);
+          height: rem(20px);
+        }
+      }
     }
   }
 
   .playBtn {
     transform: rotate(var(--rote));
     color: #fff;
+
+    @include mobile {
+      svg {
+        width: rem(24px);
+        height: rem(24px);
+      }
+    }
+
+    @include min-tablet {
+      svg {
+        width: rem(48px);
+        height: rem(48px);
+      }
+    }
   }
 
   .audioBtn {
@@ -64,6 +96,20 @@
       svg {
         path {
           display: none;
+        }
+      }
+
+      @include mobile {
+        svg {
+          width: rem(20px);
+          height: rem(20px);
+        }
+      }
+
+      @include min-tablet {
+        svg {
+          width: rem(36px);
+          height: rem(36px);
         }
       }
     }
@@ -79,6 +125,16 @@
       align-items: end;
       gap: calc(100% / 5);
       transition: .5s $easeOutQuart;
+
+      @include mobile {
+        width: rem(5px);
+        height: rem(8px);
+      }
+
+      @include min-tablet {
+        width: rem(12px);
+        height: rem(18px);
+      }
 
       span {
         width: calc(100% / 5);

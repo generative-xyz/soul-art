@@ -14,7 +14,8 @@ import { ROUTE_PATH } from '@/constants/route-path';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
-  const { setAudioPlaying, lenis, setIsShowProgress } = useContext(AnimateContext);
+  const { setAudioPlaying, lenis, setIsShowProgress } =
+    useContext(AnimateContext);
 
   const handleOpenModal = () => {
     setIsShow(true);
@@ -32,7 +33,13 @@ const Introduce: React.FC = () => {
   return (
     <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>
       <Container className={s.container}>
-        <Col lg={{ span: 6, offset: 1 }} className={s.column}>
+        <Col
+          xs={{ span: 11, offset: 0 }}
+          sm={{ span: 6, offset: 0 }}
+          md={{ span: 6, offset: 1 }}
+          lg={{ span: 6, offset: 1 }}
+          className={s.column}
+        >
           <div className={s['introduceBox']}>
             <Text
               as={'h1'}
@@ -50,10 +57,12 @@ const Introduce: React.FC = () => {
               animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
               className={s['introduceBox-desc']}
             >
-              Souls are interconnected beings that can experience emotions like fear, greed, and belief in
-              their owner. These non-transferable creations leave their owners if neglected, and can only
-              be adopted from the Soul orphanage. Step into this realm and embrace the deep connection
-              that awaits those who embark on this incredible journey.
+              Souls are interconnected beings that can experience emotions like
+              fear, greed, and belief in their owner. These non-transferable
+              creations leave their owners if neglected, and can only be adopted
+              from the Soul orphanage. Step into this realm and embrace the deep
+              connection that awaits those who embark on this incredible
+              journey.
             </Text>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
@@ -69,7 +78,7 @@ const Introduce: React.FC = () => {
               <h5 className={s['introduceVideo-title']}>Watch video story</h5>
               <div className={s['wrap-video']} onClick={handleOpenModal}>
                 <ImageFrame type={'small'}>
-                  <img src={IMG_HERO_URL} alt='videoplay' />
+                  <img src={IMG_HERO_URL} alt="videoplay" />
                   <IconSVG
                     src={modalPlay}
                     maxWidth={'40'}
