@@ -19,13 +19,16 @@
     box-shadow: 0px 0px 32px -6px #0000001a;
     background: #ffffff;
     border: 1px solid #ececec;
+    font-size: rem(16px);
 
     @include mobile {
+      white-space: nowrap;
       flex-direction: column;
       justify-content: flex-start;
       bottom: rem(16px);
-      border-radius: rem(40px);
-      max-width: 98%;
+      border-radius: rem(40px) rem(40px) 0 0;
+      bottom: 0;
+      max-width: 100%;
       gap: rem(4px);
       padding: rem(12px);
     }
@@ -36,7 +39,7 @@
       flex-direction: row;
       bottom: rem(24px);
       border-radius: rem(100px);
-      max-width: rem(740px);
+      // max-width: rem(740px);
       gap: rem(8px);
       padding: rem(8px);
     }
@@ -73,12 +76,25 @@
       gap: rem(8px);
       padding: rem(8px);
     }
+
+    @include pcWide {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      white-space: nowrap;
+      bottom: rem(32px);
+      border-radius: rem(100px);
+      max-width: rem(740px);
+      gap: rem(8px);
+      padding: rem(8px);
+    }
   }
 
   &_leftContainer {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    font-size: rem(16px);
 
     @include mobile {
       gap: 0;
@@ -137,10 +153,26 @@
     background: #f6f6f6;
     text-align: center;
     border-radius: rem(100px);
-    font-size: rem(14px);
+    font-size: rem(16px);
     line-height: rem(18px);
     transition: .5s $easeOutQuart;
     cursor: pointer;
+
+    @include mobile {
+      padding: rem(12px) rem(20px);
+    }
+
+    @include tablet {
+      padding: rem(12px) rem(24px);
+    }
+
+    @include pcS2M {
+      padding: rem(12px) rem(24px);
+    }
+
+    @include pcWide {
+      padding: rem(12px) rem(24px);
+    }
 
     &:first-child {
       background: #000;
@@ -154,12 +186,13 @@
     }
   }
 
+
   &_top_rarity {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: rem(14px);
+    font-size: rem(16px);
     line-height: rem(18px);
 
     p {
@@ -185,10 +218,10 @@
       border: none;
       outline: none;
       background: none;
-      font-size: 14px;
+      font-size: rem(16px);
       font-style: normal;
       color: #000;
-      line-height: 22.4px;
+      line-height: 140%;
       text-align: right;
 
       &:hover {
@@ -199,7 +232,7 @@
   }
 
   &_divide {
-    height: 24px;
+    height: rem(24px);
     width: 1px;
     border: 1px solid #ececec;
     margin: 0 rem(18.5px) 0 rem(22px);
@@ -227,12 +260,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    line-height: 18px;
+    font-size: rem(16px);
+    line-height: rem(18px);
 
     p {
       margin-bottom: 0;
-      margin: 0 8px;
+      margin: 0 rem(8px);
     }
   }
 
@@ -241,8 +274,8 @@
   }
 
   &_iconLive {
-    width: 12px;
-    height: 12px;
+    width: rem(12px);
+    height: rem(12px);
     line-height: 100%;
     display: flex;
     align-items: center;
@@ -259,8 +292,8 @@
 
 .filter {
   &_container {
-    padding: 6px 8px;
-    gap: 4px;
+    padding: rem(6px) rem(8px);
+    gap: rem(4px);
   }
 
   &_dropdownToggle {
@@ -276,11 +309,11 @@
     overflow: hidden;
     margin-right: rem(-10px);
     border: 1px solid #ececec;
-    box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 0px rem(24px) rem(-6px) rgba(0, 0, 0, 0.12);
     border-radius: rem(20px);
     padding: rem(20px);
-    margin-bottom: rem(25px);
     width: 100%;
+    margin-bottom: rem(25px);
 
     &:after {
       height: 3%;
@@ -297,60 +330,65 @@
       height: auto;
       width: auto;
       max-height: 370px;
-      transform: translate3d(-242px, -56px, 0px) !important;
-      width: 373px;
-    }
-
-    @include tablet {
-      height: auto;
-      max-height: 460px;
-      width: 100%;
-      transform: translate3d(10px, -20px, 0px) !important;
+      min-width: 370px;
+      margin: 0 auto rem(65px) -8px;
     }
 
     @include tabletMid {
       height: auto;
       max-height: 460px;
-      width: 740px;
-      transform: translate3d(10px, -20px, 0px) !important;
+      min-width: 735px;
+      margin: 0 rem(-18px) rem(25px) rem(-15px);
     }
 
     @include tabletWide {
       height: auto;
-      max-height: 460px;
-      width: 740px;
-      transform: translate3d(10px, -20px, 0px) !important;
+      max-height: rem(460px);
+      min-width: rem(740px);
+      margin: 0 rem(-20px) rem(25px) 0;
     }
 
     @include pcSmall {
-      width: auto;
-      max-height: 460px;
-      width: 740px;
-      transform: translate3d(10px, -20px, 0px) !important;
-    }
-
-    @include pcMid {
-      width: auto;
-      max-height: 460px;
-      width: 740px;
-      transform: translate3d(10px, -20px, 0px) !important;
+      height: auto;
+      max-height: rem(460px);
+      width: rem(740px);
+      margin: 0 rem(-20px) rem(25px) rem(-379px);
+      overflow: hidden;
     }
 
     @include pcWide {
-      width: auto;
-      max-height: 460px;
-      width: 740px;
-      transform: translate3d(10px, -20px, 0px) !important;
+      height: auto;
+      max-height: rem(460px);
+      min-width: rem(740px);
+      // margin: 0 auto rem(25px) rem(-605px);
+    }
+  }
+
+  &_header {
+    font-size: rem(20px) !important;
+    font-weight: 500;
+    line-height: 140%;
+    margin-bottom: rem(24px);
+
+    @include mobile {
+      margin-bottom: rem(16px);
+    }
+
+    @include tablet {
+      margin-bottom: rem(24px);
     }
 
     @include pcS2M {
-      height: auto;
-      max-height: 460px;
-      width: 740px;
-      transform: translate3d(10px, -20px, 0px) !important;
+      margin-bottom: rem(24px);
     }
 
+    @include pcMid {
+      margin-bottom: rem(24px);
+    }
 
+    @include pcWide {
+      margin-bottom: rem(24px);
+    }
   }
 
   &_boxComponent {
@@ -360,15 +398,8 @@
 
   &_component {
     height: 100%;
-    max-height: 440px;
+    max-height: rem(440px);
     overflow-y: auto;
     overflow-x: hidden;
-  }
-
-  &_header {
-    font-size: rem(20px);
-    font-weight: 400;
-    line-height: 140%;
-    margin-bottom: rem(24px);
   }
 }
