@@ -24,6 +24,7 @@ import { useSelector } from 'react-redux';
 import { Wrapper } from './Header.styled';
 import MenuMobile from './MenuMobile';
 import headerStyles from './header.module.scss';
+import { useRouter } from 'next/router';
 
 // type NavContent = {
 //   title: string;
@@ -72,6 +73,10 @@ const Header = ({
   isAnimation?: boolean;
   theme?: string;
 }) => {
+  const router = useRouter();
+
+  const homepage = router.pathname === ROUTE_PATH.HOME;
+
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const { btcBalance, tcBalance, gmBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
@@ -107,7 +112,11 @@ const Header = ({
 
   const ContentHeader = (): JSX.Element => {
     return (
-      <div className="content-header d-flex justify-content-between align-items-center w-100">
+      <div
+        className={`content-header d-flex justify-content-between align-items-center w-100 ${
+          homepage ? 'dark' : ''
+        }`}
+      >
         <div className={headerStyles.nav_container}>
           {/* {NAV_CONTENT.map(({ title, url }) => {
             return (
@@ -131,13 +140,13 @@ const Header = ({
             <IconSVG
               maxWidth="20"
               src={`${CDN_URL}/ic-arrow-up-right.svg`}
-              color="white"
+              color={homepage ? 'white' : 'black'}
               type="stroke"
             />
           </Link>
         </div>
 
-        <Link className="logo" href={ROUTE_PATH.ART}>
+        <Link className="logo" href={ROUTE_PATH.HOME}>
           <IconSVG
             src={`${CDN_URL}/ic-logo-white.svg`}
             maxHeight={'32'}
@@ -149,7 +158,7 @@ const Header = ({
           isOpen={isOpenMenu}
           onCloseMenu={() => setIsOpenMenu(false)}
         />
-        <div className="rightContainer">
+        <div className={`rightContainer`}>
           {isAuthenticated ? (
             <Dropdown
               show={showDropdown}
@@ -233,8 +242,9 @@ const Header = ({
                       >
                         <IconSVG
                           src={`${CDN_URL}/ic-copy.svg`}
-                          color={'#5B5B5B'}
+                          color={'#fff'}
                           maxWidth="16"
+                          className={headerStyles.copy_icon}
                         />
                       </div>
                     </div>
@@ -264,6 +274,7 @@ const Header = ({
                           src={`${CDN_URL}/ic-copy.svg`}
                           color="white"
                           maxWidth="16"
+                          className={headerStyles.copy_icon}
                         />
                       </div>
                     </div>

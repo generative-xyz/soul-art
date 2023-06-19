@@ -189,7 +189,7 @@ const ContentHeader = (): JSX.Element => {
                       >
                         <IconSVG
                           src={`${CDN_URL}/ic-copy.svg`}
-                          color={'#5B5B5B'}
+                          color={'#fff'}
                           maxWidth="16"
                         />
                       </div>
