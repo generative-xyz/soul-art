@@ -12,6 +12,7 @@ import { SoulEventType } from '@/enums/soul';
 import { ISoul } from '@/interfaces/api/soul';
 import dayjs from 'dayjs';
 import web3Instance from '@/connections/custom-web3-provider';
+import Discord from './Discord';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -108,8 +109,9 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     <div className={s.claimPage}>
       <Container className={s.container}>
         <Row className={s.row}>
-          <Col lg={{ span: 4, offset: 4 }} className={s.column}>
+          <Col lg={{ span: 8, offset: 2 }} className={s.column}>
             <div className={`${s.wrapBox}`}>
+              <h3 className={s.blockTitle}>Eligible adopters</h3>
               {isClaimed && (
                 <div className={s.successNoti}>
                   <p className={s.status}>Claim success</p>
@@ -128,6 +130,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                 <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
               </div>
             </div>
+            <Discord />
           </Col>
         </Row>
       </Container>

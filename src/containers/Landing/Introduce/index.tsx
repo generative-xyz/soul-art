@@ -7,13 +7,14 @@ import IconSVG from '@/components/IconSVG';
 import HeroModal from './Modal';
 import { useContext, useState } from 'react';
 import { Col, Container } from 'react-bootstrap';
-import { IMG_HERO_URL, modalPlay } from '@/constants/asset';
 import { AnimateContext } from '@/contexts/animate-context';
 import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { CDN_URL } from '@/configs';
-import CountdownText from '@/components/CountdownText';
+import classNames from 'classnames';
+import { modalPlay } from '@Constants/asset';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
+import CountdownText from '@/components/CountdownText';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -51,7 +52,7 @@ const Introduce: React.FC = () => {
               animOption={{ screen: 0, offset: 0, type: 'heading' }}
               className={s['introduceBox-title']}
             >
-              SOULS - The first-ever art protocol
+              SOULS
             </Text>
             <Text
               as={'p'}
@@ -60,15 +61,10 @@ const Introduce: React.FC = () => {
               animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
               className={s['introduceBox-desc']}
             >
-              Souls are interconnected beings that can experience emotions like
-              fear, greed, and belief in their owner. These non-transferable
-              creations leave their owners if neglected, and can only be adopted
-              from the Soul orphanage. Step into this realm and embrace the deep
-              connection that awaits those who embark on this incredible
-              journey.The Souls art protocol represents a network of
-              interconnected living artworks, trustlessly choreographed by
-              unstoppable smart contracts, financially managed by a
-              collector-run DAO, and powered by a native cryptocurrency - $GM.
+              {`Souls is a new kind of artwork and the first art protocol. Souls are soulbound; you can't
+                            sell your Soul for profit. Souls are interconnected; the protocol choreographs them to
+                            create a collective performance art experience. The ef protocol is managed by a
+                            collector-run DAO and powered by the cryptocurrency GM. on this incredible journey.`}
             </Text>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
@@ -92,20 +88,56 @@ const Introduce: React.FC = () => {
               </Link>
             </AnimFade>
 
-            <AnimFade className={s['introduceVideo']} screen={1}>
-              <h5 className={s['introduceVideo-title']}>Watch video story</h5>
-              <div className={s['wrap-video']} onClick={handleOpenModal}>
-                <ImageFrame type={'small'}>
-                  <img src={IMG_HERO_URL} alt="videoplay" />
-                  <IconSVG
-                    src={modalPlay}
-                    maxWidth={'40'}
-                    maxHeight={'40'}
-                    className={s.modalPlay}
-                  />
-                </ImageFrame>
+            <div className={s.introduce_actions}>
+              <div className={s.introduce_actions_item}>
+                <AnimFade className={s['introduceVideo']} screen={1}>
+                  <h5 className={s['introduceVideo-title']}>Watch the film</h5>
+                  <div className={s['wrap-video']} onClick={handleOpenModal}>
+                    <ImageFrame type={'small'}>
+                      <img
+                        src={`${CDN_URL}/poster-thumb.jpg`}
+                        alt="videoplay"
+                      />
+                      <IconSVG
+                        src={modalPlay}
+                        maxWidth={'40'}
+                        maxHeight={'40'}
+                        className={s.modalPlay}
+                      />
+                    </ImageFrame>
+                  </div>
+                </AnimFade>
               </div>
-            </AnimFade>
+              <div
+                className={classNames(
+                  s.introduce_actions_item,
+                  s.introduce_actions_item__pdf
+                )}
+              >
+                <AnimFade className={s['introduceVideo']} screen={1}>
+                  <h5 className={s['introduceVideo-title']}>
+                    Read the Whitepaper
+                  </h5>
+                  <div
+                    className={classNames(s['wrap-video'], s['wrap-pdf'])}
+                    onClick={() => {
+                      window.open(`https://newbitcoincity.com/souls.pdf`);
+                    }}
+                  >
+                    <ImageFrame type={'small'}>
+                      <div className={s.content}>
+                        <IconSVG
+                          src={`${CDN_URL}/icon-pdf.svg`}
+                          maxWidth={'45'}
+                          maxHeight={'55'}
+                          className={s.modalPlay}
+                        />
+                      </div>
+                    </ImageFrame>
+                  </div>
+                </AnimFade>
+              </div>
+            </div>
           </div>
         </Col>
       </Container>
