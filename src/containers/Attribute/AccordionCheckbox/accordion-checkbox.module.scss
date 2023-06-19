@@ -1,7 +1,7 @@
 .filterAttribute {
 
   &_content {
-    font-size: 14px;
+    font-size: rem(14px);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
@@ -36,7 +36,6 @@
       color: black;
       border-radius: 8px;
       padding: 8px;
-      transition: .2s ease-in-out;
     }
 
     &_checkbox {
@@ -48,21 +47,23 @@
       &>div {
         margin-left: 8px;
         font-weight: 400;
-        font-size: 14px;
+        font-size: rem(14px);
+        line-height: 140%;
 
         input {
-          width: 15px;
-          height: 15px;
+          width: rem(16px);
+          height: rem(16px);
         }
       }
     }
 
     &_percent {
-      padding: 2px 8px;
+      padding: rem(2px) rem(8px);
       border-radius: 20px;
       background: #F6F6F6;
-      font-size: 14px;
+      font-size: rem(14px);
       color: #5B5B5B;
+      line-height: 140%;
     }
   }
 }

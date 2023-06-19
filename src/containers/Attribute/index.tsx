@@ -1,3 +1,4 @@
+import { Button, Dropdown } from 'react-bootstrap';
 import React, {
   HTMLAttributes,
   forwardRef,
@@ -7,16 +8,15 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Button, Dropdown } from 'react-bootstrap';
 
-import IconSVG from '@/components/IconSVG';
-import { CDN_URL } from '@/configs';
-import { IAttribute } from '@/interfaces/attributes';
-import classNames from 'classnames';
-import { Formik } from 'formik';
-import { useRouter } from 'next/router';
 import AccordionComponent from './Accordion';
+import { CDN_URL } from '@/configs';
+import { Formik } from 'formik';
+import { IAttribute } from '@/interfaces/attributes';
+import IconSVG from '@/components/IconSVG';
 import attributeStyles from './attribute.module.scss';
+import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (

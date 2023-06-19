@@ -6,7 +6,7 @@
     min-height: 100vh;
     margin: 0 auto;
     position: relative;
-    background: #ffffff;
+    background: $white-primary;
     display: flex;
     justify-content: center;
   }
@@ -17,7 +17,7 @@
     margin: 0 auto;
     position: fixed;
     box-shadow: 0px 0px 32px -6px #0000001a;
-    background: #ffffff;
+    background: $white-primary;
     border: 1px solid #ececec;
     font-size: rem(16px);
 
@@ -150,9 +150,12 @@
   &_button {
     text-align: center;
     padding: rem(12px) rem(24px);
-    color: #000;
-    background: #f6f6f6;
+    background: $black-primary;
+    color: $white-primary;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: rem(100px);
     font-size: rem(16px);
     line-height: rem(18px);
@@ -174,17 +177,6 @@
     @include pcWide {
       padding: rem(12px) rem(24px);
     }
-
-    &:first-child {
-      background: #000;
-      color: #f6f6f6;
-    }
-
-    &:hover {
-      color: #f6f6f6;
-      background: #000;
-      transition: 0.5s $easeOutQuart;
-    }
   }
 
   &_top_rarity {
@@ -205,13 +197,13 @@
 
     &_container {
       width: rem(150px);
-      background: #fff;
+      background: $white-primary;
       position: absolute;
       margin-bottom: rem(25px);
       padding: rem(8px);
       border-radius: rem(16px);
-      box-shadow: 0px 0px rem(32px) rem(-6px) #0000001a;
-      background: #ffffff;
+      box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
+      border: 1px solid #ECECEC;
     }
 
     &_option {
@@ -280,7 +272,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #000;
+    border: 1px solid $black-primary;
     border-radius: 50%;
     opacity: 0;
 
@@ -320,7 +312,7 @@
       width: 100%;
       position: absolute;
       content: '';
-      background: #fff;
+      background: $white-primary;
       bottom: 0;
       left: 0;
       right: 0;
