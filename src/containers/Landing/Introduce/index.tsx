@@ -12,6 +12,7 @@ import { AnimateContext } from '@/contexts/animate-context';
 import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { CDN_URL } from '@/configs';
+import CountdownText from '@/components/CountdownText';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -69,6 +70,7 @@ const Introduce: React.FC = () => {
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
               <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
                 Adopt a Souls
+                <CountdownText />
               </Link>
               <Link
                 href={'https://discord.gg/sBTeHRW5Xb'}
@@ -85,6 +87,20 @@ const Introduce: React.FC = () => {
 
             <AnimFade className={s['introduceVideo']} screen={1}>
               <h5 className={s['introduceVideo-title']}>Watch video story</h5>
+              <div className={s['wrap-video']} onClick={handleOpenModal}>
+                <ImageFrame type={'small'}>
+                  <img src={IMG_HERO_URL} alt="videoplay" />
+                  <IconSVG
+                    src={modalPlay}
+                    maxWidth={'40'}
+                    maxHeight={'40'}
+                    className={s.modalPlay}
+                  />
+                </ImageFrame>
+              </div>
+            </AnimFade>
+            <AnimFade className={s['introduceVideo']} screen={1}>
+              <h5 className={s['introduceVideo-title']}>Read the Whitepaper</h5>
               <div className={s['wrap-video']} onClick={handleOpenModal}>
                 <ImageFrame type={'small'}>
                   <img src={IMG_HERO_URL} alt="videoplay" />

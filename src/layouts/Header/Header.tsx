@@ -233,8 +233,9 @@ const Header = ({
                       >
                         <IconSVG
                           src={`${CDN_URL}/ic-copy.svg`}
-                          color={'#5B5B5B'}
+                          color={'#fff'}
                           maxWidth="16"
+                          className={headerStyles.copy_icon}
                         />
                       </div>
                     </div>
@@ -264,6 +265,7 @@ const Header = ({
                           src={`${CDN_URL}/ic-copy.svg`}
                           color="white"
                           maxWidth="16"
+                          className={headerStyles.copy_icon}
                         />
                       </div>
                     </div>

@@ -53,11 +53,17 @@
               border: 1px solid #fff;
               background: #fff;
               color: #000;
+              display: flex;
+              align-items: center;
+              gap: rem(32px);
 
               &:hover {
                 border: 1px solid #000;
                 background: #000;
                 color: #fff;
+                * {
+                  color: inherit;
+                }
               }
             }
 
