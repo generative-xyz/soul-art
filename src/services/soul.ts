@@ -58,7 +58,6 @@ export const getSoulAttributes = async (): Promise<IAttribute[]> => {
   const res = await apiClient.get(
     `/marketplace/collections/${SOUL_CONTRACT}/attributes`
   );
-
   return Object(camelCaseKeys(res));
 };
 
@@ -72,11 +71,7 @@ export const getListContractNFTsByToken = async (
   return Object(camelCaseKeys(res));
 };
 
-export const getListTokensByWallet = async (
-  walletAddress: string
-): Promise<any> => {
-  const res = await apiClient.get(
-    `/marketplace/collections/0x85802F1f36F549334EeeEf6715Ed16555ed7178b/nfts?owner=${walletAddress}`
-  );
+export const getListTokensByWallet = async (walletAddress: string): Promise<{ items: Array<ISoul>; totalItem: number; }> => {
+  const res = await apiClient.get(`/marketplace/collections/0x85802F1f36F549334EeeEf6715Ed16555ed7178b/nfts?owner=${walletAddress}`);
   return Object(camelCaseKeys(res));
-};
+}

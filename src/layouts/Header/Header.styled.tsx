@@ -6,9 +6,8 @@ import Link from 'next/link';
 
 const Wrapper = styled.header`
   display: flex;
-  padding-top: 22px;
-  padding-bottom: 22px;
   font-size: 16px;
+  align-items: center;
 
   > div {
     width: 100%;
@@ -110,21 +109,21 @@ const Wrapper = styled.header`
   }
 `;
 
-const StyledLink = styled(Link)<{ active: boolean; activeColor?: string }>`
+const StyledLink = styled(Link) <{ active: boolean; activeColor?: string }>`
   cursor: pointer;
   font-weight: 400;
   font-size: ${px2rem(16)};
   line-height: ${px2rem(28)};
   text-decoration: none !important;
   color: ${({
-    theme,
-    active,
-    activeColor,
-  }: {
-    theme: DefaultTheme;
-    active: boolean;
-    activeColor?: string;
-  }) => (active ? activeColor || theme.white : theme.text2)};
+  theme,
+  active,
+  activeColor,
+}: {
+  theme: DefaultTheme;
+  active: boolean;
+  activeColor?: string;
+}) => (active ? activeColor || theme.white : theme.text2)};
   letter-spacing: -0.02em;
 
   :hover {
@@ -200,13 +199,11 @@ const WalletBalance = styled.div`
   display: flex;
   align-items: center;
   gap: ${px2rem(12)};
-  padding: ${px2rem(6)} ${px2rem(15)};
   // padding-left: ${px2rem(12)};
   background-color: transparent;
   /* border-radius: 40px; */
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #282a28;
   /* border: 1px solid white; */
   border-radius: 2px 0 2px 0;
 
@@ -241,7 +238,7 @@ const WalletBalance = styled.div`
       width: 1px;
       height: 16px;
       background-color: ${({ theme }: { theme: DefaultTheme }) =>
-        theme.primary['5b']};
+    theme.primary['5b']};
     }
   }
 

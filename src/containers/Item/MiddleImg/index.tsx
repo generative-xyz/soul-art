@@ -2,7 +2,7 @@ import IconSVG from '@/components/IconSVG';
 import s from './style.module.scss';
 import { FC } from 'react';
 import { detailExpand, detailRefresh } from '@/constants/asset';
-import { Explorer } from '@/components/Expoler';
+import Explorer from '@/components/Explorer';
 
 type DetailImgProps = {
   animationUrl: string | undefined;

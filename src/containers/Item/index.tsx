@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-
 import Spinner from '@/components/Spinner';
-import { ARTIFACT_CONTRACT } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { IInscription } from '@/interfaces/api/inscription';
 import logger from '@/services/logger';
 import { getNFTDetail } from '@/services/nft-explorer';
-import { useRouter } from 'next/router';
 import s from './style.module.scss';
+import { SOUL_CONTRACT } from '@/configs';
+import { useRouter } from 'next/router';
 
 const Inscription = ({ data }: { data?: IInscription }) => {
   const router = useRouter();
+
   const { tokenId } = router.query as {
     tokenId: string;
   };
@@ -28,7 +28,7 @@ const Inscription = ({ data }: { data?: IInscription }) => {
   const fetchInscriptionDetail = async () => {
     try {
       const data = await getNFTDetail({
-        contractAddress: ARTIFACT_CONTRACT,
+        contractAddress: SOUL_CONTRACT,
         tokenId: tokenId,
       });
       setInscription(data);

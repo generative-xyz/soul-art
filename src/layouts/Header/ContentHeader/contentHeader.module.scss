@@ -1,19 +1,6 @@
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 6;
-  width: 100%;
-  background: var(--background);
-  --text-color: #000;
-  --filter: black;
-  --background: #fff;
-
-  &.dark {
-    --text-color: #fff;
-    --filter: white;
-    --background: transparent;
-  }
+.headerContent {
+  padding-top: 22px;
+  padding-bottom: 22px;
 }
 
 .warning {
@@ -40,6 +27,16 @@
       text-decoration: none;
       opacity: 1;
     }
+  }
+
+  @media screen and (max-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+.rightContent {
+  @media screen and (max-width: $breakpoint-md) {
+    display: none;
   }
 }
 
@@ -68,6 +65,19 @@
   &:hover {
     border: 1px solid rgba($gray-2, 1);
   }
+
+  @media screen and (max-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+.burgerBtn {
+  &_white {
+    color: $white-primary;
+  }
+  @media screen and (min-width: $breakpoint-md) {
+    display: none;
+  }
 }
 
 .wallet_icon {
@@ -77,7 +87,6 @@
 
 .profile {
   &_container {
-    cursor: pointer;
     border-radius: 999px;
     background-color: $gray-primary;
     display: flex;
@@ -181,27 +190,17 @@
     background-color: #ececec;
     height: 1px;
     width: 100%;
-    margin: rem(20px) 0;
-  }
-
-  &_wrapper {
-    padding-top: rem(8px);
-    width: calc(100%);
-    border: none;
-    box-shadow: none;
-    background: none;
-    z-index: 10;
-    position: absolute;
+    margin: 24px 0;
   }
 
   &_container {
+    margin-top: 8px;
     width: 100%;
+    right: 0;
     border: 1px solid #ececec;
     box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
     border-radius: 20px;
     padding: 20px;
-    z-index: 6;
-    background-color: #fff;
   }
 
   &_title {

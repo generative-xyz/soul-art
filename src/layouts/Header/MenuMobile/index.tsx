@@ -1,7 +1,7 @@
 import { AssetsContext } from '@/contexts/assets-context';
 import { formatBTCPrice, formatEthPrice } from '@/utils/format';
 import React, { useContext } from 'react';
-import { ConnectWalletButton, WalletBalance } from '../Header.styled';
+import { WalletBalance } from '../Header.styled';
 import { Wrapper } from './MenuMobile.styled';
 import { useSelector } from 'react-redux';
 import { getIsAuthenticatedSelector } from '@/state/user/selector';
@@ -12,6 +12,9 @@ import Link from 'next/link';
 import Jazzicon from 'react-jazzicon/dist/Jazzicon';
 import { jsNumberForAddress } from 'react-jazzicon';
 import { useWeb3React } from '@web3-react/core';
+import { NAV_CONTENT } from '../const';
+import menuMobileStyles from './MenuMobile.module.scss';
+import Button from '@/components/Button';
 
 interface IProp {
   isOpen: boolean;
@@ -19,7 +22,7 @@ interface IProp {
 }
 
 const MenuMobile = ({ onCloseMenu, isOpen }: IProp) => {
-  const { btcBalance, tcBalance } = useContext(AssetsContext);
+  const { btcBalance, tcBalance, gmBalance } = useContext(AssetsContext);
   const { account } = useWeb3React();
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const router = useRouter();
@@ -29,26 +32,29 @@ const MenuMobile = ({ onCloseMenu, isOpen }: IProp) => {
   };
 
   return (
-    <Wrapper isOpen={isOpen}>
+    <Wrapper isOpen={isOpen} className={isOpen ? 'show' : ''}>
       <div className="inner">
         <button className="btnMenuMobile" onClick={onCloseMenu}>
-          <img src={`${CDN_URL}/icons/ic_close_menu.svg`} alt="ic_close_menu" />
+          <img src={`${CDN_URL}/ic_close_menu.svg`} alt="ic_close_menu" />
         </button>
-        <Link href={'https://tcgasstation.com/'} target="_blank">
-          Get TC
-        </Link>
-        <Link href={'https://newbitcoincity.com/'} target="_blank">
-          NBC
-        </Link>
-        <Link href={'https://generative.xyz/discord/'} target="_blank">
-          Discord
-        </Link>
-        <Link href={ROUTE_PATH.ABOUT}>About</Link>
-        <Link href={ROUTE_PATH.STATUS}>Status</Link>
+        {NAV_CONTENT.map(({ title, url }) => {
+          return (
+            <Link
+              key={title}
+              href={url}
+              className={`${menuMobileStyles.nav_item}
+                  ${router.pathname === url ? menuMobileStyles.active : ''}`}
+            >
+              {title}
+            </Link>
+          );
+        })}
         {isAuthenticated ? (
           <div className="wallet mobile">
             <WalletBalance>
               <div className="balance">
+                <p> {gmBalance}&nbsp;GM</p>
+                <span className="divider"></span>
                 <p>{formatBTCPrice(btcBalance)} BTC</p>
                 <span className="divider"></span>
                 <p>{formatEthPrice(tcBalance)} TC</p>
@@ -57,18 +63,23 @@ const MenuMobile = ({ onCloseMenu, isOpen }: IProp) => {
                 {account ? (
                   <Jazzicon diameter={32} seed={jsNumberForAddress(account)} />
                 ) : (
-                  <img
-                    src={`${CDN_URL}/icons/ic-avatar.svg`}
-                    alt="default avatar"
-                  />
+                  <img src={`${CDN_URL}/ic-avatar.svg`} alt="default avatar" />
                 )}
               </div>
             </WalletBalance>
           </div>
         ) : (
-          <ConnectWalletButton onClick={handleConnectWallet}>
-            Connect Wallet
-          </ConnectWalletButton>
+          <Button
+            onClick={handleConnectWallet}
+            className={menuMobileStyles.connect_button}
+          >
+            <img
+              alt="wallet_icon"
+              className={menuMobileStyles.wallet_icon}
+              src={`${CDN_URL}/heroicons_wallet-solid.svg`}
+            />
+            Connect wallet
+          </Button>
         )}
       </div>
     </Wrapper>

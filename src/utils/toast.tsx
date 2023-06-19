@@ -23,7 +23,7 @@ export const showToastError = ({
     ),
     {
       duration: 50000,
-      position: 'top-right',
+      position: 'bottom-right',
       style: {
         maxWidth: '900px',
         borderLeft: '4px solid #FF4747',
@@ -48,7 +48,7 @@ export const showToastSuccess = ({
     ),
     {
       duration: 50000,
-      position: 'top-right',
+      position: 'bottom-right',
       style: {
         maxWidth: '900px',
         borderLeft: '4px solid #00AA6C',

@@ -30,13 +30,10 @@
     }
   }
 
-  iframe {
-    width: 100%;
-    height: auto !important;
-  }
-
-  &.true {
-    width: 100%;
+  &.isClaimed {
+    position: relative;
+    height: 0;
+    padding-bottom: 100%;
 
     .backgroundImg {
       display: none;
@@ -44,15 +41,18 @@
 
     .img {
       position: relative;
-      top: unset;
-      left: unset;
-      transform: unset;
+      top: 0;
+      left: 0;
       width: 100%;
+      transform: none;
     }
 
     iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: auto !important;
+      height: 100%;
     }
   }
 

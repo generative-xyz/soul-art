@@ -22,8 +22,8 @@
   }
 
   @include mobile {
-    --padding-top: #{rem(84px)};
-    padding-bottom: rem(80px);
+    --padding-top: 80px;
+    padding-bottom: 80px;
   }
 
   @include min-tablet {
@@ -73,7 +73,7 @@
     }
 
     .right-container {
-      >div {
+      > div {
         margin-bottom: rem(60px);
 
         &:last-child {

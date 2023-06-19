@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-
 import Spinner from '@/components/Spinner';
 import { SOUL_CONTRACT } from '@/configs';
 import { IToken, ITokenDetail } from '@/interfaces/api/marketplace';

@@ -1,11 +1,11 @@
 import { CDN_URL } from '@/configs';
 import s from './style.module.scss';
-import { Explorer } from '@Components/Expoler';
-import { Token } from '@/interfaces/token';
+import Explorer from '@/components/Explorer';
+import { ISoul } from '@/interfaces/api/soul';
 
 type IClaimImgProps = {
   isClaimed: boolean;
-  soulToken: Token | null;
+  soulToken: ISoul | null;
   claimStatus: string;
 };
 
@@ -16,9 +16,7 @@ const ClaimImg: React.FC<IClaimImgProps> = ({
 }) => {
   return (
     <div
-      className={`${s.claimImg} ${isClaimed ? s.true : ''} ${
-        claimStatus === 'waiting' ? s.wait : ''
-      }`}
+      className={`${s.claimImg} ${isClaimed ? s.isClaimed : ''} ${claimStatus === 'waiting' ? s.wait : ''}`}
     >
       {soulToken ? (
         <Explorer url={soulToken.image} />
