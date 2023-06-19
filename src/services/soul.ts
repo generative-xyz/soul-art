@@ -4,6 +4,7 @@ import { IAttribute } from '@/interfaces/attributes';
 import { camelCaseKeys } from '@/utils/helpers';
 import { constructURL } from '@/utils/url';
 import { apiClient } from '.';
+import { IToken } from '@/interfaces/api/marketplace';
 
 const API_PATH = '/soul';
 
@@ -48,7 +49,7 @@ export const getSoulDetail = async ({
   tokenId,
 }: {
   tokenId: string;
-}): Promise<ISoul> => {
+}): Promise<IToken> => {
   const res = await apiClient.get(`${API_PATH}/nfts/${tokenId}`);
   return Object(camelCaseKeys(res));
 };

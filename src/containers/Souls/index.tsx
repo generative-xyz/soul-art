@@ -4,13 +4,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Spinner } from 'react-bootstrap';
 
 import SoulsCard from '@/components/SoulCards';
-import { ARTIFACT_CONTRACT, SOUL_CONTRACT } from '@/configs';
+import { SOUL_CONTRACT } from '@/configs';
 import { IToken } from '@/interfaces/api/marketplace';
 import { IAttribute } from '@/interfaces/attributes';
 import { getCollectionNFTList } from '@/services/marketplace';
 import { useRouter } from 'next/router';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import AttributeSort from '../Attribute';
 import soulsStyles from './souls.module.scss';
 
 const LIMIT_PAGE = 32;
@@ -135,9 +134,9 @@ export const SoulsContainer: React.FC = () => {
                     key={`token-${item.tokenId}`}
                     href={`/${item.tokenId}`}
                     image={!!item.imageCapture ? item.imageCapture : item.image}
-                    contract={ARTIFACT_CONTRACT}
                     tokenId={item.tokenId}
-                    title={`Smart Inscription #${item.tokenId}`}
+                    title={`Soul #${item.tokenId}`}
+                    ownerAddr={item.owner}
                     className={soulsStyles.grid_item}
                   />
                 );
@@ -145,7 +144,7 @@ export const SoulsContainer: React.FC = () => {
           </Container>
         </div>
       </InfiniteScroll>
-      <AttributeSort attributes={attributes || []} />
+      {/* <AttributeSort attributes={attributes || []} /> */}
     </>
   );
 };

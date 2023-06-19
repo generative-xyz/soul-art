@@ -1,26 +1,28 @@
-import { Col, Container, Row } from 'react-bootstrap';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
-import AuctionInfo from '../Item/AuctionInfo';
-import DetailImg from '../Item/MiddleImg';
-import { ISoul } from '@/interfaces/api/soul';
-import Info from '../Item/Info';
-import { ROUTE_PATH } from '@/constants/route-path';
 import Spinner from '@/components/Spinner';
-import { getSoulDetail, getSoulsNfts } from '@/services/soul';
+import { SOUL_CONTRACT } from '@/configs';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { IToken } from '@/interfaces/api/marketplace';
 import logger from '@/services/logger';
-import s from './style.module.scss';
+import { getCollectionNFTList } from '@/services/marketplace';
+import { getSoulDetail } from '@/services/soul';
 import { useRouter } from 'next/router';
+import AuctionInfo from '../Item/AuctionInfo';
+import Info from '../Item/Info';
+import DetailImg from '../Item/MiddleImg';
 import MoreSection from './MoreSection';
+import s from './style.module.scss';
 
 const SoulItem = () => {
   const router = useRouter();
   const [_isFetchingMoreItems, setIsFetchingMoreItems] = useState(false);
-  const [souls, setSouls] = useState<ISoul[]>([]);
+  const [souls, setSouls] = useState<IToken[]>([]);
   const { tokenId } = router.query as {
     tokenId: string;
   };
-  const [soulDetail, setSoulDetail] = useState<ISoul | undefined>();
+  const [soulDetail, setSoulDetail] = useState<IToken | undefined>();
 
   const fetchSouls = useCallback(async (page = 1, isFetchMore = false) => {
     try {
@@ -36,14 +38,15 @@ const SoulItem = () => {
         sort: 1,
       };
 
-      const data = await getSoulsNfts({
+      const data = await getCollectionNFTList({
+        contract_address: SOUL_CONTRACT,
         ...query,
       });
 
       if (isFetchMore) {
-        setSouls(prev => [...prev, ...data]);
+        setSouls(prev => [...prev, ...data.items]);
       } else {
-        setSouls(data);
+        setSouls(data.items);
       }
     } catch (error) {
     } finally {
@@ -84,7 +87,7 @@ const SoulItem = () => {
             <AuctionInfo img={soulDetail?.image} />
           </Col>
           <Col lg={5}>
-            <DetailImg img={soulDetail?.image} />
+            <DetailImg img={soulDetail?.animationFileUrl} />
           </Col>
           <Col lg={3}>
             <Info />

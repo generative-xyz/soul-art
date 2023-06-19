@@ -1,16 +1,14 @@
-import { Container, Spinner } from 'react-bootstrap';
-import React, { useCallback, useEffect, useState } from 'react';
+import { getDemoSoulsNfts, getSoulDemoAttributes } from '@/services/demoSoul';
 import { debounce, pick } from 'lodash';
-import { getSoulDemoAttributes, getDemoSoulsNfts } from '@/services/demoSoul';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Container, Spinner } from 'react-bootstrap';
 
-import { ARTIFACT_CONTRACT } from '@/configs';
-import AttributeSort from '../Attribute';
-import { IAttribute } from '@/interfaces/attributes';
-import { ISoul } from '@/interfaces/api/soul';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import SoulsCard from '@/components/SoulCards';
-import soulsStyles from './souls.module.scss';
+import { ISoul } from '@/interfaces/api/soul';
+import { IAttribute } from '@/interfaces/attributes';
 import { useRouter } from 'next/router';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import soulsStyles from './souls.module.scss';
 
 const LIMIT_PAGE = 32;
 
@@ -134,7 +132,6 @@ export const SoulsContainer: React.FC = () => {
                     key={`token-${item.tokenId}`}
                     href={`/demo/${item.tokenId}`}
                     image={item.image}
-                    contract={ARTIFACT_CONTRACT}
                     tokenId={item.tokenId}
                     title={`Soul Art #${item.tokenId}`}
                     className={soulsStyles.grid_item}
@@ -144,7 +141,7 @@ export const SoulsContainer: React.FC = () => {
           </Container>
         </div>
       </InfiniteScroll>
-      <AttributeSort attributes={attributes || []} />
+      {/* <AttributeSort attributes={attributes || []} /> */}
     </>
   );
 };

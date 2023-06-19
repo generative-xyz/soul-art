@@ -3,7 +3,7 @@
 
   &_box {
     width: 100%;
-    min-height: 100vh;
+    // min-height: 100vh;
     margin: 0 auto;
     position: relative;
     background: #ffffff;
@@ -358,7 +358,8 @@
 
     @include pcWide {
       height: auto;
-      max-height: rem(460px);
+      // max-height: rem(460px);
+      max-height: 60vh;
       min-width: rem(740px);
       // margin: 0 auto rem(25px) rem(-605px);
     }
