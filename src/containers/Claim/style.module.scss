@@ -9,12 +9,23 @@
       height: 100%;
 
       .column {
-        height: 100%;
+        display: flex;
+        gap: rem(40px);
+
+        .blockTitle {
+          font-weight: 400;
+          font-size: rem(32px);
+          line-height: 140%;
+          text-align: center;
+          color: #0f1b01;
+          margin-bottom: rem(32px);
+        }
 
         .wrapBox {
           position: relative;
           padding-top: rem(190px);
           padding-bottom: rem(60px);
+          flex: 1;
 
           .claimBox {
             position: relative;
