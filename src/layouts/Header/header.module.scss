@@ -76,6 +76,7 @@
   line-height: 18px;
   backdrop-filter: blur(2px);
   color: var(--text-color);
+  border-radius: 100px;
   transition: border-color 0.4s $easeOutQuart;
 
   &:hover {
