@@ -10,12 +10,7 @@ export const TC_CHAIN_ID = Number(process.env.NEXT_PUBLIC_CHAIN_ID);
 export const TC_EXPLORER_URL: string = process.env.NEXT_PUBLIC_TC_EXPLORER!;
 
 // Contract configs
-export const ARTIFACT_CONTRACT: string =
-  process.env.NEXT_PUBLIC_ARTIFACT_CONTRACT!;
-export const BNS_CONTRACT: string = process.env.NEXT_PUBLIC_BNS_CONTRACT!;
-export const BFS_ADDRESS: string = process.env.NEXT_PUBLIC_BFS_CONTRACT!;
 export const SOUL_CONTRACT: string = process.env.NEXT_PUBLIC_SOUL_CONTRACT!;
-export const SOUL_ADDRESS: string = process.env.NEXT_PUBLIC_SOUL_CONTRACT!;
 export const GM_CONTRACT: string = process.env.NEXT_PUBLIC_GM_CONTRACT!;
 export const GM_ADDRESS: string = process.env.NEXT_PUBLIC_GM_CONTRACT!;
 
