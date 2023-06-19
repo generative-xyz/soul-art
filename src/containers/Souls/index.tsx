@@ -1,23 +1,24 @@
-import { Container, Spinner } from 'react-bootstrap';
-import React, { useCallback, useEffect, useState } from 'react';
+import { getSoulAttributes } from '@/services/soul';
 import { debounce, pick } from 'lodash';
-import { getSoulAttributes, getSoulsNfts } from '@/services/soul';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Container, Spinner } from 'react-bootstrap';
 
-import { ARTIFACT_CONTRACT } from '@/configs';
-import AttributeSort from '../Attribute';
-import { IAttribute } from '@/interfaces/attributes';
-import { ISoul } from '@/interfaces/api/soul';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import SoulsCard from '@/components/SoulCards';
-import soulsStyles from './souls.module.scss';
+import { ARTIFACT_CONTRACT, SOUL_CONTRACT } from '@/configs';
+import { IToken } from '@/interfaces/api/marketplace';
+import { IAttribute } from '@/interfaces/attributes';
+import { getCollectionNFTList } from '@/services/marketplace';
 import { useRouter } from 'next/router';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import AttributeSort from '../Attribute';
+import soulsStyles from './souls.module.scss';
 
 const LIMIT_PAGE = 32;
 
 export const SoulsContainer: React.FC = () => {
   const router = useRouter();
   const [isFetching, setIsFetching] = useState(false);
-  const [souls, setSouls] = useState<ISoul[]>([]);
+  const [souls, setSouls] = useState<IToken[]>([]);
   const [attributes, setAttributes] = useState<IAttribute[]>();
   const [isFetchSuccessAttributes, setIsSuccessAttributes] = useState(false);
 
@@ -84,16 +85,16 @@ export const SoulsContainer: React.FC = () => {
             }
           }
         }
-
-        const data = await getSoulsNfts({
+        const data = await getCollectionNFTList({
+          contract_address: SOUL_CONTRACT,
           attributes: attributesFilter.toString(),
           ...query,
         });
 
         if (isFetchMore) {
-          setSouls(prev => [...prev, ...data]);
+          setSouls(prev => [...prev, ...data.items]);
         } else {
-          setSouls(data);
+          setSouls(data.items);
         }
       } catch (error) {
       } finally {
@@ -110,41 +111,41 @@ export const SoulsContainer: React.FC = () => {
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
   return (
-   <>
-    <InfiniteScroll
-      className="list"
-      dataLength={souls?.length || 0}
-      hasMore={true}
-      loader={
-        isFetching && (
-          <div className="loading">
-            <Spinner />
-          </div>
-        )
-      }
-      next={debounceLoadMore}
-    >
-      <div className={soulsStyles.art}>
-        <Container className={soulsStyles.grid_container}>
-          {souls &&
-            souls.length > 0 &&
-            souls.map(item => {
-              return (
-                <SoulsCard
-                  key={`token-${item.tokenId}`}
-                  href={`/${item.tokenId}`}
-                  image={item.image}
-                  contract={ARTIFACT_CONTRACT}
-                  tokenId={item.tokenId}
-                  title={`Smart Inscription #${item.tokenId}`}
-                  className={soulsStyles.grid_item}
-                />
-              );
-            })}
-        </Container>
-      </div>
-     
-    </InfiniteScroll>
-     <AttributeSort attributes={attributes || []} /></>
+    <>
+      <InfiniteScroll
+        className="list"
+        dataLength={souls?.length || 0}
+        hasMore={true}
+        loader={
+          isFetching && (
+            <div className="loading">
+              <Spinner />
+            </div>
+          )
+        }
+        next={debounceLoadMore}
+      >
+        <div className={soulsStyles.art}>
+          <Container className={soulsStyles.grid_container}>
+            {souls &&
+              souls.length > 0 &&
+              souls.map(item => {
+                return (
+                  <SoulsCard
+                    key={`token-${item.tokenId}`}
+                    href={`/${item.tokenId}`}
+                    image={!!item.imageCapture ? item.imageCapture : item.image}
+                    contract={ARTIFACT_CONTRACT}
+                    tokenId={item.tokenId}
+                    title={`Smart Inscription #${item.tokenId}`}
+                    className={soulsStyles.grid_item}
+                  />
+                );
+              })}
+          </Container>
+        </div>
+      </InfiniteScroll>
+      <AttributeSort attributes={attributes || []} />
+    </>
   );
 };

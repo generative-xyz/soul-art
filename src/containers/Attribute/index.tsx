@@ -1,4 +1,3 @@
-import { Button, Dropdown } from 'react-bootstrap';
 import React, {
   HTMLAttributes,
   forwardRef,
@@ -8,15 +7,16 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { Button, Dropdown } from 'react-bootstrap';
 
-import AccordionComponent from './Accordion';
+import IconSVG from '@/components/IconSVG';
 import { CDN_URL } from '@/configs';
 import { IAttribute } from '@/interfaces/attributes';
-import IconSVG from '@/components/IconSVG';
-import attributeStyles from './attribute.module.scss';
-import { Formik } from 'formik';
 import classNames from 'classnames';
+import { Formik } from 'formik';
 import { useRouter } from 'next/router';
+import AccordionComponent from './Accordion';
+import attributeStyles from './attribute.module.scss';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -44,15 +44,15 @@ export interface ISubmitValues {
 }
 
 const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  // const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const router = useRouter();
 
   const [isEnabledAttributesFilter, setIsEnabledAttributesFilter] =
     useState(false);
 
-  const handleSelect = (eventKey: string | null) => {
-    setSelectedOption(eventKey);
-  };
+  // const handleSelect = (eventKey: string | null) => {
+  //   setSelectedOption(eventKey);
+  // };
 
   const handleOnSubmit = useCallback((submitVal: ISubmitValues) => {
     setIsEnabledAttributesFilter(!!submitVal.attributes.length);
@@ -71,13 +71,13 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
       <div className={attributeStyles.attribute_container}>
         <div className={attributeStyles.attribute_leftContainer}>
           <Button className={attributeStyles.attribute_button}>Adopt</Button>
-          <Button className={attributeStyles.attribute_button}>
+          {/* <Button className={attributeStyles.attribute_button}>
             Live auction
           </Button>
-          <Button className={attributeStyles.attribute_button}>You own</Button>
+          <Button className={attributeStyles.attribute_button}>You own</Button> */}
         </div>
         <div className={attributeStyles.attribute_rightContainer}>
-          <Dropdown onSelect={handleSelect}>
+          {/* <Dropdown onSelect={handleSelect}>
             <Dropdown.Toggle
               id="dropdown-basic"
               className={
@@ -113,7 +113,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 Bottom Rarity
               </Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
           <div className={attributeStyles.attribute_divide} />
           <Dropdown>
             <Dropdown.Toggle as={FilterToggle} id="dropdown-custom-components">
