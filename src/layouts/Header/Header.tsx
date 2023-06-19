@@ -54,11 +54,11 @@ WalletToggle.displayName = 'WalletToggle';
 const NAV_CONTENT: NavContent[] = [
   {
     title: 'Story',
-    url: '/',
+    url: ROUTE_PATH.HOME,
   },
   {
     title: 'Art',
-    url: '/art',
+    url: ROUTE_PATH.ART,
   },
   // {
   //   title: 'FAQs',
@@ -91,11 +91,11 @@ const Header = ({
       setIsConnecting(true);
       await onConnect();
       await requestBtcAddress();
-    } catch (err) {
+    } catch (err: unknown) {
       logger.error(err);
       onDisconnect();
       showToastError({
-        message: (err as Error).message,
+        message: 'Rejected request.',
       });
     } finally {
       setIsConnecting(false);
@@ -290,6 +290,7 @@ const Header = ({
             </Dropdown>
           ) : (
             <Button
+              disabled={isConnecting}
               onClick={handleConnectWallet}
               className={headerStyles.connect_button}
             >

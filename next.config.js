@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -10,11 +9,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.trustless.computer',
+        hostname: '**.generative.xyz',
       },
       {
         protocol: 'https',
-        hostname: 'cdn.souldao.art',
+        hostname: '**.souldao.art',
       },
     ],
   },
@@ -25,10 +24,15 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/about',
-        destination: '/',
+        source: '/',
+        destination: '/souls',
         permanent: true,
       },
+      {
+        source: '/404',
+        destination: '/souls/404',
+        permanent: true,
+      }
     ];
   },
 };

@@ -25,7 +25,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const { query } = context;
     const { tokenId } = query as { tokenId: string };
     const data = await getNFTDetail({
-      contractAddress: SOUL_CONTRACT,
+      contractAddress: SOUL_CONTRACT.toLowerCase(),
       tokenId: tokenId,
     });
 
