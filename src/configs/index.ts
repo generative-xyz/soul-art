@@ -19,4 +19,7 @@ export const TRANSFER_TX_SIZE = 1000;
 export const BIG_FILE_PROJECT_ID = '420';
 export const MULTIPART_CHUNK_SIZE = 32000000; // 32Mb
 
+// Event
+export const CLAIM_START_TIME = '2023-06-22 14:00:00'
+
 /* eslint-enable @typescript-eslint/no-non-null-assertion */

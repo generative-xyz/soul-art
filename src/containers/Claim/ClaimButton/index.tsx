@@ -63,7 +63,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
     }
   };
 
-  const handleClaimed = async () => {
+  const handleClaim = async () => {
     try {
       setMinting(true);
       const tx = await call({
@@ -132,7 +132,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
       <button
         disabled={!isReceiveAble || !sufficientBal || isFetchingApi || minting}
         className={s.textButton}
-        onClick={handleClaimed}
+        onClick={handleClaim}
       >
         <span>{minting ? 'Processing...' : 'Adopt Soul'}</span>
       </button>

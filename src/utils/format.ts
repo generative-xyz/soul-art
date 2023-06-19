@@ -10,7 +10,7 @@ export const exponentialToDecimal = (exponential: number): string => {
       let i = 0;
       i <
       +exponentialSplitted[1] -
-        (exponentialSplitted[0].includes('.') ? exponentialSplitted[0].split('.')[1].length : 0);
+      (exponentialSplitted[0].includes('.') ? exponentialSplitted[0].split('.')[1].length : 0);
       i++
     ) {
       postfix += '0';
@@ -91,3 +91,6 @@ export const formatTCPrice = (price: string | null, emptyStr?: string): string =
   const priceNumb = new BigNumber(price).dividedBy(1e18).toNumber();
   return ceilPrecised(priceNumb, 4).toString().replace(',', '.');
 };
+
+export const zeroPad = (num: number, places: number) =>
+  String(num).padStart(places, '0');
