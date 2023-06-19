@@ -1,4 +1,4 @@
-import Banner from '@/components/Banner';
+// import Banner from '@/components/Banner';
 import { CDN_URL } from '@/configs';
 import ClaimPage from '@/containers/Claim';
 import Layout from '@/layouts';
@@ -8,7 +8,7 @@ import React from 'react';
 const AdoptPage: NextPage = (): React.ReactElement => {
   return (
     <Layout>
-      <Banner type={'claim'} />
+      {/*<Banner type={'claim'} />*/}
       <ClaimPage />
     </Layout>
   );

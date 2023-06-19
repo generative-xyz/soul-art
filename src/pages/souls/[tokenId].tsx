@@ -1,4 +1,4 @@
-import Banner from '@/components/Banner';
+// import Banner from '@/components/Banner';
 import { SOUL_CONTRACT } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { SEO_IMAGE, SEO_TITLE } from '@/constants/seo';
@@ -17,7 +17,7 @@ interface IProps {
 const SoulDetailPage: NextPage<IProps> = ({ item }: IProps): React.ReactElement => {
   return (
     <Layout>
-      <Banner type={'normal'} />
+      {/*<Banner type={'normal'} />*/}
       <SoulItem data={item} />
     </Layout>
   );

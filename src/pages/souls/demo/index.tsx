@@ -1,4 +1,4 @@
-import Banner from '@/components/Banner';
+// import Banner from '@/components/Banner';
 import { SoulsContainer } from '@/containers/SoulsDemo';
 import Layout from '@/layouts';
 import { FC } from 'react';
@@ -6,7 +6,7 @@ import { FC } from 'react';
 const SoulsPage: FC = () => {
   return (
     <Layout>
-      <Banner type={'normal'} />
+      {/*<Banner type={'normal'} />*/}
       <SoulsContainer />
     </Layout>
   );
