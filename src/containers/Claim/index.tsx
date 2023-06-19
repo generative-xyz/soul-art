@@ -3,7 +3,7 @@ import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
 import { Col, Container, Row } from 'react-bootstrap';
-import ClaimField from './ClaimButton';
+// import ClaimButton from './ClaimButton';
 import { useWeb3React } from '@web3-react/core';
 import logger from '@/services/logger';
 import useAsyncEffect from 'use-async-effect';
@@ -19,7 +19,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   const { account, provider } = useWeb3React();
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
   const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
-  const [isFetchingApi, setIsFetchingApi] = useState(false);
+  const [_isFetchingApi, setIsFetchingApi] = useState(false);
   const [soulToken, setSoulToken] = useState<ISoul | null>(null);
 
   useAsyncEffect(async () => {
@@ -127,13 +127,6 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                   claimStatus={claimStatus}
                 />
                 <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
-                {!isClaimed ? (
-                  <ClaimField
-                    isFetchingApi={isFetchingApi}
-                  />
-                ) : (
-                  ''
-                )}
               </div>
             </div>
           </Col>
