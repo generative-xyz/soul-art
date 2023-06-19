@@ -42,6 +42,7 @@ export interface ITokenSaleInfo {
 }
 
 export interface IToken {
+  animationFileUrl?: string;
   collectionAddress: string;
   tokenId: string;
   contentType: string;

@@ -115,7 +115,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
             </Dropdown.Menu>
           </Dropdown> */}
           <div className={attributeStyles.attribute_divide} />
-          <Dropdown>
+          <Dropdown drop="up">
             <Dropdown.Toggle as={FilterToggle} id="dropdown-custom-components">
               <div className={attributeStyles.attribute_filter}>
                 <IconSVG
@@ -146,10 +146,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 Attributes
               </p>
               <div
-                className={
-                  (attributeStyles.filterAttribute_boxComponent,
-                  attributeStyles.filterAttribute_component)
-                }
+                className={`${attributeStyles.filterAttribute_boxComponent} ${attributeStyles.filterAttribute_component} small-scrollbar`}
               >
                 <Formik
                   initialValues={{
