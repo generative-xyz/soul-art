@@ -152,7 +152,7 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
   useEffect(() => {
     const handleAccountsChanged = async () => {
       await disconnect();
-      router.push(`${ROUTE_PATH.CONNECT_WALLET}?next=${ROUTE_PATH.CLAIM}`);
+      router.push(`${ROUTE_PATH.CONNECT_WALLET}`);
     };
 
     if (window.ethereum) {

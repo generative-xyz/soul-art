@@ -127,7 +127,7 @@ const Header = ({
           })}
         </div>
 
-        <Link className="logo" href={ROUTE_PATH.HOME}>
+        <Link className="logo" href={ROUTE_PATH.ART}>
           <IconSVG
             src={`${CDN_URL}/logo.svg`}
             maxHeight={'32'}

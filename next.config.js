@@ -1,4 +1,6 @@
 const path = require("path");
+const needPrefix = (process.env.NEXT_PUBLIC_APP_ENV === 'production' || process.env.NEXT_PUBLIC_APP_ENV === 'develop');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
@@ -35,6 +37,7 @@ const nextConfig = {
       }
     ];
   },
+  assetPrefix: needPrefix ? '/souls' : undefined,
 };
 
 module.exports = nextConfig;

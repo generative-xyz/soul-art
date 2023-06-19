@@ -1,7 +1,7 @@
 import s from './style.module.scss';
 import IconSVG from '@Components/IconSVG';
 import { useContext, useEffect, useState, useCallback, useRef } from 'react';
-import { AnimateContext } from '@Context/Animate';
+import { AnimateContext } from '@/contexts/animate-context';
 import { MathMap } from '@Services/Animate/AnimateMathUtil';
 import { progressPlay, progressPoint, progressZoom } from '@/constants/asset';
 import { AnimFade } from '@Animations/Fade';
@@ -90,9 +90,8 @@ const ProgressBarCs = (): JSX.Element => {
             />
 
             <div
-              className={`${s.audioIconAnimate} ${
-                audioPlaying ? s.activeAnimation : ''
-              }`}
+              className={`${s.audioIconAnimate} ${audioPlaying ? s.activeAnimation : ''
+                }`}
             >
               <span className={s.audioIconAnimate_line1} />
               <span className={s.audioIconAnimate_line2} />

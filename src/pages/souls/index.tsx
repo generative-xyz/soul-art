@@ -1,12 +1,13 @@
 import { LandingContainer } from '@/containers/Landing';
-import { AnimateProvider } from '@Context/Animate';
+import { AnimateProvider } from '@/contexts/animate-context';
+import { NextPage } from 'next';
 import React from 'react';
 
-const LandingPage = () => {
+const LandingPage: NextPage = (): React.ReactElement => {
   return (
-      <AnimateProvider>
-        <LandingContainer />
-      </AnimateProvider>
+    <AnimateProvider>
+      <LandingContainer />
+    </AnimateProvider>
   );
 };
 

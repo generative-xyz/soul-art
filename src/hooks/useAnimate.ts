@@ -4,9 +4,9 @@ import {
     useContext,
     useLayoutEffect, MutableRefObject,
 } from "react";
-import {AnimateContext} from "@Context/Animate";
-import {useScrollTrigger} from "@Hooks/useScrollTrigger";
-import {PAGE_ENTER} from "@Constants/common";
+import { AnimateContext } from "@/contexts/animate-context";
+import { useScrollTrigger } from "@Hooks/useScrollTrigger";
+import { PAGE_ENTER } from "@Constants/common";
 
 export const useAnimate = (
     el: MutableRefObject<HTMLDivElement | HTMLElement | HTMLHeadingElement | null>,
@@ -15,9 +15,9 @@ export const useAnimate = (
     onSetter?: () => void,
     clearSetter?: () => void
 ): void => {
-    const {pageStatus} = useContext(AnimateContext);
+    const { pageStatus } = useContext(AnimateContext);
     let refScroller: ScrollTrigger | null = null;
-    const refOption = useRef({isActive: false, pageStatus: "PAGE_LOADING"});
+    const refOption = useRef({ isActive: false, pageStatus: "PAGE_LOADING" });
 
     const onEnterCallBack = useCallback((target: ScrollTrigger) => {
         if (

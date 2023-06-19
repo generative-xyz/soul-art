@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { AnimateContext } from '@Context/Animate';
+import { AnimateContext } from '@/contexts/animate-context';
 import { Frames } from '@Animations/Frames';
 import s from './styles.module.scss';
 import Living from '../Living';
@@ -31,11 +31,11 @@ export const FrameTop: React.FC = () => {
       endOut: 65,
     });
   const part3Frame = useFrameProcessing(lPart3, {
-      startIn: 70,
-      endIn: 80,
-      startOut: 155,
-      endOut: 165,
-    },
+    startIn: 70,
+    endIn: 80,
+    startOut: 155,
+    endOut: 165,
+  },
   );
 
   const processing = (frame: number) => {

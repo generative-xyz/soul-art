@@ -1,13 +1,12 @@
 {
-  "name": "dapp-drive",
-  "version": "0.1.0",
+  "name": "souls",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "next build",
     "dev": "next dev -p 3004",
     "dev-clean": "rm -rf .next && next dev -p 3004",
     "lint": "next lint",
-    "lint:css": "stylelint --fix **/*.{scss,css}",
     "lint:js": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "lint:json": "prettier --write \"./**/*.json\"",
     "prepare": "husky install",
@@ -49,6 +48,7 @@
     "image-promise": "^7.0.1",
     "lodash": "^4.17.21",
     "next": "^13.4.0",
+    "nextjs-progressbar": "^0.0.16",
     "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-audio-visualizers": "^0.1.1",
@@ -100,11 +100,6 @@
     "postcss-scss": "^4.0.6",
     "prettier": "^2.8.7",
     "sass": "^1.62.0",
-    "stylelint": "^14.16.0",
-    "stylelint-checkstyle-formatter": "^0.1.2",
-    "stylelint-config-standard": "^29.0.0",
-    "stylelint-config-standard-scss": "^6.1.0",
-    "stylelint-scss": "^4.3.0",
     "typescript": "5.0.4"
   }
 }

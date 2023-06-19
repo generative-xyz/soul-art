@@ -7,9 +7,14 @@ import { ITokenDetail } from '@/interfaces/api/marketplace';
 import Layout from '@/layouts';
 import logger from '@/services/logger';
 import { getNFTDetail } from '@/services/marketplace';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
+import React from 'react';
 
-const SoulDetailPage = ({ item }: { item: ITokenDetail }) => {
+interface IProps {
+  item: ITokenDetail;
+}
+
+const SoulDetailPage: NextPage<IProps> = ({ item }: IProps): React.ReactElement => {
   return (
     <Layout>
       <Banner type={'normal'} />
@@ -34,6 +39,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         item: data,
         seoInfo: {
           title: `${SEO_TITLE} | Soul #${tokenId}`,
+          description: `Soul #${tokenId}`,
           image: data.image || SEO_IMAGE,
         },
       },

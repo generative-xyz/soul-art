@@ -7,7 +7,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { PAGE_READY } from '@Constants/common';
 import { gsap } from 'gsap';
 import { CDN_URL } from '@/configs';
-import { AnimateContext } from '@Context/Animate';
+import { AnimateContext } from '@/contexts/animate-context';
 import loadImage from 'image-promise';
 import { MathMap } from '@Services/Animate/AnimateMathUtil';
 import { Col, Container } from 'react-bootstrap';

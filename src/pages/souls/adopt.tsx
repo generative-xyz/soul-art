@@ -1,14 +1,15 @@
 import Banner from '@/components/Banner';
 import { CDN_URL } from '@/configs';
-import { SoulsContainer } from '@/containers/Souls';
+import ClaimPage from '@/containers/Claim';
 import Layout from '@/layouts';
 import { NextPage } from 'next';
+import React from 'react';
 
-const SoulsPage: NextPage = () => {
+const AdoptPage: NextPage = (): React.ReactElement => {
   return (
     <Layout>
-      <Banner type={'normal'} />
-      <SoulsContainer />
+      <Banner type={'claim'} />
+      <ClaimPage />
     </Layout>
   );
 };
@@ -17,13 +18,13 @@ export async function getServerSideProps() {
   return {
     props: {
       seoInfo: {
-        title: 'The Souls | Art',
+        title: 'The Souls | Adopt Souls',
         description:
-          'Enjoy Souls - a living masterpiece that is dynamically evolving and reacting to various stimuli.',
+          'Adopt Souls - the first-ever soulbound art that are non-transferable and intimately linked to you.',
         image: `${CDN_URL}/images/1.jpg`,
       },
     },
   };
 }
 
-export default SoulsPage;
+export default AdoptPage;

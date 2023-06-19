@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useScrollTrigger } from '@Hooks/useScrollTrigger';
 import { MathLerp, MathMap, webpSupported } from '@Services/Animate/AnimateMathUtil';
 import s from './Frames.module.scss';
-import { AnimateContext } from '@Context/Animate';
+import { AnimateContext } from '@/contexts/animate-context';
 import { PAGE_READY } from '@Constants/common';
 
 interface IProps {
@@ -35,19 +35,19 @@ interface IRefDomFrames {
 }
 
 export const Frames: React.FC<IProps> = ({
-                                           className = '',
-                                           urlFrame = '',
-                                           webmFrame = '',
-                                           totalFrames = 0,
-                                           children,
-                                           height = 1080,
-                                           width = 1920,
-                                           onProcessing,
-                                           onEnter,
-                                           start,
-                                           end,
-                                           formatFrameUrl,
-                                         }) => {
+  className = '',
+  urlFrame = '',
+  webmFrame = '',
+  totalFrames = 0,
+  children,
+  height = 1080,
+  width = 1920,
+  onProcessing,
+  onEnter,
+  start,
+  end,
+  formatFrameUrl,
+}) => {
 
   const { pageStatus } = useContext(AnimateContext);
 

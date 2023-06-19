@@ -8,7 +8,7 @@ import HeroModal from './Modal';
 import { useContext, useState } from 'react';
 import { Col, Container } from 'react-bootstrap';
 import { IMG_HERO_URL, modalPlay } from '@/constants/asset';
-import { AnimateContext } from '@/contexts/Animate';
+import { AnimateContext } from '@/contexts/animate-context';
 import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
 

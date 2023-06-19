@@ -2,7 +2,7 @@ import s from './style.module.scss';
 import classNames from 'classnames';
 import Text from '@Animations/Text';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { AnimateContext } from '@Context/Animate';
+import { AnimateContext } from '@/contexts/animate-context';
 import { PAGE_ENTER, PAGE_LOADED, PAGE_READY } from '@Constants/common';
 import { gsap } from 'gsap';
 import loadImage from 'image-promise';
