@@ -55,7 +55,18 @@
               color: #000;
               display: flex;
               align-items: center;
-              gap: rem(32px);
+              gap: rem(16px);
+
+              .countdown {
+                display: flex;
+                align-items: center;
+                gap: rem(8px);
+                min-height: 24px;
+
+                span {
+                  width: 110px;
+                }
+              }
 
               &:hover {
                 border: 1px solid #000;
