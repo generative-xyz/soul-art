@@ -25,7 +25,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   useAsyncEffect(async () => {
     try {
       setIsFetchingApi(true);
-      const { items } = await getListTokensByWallet(account as string);
+      const { items } = await getListTokensByWallet('account' as string);
       if (items.length > 0 && items[0]) {
         const soulItem = items[0];
         setSoulToken(soulItem);
@@ -118,8 +118,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                 </div>
               )}
               <div
-                className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''
-                  }`}
+                className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''}`}
               >
                 <ClaimImg
                   isClaimed={isClaimed}
