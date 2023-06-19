@@ -134,7 +134,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
         className={s.textButton}
         onClick={handleClaimed}
       >
-        <span>{minting ? 'Claiming...' : 'Claim Soul'}</span>
+        <span>{minting ? 'Processing...' : 'Adopt Soul'}</span>
       </button>
     );
   };
@@ -145,7 +145,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
         disabled={isConnecting}
         className={s.textButton}
         onClick={handleConnectWallet}>
-        {isConnecting ? 'Connecting...' : 'Connect wallet to claim Souls'}
+        {isConnecting ? 'Connecting...' : 'Connect wallet to adopt Souls'}
       </button>
     );
   };

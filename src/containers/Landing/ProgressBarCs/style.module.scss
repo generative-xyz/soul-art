@@ -30,12 +30,16 @@
     .line {
       width: 100%;
       height: 1px;
-      background: rgba(#fff, .2);
+      background: rgba(#fff, 0.2);
 
       &_po {
         height: 1px;
         display: block;
-        background: linear-gradient(270deg, #FFFFFF 0.55%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(
+          270deg,
+          #ffffff 0.55%,
+          rgba(255, 255, 255, 0) 100%
+        );
         position: absolute;
         left: 0;
         top: 0;
@@ -122,9 +126,9 @@
       width: rem(12px);
       height: rem(18px);
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       gap: calc(100% / 5);
-      transition: .5s $easeOutQuart;
+      transition: 0.5s $easeOutQuart;
 
       @include mobile {
         width: rem(5px);
@@ -139,7 +143,7 @@
       span {
         width: calc(100% / 5);
         background: #fff;
-        transition: .5s $easeOutQuart;
+        transition: 0.5s $easeOutQuart;
 
         &.audioIconAnimate_line1 {
           height: 50%;
@@ -156,7 +160,7 @@
 
       @keyframes heightAnimation {
         0% {
-          height: 50%
+          height: 50%;
         }
 
         50% {

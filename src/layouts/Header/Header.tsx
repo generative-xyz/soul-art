@@ -60,10 +60,10 @@ const NAV_CONTENT: NavContent[] = [
     title: 'Art',
     url: '/art',
   },
-  {
-    title: 'FAQs',
-    url: '/faq',
-  },
+  // {
+  //   title: 'FAQs',
+  //   url: '/faq',
+  // },
 ];
 
 const Header = ({
@@ -111,8 +111,8 @@ const Header = ({
 
   const ContentHeader = (): JSX.Element => {
     return (
-      <div className="d-flex justify-content-between align-items-center w-100">
-        <div className={headerStyles['nav_container']}>
+      <div className="content-header d-flex justify-content-between align-items-center w-100">
+        <div className={headerStyles.nav_container}>
           {NAV_CONTENT.map(({ title, url }) => {
             return (
               <Link

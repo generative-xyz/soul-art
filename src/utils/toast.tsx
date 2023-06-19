@@ -22,7 +22,7 @@ export const showToastError = ({
       />
     ),
     {
-      duration: 50000,
+      duration: 5000,
       position: 'bottom-right',
       style: {
         maxWidth: '900px',
@@ -47,7 +47,7 @@ export const showToastSuccess = ({
       <ToastConfirm id={t.id} url={url} message={message} linkText={linkText} />
     ),
     {
-      duration: 50000,
+      duration: 5000,
       position: 'bottom-right',
       style: {
         maxWidth: '900px',

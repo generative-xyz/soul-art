@@ -13,18 +13,11 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
     return (
       <div className={s.claimDesc}>
         <p className={s.desc}>
-          Explore Souls, the first on-chain soulbound art that merges in a
-          collective performance, reflecting human emotions such as fear, greed,
-          and belief.
+          Explore Souls, the first ever art protocol that merges in a collective performance, trustlessly choreographed by unstoppable smart contracts, financially managed by a collector-run DAO, and powered by a native cryptocurrency - $GM.
+
         </p>
         <p className={s.desc}>
-          These Souls are personalised and irreplaceable, requiring ongoing care
-          from their owners. If you have no joy with them, they will leave you
-          in search of a better match.
-        </p>
-        <p className={s.desc}>
-          Enjoy this collection, which will help you understand the
-          interconnected nature of our New Bitcoin City community.
+          Just as the sun rises each day, the Souls collection symbolizes hope, resilience, and the potential for growth of the Bitcoin network.
         </p>
       </div>
     );
