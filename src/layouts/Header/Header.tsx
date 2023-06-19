@@ -125,6 +125,15 @@ const Header = ({
               </Link>
             );
           })}
+          <div className={headerStyles.divider}></div>
+          <Link
+            href={'https://newbitcoincity.com/'}
+            target="_blank"
+            className={`${headerStyles.nav_item}`}
+          >
+            New Bitcoin City
+            <IconSVG maxWidth="20" src={`${CDN_URL}/ic-arrow-right-up.svg`} />
+          </Link>
         </div>
 
         <Link className="logo" href={ROUTE_PATH.HOME}>

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import IconSVG from '@/components/IconSVG';
 import { CDN_URL } from '@/configs';
@@ -9,12 +9,18 @@ import { jsNumberForAddress } from 'react-jazzicon';
 import Jazzicon from 'react-jazzicon/dist/Jazzicon';
 import TabsComponent from './Tabs';
 import AuctionInfoStyles from './style.module.scss';
+import useAsyncEffect from 'use-async-effect';
+import useGMBalanceOf from '@/hooks/contract-operations/gm/useGMBalanceOf';
 
 type AuctionProps = {
   data: ITokenDetail;
 };
 const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
-  const { account } = useWeb3React();
+  const { account, provider } = useWeb3React();
+  const [isOwnerEligible, setIsOwnerEligible] = useState<boolean | null>(null);
+  const { call: getOwnerGmBalance } = useGMBalanceOf({
+    walletAddress: data.owner,
+  });
 
   // const [show, setShow] = useState<boolean>(false);
 
@@ -23,14 +29,19 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
 
   const itemName = useMemo(() => `Soul #${data.tokenId}`, [data.tokenId]);
 
-  const isOnwerEligible = useMemo(() => true, []);
+  useAsyncEffect(async () => {
+    if (data.owner && provider) {
+      const gmBalanceVal = await getOwnerGmBalance();
+      setIsOwnerEligible(gmBalanceVal > 1);
+    }
+  }, [data.owner, provider]);
 
   return (
     <>
       <div className={AuctionInfoStyles.container}>
         <p className={AuctionInfoStyles.content_title}>{itemName}</p>
         <div className={AuctionInfoStyles.content_warning}>
-          {isOnwerEligible ? (
+          {isOwnerEligible ? (
             <>
               <div className={AuctionInfoStyles.content_warning_iconUser}>
                 <Jazzicon diameter={28} seed={jsNumberForAddress(data.owner)} />
@@ -46,7 +57,10 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
               <div className={AuctionInfoStyles.content_warning_iconUser}>
                 <Jazzicon diameter={28} seed={jsNumberForAddress(data.owner)} />
                 <div className={AuctionInfoStyles.content_warning_iconWarning}>
-                  <IconSVG src={`${CDN_URL}/ic-warning.svg`}></IconSVG>
+                  <IconSVG
+                    maxWidth="20"
+                    src={`${CDN_URL}/ic-warning.svg`}
+                  ></IconSVG>
                 </div>
               </div>
               <div className={AuctionInfoStyles.content_warning_showAddress}>

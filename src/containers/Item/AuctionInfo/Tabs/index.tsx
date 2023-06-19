@@ -158,7 +158,6 @@ const TabDescription = () => {
           <IconSVG
             src={`${CDN_URL}/ic-sun.svg`}
             maxWidth={'40'}
-            maxHeight={'40'}
             className={TabsStyles.content_auction_tabDescHeadIcon}
           ></IconSVG>
         </div>
