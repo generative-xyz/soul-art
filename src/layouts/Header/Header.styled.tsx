@@ -6,8 +6,6 @@ import Link from 'next/link';
 
 const Wrapper = styled.header`
   display: flex;
-  padding-top: 22px;
-  padding-bottom: 22px;
   font-size: 16px;
 
   > div {
@@ -200,13 +198,11 @@ const WalletBalance = styled.div`
   display: flex;
   align-items: center;
   gap: ${px2rem(12)};
-  padding: ${px2rem(6)} ${px2rem(15)};
   // padding-left: ${px2rem(12)};
   background-color: transparent;
   /* border-radius: 40px; */
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #282a28;
   /* border: 1px solid white; */
   border-radius: 2px 0 2px 0;
 
