@@ -1,6 +1,28 @@
 .claimContent {
   margin-top: rem(32px);
 
+  .claimContent_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .claimContent_countdownWrapper {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+  }
+
+  .claimContent_countdownText {
+    min-width: rem(130px);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 140%;
+    color: #000;
+  }
+
   .claimContent_top {
     display: flex;
     justify-content: space-between;
