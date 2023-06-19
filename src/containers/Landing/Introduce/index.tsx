@@ -11,6 +11,7 @@ import { IMG_HERO_URL, modalPlay } from '@/constants/asset';
 import { AnimateContext } from '@/contexts/animate-context';
 import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
+import { CDN_URL } from '@/configs';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -66,11 +67,19 @@ const Introduce: React.FC = () => {
             </Text>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
-              <Link href={ROUTE_PATH.ART} className={cs(s.button, s.init)}>
-                Explore art
+              <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
+                Adopt a Souls
               </Link>
-              <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.trans)}>
-                Claim Souls
+              <Link
+                href={'https://discord.gg/sBTeHRW5Xb'}
+                className={cs(s.button, s.trans)}
+                target="_blank"
+              >
+                <IconSVG
+                  src={`${CDN_URL}/ic-discord.svg`}
+                  maxWidth={'20'}
+                ></IconSVG>
+                Join Discord
               </Link>
             </AnimFade>
 

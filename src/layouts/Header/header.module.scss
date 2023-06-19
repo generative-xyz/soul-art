@@ -97,18 +97,20 @@
   &_container {
     cursor: pointer;
     border-radius: 999px;
-    background-color: $gray-primary;
+    background-color: rgba($color: #fff, $alpha: 0.1);
+    color: white;
+    // background-color: $gray-primary;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid $gray-2;
     padding: 6px 8px;
     gap: 4px;
   }
 
   &_amount {
     border-radius: 999px;
-    background-color: $white-primary;
+    background-color: rgba($color: #fff, $alpha: 0.2);
+
     padding: 4px 8px;
     box-shadow: 0px 0px 12px -6px rgba(0, 0, 0, 0.08);
     font-size: 14px;

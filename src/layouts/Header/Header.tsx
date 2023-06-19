@@ -1,37 +1,34 @@
+import IconSVG from '@/components/IconSVG';
 import { CDN_URL, TC_URL } from '@/configs';
-import { HTMLAttributes, forwardRef, useState } from 'react';
-import { formatBTCPrice, formatEthPrice } from '@/utils/format';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { AssetsContext } from '@/contexts/assets-context';
+import { WalletContext } from '@/contexts/wallet-context';
+import { DappsTabs } from '@/enums/tabs';
+import logger from '@/services/logger';
 import {
   getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
+import { formatBTCPrice, formatEthPrice } from '@/utils/format';
 import { showToastError, showToastSuccess } from '@/utils/toast';
 import { AnimFade } from '@Animations/Fade';
-import classNames from 'classnames';
-import { Wrapper } from './Header.styled';
-import headerStyles from './header.module.scss';
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
-import logger from '@/services/logger';
-import { useContext } from 'react';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-import { useWeb3React } from '@web3-react/core';
-import { AssetsContext } from '@/contexts/assets-context';
-import IconSVG from '@/components/IconSVG';
-import { ROUTE_PATH } from '@/constants/route-path';
-import { WalletContext } from '@/contexts/wallet-context';
-import { DappsTabs } from '@/enums/tabs';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
+import { useWeb3React } from '@web3-react/core';
+import { default as classNames, default as cs } from 'classnames';
 import copy from 'copy-to-clipboard';
-import { Dropdown, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 import Link from 'next/link';
+import { HTMLAttributes, forwardRef, useContext, useState } from 'react';
+import { Button, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import { useSelector } from 'react-redux';
+import { Wrapper } from './Header.styled';
 import MenuMobile from './MenuMobile';
-import cs from 'classnames';
+import headerStyles from './header.module.scss';
 
-type NavContent = {
-  title: string;
-  url: string;
-};
+// type NavContent = {
+//   title: string;
+//   url: string;
+// };
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -51,20 +48,20 @@ const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 
 WalletToggle.displayName = 'WalletToggle';
 
-const NAV_CONTENT: NavContent[] = [
-  {
-    title: 'Story',
-    url: ROUTE_PATH.HOME,
-  },
-  {
-    title: 'Art',
-    url: ROUTE_PATH.ART,
-  },
-  // {
-  //   title: 'FAQs',
-  //   url: '/faq',
-  // },
-];
+// const NAV_CONTENT: NavContent[] = [
+//   {
+//     title: 'Story',
+//     url: ROUTE_PATH.HOME,
+//   },
+//   {
+//     title: 'Art',
+//     url: ROUTE_PATH.ART,
+//   },
+//   // {
+//   //   title: 'FAQs',
+//   //   url: '/faq',
+//   // },
+// ];
 
 const Header = ({
   height,
@@ -78,7 +75,6 @@ const Header = ({
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const { btcBalance, tcBalance, gmBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
-  const router = useRouter();
   const { account } = useWeb3React();
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const { onDisconnect, onConnect, requestBtcAddress } =
@@ -113,7 +109,7 @@ const Header = ({
     return (
       <div className="content-header d-flex justify-content-between align-items-center w-100">
         <div className={headerStyles.nav_container}>
-          {NAV_CONTENT.map(({ title, url }) => {
+          {/* {NAV_CONTENT.map(({ title, url }) => {
             return (
               <Link
                 key={title}
@@ -125,20 +121,25 @@ const Header = ({
               </Link>
             );
           })}
-          <div className={headerStyles.divider}></div>
+          <div className={headerStyles.divider}></div> */}
           <Link
             href={'https://newbitcoincity.com/'}
             target="_blank"
             className={`${headerStyles.nav_item}`}
           >
             New Bitcoin City
-            <IconSVG maxWidth="20" src={`${CDN_URL}/ic-arrow-up-right.svg`} />
+            <IconSVG
+              maxWidth="20"
+              src={`${CDN_URL}/ic-arrow-up-right.svg`}
+              color="white"
+              type="stroke"
+            />
           </Link>
         </div>
 
         <Link className="logo" href={ROUTE_PATH.ART}>
           <IconSVG
-            src={`${CDN_URL}/logo.svg`}
+            src={`${CDN_URL}/ic-logo-white.svg`}
             maxHeight={'32'}
             maxWidth={'32'}
             className={headerStyles.logo_svg}
@@ -320,7 +321,8 @@ const Header = ({
     <Wrapper
       className={classNames(
         headerStyles.header,
-        theme ? headerStyles[theme] : ''
+        theme ? headerStyles[theme] : '',
+        'dark'
       )}
       style={{ height }}
     >
