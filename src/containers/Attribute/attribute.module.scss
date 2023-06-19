@@ -12,7 +12,7 @@
   }
 
   &_container {
-    width: 100%;
+    width: fit-content;
     display: flex;
     margin: 0 auto;
     position: fixed;
@@ -29,7 +29,7 @@
       border-radius: rem(40px) rem(40px) 0 0;
       bottom: 0;
       max-width: 100%;
-      gap: rem(4px);
+      // gap: rem(4px);
       padding: rem(12px);
     }
 
@@ -39,8 +39,8 @@
       flex-direction: row;
       bottom: rem(24px);
       border-radius: rem(100px);
-      // max-width: rem(740px);
-      gap: rem(8px);
+      max-width: rem(740px);
+      // gap: rem(8px);
       padding: rem(8px);
     }
 
@@ -51,7 +51,7 @@
       bottom: rem(32px);
       border-radius: rem(100px);
       max-width: rem(740px);
-      gap: rem(8px);
+      // gap: rem(8px);
       padding: rem(8px);
     }
 
@@ -63,7 +63,7 @@
       border-radius: rem(100px);
       max-width: rem(740px);
       padding: rem(8px);
-      gap: rem(8px);
+      // gap: rem(8px);
     }
 
     @include pcS2M {
@@ -73,7 +73,7 @@
       bottom: rem(32px);
       border-radius: rem(100px);
       max-width: rem(740px);
-      gap: rem(8px);
+      // gap: rem(8px);
       padding: rem(8px);
     }
 
@@ -85,7 +85,7 @@
       bottom: rem(32px);
       border-radius: rem(100px);
       max-width: rem(740px);
-      gap: rem(8px);
+      // gap: rem(8px);
       padding: rem(8px);
     }
   }
@@ -99,7 +99,8 @@
     @include mobile {
       gap: 0;
       justify-content: space-between;
-      padding: 0 rem(10px);
+      padding-left: rem(10px);
+      // padding: 0 rem(10px);
     }
 
     @include tablet {
@@ -129,7 +130,7 @@
 
     @include mobile {
       justify-content: space-between;
-      padding: 0 rem(12px);
+      // padding: 0 rem(12px);
     }
 
     @include min-tablet {
@@ -155,7 +156,7 @@
     border-radius: rem(100px);
     font-size: rem(16px);
     line-height: rem(18px);
-    transition: .5s $easeOutQuart;
+    transition: 0.5s $easeOutQuart;
     cursor: pointer;
 
     @include mobile {
@@ -182,10 +183,9 @@
     &:hover {
       color: #f6f6f6;
       background: #000;
-      transition: .5s $easeOutQuart;
+      transition: 0.5s $easeOutQuart;
     }
   }
-
 
   &_top_rarity {
     display: flex;
@@ -319,7 +319,7 @@
       height: 3%;
       width: 100%;
       position: absolute;
-      content: "";
+      content: '';
       background: #fff;
       bottom: 0;
       left: 0;

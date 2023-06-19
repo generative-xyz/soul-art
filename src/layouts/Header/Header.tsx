@@ -64,10 +64,10 @@ const NAV_CONTENT: NavContent[] = [
     title: 'Art',
     url: '/art',
   },
-  {
-    title: 'FAQs',
-    url: '/faq',
-  },
+  // {
+  //   title: 'FAQs',
+  //   url: '/faq',
+  // },
 ];
 
 const Header = ({
