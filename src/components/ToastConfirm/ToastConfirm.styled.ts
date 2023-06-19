@@ -2,9 +2,9 @@ import px2rem from '@/utils/px2rem';
 import styled from 'styled-components';
 
 export const StyledToastConfirm = styled.div`
-  font-size: ${px2rem(14)};
+  font-size: ${px2rem(24)};
   font-weight: 400;
-  width: ${px2rem(310)};
+  width: ${px2rem(410)};
   display: flex;
   align-items: center;
   justify-content: space-between;

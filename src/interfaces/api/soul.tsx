@@ -1,21 +1,27 @@
 import { IAttribute } from '../attributes';
+import { ICollection } from './collection';
 
 export interface ISoul {
-  deleted_at: string | null;
-  created_at: string | null;
-  updated_at: string | null;
+  deletedAt: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   name: string;
   owner: string;
   tokenUri: string;
-  image?: string;
-  mintedAt: string;
+  mintedAt: number;
   attributes: IAttribute[];
   metadata: string;
-  metadata_type: string;
-  animation_file_url: string;
-  image_capture: string;
-  collection_address: string;
+  metadataType: string;
+  animationFileRrl: string;
+  imageCapture: string;
   tokenId: string;
   tokenIdInt: number;
-  is_auction: true;
+  isAuction: true;
+  blockNumber: string;
+  activities: Array<unknown>;
+  buyable: boolean;
+  collection: ICollection;
+  collectionAddress: string;
+  contentType: string;
+  image: string;
 }

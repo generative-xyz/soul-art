@@ -52,7 +52,7 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
       if (account && provider && contract) {
         logger.debug('useMint', params);
 
-        const { address, txSuccessCallback } = params;
+        const { address, totalGM, signature, txSuccessCallback } = params;
 
         const tcTxSizeByte = TRANSFER_TX_SIZE;
 
@@ -71,14 +71,14 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
         }
 
         const gasLimit = await estimateGas({
-          address: params.address,
-          totalGM: params.totalGM,
-          signature: params.signature,
+          address: address,
+          totalGM: totalGM,
+          signature: signature,
         });
 
         const transaction = await contract
           .connect(provider.getSigner())
-          .mint(address, params.totalGM, params.signature, {
+          .mint(address, totalGM, signature, {
             gasLimit: gasLimit,
           });
 

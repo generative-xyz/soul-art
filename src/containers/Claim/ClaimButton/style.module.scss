@@ -1,4 +1,4 @@
-.claimField {
+.claimButton {
   margin-top: rem(24px);
 
   .textButton {
@@ -10,22 +10,14 @@
     cursor: pointer;
     text-align: center;
     transition: 0.5s $easeOutQuart;
+    color: #fff;
+    font-size: rem(16px);
+    font-weight: 500;
+    line-height: 112%;
 
-    span {
-      color: #fff;
-      font-size: rem(16px);
-      font-weight: 500;
-      line-height: 112%;
-      transition: 0.5s $easeOutQuart;
-    }
-
-    &.false {
+    &:disabled {
       background: #f4f4f4;
-      pointer-events: none;
-
-      span {
-        color: #898989;
-      }
+      color: #898989;
     }
 
     .hide {
@@ -40,6 +32,7 @@
       }
     }
   }
+
   .noti {
     display: flex;
     align-items: center;
