@@ -134,12 +134,12 @@ const SectionFlys = (): JSX.Element => {
               animOption={{ offset: 0, screen: 0, type: 'paragraph' }}
               className={s.sectionContent}
             >
-              {`Souls are not static art but dynamic entities that reflect human behavior. They react to market dynamics, mirroring feelings of fear, greed, and belief. The interconnected nature of the Souls is fascinating, as one soul's changes can affect another soul within the collective.`}
+              {`Every SOUL has a design with the sun as its focal point. The sun has a rich metaphorical meaning in addition to its literal meaning of warmth and light. It is reminiscent of the "good morning" salutation that is frequently used in the crypto community, denoting optimism and the beginning of a new chapter.`}
             </Text>
             <AnimFade className={s.tag} offset={0.2}>
               <TextAnimate>
                 <span>
-                  Collective performance art that reflects human behavior
+                The “Good Morning” piece of Generative Art
                 </span>
               </TextAnimate>
             </AnimFade>
