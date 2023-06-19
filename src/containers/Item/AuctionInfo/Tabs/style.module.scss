@@ -318,6 +318,10 @@
       & > div:nth-child(1) {
         width: rem(40px);
         height: rem(40px);
+        svg {
+          width: 100%;
+          height: 100%;
+        }
       }
 
       & > p {
