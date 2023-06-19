@@ -15,7 +15,7 @@ const Discord: React.FC = (): React.ReactElement => {
           </div>
           <img className={s.discordUsers} src={`${CDN_URL}/discord-user-2.png`} alt="discord-users" />
           <p className={s.discordText}>
-            There are no Souls currently open for adoption.
+            There are no Souls available for adoption. Join the New Bitcoin City Discord to be the first to know.
           </p>
           <Link href={DISCORD_URL} target='_blank' className={s.joinBtn}>
             Join Discord

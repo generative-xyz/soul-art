@@ -52,7 +52,7 @@ const Introduce: React.FC = () => {
               animOption={{ screen: 0, offset: 0, type: 'heading' }}
               className={s['introduceBox-title']}
             >
-              SOULS
+              Souls: The Soulbound Art Protocol
             </Text>
             <Text
               as={'p'}
@@ -61,15 +61,12 @@ const Introduce: React.FC = () => {
               animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
               className={s['introduceBox-desc']}
             >
-              {`Souls is a new kind of artwork and the first art protocol. Souls are soulbound; you can't
-                            sell your Soul for profit. Souls are interconnected; the protocol choreographs them to
-                            create a collective performance art experience. The ef protocol is managed by a
-                            collector-run DAO and powered by the cryptocurrency GM. on this incredible journey.`}
+              {`Souls is a new kind of art (“soulbound”) and the first-ever art protocol. Souls cannot be bought or sold. A nurtured Soul will stay with you forever, but a neglected Soul might leave you to find a new home. All Souls are interconnected — creating a collective performance art experience. The Souls protocol is managed by the collector-run DAO and powered by the cryptocurrency Good Morning (GM).`}
             </Text>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
               <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
-                Adopt a Souls
+                Adopt a Soul
                 <span className={s.countdown}>
                   <SonarWaveCircle />
                   <CountdownText />
