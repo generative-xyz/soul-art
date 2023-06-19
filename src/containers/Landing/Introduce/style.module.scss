@@ -88,10 +88,6 @@
         }
 
         .introduceVideo {
-          margin-top: rem(43px);
-          padding-top: rem(43px);
-          border-top: 1px solid rgba(255, 255, 255, 0.2);
-
           .introduceVideo-title {
             text-transform: uppercase;
             font-weight: 400;
@@ -112,7 +108,7 @@
           }
 
           .wrap-video {
-            width: rem(212px);
+            width: 100%;
             cursor: pointer;
 
             img {
@@ -135,7 +131,7 @@
             }
           }
 
-          @include mobile {
+          @include onlyMobile {
             margin-top: rem(15px);
             padding-top: rem(15px);
 
@@ -145,17 +141,9 @@
           }
 
           @include tablet {
-            margin-top: rem(43px);
-            padding-top: rem(43px);
-
             .wrap-video {
               width: 40%;
             }
-          }
-
-          @include min-tablet {
-            margin-top: rem(43px);
-            padding-top: rem(43px);
           }
 
           @include pcSmall {
@@ -170,5 +158,29 @@
 
   &.popupOpen {
     z-index: 4;
+  }
+
+  &_actions {
+    display: flex;
+    gap: rem(20px);
+
+    margin-top: rem(43px);
+    padding-top: rem(43px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+    &_item {
+      flex: 0 0 rem(212px);
+
+      &__pdf {
+        :global(.imageFrame) {
+          padding: rem(6px);
+
+          .content {
+            height: rem(112px);
+            background: rgba(255, 255, 255, 0.1);
+          }
+        }
+      }
+    }
   }
 }

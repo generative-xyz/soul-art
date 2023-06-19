@@ -7,7 +7,7 @@ type IImageFrameProps = {
 
 const ImageFrame: React.FC<IImageFrameProps> = ({ children, type }) => {
   return (
-    <div className={`${s.imageFrame} ${type === 'small' ? s.small : ''}`}>
+    <div className={`imageFrame ${s.imageFrame} ${type === 'small' ? s.small : ''}`}>
       {children}
       <span className={s['top-left']}></span>
       <span className={s['top-right']}></span>
