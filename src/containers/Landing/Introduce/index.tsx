@@ -50,7 +50,7 @@ const Introduce: React.FC = () => {
               animOption={{ screen: 0, offset: 0, type: 'heading' }}
               className={s['introduceBox-title']}
             >
-              SOULS - The first-ever soulbound art
+              SOULS - The first-ever art protocol
             </Text>
             <Text
               as={'p'}
@@ -64,7 +64,10 @@ const Introduce: React.FC = () => {
               creations leave their owners if neglected, and can only be adopted
               from the Soul orphanage. Step into this realm and embrace the deep
               connection that awaits those who embark on this incredible
-              journey.
+              journey.The Souls art protocol represents a network of
+              interconnected living artworks, trustlessly choreographed by
+              unstoppable smart contracts, financially managed by a
+              collector-run DAO, and powered by a native cryptocurrency - $GM.
             </Text>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>

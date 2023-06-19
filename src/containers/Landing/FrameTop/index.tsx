@@ -51,9 +51,8 @@ export const FrameTop: React.FC = () => {
           width={1920}
           height={1080}
           className={s.info_main}
-          urlFrame={`${CDN_URL}/video-block/output_%d.jpg`}
-          // webmFrame={`https://cdn.generative.xyz/pages/home/block-3-2/block-3-v2-%d.png.webp`}
-          totalFrames={90}
+          urlFrame={`${CDN_URL}/LP_02_Compress/v-%d.jpg`}
+          totalFrames={92}
           onProcessing={processing}
           start={registerLoader}
           end={unRegisterLoader}
