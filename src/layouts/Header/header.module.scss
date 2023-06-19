@@ -50,8 +50,12 @@
 
   .nav_item:last-of-type {
     opacity: 1;
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+
     &:hover {
-      opacity: 0.7;
+      opacity: 0.6;
     }
   }
 }

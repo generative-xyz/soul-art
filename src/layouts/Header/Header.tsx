@@ -132,7 +132,7 @@ const Header = ({
             className={`${headerStyles.nav_item}`}
           >
             New Bitcoin City
-            <IconSVG maxWidth="20" src={`${CDN_URL}/ic-arrow-right-up.svg`} />
+            <IconSVG maxWidth="20" src={`${CDN_URL}/ic-arrow-up-right.svg`} />
           </Link>
         </div>
 

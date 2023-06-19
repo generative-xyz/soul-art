@@ -3,7 +3,7 @@ import { debounce, pick } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Spinner } from 'react-bootstrap';
 import SoulsCard from '@/components/SoulCards';
-import { SOUL_CONTRACT } from '@/configs';
+import { CDN_URL, SOUL_CONTRACT } from '@/configs';
 import { IToken } from '@/interfaces/api/marketplace';
 import { IAttribute } from '@/interfaces/attributes';
 import { getCollectionNFTList } from '@/services/marketplace';
@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import soulsStyles from './souls.module.scss';
 import { ROUTE_PATH } from '@/constants/route-path';
+import Link from 'next/link';
 
 const LIMIT_PAGE = 32;
 
@@ -92,8 +93,10 @@ export const SoulsContainer: React.FC = () => {
 
         if (isFetchMore) {
           setSouls(prev => [...prev, ...data.items]);
+          // setSouls([]);
         } else {
           setSouls(data.items);
+          // setSouls([]);
         }
       } catch (error) {
       } finally {
@@ -108,6 +111,27 @@ export const SoulsContainer: React.FC = () => {
       fetchSouls();
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
+
+  if (!souls || souls.length === 0) {
+    return (
+      <div className={soulsStyles.emptyWrapper}>
+        <div className={soulsStyles.empty}>
+          <div className={soulsStyles.empty_thumbnailWrapper}>
+            <img
+              src={`${CDN_URL}/img-empty-thumbnail.png`}
+              alt="empty thumbnail image"
+            />
+          </div>
+          <p className={soulsStyles.empty_content}>
+            Be the first one to adopt a Soul. Adopt a Soul here.
+          </p>
+          <Link href={ROUTE_PATH.CLAIM} className={soulsStyles.empty_adopt}>
+            Adopt Souls
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
