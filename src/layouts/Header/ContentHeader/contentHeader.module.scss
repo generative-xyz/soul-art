@@ -88,7 +88,7 @@
 .profile {
   &_container {
     border-radius: 999px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -205,7 +205,7 @@
 
   &_title {
     text-align: left;
-    color: #000;
+    color: #fff;
     font-size: rem(16px);
     line-height: 140%;
     margin-bottom: rem(8px);
@@ -236,6 +236,11 @@
       align-items: center;
       justify-content: flex-start;
 
+      svg,
+      path {
+        fill: #fff;
+      }
+
       p {
         font-size: rem(16px);
         line-height: 140%;
@@ -253,10 +258,16 @@
     justify-content: flex-start;
     margin-bottom: rem(16px);
 
+    svg,
+    path {
+      fill: #fff;
+    }
+
     p {
       margin-left: 8px;
       margin-bottom: 0;
       font-size: 16px;
+      color: white;
     }
 
     &:last-child {
