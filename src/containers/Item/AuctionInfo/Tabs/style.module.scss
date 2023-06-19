@@ -39,7 +39,7 @@
     }
 
     &_showAddress {
-      color: #FF4747;
+      color: #ff4747;
       font-size: rem(16px);
       font-weight: 500;
       line-height: 140%;
@@ -49,7 +49,7 @@
   &_divide {
     width: 100%;
     height: 0px;
-    border: 1px solid #ECECEC;
+    border: 1px solid #ececec;
     margin: rem(22px) 0 rem(24px) 0;
   }
 
@@ -61,7 +61,7 @@
       font-size: rem(12px);
       font-weight: 400;
       color: #000;
-      opacity: .6;
+      opacity: 0.6;
       line-height: 140%;
     }
 
@@ -85,12 +85,12 @@
       justify-content: center;
       width: rem(10px);
       height: rem(10px);
-      background: #0AC681;
+      background: #0ac681;
       position: relative;
       border-radius: 100px;
 
       &::after {
-        content: "";
+        content: '';
         width: rem(16px);
         height: rem(16px);
         position: absolute;
@@ -129,12 +129,12 @@
       font-size: rem(16px);
       line-height: rem(18px);
       margin: rem(12px) 0 rem(32px) 0;
-      transition: .5s $easeOutQuart;
+      transition: 0.5s $easeOutQuart;
 
       &:hover {
         background: #fff;
         color: #000;
-        transition: .5s $easeOutQuart;
+        transition: 0.5s $easeOutQuart;
         border: 1px solid #000;
       }
     }
@@ -158,8 +158,7 @@
         }
       }
 
-
-      li>button {
+      li > button {
         position: relative;
         line-height: 140%;
         font-size: rem(16px);
@@ -180,17 +179,17 @@
         position: relative;
 
         &:hover {
-          color: #1C1C1C;
+          color: #1c1c1c;
         }
       }
 
       :global(.nav-link.active) {
-        color: #1C1C1C;
+        color: #1c1c1c;
 
         &::before {
-          content: "";
+          content: '';
           position: absolute;
-          background: #1C1C1C;
+          background: #1c1c1c;
           height: 2px;
           width: 100%;
           bottom: 0;
@@ -203,7 +202,7 @@
       position: relative;
 
       &:after {
-        content: "";
+        content: '';
         position: absolute;
         height: 5px;
         width: 100%;
@@ -217,20 +216,20 @@
 
     &_tabBox {
       height: 100%;
-      max-height: rem(400px);
+      // max-height: rem(400px);
       overflow-y: auto;
       margin-bottom: 15px;
 
       @include pcSmall {
-        max-height: rem(180px);
+        // max-height: rem(180px);
       }
 
       @include pcMid {
-        max-height: rem(230px);
+        // max-height: rem(230px);
       }
 
       @include pcWide {
-        max-height: rem(400px);
+        // max-height: rem(400px);
       }
     }
 
@@ -298,7 +297,7 @@
       text-align: right;
       font-weight: 400;
       color: #000;
-      opacity: .6;
+      opacity: 0.6;
     }
 
     &_tabDesc {
@@ -306,7 +305,7 @@
     }
 
     &_tabDescHead {
-      background: #F6F6F6;
+      background: #f6f6f6;
       width: 100%;
       border-radius: rem(4px);
       display: flex;
@@ -316,12 +315,12 @@
       padding: rem(19px) 0;
       margin-bottom: rem(20px);
 
-      &>div:nth-child(1) {
+      & > div:nth-child(1) {
         width: rem(40px);
         height: rem(40px);
       }
 
-      &>p {
+      & > p {
         font-size: rem(16px);
         line-height: 140%;
         margin: 0 rem(16px) 0 rem(8px);
@@ -341,8 +340,7 @@
       padding: rem(8px) rem(12px);
       background: #fff;
       color: #000;
-      offset: 0px,
-        0px rgba(0, 0, 0, 0.12);
+      offset: 0px, 0px rgba(0, 0, 0, 0.12);
       box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
       border-radius: rem(24px);
     }
@@ -365,7 +363,7 @@
       font-size: rem(14px);
       margin-bottom: rem(4px);
       line-height: 140%;
-      opacity: .6;
+      opacity: 0.6;
       text-transform: capitalize;
     }
 
@@ -381,10 +379,9 @@
       font-weight: 500;
       text-align: center;
       width: rem(40px);
-      offset: 0px,
-        0px rgba(0, 0, 0, 0.08);
+      offset: 0px, 0px rgba(0, 0, 0, 0.08);
       border-radius: rem(16px);
-      background: #FFFFFF;
+      background: #ffffff;
       padding: rem(2px) rem(8px);
       font-size: rem(14px);
       margin-bottom: rem(4px);
@@ -401,7 +398,7 @@
     }
 
     &_tabInterKeyText {
-      background: #FFFFFF;
+      background: #ffffff;
       width: rem(32px);
       height: rem(32px);
       text-align: center;
@@ -412,8 +409,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      offset: 0px,
-        0px rgba(0, 0, 0, 0.12);
+      offset: 0px, 0px rgba(0, 0, 0, 0.12);
       box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
       margin-right: rem(16px);
     }

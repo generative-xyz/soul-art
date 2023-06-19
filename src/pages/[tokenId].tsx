@@ -1,17 +1,19 @@
-import { GetServerSidePropsContext, NextPage } from 'next';
-import Layout from '@/layouts';
+import Banner from '@/components/Banner';
+import { SOUL_CONTRACT } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { SEO_IMAGE, SEO_TITLE } from '@/constants/seo';
-import logger from '@/services/logger';
-import { getSoulDetail } from '@/services/soul';
 import SoulItem from '@/containers/SoulItem';
-import Banner from '@/components/Banner';
+import { ITokenDetail } from '@/interfaces/api/marketplace';
+import Layout from '@/layouts';
+import logger from '@/services/logger';
+import { getNFTDetail } from '@/services/marketplace';
+import { GetServerSidePropsContext } from 'next';
 
-const SoulDetailPage: NextPage = () => {
+const SoulDetailPage = ({ item }: { item: ITokenDetail }) => {
   return (
     <Layout>
       <Banner type={'normal'} />
-      <SoulItem />
+      <SoulItem data={item} />
     </Layout>
   );
 };
@@ -22,12 +24,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   try {
     const { query } = context;
     const { tokenId } = query as { tokenId: string };
-    const data = await getSoulDetail({
-      tokenId,
+    const data = await getNFTDetail({
+      contractAddress: SOUL_CONTRACT,
+      tokenId: tokenId,
     });
 
     return {
       props: {
+        item: data,
         seoInfo: {
           title: `${SEO_TITLE} | Soul #${tokenId}`,
           image: data.image || SEO_IMAGE,

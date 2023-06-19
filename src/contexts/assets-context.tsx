@@ -94,7 +94,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   const [comingAmount, setcomingAmount] = useState<number>(0);
   const [eth2btcRate, setEth2BtcRate] = useState<number>(0);
 
-  const { call: getGmBalance } = useGMBalanceOf();
+  const { call: getGmBalance } = useGMBalanceOf({ walletAddress: tcAddress });
 
   const fetchAssets = async (): Promise<ICollectedUTXOResp | undefined> => {
     if (!currentAddress || !tcAddress) return undefined;

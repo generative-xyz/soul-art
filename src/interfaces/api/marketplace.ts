@@ -1,7 +1,9 @@
+import { IMAGE_TYPE } from '@/components/NFTDisplayBox/constant';
 import { IAttribute } from '../attributes';
 import { IOwnedBNS } from '../bns';
 import { ICollection } from './collection';
 import { IPagingParams } from './query';
+import { ITokenAttributes } from '../token';
 
 export interface ITokenOffer {
   id: string;
@@ -70,6 +72,107 @@ export interface IToken {
   collection_address: string;
   tokenIdInt: number;
   is_auction: true;
+}
+
+export interface IInscriptionActivity {
+  baseEntity: {
+    id: string;
+    deletedAt: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  };
+  type: number;
+  title: string;
+  userAAddress: string | null;
+  userBAddress: string | null;
+  amount: number;
+  erc20Address: string;
+  time: string | null;
+  inscriptionId: string;
+  collectionContract: string;
+  offeringId: string;
+  blockNumber: number;
+  txHash: string;
+  logIndex: number;
+}
+export interface ITokenOffer {
+  id: string;
+  deletedAt: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+  offeringId: string;
+  collectionContract: string;
+  tokenId: string;
+  buyer: string;
+  erc20Token: string;
+  price: number;
+  status: number;
+  durationTime: number;
+  blockNumber: number;
+  ownerAddress: string | null;
+}
+
+export interface ITokenListingForSale {
+  id: string;
+  deletedAt?: string;
+  createdAt: string;
+  updatedAt?: string;
+  offeringId: string;
+  collectionContract: string;
+  tokenId: string;
+  seller: string;
+  erc20Token: string;
+  price: string;
+  status: number;
+  durationTime: number;
+  blockNumber: number;
+  ownerAddress?: string;
+}
+
+export interface ITokenActivity {
+  baseEntity: {
+    id: string;
+    deletedAt: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  };
+  type: number;
+  title: string;
+  userAAddress: string | null;
+  userBAddress: string | null;
+  amount: number;
+  erc20Address: string;
+  time: string | null;
+  inscriptionId: string;
+  collectionContract: string;
+  offeringId: string;
+  blockNumber: number;
+  txHash: string;
+  logIndex: number;
+}
+
+export interface ITokenDetail {
+  animationFileUrl: string;
+  id: string;
+  collection: ICollection;
+  imageCapture?: string;
+  name: string;
+  tokenId: string;
+  tokenUri: string;
+  attributes: ITokenAttributes[];
+  metadataType: string;
+  contentType: IMAGE_TYPE;
+  createdAt: string;
+  updatedAt: string;
+  mintedAt: number;
+  collectionAddress: string;
+  owner: string;
+  image?: string;
+  activities?: ITokenActivity[];
+  listingForSales?: ITokenListingForSale[];
+  makeOffers?: ITokenOffer[];
+  buyable: boolean;
+  bnsData?: IOwnedBNS[];
 }
 
 export interface IGetCollectionNFTListParams extends IPagingParams {

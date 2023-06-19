@@ -1,17 +1,14 @@
-import { Col, Container, Row } from 'react-bootstrap';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
-import AuctionInfo from '../Item/AuctionInfo';
-import DetailImg from '../Item/MiddleImg';
-import { ISoul } from '@/interfaces/api/soul';
-import Info from '../Item/Info';
-import { ROUTE_PATH } from '@/constants/route-path';
 import Spinner from '@/components/Spinner';
-import { getSoulDemoDetail, getDemoSoulsNfts } from '@/services/demoSoul';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { ISoul } from '@/interfaces/api/soul';
+import { getDemoSoulsNfts, getSoulDemoDetail } from '@/services/demoSoul';
 import logger from '@/services/logger';
-import s from './style.module.scss';
 import { useRouter } from 'next/router';
 import MoreSection from './MoreSection';
+import s from './style.module.scss';
 
 const SoulItem = () => {
   const router = useRouter();
@@ -61,7 +58,7 @@ const SoulItem = () => {
       const data = await getSoulDemoDetail({
         tokenId,
       });
-      setSoulDetail(data);
+      setSoulDetail(data || undefined);
     } catch (error) {
       logger.error(error);
       router.push(ROUTE_PATH.NOT_FOUND);
@@ -80,15 +77,9 @@ const SoulItem = () => {
     <div className={s.artDetail}>
       <Container>
         <Row>
-          <Col lg={4}>
-            <AuctionInfo img={soulDetail?.image} />
-          </Col>
-          <Col lg={5}>
-            <DetailImg img={soulDetail?.image} />
-          </Col>
-          <Col lg={3}>
-            <Info />
-          </Col>
+          <Col lg={4}>{/* <AuctionInfo img={soulDetail?.image} /> */}</Col>
+          <Col lg={5}>{/* <DetailImg img={soulDetail?.image} /> */}</Col>
+          <Col lg={3}>{/* <Info /> */}</Col>
         </Row>
       </Container>
 

@@ -16,7 +16,7 @@ export interface INFTCard {
   ownerAddr?: string;
 }
 
-const NFTCard = ({ href, image, className, ownerAddr }: INFTCard) => {
+const NFTCard = ({ href, image, className, ownerAddr, title }: INFTCard) => {
   return (
     <Card className={className}>
       <Card.Link href={href} as={Link} className={soulsCardStyles.card_link}>
@@ -42,13 +42,13 @@ const NFTCard = ({ href, image, className, ownerAddr }: INFTCard) => {
             <Card.Text>2d : 16h : 12m</Card.Text>
           </div> */}
           <div className={soulsCardStyles.hoverInfo}>
-            <p>Soul #123</p>
-            <div>
+            <p>{title}</p>
+            <div className={soulsCardStyles.owner}>
               {!!ownerAddr && (
                 <>
                   <div className={soulsCardStyles.avatarWrapper}>
                     <Jazzicon
-                      diameter={32}
+                      diameter={24}
                       seed={jsNumberForAddress(ownerAddr)}
                     />
                   </div>
