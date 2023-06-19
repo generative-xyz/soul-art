@@ -3,7 +3,7 @@ import Header from './Header';
 import layoutStyles from './layout.module.scss';
 import { GridDebug } from '@/animations/Grid/grid';
 
-export const HEADER_HEIGHT = 84;
+export const HEADER_HEIGHT = 80;
 export const FO0TER_HEIGHT = 80;
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {

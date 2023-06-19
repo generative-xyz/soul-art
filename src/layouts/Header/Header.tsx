@@ -6,7 +6,6 @@ import {
   getUserSelector,
 } from '@/state/user/selector';
 import { showToastError, showToastSuccess } from '@/utils/toast';
-
 import { AnimFade } from '@Animations/Fade';
 import { AssetsContext } from '@/contexts/assets-context';
 import Button from '@/components/Button';
@@ -53,6 +52,7 @@ const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     </div>
   )
 );
+
 WalletToggle.displayName = 'WalletToggle';
 
 const NAV_CONTENT: NavContent[] = [
@@ -82,14 +82,13 @@ const Header = ({
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const { btcBalance, tcBalance, gmBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
-
   const router = useRouter();
-
   const { account } = useWeb3React();
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleConnectWallet = async () => {
     try {
@@ -114,7 +113,7 @@ const Header = ({
     });
   };
 
-  const ContentHader = (): JSX.Element => {
+  const ContentHeader = (): JSX.Element => {
     return (
       <div className="d-flex justify-content-between align-items-center w-100">
         <div className={headerStyles['nav_container']}>
@@ -146,7 +145,11 @@ const Header = ({
         />
         <div className="rightContainer">
           {isAuthenticated ? (
-            <Dropdown>
+            <Dropdown
+              show={showDropdown}
+              onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
+            >
               <Dropdown.Toggle
                 as={WalletToggle}
                 id="dropdown-custom-components"
@@ -206,8 +209,8 @@ const Header = ({
                   </div>
                 </div>
               </Dropdown.Toggle>
-              <Dropdown.Menu className={headerStyles.menu_container}>
-                <div>
+              <Dropdown.Menu className={headerStyles.menu_wrapper}>
+                <div className={headerStyles.menu_container}>
                   <div className={headerStyles.menu_content}>
                     <div className={headerStyles.menu_title}>TC Address</div>
                     <div className={headerStyles.menu_item}>
@@ -226,7 +229,6 @@ const Header = ({
                           src={`${CDN_URL}/ic-copy.svg`}
                           color={'#5B5B5B'}
                           maxWidth="16"
-                          // type="stroke"
                         />
                       </div>
                     </div>
@@ -319,10 +321,10 @@ const Header = ({
       <div className="container">
         {isAnimation ? (
           <AnimFade>
-            <ContentHader />
+            <ContentHeader />
           </AnimFade>
         ) : (
-          <ContentHader />
+          <ContentHeader />
         )}
       </div>
     </Wrapper>

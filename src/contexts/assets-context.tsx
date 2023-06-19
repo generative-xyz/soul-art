@@ -225,7 +225,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
 
     const intervalID = setInterval(() => {
       fetchAssetsData();
-    }, 30000);
+    }, 60000);
 
     return () => {
       clearInterval(intervalID);

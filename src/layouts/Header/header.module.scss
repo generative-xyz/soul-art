@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 5;
+  z-index: 6;
   width: 100%;
   background: var(--background);
   --text-color: #000;
@@ -30,7 +30,7 @@
 
   .nav_item {
     opacity: 0.6;
-    transition: opacity .4s $easeOutQuart;
+    transition: opacity 0.4s $easeOutQuart;
 
     &.active {
       opacity: 1;
@@ -58,14 +58,14 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  border: 1px solid rgba($gray-2, .4);
+  border: 1px solid rgba($gray-2, 0.4);
   font-size: 14px;
   line-height: 18px;
   backdrop-filter: blur(2px);
   color: var(--text-color);
-  transition: border-color .4s $easeOutQuart;
+  transition: border-color 0.4s $easeOutQuart;
 
-  &:hover{
+  &:hover {
     border: 1px solid rgba($gray-2, 1);
   }
 }
@@ -77,6 +77,7 @@
 
 .profile {
   &_container {
+    cursor: pointer;
     border-radius: 999px;
     background-color: $gray-primary;
     display: flex;
@@ -180,17 +181,27 @@
     background-color: #ececec;
     height: 1px;
     width: 100%;
-    margin: 24px 0;
+    margin: rem(20px) 0;
+  }
+
+  &_wrapper {
+    padding-top: rem(8px);
+    width: calc(100%);
+    border: none;
+    box-shadow: none;
+    background: none;
+    z-index: 10;
+    position: absolute;
   }
 
   &_container {
-    margin-top: 8px;
     width: 100%;
-    right: 0;
     border: 1px solid #ececec;
     box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
     border-radius: 20px;
     padding: 20px;
+    z-index: 6;
+    background-color: #fff;
   }
 
   &_title {

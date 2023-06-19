@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import * as TC_SDK from 'trustless-computer-sdk';
 import logger from '@/services/logger';
+import { APP_ENV } from '@/configs';
 
 interface IParams<P, R> {
   operation: ContractOperationHook<P, R>;
@@ -76,7 +77,7 @@ const useContractOperation = <P, R>(
         dappURL: window.location.href,
         isRedirect: true,
         target: '_self',
-        isMainnet: true,
+        isMainnet: APP_ENV === 'production',
       });
 
       return tx;

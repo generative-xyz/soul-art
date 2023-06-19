@@ -44,9 +44,9 @@ const ToastError: React.FC<IProps> = ({
       </div>
       <div className="cursor-pointer" onClick={() => toast.dismiss(id)}>
         <IconSVG
-          src={`${CDN_URL}/icons/ic-close-1.svg`}
-          maxWidth="16"
-          maxHeight="16"
+          src={`${CDN_URL}/ic-close-1.svg`}
+          maxWidth="12"
+          maxHeight="12"
           color="black"
           type="fill"
         />
