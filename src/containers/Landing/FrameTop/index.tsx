@@ -8,8 +8,9 @@ import classNames from 'classnames';
 import { useFrameProcessing } from '@/hooks/useFrameProcessing';
 import { CDN_URL } from '@/configs';
 import Introduce from '../Introduce';
+import { useWindowSize } from '@trustless-computer/dapp-core';
 
-export const FrameTop: React.FC = () => {
+const FrameTop: React.FC = () => {
   const { registerLoader, unRegisterLoader } = useContext(AnimateContext);
 
   const elMain = useRef<HTMLDivElement | null>(null);
@@ -23,30 +24,39 @@ export const FrameTop: React.FC = () => {
     startOut: 10,
     endOut: 20,
   });
-  const part2Frame = useFrameProcessing(lPart2,
-    {
-      startIn: 20,
-      endIn: 30,
-      startOut: 55,
-      endOut: 65,
-    });
+  const part2Frame = useFrameProcessing(lPart2, {
+    startIn: 20,
+    endIn: 30,
+    startOut: 55,
+    endOut: 65,
+  });
   const part3Frame = useFrameProcessing(lPart3, {
-      startIn: 70,
-      endIn: 80,
-      startOut: 155,
-      endOut: 165,
-    },
-  );
+    startIn: 70,
+    endIn: 80,
+    startOut: 155,
+    endOut: 165,
+  });
 
   const processing = (frame: number) => {
     part1Frame(frame);
     part2Frame(frame);
     part3Frame(frame);
   };
+  const { mobileScreen } = useWindowSize();
 
-  return (
-    <div className={s.main} ref={elMain}>
-      {
+  const MobileFrameTop = () => {
+    return (
+      <div className={s.frameTopMobile}>
+        <Introduce />
+        <SubLiving />
+        <Living />
+      </div>
+    );
+  };
+
+  const DesktopFrameTop = () => {
+    return (
+      <div className={s.main} ref={elMain}>
         <Frames
           width={1920}
           height={1080}
@@ -68,7 +78,11 @@ export const FrameTop: React.FC = () => {
             <Living />
           </div>
         </Frames>
-      }
-    </div>
-  );
+      </div>
+    );
+  };
+
+  return <div>{mobileScreen ? <MobileFrameTop /> : <DesktopFrameTop />}</div>;
 };
+
+export default FrameTop;

@@ -10,7 +10,8 @@ import { Container } from 'react-bootstrap';
 import classNames from 'classnames';
 
 const ProgressBarCs = (): JSX.Element => {
-  const { lenis, audioPlaying, setAudioPlaying, isShowProgress } = useContext(AnimateContext);
+  const { lenis, audioPlaying, setAudioPlaying, isShowProgress } =
+    useContext(AnimateContext);
 
   const [po, setPo] = useState<number>(0);
   const [rote, setRote] = useState<number>(0);
@@ -41,10 +42,8 @@ const ProgressBarCs = (): JSX.Element => {
   }, [audioPlaying, setAudioPlaying]);
 
   useEffect(() => {
-    if (refAudio.current)
-      refAudio.current.volume = 0.3;
+    if (refAudio.current) refAudio.current.volume = 0.3;
   }, []);
-
 
   return (
     <div
@@ -101,7 +100,7 @@ const ProgressBarCs = (): JSX.Element => {
           </div>
         </AnimFade>
       </Container>
-      <audio ref={refAudio} src={MAIN_AUDIO} />
+      <audio ref={refAudio} src={MAIN_AUDIO} loop />
     </div>
   );
 };

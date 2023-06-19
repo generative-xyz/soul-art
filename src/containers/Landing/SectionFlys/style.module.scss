@@ -52,7 +52,12 @@
           height: auto;
         }
 
-        @include min-tablet {
+        @include tablet {
+          width: 100%;
+          height: auto;
+        }
+
+        @include pcSmall {
           width: auto;
           height: vh(720px);
         }
@@ -91,12 +96,16 @@
           margin-bottom: rem(32px);
 
           @include mobile {
-            font-size: rem(12px);
-            margin-bottom: rem(16px);
-            text-align: center;
+            font-size: rem(20px);
+            margin-bottom: rem(24px);
           }
 
-          @include min-tablet {
+          @include tablet {
+            font-size: rem(16px);
+            margin-bottom: rem(24px);
+          }
+
+          @include pcSmall {
             font-size: rem(24px);
             margin-bottom: rem(32px);
           }
@@ -117,7 +126,11 @@
           bottom: vh(70px);
         }
 
-        @include min-tablet {
+        @include tablet {
+          bottom: vh(52px);
+        }
+
+        @include pcSmall {
           bottom: vh(48px);
         }
       }

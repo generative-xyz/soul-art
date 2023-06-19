@@ -31,6 +31,7 @@ const TechItem: FC<TechItemProps> = ({ item }) => {
         </Text>
         <Text
           as={'p'}
+          size={'20'}
           animOption={{ offset: 0.3, screen: 0, type: 'paragraph' }}
           className={s['item-content_desc']}
         >

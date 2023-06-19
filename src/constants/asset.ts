@@ -16,3 +16,8 @@ export const detailRefresh = `${CDN_URL}/detailRefresh.svg`;
 export const notiReceive = `${CDN_URL}/notiReceive.svg`;
 export const successIcon = `${CDN_URL}/successIcon(1).svg`;
 export const waitIcon = `${CDN_URL}/waitIcon(1).svg`;
+
+export const mobileIntroduce = `${CDN_URL}/IntroduceBG1.jpg`;
+export const mobileFlare = `${CDN_URL}/flareBG.jpg`;
+export const mobileLiving = `${CDN_URL}/livingBG.jpg`;
+export const mobileSubLiving = `${CDN_URL}/subLivingBG.jpg`;

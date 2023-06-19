@@ -193,4 +193,12 @@
       }
     }
   }
+
+  @include mobile {
+    display: none;
+  }
+
+  @include min-tablet {
+    display: block;
+  }
 }

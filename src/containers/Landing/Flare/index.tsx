@@ -8,10 +8,11 @@ import { CDN_URL } from '@/configs';
 import { useScrollFixed } from '@Hooks/useScorllFixed';
 import { useCallback, useRef } from 'react';
 import { useFrameProcessing } from '@Hooks/useFrameProcessing';
+import { useWindowSize } from '@trustless-computer/dapp-core';
+import { mobileFlare } from '@/constants/asset';
 
 const Flare: React.FC = () => {
   const refBox = useRef<HTMLDivElement | null>(null);
-
   const lPart1 = useRef<HTMLDivElement | null>(null);
   const lPart2 = useRef<HTMLDivElement | null>(null);
 
@@ -37,8 +38,39 @@ const Flare: React.FC = () => {
   );
 
   useScrollFixed(refBox, 1200, onUpdate);
-  return (
-    <div ref={refBox} className={s.main}>
+
+  const { mobileScreen } = useWindowSize();
+
+  const MobileFlare = () => {
+    return (
+      <div className={s.mobileFlare}>
+        <div className={s.image}>
+          <img src={mobileFlare} alt="background image" />
+        </div>
+        <Container className={s.container}>
+          <div className={s.wrapSectionContent}>
+            <div className={s.wrapSectionContent_inner}>
+              <p className={s.sectionContent}>
+                {`In the world of SOULS, ownership takes on a unique meaning. Souls cannot be sold or transferred—representing a deep personal connection to your beliefs. When a Soul feels a decline in your attention, it seeks a new connection with someone whose belief burns bright. `}
+              </p>
+
+              <p className={s.sectionContent}>
+                {`The adoption process allows you to welcome a Soul into your digital realm, with the funds going to the SOULS DAO. This decentralized, autonomous organization supports the community and future projects. `}
+              </p>
+            </div>
+            <div className={s.tag}>
+              <TextAnimate>
+                <span>A one-of-a-kind ownership system</span>
+              </TextAnimate>
+            </div>
+          </div>
+        </Container>
+      </div>
+    );
+  };
+
+  const DesktopFlare = () => {
+    return (
       <VideoBg videoUrls={{ mp4: `${CDN_URL}/block-2-min.mp4` }}>
         <div className={s.flareSection}>
           <Container className={s.container}>
@@ -72,6 +104,12 @@ const Flare: React.FC = () => {
           </Container>
         </div>
       </VideoBg>
+    );
+  };
+
+  return (
+    <div ref={refBox} className={s.main}>
+      {mobileScreen ? <MobileFlare /> : <DesktopFlare />}
     </div>
   );
 };

@@ -4,9 +4,9 @@ import React from 'react';
 
 const LandingPage = () => {
   return (
-      <AnimateProvider>
-        <LandingContainer />
-      </AnimateProvider>
+    <AnimateProvider>
+      <LandingContainer />
+    </AnimateProvider>
   );
 };
 

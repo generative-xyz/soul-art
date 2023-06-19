@@ -84,7 +84,7 @@
                     height: auto;
                 }
 
-                @include min-tablet {
+                @include pcSmall {
                     width: 62.5%;
                     height: 62.5%;
                 }

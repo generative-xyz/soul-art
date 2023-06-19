@@ -51,7 +51,7 @@ const Tech: React.FC = () => {
         </div>
         <Container className={s.container}>
           <Row>
-            <Col className={`${s.leftContainer}`} xs={12} md={5} lg={5}>
+            <Col className={`${s.leftContainer}`} xs={12} sm={12} md={5} lg={5}>
               <div className={s.wrapLeftContainer}>
                 <Text
                   size={'d0'}
@@ -63,7 +63,7 @@ const Tech: React.FC = () => {
                 </Text>
               </div>
             </Col>
-            <Col className={s['right-container']} xs={12} md={7} lg={7}>
+            <Col className={s['right-container']} xs={12} sm={12} md={7} lg={7}>
               {contentArray.map(item => (
                 <TechItem key={item.id} item={item} />
               ))}

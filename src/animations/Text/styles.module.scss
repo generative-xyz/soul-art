@@ -20,10 +20,14 @@
       font-size: rem(68px);
 
       @include mobile {
-        font-size: rem(32px);
+        font-size: rem(36px);
       }
 
-      @include min-tablet {
+      @include tablet {
+        font-size: rem(42px);
+      }
+
+      @include pcSmall {
         font-size: rem(68px);
       }
     }
@@ -35,7 +39,11 @@
         font-size: rem(18px);
       }
 
-      @include min-tablet {
+      @include tablet {
+        font-size: rem(24px);
+      }
+
+      @include pcSmall {
         font-size: rem(36px);
       }
     }
@@ -44,10 +52,14 @@
       font-size: rem(32px);
 
       @include mobile {
-        font-size: rem(16px);
+        font-size: rem(24px);
       }
 
-      @include min-tablet {
+      @include tablet {
+        font-size: rem(24px);
+      }
+
+      @include pcSmall {
         font-size: rem(32px);
       }
     }
@@ -59,7 +71,11 @@
         font-size: rem(12px);
       }
 
-      @include min-tablet {
+      @include tablet {
+        font-size: rem(16px);
+      }
+
+      @include pcSmall {
         font-size: rem(24px);
       }
     }
@@ -68,10 +84,14 @@
       font-size: rem(20px);
 
       @include mobile {
-        font-size: rem(12px);
+        font-size: rem(16px);
       }
 
-      @include min-tablet {
+      @include tablet {
+        font-size: rem(16px);
+      }
+
+      @include pcSmall {
         font-size: rem(20px);
       }
     }
@@ -83,7 +103,11 @@
         font-size: rem(10px);
       }
 
-      @include min-tablet {
+      @include tablet {
+        font-size: rem(14px);
+      }
+
+      @include pcSmall {
         font-size: rem(16px);
       }
     }

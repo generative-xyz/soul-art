@@ -6,14 +6,13 @@ export const useFrameProcessing = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comp: MutableRefObject<any>,
   motion: {
-    startIn?: number,
-    endIn?: number,
-    startOut?: number,
-    endOut?: number
-  },
+    startIn?: number;
+    endIn?: number;
+    startOut?: number;
+    endOut?: number;
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
-
   const { startIn, endIn, startOut, endOut } = motion;
 
   useLayoutEffect(() => {

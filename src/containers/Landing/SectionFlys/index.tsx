@@ -112,11 +112,7 @@ const SectionFlys = (): JSX.Element => {
         >
           <div ref={refImages} className={s.livingArtSection_images}>
             {urls.map(url => {
-              return (
-                <>
-                  <img src={url} alt="img" />
-                </>
-              );
+              return <img key={url} src={url} alt="img" />;
             })}
           </div>
         </Col>
@@ -124,7 +120,7 @@ const SectionFlys = (): JSX.Element => {
 
       <Container className={s.container}>
         <Col
-          xs={{ span: 10, offset: 1 }}
+          xs={{ span: 12, offset: 0 }}
           md={{ span: 10, offset: 1 }}
           lg={{ span: 10, offset: 1 }}
           className={s.column}
@@ -138,9 +134,7 @@ const SectionFlys = (): JSX.Element => {
             </Text>
             <AnimFade className={s.tag} offset={0.2}>
               <TextAnimate>
-                <span>
-                  Collective performance art that reflects human behavior
-                </span>
+                <span>The “Good Morning” piece of Generative Art</span>
               </TextAnimate>
             </AnimFade>
           </div>

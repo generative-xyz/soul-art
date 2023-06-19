@@ -2,7 +2,7 @@ html {
 
   font-size: 10px !important;
 
-  @include min-tablet {
+  @include pcSmall {
     font-size: vw(10px) !important;
   }
 

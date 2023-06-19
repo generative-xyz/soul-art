@@ -27,7 +27,13 @@
             text-align: center;
           }
 
-          @include min-tablet {
+          @include tablet {
+            font-size: rem(16px);
+            margin-bottom: rem(24px);
+            text-align: unset;
+          }
+
+          @include pcSmall {
             font-size: rem(24px);
             margin-bottom: rem(32px);
             text-align: unset;
@@ -49,6 +55,45 @@
 
           @include min-tablet {
             justify-content: unset;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mobileSubLiving {
+  .image {
+    width: 100%;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .container {
+    background: #000;
+
+    .wrapContent {
+      padding-top: rem(24px);
+      padding-bottom: rem(60px);
+
+      .sectionContent {
+        color: #fff;
+        font-size: rem(20px);
+        line-height: rem(28px);
+        margin-bottom: rem(24px);
+        text-align: center;
+      }
+
+      .tag {
+        display: flex;
+        justify-content: center;
+
+        a {
+          &:hover {
+            text-decoration: none;
           }
         }
       }
