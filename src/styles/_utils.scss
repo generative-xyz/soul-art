@@ -1,5 +1,4 @@
 html {
-
   font-size: 10px !important;
 
   @include min-tablet {
@@ -64,10 +63,14 @@ html {
     bottom: 0;
     border: 1px solid transparent;
     pointer-events: none !important;
-    background: linear-gradient(138.24deg,
+    background: linear-gradient(
+        138.24deg,
         rgba(120, 170, 143, 0.8) 1.72%,
-        rgba(2, 47, 22, 0.64) 101.88%) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        rgba(2, 47, 22, 0.64) 101.88%
+      )
+      border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
   }
@@ -86,7 +89,6 @@ html {
   transform: rotate(180deg);
 }
 
-
 .container {
   @include calcMobile(padding-left, 16px, 24px);
   @include calcMobile(padding-right, 16px, 24px);
@@ -101,4 +103,31 @@ html {
 
 .row {
   --bs-gutter-x: #{rem(40px)};
+}
+
+// .disable-scrollbar {
+//   -ms-overflow-style: none;
+//   scrollbar-width: 0.5em;
+//   &::-webkit-scrollbar {
+//     // display: none;
+//     width: 0.5em; /* Adjust the width according to your preference */
+//   }
+// }
+
+.small-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+
+  /* Optional: Custom scroll behavior */
+  &::-webkit-scrollbar {
+    width: 0.2em; /* Adjust the width according to your preference */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent; /* Set to your desired color or remove to use the default */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    // background-color: #2e2e2e; /* Set to your desired color or remove to use the default */
+  }
 }

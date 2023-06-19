@@ -1,16 +1,16 @@
 import Button from '@/components/Button';
 import IconSVG from '@/components/IconSVG';
+import SoulsCard from '@/components/SoulCards';
 import { CDN_URL } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
-import { ISoul } from '@/interfaces/api/soul';
+import { IToken } from '@/interfaces/api/marketplace';
 import Link from 'next/link';
 import { FC, memo } from 'react';
-import moreSectionStyles from './moreSection.module.scss';
-import SoulsCard from '@/components/SoulCards';
 import { Container } from 'react-bootstrap';
+import moreSectionStyles from './moreSection.module.scss';
 
 type MoreSectionProps = {
-  soulItems: ISoul[];
+  soulItems: IToken[];
 };
 
 const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
@@ -30,11 +30,11 @@ const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
         </Button>
       </h4>
       <div className={moreSectionStyles.grid}>
-        {soulItems?.map(({ tokenId, image }) => (
+        {soulItems?.map(({ tokenId, image, imageCapture }) => (
           <SoulsCard
             key={`token-${tokenId}`}
             href={`/${tokenId}`}
-            image={image}
+            image={imageCapture ?? image}
             tokenId={tokenId}
             title={`Souls #${tokenId}`}
           />

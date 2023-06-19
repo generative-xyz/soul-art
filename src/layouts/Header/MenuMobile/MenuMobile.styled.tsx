@@ -6,10 +6,15 @@ const Wrapper = styled.div<{ isOpen: boolean }>`
   top: 0;
   left: 0;
   z-index: 99;
-  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
-
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+  background: #ffffff;
   .bg {
     z-index: 1;
+  }
+
+  &.show {
+    transform: translateX(0%);
   }
 
   .inner {
@@ -52,7 +57,7 @@ const Wrapper = styled.div<{ isOpen: boolean }>`
   }
 
   p {
-    color: #fff;
+    margin: 0;
   }
 `;
 

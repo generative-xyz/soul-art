@@ -1,20 +1,22 @@
+import { shortenAddress } from '@/utils';
 import soulsCardStyles from './soulscard.module.scss';
 
-import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
-import cs from 'classnames';
+import Card from 'react-bootstrap/Card';
+import { jsNumberForAddress } from 'react-jazzicon';
+import Jazzicon from 'react-jazzicon/dist/Jazzicon';
 
 export interface INFTCard {
   href: string;
   image?: string;
   thumbnail?: string;
-  contract?: string;
   tokenId?: string;
   className?: string;
   title?: string;
+  ownerAddr?: string;
 }
 
-const NFTCard = ({ href, image, className }: INFTCard) => {
+const NFTCard = ({ href, image, className, ownerAddr }: INFTCard) => {
   return (
     <Card className={className}>
       <Card.Link href={href} as={Link} className={soulsCardStyles.card_link}>
@@ -26,10 +28,10 @@ const NFTCard = ({ href, image, className }: INFTCard) => {
           />
         </div>
         <Card.Body className={soulsCardStyles.card_body}>
-          <Card.Text className={soulsCardStyles.card_label}>
+          {/* <Card.Text className={soulsCardStyles.card_label}>
             Highest bid
-          </Card.Text>
-          <div
+          </Card.Text> */}
+          {/* <div
             className={cs(
               'd-flex justify-content-between align-items-center',
               soulsCardStyles.card_body__content
@@ -38,6 +40,24 @@ const NFTCard = ({ href, image, className }: INFTCard) => {
             <Card.Text>1.5 BTC</Card.Text>
 
             <Card.Text>2d : 16h : 12m</Card.Text>
+          </div> */}
+          <div className={soulsCardStyles.hoverInfo}>
+            <p>Soul #123</p>
+            <div>
+              {!!ownerAddr && (
+                <>
+                  <div className={soulsCardStyles.avatarWrapper}>
+                    <Jazzicon
+                      diameter={32}
+                      seed={jsNumberForAddress(ownerAddr)}
+                    />
+                  </div>
+                  <div className={soulsCardStyles.address}>
+                    {shortenAddress(ownerAddr)}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </Card.Body>
       </Card.Link>

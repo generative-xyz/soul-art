@@ -1,36 +1,36 @@
-import { CDN_URL, TC_URL } from '@/configs';
-import { HTMLAttributes, forwardRef, useState } from 'react';
-import { formatBTCPrice, formatEthPrice } from '@/utils/format';
+import copy from 'copy-to-clipboard';
+import contentHeader from './contentHeader.module.scss';
+import { showToastError, showToastSuccess } from '@/utils/toast';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import IconSVG from '@/components/IconSVG';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { useSelector } from 'react-redux';
+import { HTMLAttributes, forwardRef, useContext, useState } from 'react';
+import { AssetsContext } from '@/contexts/assets-context';
+import { useWeb3React } from '@web3-react/core';
 import {
   getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
-import { showToastError, showToastSuccess } from '@/utils/toast';
-import { AnimFade } from '@Animations/Fade';
-import classNames from 'classnames';
-import { Wrapper } from './Header.styled';
-import headerStyles from './header.module.scss';
-import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
-import logger from '@/services/logger';
-import { useContext } from 'react';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-import { useWeb3React } from '@web3-react/core';
-import { AssetsContext } from '@/contexts/assets-context';
-import IconSVG from '@/components/IconSVG';
-import { ROUTE_PATH } from '@/constants/route-path';
 import { WalletContext } from '@/contexts/wallet-context';
-import { DappsTabs } from '@/enums/tabs';
-import { formatLongAddress } from '@trustless-computer/dapp-core';
-import copy from 'copy-to-clipboard';
-import { Dropdown, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
-import Link from 'next/link';
-import MenuMobile from './MenuMobile';
+import { CDN_URL, TC_URL } from '@/configs';
+import MenuMobile from '../MenuMobile';
+import { Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import logger from '@/services/logger';
 import cs from 'classnames';
+import { formatLongAddress } from '@trustless-computer/dapp-core';
+import { formatBTCPrice, formatEthPrice } from '@/utils/format';
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import { DappsTabs } from '@/enums/tabs';
+import Button from '@/components/Button';
+import { NAV_CONTENT } from '../const';
 
-type NavContent = {
-  title: string;
-  url: string;
+const onClickCopy = (address: string) => {
+  copy(address);
+  showToastSuccess({
+    message: 'Copied',
+  });
 };
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -48,43 +48,19 @@ const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     </div>
   )
 );
-
 WalletToggle.displayName = 'WalletToggle';
 
-const NAV_CONTENT: NavContent[] = [
-  {
-    title: 'Story',
-    url: '/',
-  },
-  {
-    title: 'Art',
-    url: '/art',
-  },
-  {
-    title: 'FAQs',
-    url: '/faq',
-  },
-];
-
-const Header = ({
-  height,
-  isAnimation,
-  theme,
-}: {
-  height: number;
-  isAnimation?: boolean;
-  theme?: string;
-}) => {
+const ContentHeader = (): JSX.Element => {
+  const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const { btcBalance, tcBalance, gmBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
-  const router = useRouter();
+
   const { account } = useWeb3React();
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleConnectWallet = async () => {
     try {
@@ -102,24 +78,22 @@ const Header = ({
     }
   };
 
-  const onClickCopy = (address: string) => {
-    copy(address);
-    showToastSuccess({
-      message: 'Copied',
-    });
-  };
-
-  const ContentHeader = (): JSX.Element => {
-    return (
-      <div className="d-flex justify-content-between align-items-center w-100">
-        <div className={headerStyles['nav_container']}>
+  return (
+    <>
+      <div
+        className={cs(
+          'container d-flex justify-content-between align-items-center w-100',
+          contentHeader.headerContent
+        )}
+      >
+        <div className={contentHeader['nav_container']}>
           {NAV_CONTENT.map(({ title, url }) => {
             return (
               <Link
                 key={title}
                 href={url}
-                className={`${headerStyles.nav_item}
-                  ${router.pathname === url ? headerStyles.active : ''}`}
+                className={`${contentHeader.nav_item}
+                  ${router.pathname === url ? contentHeader.active : ''}`}
               >
                 {title}
               </Link>
@@ -132,33 +106,25 @@ const Header = ({
             src={`${CDN_URL}/logo.svg`}
             maxHeight={'32'}
             maxWidth={'32'}
-            className={headerStyles.logo_svg}
+            className={contentHeader.logo_svg}
           />
         </Link>
-        <MenuMobile
-          isOpen={isOpenMenu}
-          onCloseMenu={() => setIsOpenMenu(false)}
-        />
-        <div className="rightContainer">
+        <div>
           {isAuthenticated ? (
-            <Dropdown
-              show={showDropdown}
-              onMouseEnter={() => setShowDropdown(true)}
-              onMouseLeave={() => setShowDropdown(false)}
-            >
+            <Dropdown className={contentHeader.rightContent}>
               <Dropdown.Toggle
                 as={WalletToggle}
                 id="dropdown-custom-components"
               >
-                <div className={headerStyles.profile_container}>
+                <div className={contentHeader.profile_container}>
                   <OverlayTrigger
                     overlay={
                       <Tooltip
                         id={'warning-gm'}
                         placement="bottom"
-                        className={headerStyles.tooltip_body}
+                        className={contentHeader.tooltip_body}
                       >
-                        <div className={headerStyles.tooltip_content}>
+                        <div className={contentHeader.tooltip_content}>
                           <p>You are not owning over 1GM</p>
                           <p>
                             Your art will be adopted by someone else at any
@@ -171,8 +137,8 @@ const Header = ({
                   >
                     <div
                       className={cs(
-                        headerStyles.profile_amount,
-                        headerStyles.warning
+                        contentHeader.profile_amount,
+                        contentHeader.warning
                       )}
                     >
                       <IconSVG
@@ -184,13 +150,13 @@ const Header = ({
                     </div>
                   </OverlayTrigger>
 
-                  <div className={headerStyles.profile_amount}>
+                  <div className={contentHeader.profile_amount}>
                     {formatEthPrice(tcBalance)}&nbsp;TC
                   </div>
-                  <div className={headerStyles.profile_amount}>
+                  <div className={contentHeader.profile_amount}>
                     {formatBTCPrice(btcBalance)}&nbsp;BTC
                   </div>
-                  <div className={headerStyles.profile_avatar}>
+                  <div className={contentHeader.profile_avatar}>
                     {account ? (
                       <Jazzicon
                         diameter={32}
@@ -198,19 +164,19 @@ const Header = ({
                       />
                     ) : (
                       <img
-                        src={`${CDN_URL}/icons/ic-avatar.svg`}
+                        src={`${CDN_URL}/ic-avatar.svg`}
                         alt="default avatar"
                       />
                     )}
                   </div>
                 </div>
               </Dropdown.Toggle>
-              <Dropdown.Menu className={headerStyles.menu_wrapper}>
-                <div className={headerStyles.menu_container}>
-                  <div className={headerStyles.menu_content}>
-                    <div className={headerStyles.menu_title}>TC Address</div>
-                    <div className={headerStyles.menu_item}>
-                      <div className={headerStyles.menu_item_address}>
+              <Dropdown.Menu className={contentHeader.menu_container}>
+                <div>
+                  <div className={contentHeader.menu_content}>
+                    <div className={contentHeader.menu_title}>TC Address</div>
+                    <div className={contentHeader.menu_item}>
+                      <div className={contentHeader.menu_item_address}>
                         <IconSVG
                           src={`${CDN_URL}/ic_tc.svg`}
                           maxWidth="28"
@@ -230,10 +196,10 @@ const Header = ({
                     </div>
                   </div>
                   <div className="divider" />
-                  <div className={headerStyles.menu_content}>
-                    <div className={headerStyles.menu_title}>BTC Address</div>
-                    <div className={headerStyles.menu_item}>
-                      <div className={headerStyles.menu_item_address}>
+                  <div className={contentHeader.menu_content}>
+                    <div className={contentHeader.menu_title}>BTC Address</div>
+                    <div className={contentHeader.menu_item}>
+                      <div className={contentHeader.menu_item_address}>
                         <IconSVG
                           src={`${CDN_URL}/ic-btc.svg`}
                           maxWidth="28"
@@ -258,12 +224,12 @@ const Header = ({
                       </div>
                     </div>
                   </div>
-                  <div className={headerStyles.menu_divider}></div>
+                  <div className={contentHeader.menu_divider}></div>
                   <div
                     onClick={() =>
                       window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
                     }
-                    className={headerStyles.menu_box}
+                    className={contentHeader.menu_box}
                   >
                     <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
                     <p>Profile</p>
@@ -272,15 +238,15 @@ const Header = ({
                     onClick={() =>
                       window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
                     }
-                    className={headerStyles.menu_box}
+                    className={contentHeader.menu_box}
                   >
                     <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
                     <p>Wallet</p>
                   </div>
-                  <div className={headerStyles.menu_divider} />
+                  <div className={contentHeader.menu_divider} />
                   <Button
                     onClick={onDisconnect}
-                    className={headerStyles.menu_box}
+                    className={contentHeader.menu_box}
                   >
                     <IconSVG src={`${CDN_URL}/disconnect.svg`} maxWidth="16" />
                     <p>Disconnect</p>
@@ -289,42 +255,39 @@ const Header = ({
               </Dropdown.Menu>
             </Dropdown>
           ) : (
-            <Button
-              onClick={handleConnectWallet}
-              className={headerStyles.connect_button}
-            >
-              <img
-                alt="wallet_icon"
-                className={headerStyles.wallet_icon}
-                src={`${CDN_URL}/heroicons_wallet-solid.svg`}
-              />
-              {isConnecting ? 'Connecting...' : 'Connect wallet'}
-            </Button>
+            <>
+              <Button
+                onClick={handleConnectWallet}
+                className={contentHeader.connect_button}
+              >
+                <img
+                  alt="wallet_icon"
+                  className={contentHeader.wallet_icon}
+                  src={`${CDN_URL}/heroicons_wallet-solid.svg`}
+                />
+                {isConnecting ? 'Connecting...' : 'Connect wallet'}
+              </Button>
+            </>
           )}
+          <button
+            className={cs(
+              contentHeader.burgerBtn,
+              router.pathname === '/'
+                ? contentHeader.burgerBtn_white
+                : undefined
+            )}
+            onClick={() => setIsOpenMenu(true)}
+          >
+            <IconSVG src={`${CDN_URL}/ic-hambuger.svg`} />
+          </button>
         </div>
       </div>
-    );
-  };
-
-  return (
-    <Wrapper
-      className={classNames(
-        headerStyles.header,
-        theme ? headerStyles[theme] : ''
-      )}
-      style={{ height }}
-    >
-      <div className="container">
-        {isAnimation ? (
-          <AnimFade>
-            <ContentHeader />
-          </AnimFade>
-        ) : (
-          <ContentHeader />
-        )}
-      </div>
-    </Wrapper>
+      <MenuMobile
+        isOpen={isOpenMenu}
+        onCloseMenu={() => setIsOpenMenu(false)}
+      />
+    </>
   );
 };
 
-export default Header;
+export default ContentHeader;

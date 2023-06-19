@@ -5,10 +5,6 @@
     height: 100%;
     object-fit: cover;
 
-    @include mobile {
-      border-radius: rem(4px);
-    }
-
     &__container {
       width: 100%;
       padding-bottom: 100%;
@@ -31,13 +27,17 @@
   }
 
   &_body {
-    display: none;
-
     &__content {
       p {
         font-size: rem(20px);
         font-weight: 500;
       }
+    }
+
+    .hoverInfo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 }
