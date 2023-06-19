@@ -1,19 +1,17 @@
-import { Col, Container, Row } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
-import AuctionInfo from './AuctionInfo';
-import DetailImg from './MiddleImg';
-import { IInscription } from '@/interfaces/api/inscription';
-import Info from './Info';
-import { ROUTE_PATH } from '@/constants/route-path';
+import { Col, Container, Row } from 'react-bootstrap';
 import Spinner from '@/components/Spinner';
-import { getNFTDetail } from '@/services/nft-explorer';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { IInscription } from '@/interfaces/api/inscription';
 import logger from '@/services/logger';
+import { getNFTDetail } from '@/services/nft-explorer';
 import s from './style.module.scss';
-import { useRouter } from 'next/router';
 import { SOUL_CONTRACT } from '@/configs';
+import { useRouter } from 'next/router';
 
 const Inscription = ({ data }: { data?: IInscription }) => {
   const router = useRouter();
+
   const { tokenId } = router.query as {
     tokenId: string;
   };
@@ -52,15 +50,14 @@ const Inscription = ({ data }: { data?: IInscription }) => {
     <div className={s.artDetail}>
       <Container>
         <Row>
-          <Col lg={4}>
-            <AuctionInfo img={inscription.image} />
-          </Col>
+          <Col lg={4}>{/* <AuctionInfo data={inscription} /> */}</Col>
           <Col lg={5}>
-            <DetailImg img={inscription.image} />
+            {/* <DetailImg
+              animationUrl={inscription.animationFileUrl}
+              imgCapture={inscription?.imageCapture}
+            /> */}
           </Col>
-          <Col lg={3}>
-            <Info />
-          </Col>
+          <Col lg={3}>{/* <Info data={inscription} /> */}</Col>
         </Row>
       </Container>
     </div>
