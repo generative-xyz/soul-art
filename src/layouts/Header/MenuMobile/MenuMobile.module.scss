@@ -1,0 +1,51 @@
+.menu {
+  &_content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+  }
+  &_mobile {
+    margin-bottom: rem(20px);
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.nav_item {
+  opacity: 0.6;
+  transition: opacity 0.4s $easeOutQuart;
+
+  &.active {
+    opacity: 1;
+  }
+
+  &:hover {
+    text-decoration: none;
+    opacity: 1;
+  }
+}
+
+.connect_button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid rgba($gray-2, 0.4);
+  font-size: 14px;
+  line-height: 18px;
+  backdrop-filter: blur(2px);
+  color: var(--text-color);
+  transition: border-color 0.4s $easeOutQuart;
+
+  &:hover {
+    border: 1px solid rgba($gray-2, 1);
+  }
+}
+
+.wallet_icon {
+  width: 20px;
+  height: 20px;
+}
