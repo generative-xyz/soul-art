@@ -2,26 +2,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Spinner from '@/components/Spinner';
 import { SOUL_CONTRACT } from '@/configs';
-import { ROUTE_PATH } from '@/constants/route-path';
-import { IToken } from '@/interfaces/api/marketplace';
-import logger from '@/services/logger';
+import { IToken, ITokenDetail } from '@/interfaces/api/marketplace';
 import { getCollectionNFTList } from '@/services/marketplace';
-import { getSoulDetail } from '@/services/soul';
-import { useRouter } from 'next/router';
 import AuctionInfo from '../Item/AuctionInfo';
 import Info from '../Item/Info';
 import DetailImg from '../Item/MiddleImg';
 import MoreSection from './MoreSection';
 import s from './style.module.scss';
 
-const SoulItem = () => {
-  const router = useRouter();
+const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
   const [_isFetchingMoreItems, setIsFetchingMoreItems] = useState(false);
   const [souls, setSouls] = useState<IToken[]>([]);
-  const { tokenId } = router.query as {
-    tokenId: string;
-  };
-  const [soulDetail, setSoulDetail] = useState<IToken | undefined>();
 
   const fetchSouls = useCallback(async (page = 1, isFetchMore = false) => {
     try {
@@ -54,21 +45,8 @@ const SoulItem = () => {
   }, []);
 
   useEffect(() => {
-    fetchSoulDetail();
     fetchSouls();
   }, []);
-
-  const fetchSoulDetail = async () => {
-    try {
-      const data = await getSoulDetail({
-        tokenId: tokenId,
-      });
-      setSoulDetail(data);
-    } catch (error) {
-      logger.error(error);
-      router.push(ROUTE_PATH.NOT_FOUND);
-    }
-  };
 
   if (!soulDetail) {
     return (
@@ -83,13 +61,16 @@ const SoulItem = () => {
       <Container>
         <Row>
           <Col lg={4}>
-            <AuctionInfo img={soulDetail?.image} />
+            <AuctionInfo data={soulDetail} />
           </Col>
           <Col lg={5}>
-            <DetailImg img={soulDetail?.animationFileUrl} />
+            <DetailImg
+              animationUrl={soulDetail.animationFileUrl}
+              imgCapture={soulDetail?.imageCapture}
+            />
           </Col>
           <Col lg={3}>
-            <Info />
+            <Info data={soulDetail} />
           </Col>
         </Row>
       </Container>
