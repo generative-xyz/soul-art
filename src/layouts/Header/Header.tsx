@@ -26,10 +26,10 @@ import MenuMobile from './MenuMobile';
 import headerStyles from './header.module.scss';
 import { useRouter } from 'next/router';
 
-// type NavContent = {
-//   title: string;
-//   url: string;
-// };
+type NavContent = {
+  title: string;
+  url: string;
+};
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -49,20 +49,20 @@ const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 
 WalletToggle.displayName = 'WalletToggle';
 
-// const NAV_CONTENT: NavContent[] = [
-//   {
-//     title: 'Story',
-//     url: ROUTE_PATH.HOME,
-//   },
-//   {
-//     title: 'Art',
-//     url: ROUTE_PATH.ART,
-//   },
-//   // {
-//   //   title: 'FAQs',
-//   //   url: '/faq',
-//   // },
-// ];
+const NAV_CONTENT: NavContent[] = [
+  {
+    title: 'Story',
+    url: ROUTE_PATH.HOME,
+  },
+  {
+    title: 'Art',
+    url: ROUTE_PATH.ART,
+  },
+  // {
+  //   title: 'FAQs',
+  //   url: '/faq',
+  // },
+];
 
 const Header = ({
   height,
@@ -118,7 +118,7 @@ const Header = ({
         }`}
       >
         <div className={headerStyles.nav_container}>
-          {/* {NAV_CONTENT.map(({ title, url }) => {
+          {NAV_CONTENT.map(({ title, url }) => {
             return (
               <Link
                 key={title}
@@ -130,11 +130,26 @@ const Header = ({
               </Link>
             );
           })}
-          <div className={headerStyles.divider}></div> */}
+        </div>
+
+        <Link className="logo" href={ROUTE_PATH.HOME}>
+          Souls
+          {/* <IconSVG
+            src={`${CDN_URL}/ic-logo-white.svg`}
+            maxHeight={'32'}
+            maxWidth={'32'}
+            className={headerStyles.logo_svg}
+          /> */}
+        </Link>
+        <MenuMobile
+          isOpen={isOpenMenu}
+          onCloseMenu={() => setIsOpenMenu(false)}
+        />
+        <div className={`rightContainer`}>
           <Link
             href={'https://newbitcoincity.com/'}
             target="_blank"
-            className={`${headerStyles.nav_item}`}
+            className={`${headerStyles.nbc_link}`}
           >
             New Bitcoin City
             <IconSVG
@@ -144,21 +159,7 @@ const Header = ({
               type="stroke"
             />
           </Link>
-        </div>
 
-        <Link className="logo" href={ROUTE_PATH.HOME}>
-          <IconSVG
-            src={`${CDN_URL}/ic-logo-white.svg`}
-            maxHeight={'32'}
-            maxWidth={'32'}
-            className={headerStyles.logo_svg}
-          />
-        </Link>
-        <MenuMobile
-          isOpen={isOpenMenu}
-          onCloseMenu={() => setIsOpenMenu(false)}
-        />
-        <div className={`rightContainer`}>
           {isAuthenticated ? (
             <Dropdown
               show={showDropdown}

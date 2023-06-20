@@ -47,17 +47,6 @@
       opacity: 1;
     }
   }
-
-  .nav_item:last-of-type {
-    opacity: 1;
-    display: flex;
-    align-items: center;
-    gap: rem(8px);
-
-    &:hover {
-      opacity: 0.6;
-    }
-  }
 }
 
 .logo {
@@ -303,11 +292,21 @@
   }
 }
 
+.nbc_link {
+  display: flex;
+  align-items: center;
+  gap: rem(4px);
+
+  &:hover {
+    text-decoration: none;
+    opacity: 0.6;
+  }
+}
+
 .dark {
   .profile_container {
     background-color: rgba($color: #fff, $alpha: 0.1);
     border-color: rgba($color: #fff, $alpha: 0.1);
-
   }
   .profile_amount {
     background-color: rgba($color: #fff, $alpha: 0.2);
@@ -348,6 +347,15 @@
   }
 
   .copy_icon {
+    svg,
+    path {
+      stroke: #fff;
+    }
+  }
+
+  .nbc_link {
+    color: #fff;
+
     svg,
     path {
       stroke: #fff;
