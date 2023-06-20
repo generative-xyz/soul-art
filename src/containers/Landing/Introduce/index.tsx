@@ -118,13 +118,13 @@ const Introduce: React.FC = () => {
                   <div
                     className={classNames(s['wrap-video'], s['wrap-pdf'])}
                     onClick={() => {
-                      window.open(`https://newbitcoincity.com/souls.pdf`);
+                      window.open(`https://newbitcoincity.com/souls/whitepaper.pdf`);
                     }}
                   >
                     <ImageFrame type={'small'}>
                       <div className={s.content}>
                         <IconSVG
-                          src={`${CDN_URL}/icon-pdf.svg`}
+                          src={`${CDN_URL}/icon-pdf-s.svg`}
                           maxWidth={'45'}
                           maxHeight={'55'}
                           className={s.modalPlay}

@@ -190,23 +190,6 @@ export const Loading = (): JSX.Element => {
                 />
                 <div className="container">
                     <div className={s.container_inner}>
-                        <div className={s.loading_icon}>
-              <span className={s.loading_icon_text}>
-                <span>Loading...</span>
-                <span
-                    className={classNames(
-                        s.loading_icon_text_counter,
-                        'text-black'
-                    )}
-                    ref={refPersent}
-                >
-                  0%
-                </span>
-              </span>
-                            <div className={s.loading_icon_inner}>
-                                <img src={`${CDN_URL}/ic-loading-dark.svg`} alt="ic-loading"/>
-                            </div>
-                        </div>
                         <div className={s.loading_inner}>
                             <Text as={'p'} size={'d2'} className={'mb-1_16'}>
                                 Welcome to New Bitcoin City
@@ -220,6 +203,23 @@ export const Loading = (): JSX.Element => {
                                 Step into the land of New Bitcoin City, there is a spirit known as GM tokens, they’re
                                 the touchstone of hope for a brighter future of Bitcoin—the land of freedom.
                             </Text>
+                            <div className={s.loading_icon}>
+                                <div className={s.loading_icon_inner}>
+                                    <img src={`${CDN_URL}/ic-loading-dark.svg`} alt="ic-loading"/>
+                                </div>
+                                <span className={s.loading_icon_text}>
+                            <span>Loading...</span>
+                            <span
+                                className={classNames(
+                                    s.loading_icon_text_counter,
+                                    'text-black'
+                                )}
+                                ref={refPersent}
+                            >
+                                  0%
+                                </span>
+                              </span>
+                            </div>
                         </div>
                     </div>
                 </div>
