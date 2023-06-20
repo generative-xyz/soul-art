@@ -70,7 +70,6 @@
     "styled-components": "^5.3.9",
     "supports-webp": "^3.0.0",
     "trustless-computer-sdk": "https://github.com/TrustlessComputer/tc-sdk#v0.1.38",
-    "unzipit": "^1.4.2",
     "use-async-effect": "^2.2.7",
     "uuid": "^9.0.0",
     "web3": "^1.10.0"

@@ -42,6 +42,7 @@ export const getSoulsNfts = async ({
       attributes: attributes ? encodeURI(attributes) : undefined,
     },
   });
+
   return Object(camelCaseKeys(res));
 };
 

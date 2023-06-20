@@ -1,4 +1,4 @@
-import soul from '@/abis/soul.json';
+import SoulsAbiJson from '@/abis/soul.json';
 import { SOUL_CONTRACT, TRANSFER_TX_SIZE } from '@/configs';
 import { AssetsContext } from '@/contexts/assets-context';
 import { useContract } from '@/hooks/useContract';
@@ -6,7 +6,6 @@ import {
   ContractOperationHook,
   DAppType,
 } from '@/interfaces/contract-operation';
-// import { compressFileAndGetSize } from '@/services/file';
 import logger from '@/services/logger';
 import { formatBTCPrice } from '@/utils/format';
 import { useWeb3React } from '@web3-react/core';
@@ -25,7 +24,7 @@ export interface IMintParams {
 
 const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
   const { account, provider } = useWeb3React();
-  const contract = useContract(SOUL_CONTRACT, soul.abi, true);
+  const contract = useContract(SOUL_CONTRACT, SoulsAbiJson.abi, true);
   const { btcBalance, feeRate } = useContext(AssetsContext);
 
   const estimateGas = useCallback(
@@ -98,7 +97,7 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
     estimateGas: estimateGas,
     call: call,
     dAppType: DAppType.SOUL,
-    operationName: 'Mint',
+    operationName: 'Adopt',
   };
 };
 

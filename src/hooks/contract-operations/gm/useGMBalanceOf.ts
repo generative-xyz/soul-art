@@ -1,4 +1,4 @@
-import Erc20Json from '@/abis/soul.json';
+import Erc20Json from '@/abis/erc20.json';
 import { GM_CONTRACT } from '@/configs';
 import { useContract } from '@/hooks/useContract';
 import { useWeb3React } from '@web3-react/core';
