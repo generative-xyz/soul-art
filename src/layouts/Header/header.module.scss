@@ -47,6 +47,10 @@
       opacity: 1;
     }
   }
+
+  @media screen and (max-width: $breakpoint-md) {
+    display: none;
+  }
 }
 
 .logo {
