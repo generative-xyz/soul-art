@@ -56,27 +56,48 @@ const Introduce: React.FC = () => {
             </Text>
             <Text
               as={'p'}
-              size={'20'}
+              size={'28'}
               color={'white-primary'}
+              fontWeight="regular"
               animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
-              className={s['introduceBox-desc']}
+              className={s['introduceBox-subTitle']}
             >
               The first-ever cryptoart protocol & a new kind of art.
-              <br />
-              <br />
-              Managed by the community-run DAO and powered by the cryptocurrency
-              GM, Souls is a revolutionary cryptoart protocol for experiencing
-              art on Bitcoin.
-              <br />
-              <br />
-              Souls are soulbound artworks that can’t be bought or sold. As
-              on-chain living art, a nurtured Soul will stay with you forever,
-              but a neglected Soul might leave you and find a new home.
-              <br />
-              <br />
-              But above all, Souls are interconnected and perform their
-              ever-changing artworks not as one but collectively.
             </Text>
+            <div className={s['introduceBox-desc-wrapper']}>
+              <Text
+                as={'p'}
+                size={'20'}
+                color={'white-primary'}
+                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+                className={s['introduceBox-desc']}
+              >
+                Managed by the community-run DAO and powered by the
+                cryptocurrency GM, Souls is a revolutionary cryptoart protocol
+                for experiencing art on Bitcoin.
+              </Text>
+              <Text
+                as={'p'}
+                size={'20'}
+                color={'white-primary'}
+                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+                className={s['introduceBox-desc']}
+              >
+                Souls are soulbound artworks that can’t be bought or sold. As
+                on-chain living art, a nurtured Soul will stay with you forever,
+                but a neglected Soul might leave you and find a new home.
+              </Text>
+              <Text
+                as={'p'}
+                size={'20'}
+                color={'white-primary'}
+                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+                className={s['introduceBox-desc']}
+              >
+                But above all, Souls are interconnected and perform their
+                ever-changing artworks not as one but collectively.
+              </Text>
+            </div>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
               <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
