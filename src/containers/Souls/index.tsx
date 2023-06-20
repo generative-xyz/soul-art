@@ -1,7 +1,7 @@
 import { getSoulAttributes } from '@/services/soul';
 import { debounce, pick } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Container, Spinner } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import SoulsCard from '@/components/SoulCards';
 import { CDN_URL, SOUL_CONTRACT } from '@/configs';
 import { IToken } from '@/interfaces/api/marketplace';
@@ -12,11 +12,14 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import soulsStyles from './souls.module.scss';
 import { ROUTE_PATH } from '@/constants/route-path';
 import Link from 'next/link';
+import AttributeSort from '@/containers/Attribute';
+import Spinner from '@/components/Spinner';
 
 const LIMIT_PAGE = 32;
 
 export const SoulsContainer: React.FC = () => {
   const router = useRouter();
+  const [initialLoading, setInitialLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
   const [souls, setSouls] = useState<IToken[]>([]);
   const [attributes, setAttributes] = useState<IAttribute[]>();
@@ -101,6 +104,7 @@ export const SoulsContainer: React.FC = () => {
       } catch (error) {
       } finally {
         setIsFetching(false);
+        setInitialLoading(false);
       }
     },
     [router.query, attributes]
@@ -112,7 +116,15 @@ export const SoulsContainer: React.FC = () => {
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
-  if (!souls || souls.length === 0) {
+  if (initialLoading) {
+    return (
+      <div className="grid-center h-full-view">
+        <Spinner width={200} height={200} />
+      </div>
+    );
+  }
+
+  if (souls && souls.length === 0) {
     return (
       <div className={soulsStyles.emptyWrapper}>
         <div className={soulsStyles.empty}>
@@ -168,6 +180,7 @@ export const SoulsContainer: React.FC = () => {
           </Container>
         </div>
       </InfiniteScroll>
+      <AttributeSort attributes={attributes || []} />
     </>
   );
 };

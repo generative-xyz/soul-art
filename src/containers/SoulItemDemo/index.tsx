@@ -4,7 +4,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import Spinner from '@/components/Spinner';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { ISoul } from '@/interfaces/api/soul';
-import { getDemoSoulsNfts, getSoulDemoDetail } from '@/services/demoSoul';
+import { getDemoSoulsNfts, getSoulDemoDetail } from '@/services/demo-soul';
 import logger from '@/services/logger';
 import { useRouter } from 'next/router';
 import MoreSection from './MoreSection';

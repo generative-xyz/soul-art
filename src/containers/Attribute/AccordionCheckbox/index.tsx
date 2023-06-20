@@ -24,7 +24,7 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
   const isChecked = useMemo(() => {
     if (typeof router.query[traitName] !== 'string') return false;
     return router.query[traitName]?.includes(title);
-  }, [router.query]);
+  }, [router.query, title, traitName]);
 
   const handleCheckboxChange = () => {
     const routerAttributesVal = router.query[traitName];
@@ -78,17 +78,14 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
           ? accordionCheckboxStyles.filterAttribute_content_itemChecked
           : accordionCheckboxStyles.filterAttribute_content_item
       }
-      onClick = {handleCheckboxChange}
+      onClick={handleCheckboxChange}
     >
       <span
         className={accordionCheckboxStyles.filterAttribute_content_checkbox}
       >
         <div>
           <label className={accordionCheckboxStyles.container_checkbox}>
-            <Field
-              type="checkbox"
-              checked={isChecked}
-            />
+            <Field type="checkbox" checked={isChecked} />
             <span
               className={accordionCheckboxStyles.container_checkmark}
             ></span>

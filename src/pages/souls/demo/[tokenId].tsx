@@ -3,7 +3,7 @@ import Layout from '@/layouts';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { SEO_IMAGE, SEO_TITLE } from '@/constants/seo';
 import logger from '@/services/logger';
-import { getSoulDemoDetail } from '@/services/demoSoul';
+import { getSoulDemoDetail } from '@/services/demo-soul';
 import SoulItem from '@/containers/SoulItemDemo';
 // import Banner from '@/components/Banner';
 

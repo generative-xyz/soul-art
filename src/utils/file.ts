@@ -1,57 +1,5 @@
-import FileType from 'file-type/browser';
-import { ERC721_SUPPORTED_EXTENSIONS, IMAGE_EXTENSIONS, NAIVE_MIMES, SUPPORTED_FILE_EXT } from '@/constants/file';
-import { unzip } from 'unzipit';
-import { MASOX_SYSTEM_PREFIX } from '@/constants/sandbox';
-import { Buffer } from 'buffer';
+import { ERC721_SUPPORTED_EXTENSIONS, IMAGE_EXTENSIONS, SUPPORTED_FILE_EXT } from '@/constants/file';
 import { MediaType } from '@/enums/file';
-
-export const readFileAsBuffer = (file: File | Blob): Promise<Buffer> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const buffer = Buffer.from(reader.result as string);
-      resolve(buffer);
-    };
-    reader.onerror = (err: unknown) => {
-      reject(err);
-    };
-    reader.readAsArrayBuffer(file);
-  });
-};
-
-export function getNaiveMimeType(filename: string): string | false {
-  const ext = filename.split('.').pop();
-  return (ext && NAIVE_MIMES[ext]) || false;
-}
-
-export async function unzipFile(file: File): Promise<Record<string, Blob>> {
-  const { entries } = await unzip(file);
-
-  const blobs: Record<string, Blob> = {};
-  for (const name in entries) {
-    // Ignore system files
-    if (MASOX_SYSTEM_PREFIX.some((systemFileName: string) => name.includes(systemFileName))) {
-      continue;
-    }
-
-    // Ignore directories
-    if (entries[name].isDirectory) {
-      continue;
-    }
-
-    let mime = getNaiveMimeType(name);
-    if (!mime) {
-      const buffer = await entries[name].arrayBuffer();
-      const type = await FileType.fromBuffer(buffer);
-      if (type) {
-        mime = type.mime;
-      }
-    }
-    blobs[name] = await entries[name].blob(mime || undefined);
-  }
-
-  return blobs;
-}
 
 export const getFileExtensionByFileName = (fileName: string): string | null => {
   const fileExt = fileName.split('.').pop();

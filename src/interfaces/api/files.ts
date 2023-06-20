@@ -1,4 +1,3 @@
-import { IMAGE_TYPE } from '@/components/NFTDisplayBox/constant';
 import { IPagingParams } from './query';
 import { ChunkProcessStatus } from '@/enums/file';
 
@@ -109,7 +108,7 @@ export interface IUploadFileResponseItem {
   path: string;
   fullPath: string;
   size: number;
-  fileType: IMAGE_TYPE;
+  fileType: string;
   createdAt: string;
   chunks: number;
   chunkSize: number;

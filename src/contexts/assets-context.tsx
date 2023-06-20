@@ -23,7 +23,7 @@ import debounce from 'lodash/debounce';
 import { useWeb3React } from '@web3-react/core';
 import * as TC_SDK from 'trustless-computer-sdk';
 import logger from '@/services/logger';
-import useGMBalanceOf from '@Hooks/contract-operations/gm/useGMBalanceOf';
+import useGMBalanceOf from '@/hooks/contract-operations/gm/useGMBalanceOf';
 import useAsyncEffect from 'use-async-effect';
 
 export interface IAssetsContext {
