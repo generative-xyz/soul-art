@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { useFrameProcessing } from '@/hooks/useFrameProcessing';
 import { CDN_URL } from '@/configs';
 import Introduce from '../Introduce';
-import { useWindowSize } from '@trustless-computer/dapp-core';
+import useWindowResize from '@/hooks/useWindowResize';
 
 const FrameTop: React.FC = () => {
   const { registerLoader, unRegisterLoader } = useContext(AnimateContext);
@@ -17,6 +17,7 @@ const FrameTop: React.FC = () => {
   const lPart1 = useRef<HTMLDivElement | null>(null);
   const lPart2 = useRef<HTMLDivElement | null>(null);
   const lPart3 = useRef<HTMLDivElement | null>(null);
+  const { isMobile } = useWindowResize();
 
   const part1Frame = useFrameProcessing(lPart1, {
     startIn: 0,
@@ -35,54 +36,44 @@ const FrameTop: React.FC = () => {
     endIn: 80,
     startOut: 155,
     endOut: 165,
-  },
-  );
+  });
 
   const processing = (frame: number) => {
     part1Frame(frame);
     part2Frame(frame);
     part3Frame(frame);
   };
-  const { mobileScreen } = useWindowSize();
 
-  const MobileFrameTop = () => {
-    return (
-      <div className={s.frameTopMobile}>
+  return (
+    <div className={`${isMobile ? s.frameTopMobile : s.main}`} ref={elMain}>
+      <Frames
+        width={1920}
+        height={1080}
+        className={s.info_main}
+        urlFrame={`${CDN_URL}/LP_02_Compress/v-%d.jpg`}
+        totalFrames={92}
+        onProcessing={processing}
+        start={registerLoader}
+        end={unRegisterLoader}
+      >
+        <div ref={lPart1} className={classNames(s.hero, s.contentItem)}>
+          <Introduce />
+        </div>
+        <div ref={lPart2} className={classNames(s.subLiving, s.contentItem)}>
+          <SubLiving />
+        </div>
+        <div ref={lPart3} className={classNames(s.livingArt, s.contentItem)}>
+          <Living />
+        </div>
+      </Frames>
+
+      <div className={s.wrapMobileFrame}>
         <Introduce />
         <SubLiving />
         <Living />
       </div>
-    );
-  };
-
-  const DesktopFrameTop = () => {
-    return (
-      <div className={s.main} ref={elMain}>
-        <Frames
-          width={1920}
-          height={1080}
-          className={s.info_main}
-          urlFrame={`${CDN_URL}/LP_02_Compress/v-%d.jpg`}
-          totalFrames={92}
-          onProcessing={processing}
-          start={registerLoader}
-          end={unRegisterLoader}
-        >
-          <div ref={lPart1} className={classNames(s.hero, s.contentItem)}>
-            <Introduce />
-          </div>
-          <div ref={lPart2} className={classNames(s.subLiving, s.contentItem)}>
-            <SubLiving />
-          </div>
-          <div ref={lPart3} className={classNames(s.livingArt, s.contentItem)}>
-            <Living />
-          </div>
-        </Frames>
-      </div>
-    );
-  };
-
-  return <div>{mobileScreen ? <MobileFrameTop /> : <DesktopFrameTop />}</div>;
+    </div>
+  );
 };
 
 export default FrameTop;

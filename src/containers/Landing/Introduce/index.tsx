@@ -7,7 +7,6 @@ import HeroModal from './Modal';
 import { useContext, useState } from 'react';
 import { Col, Container } from 'react-bootstrap';
 import { modalPlay } from '@/constants/asset';
-import { useWindowSize } from '@trustless-computer/dapp-core';
 import { AnimateContext } from '@/contexts/animate-context';
 import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
@@ -17,13 +16,14 @@ import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
 import MobileIntroduce from './MobileIntroduce';
 import { AnimFade } from '@/animations/Fade';
+import useWindowResize from '@/hooks/useWindowResize';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const { setAudioPlaying, lenis, setIsShowProgress } =
     useContext(AnimateContext);
 
-  const { mobileScreen } = useWindowSize();
+  const { isMobile } = useWindowResize();
 
   const handleOpenModal = () => {
     setIsShow(true);
@@ -157,7 +157,7 @@ const Introduce: React.FC = () => {
 
   return (
     <>
-      {mobileScreen ? (
+      {isMobile ? (
         <MobileIntroduce isShow={isShow} handleOpenModal={handleOpenModal} />
       ) : (
         <DesktopIntroduce />

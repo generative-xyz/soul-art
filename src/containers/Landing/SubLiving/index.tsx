@@ -1,11 +1,11 @@
 import TextAnimate from '@/components/TextAnimate';
 import s from './style.module.scss';
 import { Container, Col } from 'react-bootstrap';
-import { useWindowSize } from '@trustless-computer/dapp-core';
 import MobileSubLiving from './MobileSubLiving';
+import useWindowResize from '@/hooks/useWindowResize';
 
 const SubLiving = () => {
-  const { mobileScreen } = useWindowSize();
+  const { isMobile } = useWindowResize();
 
   const DescktopSubLiving = () => {
     return (
@@ -34,7 +34,7 @@ const SubLiving = () => {
     );
   };
 
-  return <>{mobileScreen ? <MobileSubLiving /> : <DescktopSubLiving />}</>;
+  return <>{isMobile ? <MobileSubLiving /> : <DescktopSubLiving />}</>;
 };
 
 export default SubLiving;

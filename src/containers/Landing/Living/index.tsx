@@ -1,11 +1,11 @@
 import { Container, Col } from 'react-bootstrap';
 import s from './style.module.scss';
 import TextAnimate from '@/components/TextAnimate';
-import { useWindowSize } from '@trustless-computer/dapp-core';
 import MobileLiving from './MobileLiving';
+import useWindowResize from '@/hooks/useWindowResize';
 
 const Living = () => {
-  const { mobileScreen } = useWindowSize();
+  const { isMobile } = useWindowResize();
 
   const DesktopLiving = () => {
     return (
@@ -35,7 +35,7 @@ const Living = () => {
     );
   };
 
-  return <>{mobileScreen ? <MobileLiving /> : <DesktopLiving />}</>;
+  return <>{isMobile ? <MobileLiving /> : <DesktopLiving />}</>;
 };
 
 export default Living;

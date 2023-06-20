@@ -8,8 +8,9 @@ import { CDN_URL } from '@/configs';
 import { useScrollFixed } from '@Hooks/useScorllFixed';
 import { useCallback, useRef } from 'react';
 import { useFrameProcessing } from '@Hooks/useFrameProcessing';
-import { useWindowSize } from '@trustless-computer/dapp-core';
+
 import MobileFlare from './MobileFlare';
+import useWindowResize from '@/hooks/useWindowResize';
 
 const Flare: React.FC = () => {
   const refBox = useRef<HTMLDivElement | null>(null);
@@ -39,7 +40,7 @@ const Flare: React.FC = () => {
 
   useScrollFixed(refBox, 1200, onUpdate);
 
-  const { mobileScreen } = useWindowSize();
+  const { isMobile } = useWindowResize();
 
   const DesktopFlare = () => {
     return (
@@ -82,7 +83,7 @@ Since Souls cannot be transferred or sold, they represent a very close personal 
 
   return (
     <div ref={refBox} className={s.main}>
-      {mobileScreen ? <MobileFlare /> : <DesktopFlare />}
+      {isMobile ? <MobileFlare /> : <DesktopFlare />}
     </div>
   );
 };
