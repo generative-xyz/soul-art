@@ -47,7 +47,7 @@ const useContractOperation = <P, R>(
       // This function does not handle error
       // It delegates error to caller
 
-      if (!isAuthenticated || !user?.walletAddress) {
+      if (inscribeable && (!isAuthenticated || !user?.walletAddress)) {
         router.push(`${ROUTE_PATH.CONNECT_WALLET}`);
         throw Error('Please connect wallet to continue.');
       }
@@ -70,6 +70,10 @@ const useContractOperation = <P, R>(
         ...params,
       });
       logger.debug('tcTX', tx);
+
+      if (tx === null) {
+        throw Error('Rejected request.');
+      }
 
       TC_SDK.signTransaction({
         method: `${operationName} ${dAppType}`,

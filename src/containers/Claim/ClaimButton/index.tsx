@@ -10,12 +10,12 @@ import { showToastError } from '@/utils/toast';
 import BigNumber from 'bignumber.js';
 import { AssetsContext } from '@/contexts/assets-context';
 import { useWeb3React } from '@web3-react/core';
-import { SoulEventType } from '@/enums/soul';
 import useMint, { IMintParams } from '@/hooks/contract-operations/soul/useMint';
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import { Transaction } from 'ethers';
 import { generateSignature } from '@/services/signature';
 import useAsyncEffect from 'use-async-effect';
+import { toStorageKey } from '@/utils';
 
 type IClaimButtonProps = {
   isFetchingApi: boolean;
@@ -37,14 +37,17 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
     operation: useMint,
     inscribeable: true,
   });
+  const {
+    operationName
+  } = useMint()
   const isReceiveAble = useMemo(() => !!signature, [signature]);
 
   const txSuccessCallback = async (transaction: Transaction | null) => {
-    if (!transaction) return;
+    if (!transaction || !account) return;
     const txHash = transaction.hash;
     if (!txHash) return;
-    const storageKey = `${SoulEventType.MINT}_${account}`;
-    localStorage.setItem(storageKey, txHash);
+    const key = toStorageKey(operationName, account);
+    localStorage.setItem(key, txHash);
   };
 
   const handleConnectWallet = async () => {
@@ -66,17 +69,12 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   const handleClaim = async () => {
     try {
       setMinting(true);
-      const tx = await call({
+      await call({
         address: account as string,
         totalGM: totalGM,
         signature: signature,
         txSuccessCallback: txSuccessCallback,
       });
-      if (!tx) {
-        showToastError({
-          message: 'Rejected request.',
-        });
-      }
     } catch (err: unknown) {
       logger.error(err);
       showToastError({

@@ -25,6 +25,7 @@ import * as TC_SDK from 'trustless-computer-sdk';
 import logger from '@/services/logger';
 import useGMBalanceOf from '@/hooks/contract-operations/gm/useGMBalanceOf';
 import useAsyncEffect from 'use-async-effect';
+import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 
 export interface IAssetsContext {
   btcBalance: string;
@@ -86,15 +87,16 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   const [isLoadedAssets, setIsLoadedAssets] = useState<boolean>(false);
   const [tcBalance, setTcBalance] = useState('0');
   const [gmBalance, setGmBalance] = useState('0');
-
   // History
   const [history, setHistory] = useState<ITxHistory[]>([]);
   // Fee rate
   const [feeRate, setFeeRate] = useState<IFeeRate>(initialValue.feeRate);
   const [comingAmount, setcomingAmount] = useState<number>(0);
   const [eth2btcRate, setEth2BtcRate] = useState<number>(0);
-
-  const { call: getGmBalance } = useGMBalanceOf({ walletAddress: tcAddress });
+  const { run: getGMBalance } = useContractOperation({
+    operation: useGMBalanceOf,
+    inscribeable: false
+  })
 
   const fetchAssets = async (): Promise<ICollectedUTXOResp | undefined> => {
     if (!currentAddress || !tcAddress) return undefined;
@@ -233,9 +235,14 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   }, [user, provider, currentAddress]);
 
   useAsyncEffect(async () => {
-    if (tcAddress && provider) {
-      const gmBalanceVal = await getGmBalance();
-      setGmBalance(gmBalanceVal.toString());
+    if (!tcAddress || !provider) return;
+    try {
+      const gmBalance = await getGMBalance({
+        address: tcAddress
+      });
+      setGmBalance(gmBalance.toString());
+    } catch (err: unknown) {
+      logger.error(err);
     }
   }, [tcAddress, provider]);
 

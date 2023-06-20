@@ -2,6 +2,7 @@ import CountdownText from '@/components/CountdownText';
 import Status from './Status';
 import s from './style.module.scss';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
+import { CLAIM_START_TIME } from '@/configs';
 
 type IClaimContentProps = {
   isClaimed: boolean;
@@ -33,7 +34,7 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
           </p>
           <div className={s.claimContent_countdownWrapper}>
             <SonarWaveCircle />
-            <CountdownText className={s.claimContent_countdownText} />
+            <CountdownText className={s.claimContent_countdownText} countDownTo={CLAIM_START_TIME} />
           </div>
         </div>
         <Status type={claimStatus} />

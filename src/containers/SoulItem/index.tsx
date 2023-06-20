@@ -4,11 +4,12 @@ import Spinner from '@/components/Spinner';
 import { SOUL_CONTRACT } from '@/configs';
 import { IToken, ITokenDetail } from '@/interfaces/api/marketplace';
 import { getCollectionNFTList } from '@/services/marketplace';
-import AuctionInfo from '../Item/AuctionInfo';
-import Info from '../Item/Info';
-import DetailImg from '../Item/DetailImg';
+import AuctionInfo from './AuctionInfo';
+import Info from './Info';
+import DetailImg from './DetailImg';
 import MoreSection from './MoreSection';
 import s from './style.module.scss';
+import TabsComponent from './Tabs';
 
 const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
   const [_isFetchingMoreItems, setIsFetchingMoreItems] = useState(false);
@@ -62,6 +63,7 @@ const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
         <Row>
           <Col lg={4}>
             <AuctionInfo data={soulDetail} />
+            <TabsComponent />
           </Col>
           <Col lg={5}>
             <DetailImg

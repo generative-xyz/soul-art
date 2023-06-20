@@ -8,11 +8,12 @@ import { useWeb3React } from '@web3-react/core';
 import logger from '@/services/logger';
 import useAsyncEffect from 'use-async-effect';
 import { getListTokensByWallet } from '@Services/soul';
-import { SoulEventType } from '@/enums/soul';
 import { ISoul } from '@/interfaces/api/soul';
 import dayjs from 'dayjs';
 import web3Instance from '@/connections/custom-web3-provider';
 import Discord from './Discord';
+import useMint from '@/hooks/contract-operations/soul/useMint';
+import { toStorageKey } from '@/utils';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -22,6 +23,9 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
   const [_isFetchingApi, setIsFetchingApi] = useState(false);
   const [soulToken, setSoulToken] = useState<ISoul | null>(null);
+  const {
+    operationName
+  } = useMint();
 
   useAsyncEffect(async () => {
     try {
@@ -50,8 +54,8 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   useEffect(() => {
     if (!account || isClaimed) return;
 
-    const storageKey = `${SoulEventType.MINT}_${account}`;
-    const txHash = localStorage.getItem(storageKey);
+    const key = toStorageKey(operationName, account);
+    const txHash = localStorage.getItem(key);
     if (!txHash) return;
 
     setTransactionHash(txHash.toString());

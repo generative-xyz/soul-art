@@ -146,7 +146,7 @@ const ContentHeader = (): JSX.Element => {
                         maxWidth={'20'}
                         maxHeight={'20'}
                       ></IconSVG>
-                      {gmBalance}&nbsp;GM
+                      {`${formatEthPrice(gmBalance)} GM`}
                     </div>
                   </OverlayTrigger>
 

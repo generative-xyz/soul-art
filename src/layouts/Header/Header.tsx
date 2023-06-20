@@ -113,9 +113,8 @@ const Header = ({
   const ContentHeader = (): JSX.Element => {
     return (
       <div
-        className={`content-header d-flex justify-content-between align-items-center w-100 ${
-          homepage ? 'dark' : ''
-        }`}
+        className={`content-header d-flex justify-content-between align-items-center w-100 ${homepage ? 'dark' : ''
+          }`}
       >
         <div className={headerStyles.nav_container}>
           {/* {NAV_CONTENT.map(({ title, url }) => {
@@ -199,7 +198,7 @@ const Header = ({
                         maxWidth={'20'}
                         maxHeight={'20'}
                       ></IconSVG>
-                      {gmBalance}&nbsp;GM
+                      {`${formatEthPrice(gmBalance)} GM`}
                     </div>
                   </OverlayTrigger>
 
