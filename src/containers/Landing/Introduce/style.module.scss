@@ -22,9 +22,17 @@
           color: #fff;
         }
 
-        .introduceBox-desc {
+        h1 {
+          margin-bottom: rem(12px) !important;
+        }
+
+        .introduceBox-desc-wrapper {
+          margin-top: rem(40px);
           margin-bottom: rem(40px);
           color: #fff;
+          display: flex;
+          flex-direction: column;
+          gap: rem(20px);
 
           @include mobile {
             margin-bottom: rem(20px);
@@ -32,6 +40,8 @@
 
           @include min-tablet {
             margin-bottom: rem(40px);
+          }
+          .introduceBox-desc {
           }
         }
 

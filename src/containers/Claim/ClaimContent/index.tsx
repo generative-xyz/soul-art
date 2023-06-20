@@ -15,12 +15,14 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
     return (
       <div className={s.claimDesc}>
         <p className={s.desc}>
-          Souls can only be adopted by New Bitcoiners who contributed at least 1 $GM at the end of the GM crowdfunding event.
+          Souls can only be adopted by New Bitcoiners who contributed at least 1
+          $GM at the end of the GM crowdfunding event.
         </p>
         <p className={s.desc}>
-          Just as the sun rises each day, the Souls collection symbolizes hope, resilience, and the potential for growth of the Bitcoin network.
+          Just as the sun rises each day, the Souls collection symbolizes hope,
+          resilience, and the potential for growth of the Bitcoin network.
         </p>
-      </div >
+      </div>
     );
   };
 
@@ -32,6 +34,7 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
             Souls
           </p>
           <div className={s.claimContent_countdownWrapper}>
+            <p>Adopt your Soul in</p>
             <SonarWaveCircle />
             <CountdownText className={s.claimContent_countdownText} />
           </div>

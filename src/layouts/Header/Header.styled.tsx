@@ -35,8 +35,12 @@ const Wrapper = styled.header`
     position: absolute;
     top: 50%;
     left: 50%;
+    font-size: 28px;
+    line-height: 28px;
     transform: translate(-50%, -50%);
     z-index: 10;
+    color: #000;
+    font-family: var(--righteous-font);
   }
 
   .logo-title {
@@ -110,6 +114,12 @@ const Wrapper = styled.header`
 
   .content-header {
     position: relative;
+  }
+
+  .dark {
+    .logo {
+      color: #fff;
+    }
   }
 `;
 
