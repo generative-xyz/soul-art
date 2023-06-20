@@ -187,35 +187,37 @@
       }
     }
   }
-}
 
-&.popupOpen {
-  z-index: 4;
-}
-
-&_actions {
-  display: flex;
-  gap: rem(20px);
-
-  margin-top: rem(43px);
-  padding-top: rem(43px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-
-  &_item {
-    flex: 0 0 rem(212px);
-
-    &__pdf {
-      :global(.imageFrame) {
-        padding: rem(6px);
-
-        .content {
-          height: rem(112px);
-          background: rgba(255, 255, 255, 1);
+  &.popupOpen {
+    z-index: 4;
+  }
+  
+  &_actions {
+    display: flex;
+    gap: rem(20px);
+  
+    margin-top: rem(43px);
+    padding-top: rem(43px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  
+    &_item {
+      flex: 0 0 rem(212px);
+  
+      &__pdf {
+        :global(.imageFrame) {
+          padding: rem(6px);
+  
+          .content {
+            height: rem(112px);
+            background: rgba(255, 255, 255, 1);
+          }
         }
       }
     }
   }
 }
+
+
 
 
 .mobileIntroduce {
