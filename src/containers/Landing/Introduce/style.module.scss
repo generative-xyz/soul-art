@@ -72,6 +72,7 @@
                 border: 1px solid #000;
                 background: #000;
                 color: #fff;
+
                 * {
                   color: inherit;
                 }
@@ -151,10 +152,6 @@
           @include onlyMobile {
             margin-top: rem(15px);
             padding-top: rem(15px);
-
-            .wrap-video {
-              width: 50%;
-            }
           }
 
           @include tablet {
@@ -186,15 +183,18 @@
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 
     &_item {
-      flex: 0 0 rem(212px);
+      flex: 0 0 50%;
+      @include min-tablet {
+        flex: 0 0 rem(212px);
+      }
 
       &__pdf {
         :global(.imageFrame) {
           padding: rem(6px);
 
           .content {
-            height: rem(112px);
-            background: rgba(255, 255, 255, 1);
+            padding-bottom: (83/147) * 100%;
+            background: rgba(255, 255, 255, .1);
           }
         }
       }
