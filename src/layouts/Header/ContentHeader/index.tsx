@@ -121,7 +121,7 @@ const ContentHeader = (): JSX.Element => {
                     overlay={
                       <Tooltip
                         id={'warning-gm'}
-                        placement="bottom"
+                        placement="left"
                         className={contentHeader.tooltip_body}
                       >
                         <div className={contentHeader.tooltip_content}>

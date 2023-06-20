@@ -47,17 +47,6 @@
       opacity: 1;
     }
   }
-
-  .nav_item:last-of-type {
-    opacity: 1;
-    display: flex;
-    align-items: center;
-    gap: rem(8px);
-
-    &:hover {
-      opacity: 0.6;
-    }
-  }
 }
 
 .logo {
@@ -116,7 +105,10 @@
     padding: 4px 8px;
     box-shadow: 0px 0px 12px -6px rgba(0, 0, 0, 0.08);
     font-size: 14px;
-    line-height: 140%;
+    line-height: 20/14;
+    display: flex;
+    align-items: center;
+    gap: rem(5px);
 
     &.warning {
       color: $red-primary;
@@ -209,6 +201,7 @@
   &_wrapper {
     padding-top: rem(8px);
     width: calc(100%);
+    min-width: rem(250px);
     border: none;
     box-shadow: none;
     background: none;
@@ -303,11 +296,21 @@
   }
 }
 
+.nbc_link {
+  display: flex;
+  align-items: center;
+  gap: rem(4px);
+
+  &:hover {
+    text-decoration: none;
+    opacity: 0.6;
+  }
+}
+
 .dark {
   .profile_container {
     background-color: rgba($color: #fff, $alpha: 0.1);
     border-color: rgba($color: #fff, $alpha: 0.1);
-
   }
   .profile_amount {
     background-color: rgba($color: #fff, $alpha: 0.2);
@@ -348,6 +351,15 @@
   }
 
   .copy_icon {
+    svg,
+    path {
+      stroke: #fff;
+    }
+  }
+
+  .nbc_link {
+    color: #fff;
+
     svg,
     path {
       stroke: #fff;
