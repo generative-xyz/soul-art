@@ -16,7 +16,7 @@ const SubLiving = () => {
         <Container className={s.container}>
           <div className={s.wrapContent}>
             <p className={s.sectionContent}>
-              {`Souls react to the owner's GM balance and trading behavior. As the owner acquires more GM tokens, the Soul grows in size. It also mimics the patterns of the owner's trading style, whether it's a steady hand guiding the brushstrokes or a flurry of dynamic lines.`}
+              {`Souls interact with the owner's GM balance and trading patterns.  The Soul expands in size as the owner gains more GM tokens. Additionally, it imitates the patterns of the owner's trading approach, whether that be a steady hand directing the brushstrokes or a flurry of dynamic lines.`}
             </p>
             <div className={s.tag}>
               <TextAnimate>

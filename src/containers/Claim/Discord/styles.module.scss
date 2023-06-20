@@ -1,0 +1,78 @@
+.discord {
+  padding-top: rem(190px);
+  padding-bottom: rem(60px);
+  flex: 1;
+}
+
+.discordContainer {
+  background-color: #f6f6f6;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - rem(76.8px));
+}
+
+.mainContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.discordLogoWrapper {
+  width: rem(120px);
+  height: rem(120px);
+  background: #ffffff;
+  border: 1px solid #ececec;
+  box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: rem(16px);
+}
+
+.discordLogo {
+  max-width: rem(60px);
+}
+
+.discordUsers {
+  max-height: rem(50px);
+  margin-bottom: rem(12px);
+}
+
+.discordText {
+  font-weight: 400;
+  font-size: rem(20px);
+  line-height: 140%;
+  color: #000000;
+  margin-bottom: rem(32px);
+  padding: 0 rem(32px);
+  text-align: center;
+}
+
+.joinBtn {
+  display: inline-block;
+  padding: rem(16px) rem(40px);
+  color: #ffffff;
+  font-weight: 500;
+  font-size: rem(16px);
+  line-height: rem(18px);
+  background: #000000;
+  border-radius: 100px;
+
+  &:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+}
+
+.blockTitle {
+  font-weight: 400;
+  font-size: rem(32px);
+  line-height: 140%;
+  text-align: center;
+  color: #0f1b01;
+  margin-bottom: rem(32px);
+}

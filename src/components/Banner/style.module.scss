@@ -1,30 +1,21 @@
 .banner {
   position: fixed;
-  top: rem(84px);
+  top: 80px;
   left: 50%;
   transform: translate(-50%);
   width: 100%;
   padding: rem(12px) 0;
-  background: #F6F6F6;
+  background: #f6f6f6;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 11;
   backdrop-filter: blur(2px);
-
-  @include tabletWide {
-    flex-direction: row;
-    gap: rem(16px);
-  }
+  gap: rem(8px);
+  flex-direction: column;
 
   @include min-tablet {
     flex-direction: row;
-    gap: rem(16px);
-  }
-
-  @include mobile {
-    gap: rem(8px);
-    flex-direction: column;
   }
 
   .bannerText {

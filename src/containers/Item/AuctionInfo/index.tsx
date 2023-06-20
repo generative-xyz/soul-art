@@ -1,43 +1,79 @@
-import { Button, Modal } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
-import AuctionInfoStyles from './style.module.scss';
-import { CDN_URL } from '@/configs';
 import IconSVG from '@/components/IconSVG';
+import { CDN_URL } from '@/configs';
+import { ITokenDetail } from '@/interfaces/api/marketplace';
+import { shortenAddress } from '@/utils';
+import { useWeb3React } from '@web3-react/core';
+import { jsNumberForAddress } from 'react-jazzicon';
+import Jazzicon from 'react-jazzicon/dist/Jazzicon';
 import TabsComponent from './Tabs';
-import { formatLongAddress } from '@trustless-computer/dapp-core';
+import AuctionInfoStyles from './style.module.scss';
+import useAsyncEffect from 'use-async-effect';
+import useGMBalanceOf from '@/hooks/contract-operations/gm/useGMBalanceOf';
 
-type AuctionImgProps = {
-  img: string | undefined;
+type AuctionProps = {
+  data: ITokenDetail;
 };
-const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
+const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
+  const { account, provider } = useWeb3React();
+  const [isOwnerEligible, setIsOwnerEligible] = useState<boolean | null>(null);
+  const { call: getOwnerGmBalance } = useGMBalanceOf({
+    walletAddress: data.owner,
+  });
 
-  const [show, setShow] = useState<boolean>(false);
+  // const [show, setShow] = useState<boolean>(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+
+  const itemName = useMemo(() => `Soul #${data.tokenId}`, [data.tokenId]);
+
+  useAsyncEffect(async () => {
+    if (data.owner && provider) {
+      const gmBalanceVal = await getOwnerGmBalance();
+      setIsOwnerEligible(gmBalanceVal > 1);
+    }
+  }, [data.owner, provider]);
+
   return (
     <>
       <div className={AuctionInfoStyles.container}>
-        <p className={AuctionInfoStyles.content_title}>Solaris #123</p>
+        <p className={AuctionInfoStyles.content_title}>{itemName}</p>
         <div className={AuctionInfoStyles.content_warning}>
-          <div className={AuctionInfoStyles.content_warning_iconUser}>
-           <IconSVG
-              src={`${CDN_URL}/img-user.svg`}
-              maxWidth={"50"}
-              maxHeight={"50"}
-            ></IconSVG>
-            <div className={AuctionInfoStyles.content_warning_iconWarning}>
-              <IconSVG src={`${CDN_URL}/ic-warning.svg`}></IconSVG>
-            </div>
-          </div>
-          <div className={AuctionInfoStyles.content_warning_showAddress}>
-            {formatLongAddress('012831236821763812638')} is not eligible to own
-            Soul
-          </div>
+          {isOwnerEligible ? (
+            <>
+              <div className={AuctionInfoStyles.content_warning_iconUser}>
+                <Jazzicon diameter={28} seed={jsNumberForAddress(data.owner)} />
+              </div>
+              <div className={AuctionInfoStyles.content_address}>
+                {account === data.owner
+                  ? 'You'
+                  : `${shortenAddress(data.owner)}`}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={AuctionInfoStyles.content_warning_iconUser}>
+                <Jazzicon diameter={28} seed={jsNumberForAddress(data.owner)} />
+                <div className={AuctionInfoStyles.content_warning_iconWarning}>
+                  <IconSVG
+                    maxWidth="20"
+                    src={`${CDN_URL}/ic-warning.svg`}
+                  ></IconSVG>
+                </div>
+              </div>
+              <div className={AuctionInfoStyles.content_warning_showAddress}>
+                {account === data.owner
+                  ? 'You are'
+                  : `${shortenAddress(data.owner)} is `}
+                not eligible to own Soul
+              </div>
+            </>
+          )}
         </div>
-        <div className={AuctionInfoStyles.content_divide}></div>
-        <div className={AuctionInfoStyles.content_auction}>
+        {/* <div className={AuctionInfoStyles.content_divide}></div> */}
+        {/* <div className={AuctionInfoStyles.content_auction}>
           <div className={AuctionInfoStyles.content_auctionLeft}>
             <p className={AuctionInfoStyles.content_auctionLeft_title}>
               Highest bid
@@ -52,16 +88,16 @@ const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
               2d&nbsp;:&nbsp;16h&nbsp;:&nbsp;12m
             </p>
           </div>
-        </div>
-        <Button
+        </div> */}
+        {/* <Button
           className={AuctionInfoStyles.content_auction_adoptButton}
           onClick={handleShow}
         >
           Adopt
-        </Button>
+        </Button> */}
         <TabsComponent />
       </div>
-      <Modal
+      {/* <Modal
         className={AuctionInfoStyles.modal}
         centered
         show={show}
@@ -84,8 +120,8 @@ const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
               >
                 <IconSVG
                   src={`${CDN_URL}/ic-vector.svg`}
-                  maxWidth={"15.34"}
-                  maxHeight={"15.34"}
+                  maxWidth={'15.34'}
+                  maxHeight={'15.34'}
                 ></IconSVG>
               </div>
             </Modal.Title>
@@ -96,7 +132,7 @@ const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
                 <div
                   className={AuctionInfoStyles.modal_body_addressContent_img}
                 >
-                  <img src={img} alt="art_img" />
+                   <img src={img} alt="art_img" />
                 </div>
                 <div
                   className={AuctionInfoStyles.modal_body_addressContent_info}
@@ -116,8 +152,8 @@ const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
                     <div>
                       <IconSVG
                         src={`${CDN_URL}/img-user.svg`}
-                        maxWidth={"32"}
-                        maxHeight={"32"}
+                        maxWidth={'32'}
+                        maxHeight={'32'}
                       ></IconSVG>
                     </div>
                     <p>{formatLongAddress('012831236821763812638')}</p>
@@ -197,7 +233,7 @@ const AuctionInfo:React.FC<AuctionImgProps> = ({img}) => {
             </Button>
           </Modal.Footer>
         </div>
-      </Modal>
+      </Modal> */}
     </>
   );
 };

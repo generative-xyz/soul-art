@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 5;
+  z-index: 6;
   width: 100%;
   background: var(--background);
   --text-color: #000;
@@ -16,6 +16,12 @@
   }
 }
 
+.divider {
+  width: 1px;
+  height: 16px;
+  background: #ececec;
+}
+
 .warning {
   display: flex;
   align-items: center;
@@ -25,12 +31,12 @@
 .nav_container {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: rem(28px);
   color: var(--text-color);
 
   .nav_item {
     opacity: 0.6;
-    transition: opacity .4s $easeOutQuart;
+    transition: opacity 0.4s $easeOutQuart;
 
     &.active {
       opacity: 1;
@@ -39,6 +45,17 @@
     &:hover {
       text-decoration: none;
       opacity: 1;
+    }
+  }
+
+  .nav_item:last-of-type {
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+
+    &:hover {
+      opacity: 0.6;
     }
   }
 }
@@ -58,14 +75,15 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  border: 1px solid rgba($gray-2, .4);
+  border: 1px solid rgba($gray-2, 0.4);
   font-size: 14px;
   line-height: 18px;
   backdrop-filter: blur(2px);
   color: var(--text-color);
-  transition: border-color .4s $easeOutQuart;
+  border-radius: 100px;
+  transition: border-color 0.4s $easeOutQuart;
 
-  &:hover{
+  &:hover {
     border: 1px solid rgba($gray-2, 1);
   }
 }
@@ -77,19 +95,24 @@
 
 .profile {
   &_container {
+    cursor: pointer;
     border-radius: 999px;
-    background-color: $gray-primary;
+    // background-color: rgba($color: #fff, $alpha: 0.1);
+    border: 1px solid #ececec;
+    color: white;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid $gray-2;
     padding: 6px 8px;
     gap: 4px;
   }
 
   &_amount {
     border-radius: 999px;
-    background-color: $white-primary;
+    // background-color: rgba($color: #fff, $alpha: 0.2);
+    background-color: $gray-primary;
+    color: #000;
     padding: 4px 8px;
     box-shadow: 0px 0px 12px -6px rgba(0, 0, 0, 0.08);
     font-size: 14px;
@@ -180,17 +203,27 @@
     background-color: #ececec;
     height: 1px;
     width: 100%;
-    margin: 24px 0;
+    margin: rem(20px) 0;
+  }
+
+  &_wrapper {
+    padding-top: rem(8px);
+    width: calc(100%);
+    border: none;
+    box-shadow: none;
+    background: none;
+    z-index: 10;
+    position: absolute;
   }
 
   &_container {
-    margin-top: 8px;
     width: 100%;
-    right: 0;
-    border: 1px solid #ececec;
+    border: 1px solid rgba($color: #fff, $alpha: 0.1);
     box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
     border-radius: 20px;
-    padding: 20px;
+    padding: rem(16px);
+    z-index: 6;
+    background-color: white;
   }
 
   &_title {
@@ -209,6 +242,7 @@
     justify-content: flex-start;
     flex-direction: column;
     border: 1px solid #ececec;
+    // border: 1px solid rgba($color: #fff, $alpha: 0.1);
     border-radius: rem(16px);
     padding: rem(12px);
     margin-bottom: rem(8px);
@@ -231,6 +265,7 @@
         line-height: 140%;
         margin-bottom: 0;
         margin-left: rem(8px);
+        color: #000;
       }
     }
   }
@@ -243,14 +278,79 @@
     justify-content: flex-start;
     margin-bottom: rem(16px);
 
+    svg,
+    path {
+      stroke: #000;
+    }
+
     p {
       margin-left: 8px;
       margin-bottom: 0;
       font-size: 16px;
+      color: #000;
     }
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+}
+
+.copy_icon {
+  svg,
+  path {
+    stroke: #000;
+  }
+}
+
+.dark {
+  .profile_container {
+    background-color: rgba($color: #fff, $alpha: 0.1);
+    border-color: rgba($color: #fff, $alpha: 0.1);
+
+  }
+  .profile_amount {
+    background-color: rgba($color: #fff, $alpha: 0.2);
+    color: white;
+    border-color: rgba($color: #fff, $alpha: 0.1);
+
+    &.warning {
+      color: $red-primary;
+    }
+  }
+
+  .menu_container {
+    background-color: rgba($color: #fff, $alpha: 0.1);
+  }
+
+  .menu_divider {
+    background-color: rgba($color: #fff, $alpha: 0.1);
+  }
+
+  .menu_content {
+    border-color: rgba($color: #fff, $alpha: 0.1);
+
+    * {
+      color: white;
+    }
+  }
+
+  .menu_box {
+    // background-color: rgba($color: #fff, $alpha: 0.1);
+
+    * {
+      color: white;
+    }
+    svg,
+    path {
+      stroke: #fff;
+    }
+  }
+
+  .copy_icon {
+    svg,
+    path {
+      stroke: #fff;
     }
   }
 }

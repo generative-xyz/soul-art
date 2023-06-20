@@ -1,5 +1,5 @@
 import soul from '@/abis/soul.json';
-import { SOUL_ADDRESS, TRANSFER_TX_SIZE } from '@/configs';
+import { SOUL_CONTRACT, TRANSFER_TX_SIZE } from '@/configs';
 import { AssetsContext } from '@/contexts/assets-context';
 import { useContract } from '@/hooks/useContract';
 import {
@@ -25,7 +25,7 @@ export interface IMintParams {
 
 const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
   const { account, provider } = useWeb3React();
-  const contract = useContract(SOUL_ADDRESS, soul.abi, true);
+  const contract = useContract(SOUL_CONTRACT, soul.abi, true);
   const { btcBalance, feeRate } = useContext(AssetsContext);
 
   const estimateGas = useCallback(
@@ -52,7 +52,7 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
       if (account && provider && contract) {
         logger.debug('useMint', params);
 
-        const { address, txSuccessCallback } = params;
+        const { address, totalGM, signature, txSuccessCallback } = params;
 
         const tcTxSizeByte = TRANSFER_TX_SIZE;
 
@@ -71,14 +71,14 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
         }
 
         const gasLimit = await estimateGas({
-          address: params.address,
-          totalGM: params.totalGM,
-          signature: params.signature,
+          address: address,
+          totalGM: totalGM,
+          signature: signature,
         });
 
         const transaction = await contract
           .connect(provider.getSigner())
-          .mint(address, params.totalGM, params.signature, {
+          .mint(address, totalGM, signature, {
             gasLimit: gasLimit,
           });
 

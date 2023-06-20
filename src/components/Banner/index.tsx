@@ -14,17 +14,16 @@ const Banner: React.FC<IBannerProps> = ({ type }) => {
     <div className={s.banner}>
       {type === 'claim' ? (
         <p className={s.bannerText}>
-          Experience the first soulbound art on-chain
+          Experience the first ever art protocol powered by smart contracts and $GM
         </p>
       ) : (
         <p className={s.bannerText}>
-          Posuere dolor adipiscing est et potenti odio condimentum euismod
-          lobortis.
+          Experience the first ever art protocol powered by smart contracts and $GM
         </p>
       )}
       <Button borderRadius="100px" className={s.bannerButton}>
         <Link href={`${ROUTE_PATH.CLAIM}`} className={s.banner_link}>
-          Claim Souls
+          Adopt Souls
           <IconSVG
             src={`${CDN_URL}/bannerArrow.svg`}
             maxWidth="11"

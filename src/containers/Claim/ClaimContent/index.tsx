@@ -1,5 +1,7 @@
+import CountdownText from '@/components/CountdownText';
 import Status from './Status';
 import s from './style.module.scss';
+import SonarWaveCircle from '@/components/SonarWaveCircle';
 
 type IClaimContentProps = {
   isClaimed: boolean;
@@ -13,29 +15,27 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
     return (
       <div className={s.claimDesc}>
         <p className={s.desc}>
-          Explore Souls, the first on-chain soulbound art that merges in a
-          collective performance, reflecting human emotions such as fear, greed,
-          and belief.
+          Souls can only be adopted by New Bitcoiners who contributed at least 1 $GM at the end of the GM crowdfunding event.
         </p>
         <p className={s.desc}>
-          These Souls are personalised and irreplaceable, requiring ongoing care
-          from their owners. If you have no joy with them, they will leave you
-          in search of a better match.
+          Just as the sun rises each day, the Souls collection symbolizes hope, resilience, and the potential for growth of the Bitcoin network.
         </p>
-        <p className={s.desc}>
-          Enjoy this collection, which will help you understand the
-          interconnected nature of our New Bitcoin City community.
-        </p>
-      </div>
+      </div >
     );
   };
 
   return (
     <div className={`${s.claimContent} ${isClaimed ? s.true : ''}`}>
       <div className={s.claimContent_top}>
-        <p className={`${s.claimContent_title} ${isClaimed ? s.true : ''}`}>
-          Souls
-        </p>
+        <div className={s.claimContent_header}>
+          <p className={`${s.claimContent_title} ${isClaimed ? s.true : ''}`}>
+            Souls
+          </p>
+          <div className={s.claimContent_countdownWrapper}>
+            <SonarWaveCircle />
+            <CountdownText className={s.claimContent_countdownText} />
+          </div>
+        </div>
         <Status type={claimStatus} />
       </div>
       {isClaimed ? '' : <ClaimDesc />}

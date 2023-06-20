@@ -16,7 +16,7 @@ const Living = () => {
         <Container className={s.container}>
           <div className={s.wrapContent}>
             <p className={s.sectionContent}>
-              {`Souls are not static art but dynamic entities that reflect human behavior. They react to market dynamics, mirroring feelings of fear, greed, and belief. The interconnected nature of the Souls is fascinating, as one soul's changes can affect another soul within the collective.`}
+              {`Souls are dynamic beings that reflect human behaviour, not static works of art. They react to market dynamics and illustrate emotions like fear, greed, and belief. It's phenomenal how closely connected the Souls are because changes in one Soul can have an impact on another Soul within the collective.`}
             </p>
             <div className={s.tag}>
               <TextAnimate>

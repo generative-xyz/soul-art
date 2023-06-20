@@ -42,8 +42,7 @@ const HeroModal: React.FC<ModalProps> = ({ showModal, closeModal }) => {
           </div>
           <ImageFrame>
             <video ref={videoRef} controls>
-              <source src={`${CDN_URL}/output.webm`} type="video/webm" />
-              <source src={`${CDN_URL}/output.mp4`} type="video/mp4" />
+              <source src={`${CDN_URL}/TaleOfSoul_03.mp4`} type="video/mp4" />
             </video>
           </ImageFrame>
         </div>

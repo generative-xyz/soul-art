@@ -19,7 +19,7 @@ const Tech: React.FC = () => {
       id: 5,
       title: 'Brushwork',
       img: `${CDN_URL}/solagif/Brushwork.gif`,
-      content: `The brushwork in the artwork represents the stability of the Souls. A higher trading rate and increased GM balance result in more precise and stable brushwork, reflecting the confidence and active engagement of the owners in the ecosystem.`,
+      content: `The brushwork in the artwork reflects the owner's GM token journey. Holding GM tokens for a longer time results in stable brushwork, while frequent trading leads to wilder strokes. The brushwork captures the owner's commitment and trading style.`,
     },
     {
       id: 1,

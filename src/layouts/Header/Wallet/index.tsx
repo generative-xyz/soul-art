@@ -1,33 +1,39 @@
+import ArtifactButton from '@/components/ArtifactButton';
 import IconSVG from '@/components/IconSVG';
+import Text from '@/components/Text';
 import { CDN_URL, TC_URL } from '@/configs';
 import { AssetsContext } from '@/contexts/assets-context';
-import { getIsAuthenticatedSelector, getUserSelector } from '@/state/user/selector';
-import { formatBTCPrice, formatEthPrice } from '@/utils/format';
-import { useWeb3React } from '@web3-react/core';
-import copy from 'copy-to-clipboard';
-import ArtifactButton from '@/components/ArtifactButton';
-import Text from '@/components/Text';
 import { WalletContext } from '@/contexts/wallet-context';
 import { DappsTabs } from '@/enums/tabs';
+import logger from '@/services/logger';
+import {
+  getIsAuthenticatedSelector,
+  getUserSelector,
+} from '@/state/user/selector';
+import { formatBTCPrice, formatEthPrice } from '@/utils/format';
+import { showToastError, showToastSuccess } from '@/utils/toast';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
-import { useContext, useRef, useState } from 'react';
+import { useWeb3React } from '@web3-react/core';
+import copy from 'copy-to-clipboard';
+import { useContext, useState } from 'react';
 import { OverlayTrigger } from 'react-bootstrap';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { useSelector } from 'react-redux';
-import { ConnectWalletButton, WalletBalance, WalletWrapper } from '../Header.styled';
+import {
+  ConnectWalletButton,
+  WalletBalance,
+  WalletWrapper,
+} from '../Header.styled';
 import { WalletPopover } from './Wallet.styled';
-import logger from '@/services/logger';
-import { showToastError, showToastSuccess } from '@/utils/toast';
 
 const WalletHeader = () => {
   const { account } = useWeb3React();
   const user = useSelector(getUserSelector);
-  const { onDisconnect, onConnect, requestBtcAddress } = useContext(WalletContext);
+  const { onDisconnect, onConnect, requestBtcAddress } =
+    useContext(WalletContext);
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const { btcBalance, tcBalance } = useContext(AssetsContext);
-  const [show, setShow] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
-  const ref = useRef(null);
 
   const handleConnectWallet = async () => {
     try {
@@ -45,27 +51,15 @@ const WalletHeader = () => {
     }
   };
 
-  const handleOnMouseEnter = () => {
-    setShow(true);
-  };
-  const handleOnMouseLeave = () => {
-    setShow(false);
-  };
-
   const onClickCopy = (address: string) => {
     copy(address);
     showToastSuccess({
-      message: 'Copied'
+      message: 'Copied',
     });
   };
 
   const walletPopover = (
-    <WalletPopover
-      id="wallet-header"
-      onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={handleOnMouseLeave}
-      show={show}
-    >
+    <WalletPopover id="wallet-header">
       <div className="wrapper">
         <div className="wallet-tc">
           <div className="wallet-item">
@@ -74,7 +68,11 @@ const WalletHeader = () => {
               maxWidth="24"
               maxHeight="24"
             />
-            <Text size={'regular'} className="wallet-address" fontWeight="regular">
+            <Text
+              size={'regular'}
+              className="wallet-address"
+              fontWeight="regular"
+            >
               {formatLongAddress(user?.walletAddress || '')}
             </Text>
           </div>
@@ -86,7 +84,7 @@ const WalletHeader = () => {
               src={`${CDN_URL}/icons/ic-copy-artifact.svg`}
               color="white"
               maxWidth="16"
-            // type="stroke"
+              type="stroke"
             ></IconSVG>
           </div>
         </div>
@@ -98,7 +96,11 @@ const WalletHeader = () => {
               maxWidth="24"
               maxHeight="24"
             />
-            <Text size={'regular'} className="wallet-address" fontWeight="regular">
+            <Text
+              size={'regular'}
+              className="wallet-address"
+              fontWeight="regular"
+            >
               {formatLongAddress(user?.walletAddressBtcTaproot || '')}
             </Text>
           </div>
@@ -119,11 +121,19 @@ const WalletHeader = () => {
             className="wallet-link"
             onClick={() => window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)}
           >
-            <IconSVG src={`${CDN_URL}/icons/ep_wallet-filled.svg`} maxWidth="20" />
+            <IconSVG
+              src={`${CDN_URL}/icons/ep_wallet-filled.svg`}
+              maxWidth="20"
+              color="white"
+              type="fill"
+            />
             <Text size="medium">Wallet</Text>
           </div>
           <div className="wallet-disconnect" onClick={onDisconnect}>
-            <IconSVG src={`${CDN_URL}/icons/basil_logout-solid.svg`} maxWidth="20" />
+            <IconSVG
+              src={`${CDN_URL}/icons/basil_logout-solid.svg`}
+              maxWidth="20"
+            />
             <Text size="medium">Disconnect</Text>
           </div>
         </div>
@@ -135,18 +145,14 @@ const WalletHeader = () => {
     <>
       {account && isAuthenticated ? (
         <OverlayTrigger
-          trigger={['hover', 'focus']}
+          trigger="click"
           placement="bottom"
           overlay={walletPopover}
-          container={ref}
-          show={show}
+          show={false}
         >
           <div
             // className="wallet"
             onClick={() => window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)}
-            ref={ref}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
           >
             <WalletWrapper>
               <WalletBalance>
@@ -164,7 +170,10 @@ const WalletHeader = () => {
         </OverlayTrigger>
       ) : (
         <ArtifactButton variant="transparent" width={228} height={48}>
-          <ConnectWalletButton className="hideMobile" onClick={handleConnectWallet}>
+          <ConnectWalletButton
+            className="hideMobile"
+            onClick={handleConnectWallet}
+          >
             {isConnecting ? 'Connecting...' : 'Connect wallet'}
           </ConnectWalletButton>
         </ArtifactButton>

@@ -1,23 +1,24 @@
-import { Container, Spinner } from 'react-bootstrap';
-import React, { useCallback, useEffect, useState } from 'react';
+import { getSoulAttributes } from '@/services/soul';
 import { debounce, pick } from 'lodash';
-import { getSoulAttributes, getSoulsNfts } from '@/services/soul';
-
-import { ARTIFACT_CONTRACT } from '@/configs';
-import AttributeSort from '../Attribute';
-import { IAttribute } from '@/interfaces/attributes';
-import { ISoul } from '@/interfaces/api/soul';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Container, Spinner } from 'react-bootstrap';
 import SoulsCard from '@/components/SoulCards';
-import soulsStyles from './souls.module.scss';
+import { CDN_URL, SOUL_CONTRACT } from '@/configs';
+import { IToken } from '@/interfaces/api/marketplace';
+import { IAttribute } from '@/interfaces/attributes';
+import { getCollectionNFTList } from '@/services/marketplace';
 import { useRouter } from 'next/router';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import soulsStyles from './souls.module.scss';
+import { ROUTE_PATH } from '@/constants/route-path';
+import Link from 'next/link';
 
 const LIMIT_PAGE = 32;
 
 export const SoulsContainer: React.FC = () => {
   const router = useRouter();
   const [isFetching, setIsFetching] = useState(false);
-  const [souls, setSouls] = useState<ISoul[]>([]);
+  const [souls, setSouls] = useState<IToken[]>([]);
   const [attributes, setAttributes] = useState<IAttribute[]>();
   const [isFetchSuccessAttributes, setIsSuccessAttributes] = useState(false);
 
@@ -84,16 +85,18 @@ export const SoulsContainer: React.FC = () => {
             }
           }
         }
-
-        const data = await getSoulsNfts({
+        const data = await getCollectionNFTList({
+          contract_address: SOUL_CONTRACT,
           attributes: attributesFilter.toString(),
           ...query,
         });
 
         if (isFetchMore) {
-          setSouls(prev => [...prev, ...data]);
+          setSouls(prev => [...prev, ...data.items]);
+          // setSouls([]);
         } else {
-          setSouls(data);
+          setSouls(data.items);
+          // setSouls([]);
         }
       } catch (error) {
       } finally {
@@ -109,42 +112,62 @@ export const SoulsContainer: React.FC = () => {
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
-  return (
-   <>
-    <InfiniteScroll
-      className="list"
-      dataLength={souls?.length || 0}
-      hasMore={true}
-      loader={
-        isFetching && (
-          <div className="loading">
-            <Spinner />
+  if (!souls || souls.length === 0) {
+    return (
+      <div className={soulsStyles.emptyWrapper}>
+        <div className={soulsStyles.empty}>
+          <div className={soulsStyles.empty_thumbnailWrapper}>
+            <img
+              src={`${CDN_URL}/img-empty-thumbnail.png`}
+              alt="empty thumbnail image"
+            />
           </div>
-        )
-      }
-      next={debounceLoadMore}
-    >
-      <div className={soulsStyles.art}>
-        <Container className={soulsStyles.grid_container}>
-          {souls &&
-            souls.length > 0 &&
-            souls.map(item => {
-              return (
-                <SoulsCard
-                  key={`token-${item.tokenId}`}
-                  href={`/${item.tokenId}`}
-                  image={item.image}
-                  contract={ARTIFACT_CONTRACT}
-                  tokenId={item.tokenId}
-                  title={`Smart Inscription #${item.tokenId}`}
-                  className={soulsStyles.grid_item}
-                />
-              );
-            })}
-        </Container>
+          <p className={soulsStyles.empty_content}>
+            Be the first one to adopt a Soul. Adopt a Soul here.
+          </p>
+          <Link href={ROUTE_PATH.CLAIM} className={soulsStyles.empty_adopt}>
+            Adopt Souls
+          </Link>
+        </div>
       </div>
-     
-    </InfiniteScroll>
-     <AttributeSort attributes={attributes || []} /></>
+    );
+  }
+
+  return (
+    <>
+      <InfiniteScroll
+        className="list"
+        dataLength={souls?.length || 0}
+        hasMore={true}
+        loader={
+          isFetching && (
+            <div className="loading">
+              <Spinner />
+            </div>
+          )
+        }
+        next={debounceLoadMore}
+      >
+        <div className={soulsStyles.art}>
+          <Container className={soulsStyles.grid_container}>
+            {souls &&
+              souls.length > 0 &&
+              souls.map(item => {
+                return (
+                  <SoulsCard
+                    key={`token-${item.tokenId}`}
+                    href={`${ROUTE_PATH.HOME}/${item.tokenId}`}
+                    image={!!item.imageCapture ? item.imageCapture : item.image}
+                    tokenId={item.tokenId}
+                    title={`Soul #${item.tokenId}`}
+                    ownerAddr={item.owner}
+                    className={soulsStyles.grid_item}
+                  />
+                );
+              })}
+          </Container>
+        </div>
+      </InfiniteScroll>
+    </>
   );
 };

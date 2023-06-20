@@ -1,42 +1,35 @@
+import IconSVG from '@/components/IconSVG';
 import { CDN_URL, TC_URL } from '@/configs';
-import { HTMLAttributes, forwardRef, useState } from 'react';
-import { formatBTCPrice, formatEthPrice } from '@/utils/format';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { AssetsContext } from '@/contexts/assets-context';
+import { WalletContext } from '@/contexts/wallet-context';
+import { DappsTabs } from '@/enums/tabs';
+import logger from '@/services/logger';
 import {
   getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
+import { formatBTCPrice, formatEthPrice } from '@/utils/format';
 import { showToastError, showToastSuccess } from '@/utils/toast';
-
 import { AnimFade } from '@Animations/Fade';
-import { AssetsContext } from '@/contexts/assets-context';
-import Button from '@/components/Button';
-import { DappsTabs } from '@/enums/tabs';
-import Dropdown from 'react-bootstrap/Dropdown';
-import IconSVG from '@/components/IconSVG';
-import Jazzicon from 'react-jazzicon/dist/Jazzicon';
-import Link from 'next/link';
-import MenuMobile from './MenuMobile';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import { ROUTE_PATH } from '@/constants/route-path';
-import Tooltip from 'react-bootstrap/Tooltip';
-import { WalletContext } from '@/contexts/wallet-context';
-import { Wrapper } from './Header.styled';
-import classNames from 'classnames';
-import copy from 'copy-to-clipboard';
-import cs from 'classnames';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
-import headerStyles from './header.module.scss';
-import { jsNumberForAddress } from 'react-jazzicon';
-import logger from '@/services/logger';
-import { useContext } from 'react';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 import { useWeb3React } from '@web3-react/core';
+import { default as classNames, default as cs } from 'classnames';
+import copy from 'copy-to-clipboard';
+import Link from 'next/link';
+import { HTMLAttributes, forwardRef, useContext, useState } from 'react';
+import { Button, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import { useSelector } from 'react-redux';
+import { Wrapper } from './Header.styled';
+import MenuMobile from './MenuMobile';
+import headerStyles from './header.module.scss';
+import { useRouter } from 'next/router';
 
-type NavContent = {
-  title: string;
-  url: string;
-};
+// type NavContent = {
+//   title: string;
+//   url: string;
+// };
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -53,22 +46,23 @@ const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     </div>
   )
 );
+
 WalletToggle.displayName = 'WalletToggle';
 
-const NAV_CONTENT: NavContent[] = [
-  {
-    title: 'Story',
-    url: '/',
-  },
-  {
-    title: 'Art',
-    url: '/art',
-  },
-  {
-    title: 'FAQs',
-    url: '/faq',
-  },
-];
+// const NAV_CONTENT: NavContent[] = [
+//   {
+//     title: 'Story',
+//     url: ROUTE_PATH.HOME,
+//   },
+//   {
+//     title: 'Art',
+//     url: ROUTE_PATH.ART,
+//   },
+//   // {
+//   //   title: 'FAQs',
+//   //   url: '/faq',
+//   // },
+// ];
 
 const Header = ({
   height,
@@ -79,28 +73,30 @@ const Header = ({
   isAnimation?: boolean;
   theme?: string;
 }) => {
+  const router = useRouter();
+
+  const homepage = router.pathname === ROUTE_PATH.HOME;
+
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const { btcBalance, tcBalance, gmBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
-
-  const router = useRouter();
-
   const { account } = useWeb3React();
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleConnectWallet = async () => {
     try {
       setIsConnecting(true);
       await onConnect();
       await requestBtcAddress();
-    } catch (err) {
+    } catch (err: unknown) {
       logger.error(err);
       onDisconnect();
       showToastError({
-        message: (err as Error).message,
+        message: 'Rejected request.',
       });
     } finally {
       setIsConnecting(false);
@@ -114,11 +110,15 @@ const Header = ({
     });
   };
 
-  const ContentHader = (): JSX.Element => {
+  const ContentHeader = (): JSX.Element => {
     return (
-      <div className="d-flex justify-content-between align-items-center w-100">
-        <div className={headerStyles['nav_container']}>
-          {NAV_CONTENT.map(({ title, url }) => {
+      <div
+        className={`content-header d-flex justify-content-between align-items-center w-100 ${
+          homepage ? 'dark' : ''
+        }`}
+      >
+        <div className={headerStyles.nav_container}>
+          {/* {NAV_CONTENT.map(({ title, url }) => {
             return (
               <Link
                 key={title}
@@ -130,11 +130,25 @@ const Header = ({
               </Link>
             );
           })}
+          <div className={headerStyles.divider}></div> */}
+          <Link
+            href={'https://newbitcoincity.com/'}
+            target="_blank"
+            className={`${headerStyles.nav_item}`}
+          >
+            New Bitcoin City
+            <IconSVG
+              maxWidth="20"
+              src={`${CDN_URL}/ic-arrow-up-right.svg`}
+              color={homepage ? 'white' : 'black'}
+              type="stroke"
+            />
+          </Link>
         </div>
 
         <Link className="logo" href={ROUTE_PATH.HOME}>
           <IconSVG
-            src={`${CDN_URL}/logo.svg`}
+            src={`${CDN_URL}/ic-logo-white.svg`}
             maxHeight={'32'}
             maxWidth={'32'}
             className={headerStyles.logo_svg}
@@ -144,9 +158,13 @@ const Header = ({
           isOpen={isOpenMenu}
           onCloseMenu={() => setIsOpenMenu(false)}
         />
-        <div className="rightContainer">
+        <div className={`rightContainer`}>
           {isAuthenticated ? (
-            <Dropdown>
+            <Dropdown
+              show={showDropdown}
+              onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
+            >
               <Dropdown.Toggle
                 as={WalletToggle}
                 id="dropdown-custom-components"
@@ -206,8 +224,8 @@ const Header = ({
                   </div>
                 </div>
               </Dropdown.Toggle>
-              <Dropdown.Menu className={headerStyles.menu_container}>
-                <div>
+              <Dropdown.Menu className={headerStyles.menu_wrapper}>
+                <div className={headerStyles.menu_container}>
                   <div className={headerStyles.menu_content}>
                     <div className={headerStyles.menu_title}>TC Address</div>
                     <div className={headerStyles.menu_item}>
@@ -224,9 +242,9 @@ const Header = ({
                       >
                         <IconSVG
                           src={`${CDN_URL}/ic-copy.svg`}
-                          color={'#5B5B5B'}
+                          color={'#fff'}
                           maxWidth="16"
-                          // type="stroke"
+                          className={headerStyles.copy_icon}
                         />
                       </div>
                     </div>
@@ -256,6 +274,7 @@ const Header = ({
                           src={`${CDN_URL}/ic-copy.svg`}
                           color="white"
                           maxWidth="16"
+                          className={headerStyles.copy_icon}
                         />
                       </div>
                     </div>
@@ -292,6 +311,7 @@ const Header = ({
             </Dropdown>
           ) : (
             <Button
+              disabled={isConnecting}
               onClick={handleConnectWallet}
               className={headerStyles.connect_button}
             >
@@ -312,17 +332,18 @@ const Header = ({
     <Wrapper
       className={classNames(
         headerStyles.header,
-        theme ? headerStyles[theme] : ''
+        theme ? headerStyles[theme] : '',
+        'dark'
       )}
       style={{ height }}
     >
       <div className="container">
         {isAnimation ? (
           <AnimFade>
-            <ContentHader />
+            <ContentHeader />
           </AnimFade>
         ) : (
-          <ContentHader />
+          <ContentHeader />
         )}
       </div>
     </Wrapper>

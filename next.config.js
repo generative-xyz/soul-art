@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
+const needPrefix = (process.env.NEXT_PUBLIC_APP_ENV === 'production' || process.env.NEXT_PUBLIC_APP_ENV === 'develop');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: true,
@@ -10,11 +11,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.trustless.computer',
+        hostname: '**.generative.xyz',
       },
       {
         protocol: 'https',
-        hostname: 'cdn.souldao.art',
+        hostname: '**.souldao.art',
       },
     ],
   },
@@ -25,12 +26,18 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/about',
-        destination: '/',
+        source: '/',
+        destination: '/souls',
         permanent: true,
       },
+      {
+        source: '/404',
+        destination: '/souls/404',
+        permanent: true,
+      }
     ];
   },
+  assetPrefix: needPrefix ? '/souls' : undefined,
 };
 
 module.exports = nextConfig;

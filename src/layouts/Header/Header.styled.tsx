@@ -6,9 +6,8 @@ import Link from 'next/link';
 
 const Wrapper = styled.header`
   display: flex;
-  padding-top: 22px;
-  padding-bottom: 22px;
   font-size: 16px;
+  align-items: center;
 
   > div {
     width: 100%;
@@ -32,12 +31,12 @@ const Wrapper = styled.header`
   }
 
   .logo {
-    display: flex;
-    align-items: center;
-    gap: ${px2rem(12)};
-    width: fit-content;
-    transform: scale(0.9);
     text-decoration: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
   }
 
   .logo-title {
@@ -108,6 +107,10 @@ const Wrapper = styled.header`
       }
     }
   }
+
+  .content-header {
+    position: relative;
+  }
 `;
 
 const StyledLink = styled(Link)<{ active: boolean; activeColor?: string }>`
@@ -150,6 +153,8 @@ const Anchor = styled.a<{ active: boolean }>`
 `;
 
 const WalletWrapper = styled.div`
+  background-color: rgba(255, 255, 255, 0.1);
+
   position: relative;
   &:before {
     content: '';
@@ -200,13 +205,11 @@ const WalletBalance = styled.div`
   display: flex;
   align-items: center;
   gap: ${px2rem(12)};
-  padding: ${px2rem(6)} ${px2rem(15)};
   // padding-left: ${px2rem(12)};
   background-color: transparent;
   /* border-radius: 40px; */
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #282a28;
   /* border: 1px solid white; */
   border-radius: 2px 0 2px 0;
 

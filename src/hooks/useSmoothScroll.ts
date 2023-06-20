@@ -1,10 +1,10 @@
 import Lenis from "@studio-freight/lenis";
-import {useContext, useLayoutEffect, useRef} from "react";
-import {AnimateContext} from "@Context/Animate";
+import { useContext, useLayoutEffect, useRef } from "react";
+import { AnimateContext } from "@/contexts/animate-context";
 
 export const useSmoothScroll = (): void => {
-    const {setLenis} = useContext(AnimateContext);
-    const refCog = useRef<any>({lenis: null, requestAnimation: null});
+    const { setLenis } = useContext(AnimateContext);
+    const refCog = useRef<any>({ lenis: null, requestAnimation: null });
 
     const raf = (time: number) => {
         refCog.current.lenis.raf(time);

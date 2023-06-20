@@ -1,3 +1,13 @@
 .connectWalletButton {
-  color: $white-primary;
+  color: $dark-primary;
+}
+
+
+.connectWalletButtonWrapper {
+  border: 1px solid #ECECEC;
+  backdrop-filter: blur(2px);
+  border-radius: 100px !important;
+  padding: rem(12px) rem(24px) !important;
+  display: flex;
+  gap: rem(10px);
 }

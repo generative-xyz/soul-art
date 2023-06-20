@@ -1,6 +1,5 @@
 import { MediaType } from '@/enums/file';
 import { getMediaTypeFromFileExt } from '@/utils/file';
-// import Image from 'next/image';
 import AudioPreview from '../AudioPreview';
 import IFramePreview from '../IframePreview';
 import ImagePreview from '../ImagePreview';

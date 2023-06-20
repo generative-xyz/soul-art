@@ -1,6 +1,6 @@
 import { CDN_URL } from '@/configs';
 
-export const SEO_TITLE = 'Souls art';
+export const SEO_TITLE = 'The Souls';
 export const SEO_DESCRIPTION =
-  'Store files on Bitcoin. Cheap. Immutable. Fully on-chain. Large files are supported.';
-export const SEO_IMAGE = `${CDN_URL}/images/metadata-Artifacts.jpg`;
+  'The first-ever art protocol powered by smart contracts and a native token - $GM on Bitcoin.';
+export const SEO_IMAGE = `${CDN_URL}/metadata-home.jpg`;

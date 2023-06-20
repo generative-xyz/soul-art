@@ -1,0 +1,39 @@
+@keyframes sonarWave {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.sonarWrapper {
+  position: relative;
+  z-index: 0;
+}
+
+.sonarEmitter {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background-color: #0ac681;
+}
+
+.sonarWave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background: #0ac681;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.sonarWave {
+  animation: sonarWave 1s linear infinite;
+}

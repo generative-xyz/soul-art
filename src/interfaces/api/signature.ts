@@ -4,6 +4,6 @@ export interface ICreateSignature {
 
 export interface ISignatureResult {
   signature: string;
-  message_hash: string;
+  messageHash: string;
   gm: string;
 }

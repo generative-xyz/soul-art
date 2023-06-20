@@ -2,16 +2,22 @@ import IconSVG from '@/components/IconSVG';
 import s from './style.module.scss';
 import { FC } from 'react';
 import { detailExpand, detailRefresh } from '@/constants/asset';
+import Explorer from '@/components/Explorer';
 
 type DetailImgProps = {
-  img: string | undefined;
+  animationUrl: string | undefined;
+  imgCapture?: string | undefined;
 };
 
-const DetailImg: FC<DetailImgProps> = ({ img }) => {
+const DetailImg: FC<DetailImgProps> = ({ animationUrl, imgCapture }) => {
   return (
     <div className={s.detailImg}>
       <div className={s.img}>
-        <img src={img} alt="detailImg" />
+        {animationUrl ? (
+          <Explorer url={animationUrl} />
+        ) : (
+          <img src={imgCapture} alt="detailImg" />
+        )}
       </div>
 
       <div className={s['detailImg-buttons']}>

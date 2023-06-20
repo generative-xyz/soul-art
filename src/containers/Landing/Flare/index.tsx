@@ -84,19 +84,20 @@ const Flare: React.FC = () => {
                 <div className={s.wrapSectionContent_inner}>
                   <div ref={lPart1} className={s.wrapSectionContent_item}>
                     <Text className={s.sectionContent}>
-                      {`In the world of SOULS, ownership takes on a unique meaning. Souls cannot be sold or transferred—representing a deep personal connection to your beliefs. When a Soul feels a decline in your attention, it seeks a new connection with someone whose belief burns bright. `}
+                      {` Ownership assumes an exceptional definition within the world of SOULS.
+Since Souls cannot be transferred or sold, they represent a very close personal connection to your beliefs. A soul searches for a new connection with someone whose belief is strong when it senses a decline in your attention.`}
                     </Text>
                   </div>
 
                   <div ref={lPart2} className={s.wrapSectionContent_item}>
                     <Text className={s.sectionContent}>
-                      {`The adoption process allows you to welcome a Soul into your digital realm, with the funds going to the SOULS DAO. This decentralized, autonomous organization supports the community and future projects. `}
+                      {`When you adopt a Soul, the funds contribute to the support of the SOULS DAO. This self-governing and decentralized organization is dedicated to nurturing the community and advancing forthcoming endeavors.`}
                     </Text>
                   </div>
                 </div>
                 <AnimFade offset={0.2} className={s.tag}>
                   <TextAnimate>
-                    <span>A one-of-a-kind ownership system</span>
+                    <span>A one-of-a-kind approach to ownership</span>
                   </TextAnimate>
                 </AnimFade>
               </div>

@@ -1,6 +1,6 @@
 import React, { useRef, useContext, useEffect, useCallback } from "react";
 import { gsap } from "gsap";
-import { AnimateContext } from "@Context/Animate";
+import { AnimateContext } from "@/contexts/animate-context";
 import { PAGE_LOADED, PAGE_ENTER } from "@Constants/common";
 import s from "./styles.module.scss";
 

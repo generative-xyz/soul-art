@@ -65,3 +65,11 @@ export type Token = {
   sell_verified: boolean;
   tokenIDData: string;
 };
+
+export interface ITokenAttributes {
+  count: number;
+  percent: number;
+  total: number;
+  traitType: string;
+  value: string;
+}

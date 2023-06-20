@@ -1,279 +1,126 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
 import { Col, Container, Row } from 'react-bootstrap';
-import ClaimField from './ClaimField';
-
-import { Transaction } from 'ethers';
-import useMint, { IMintParams } from '@/hooks/contract-operations/soul/useMint';
+// import ClaimButton from './ClaimButton';
 import { useWeb3React } from '@web3-react/core';
-import { generateSignature } from '@/services/signature';
-import useContractOperation from '@/hooks/contract-operations/useContractOperation';
-import { WalletContext } from '@/contexts/wallet-context';
 import logger from '@/services/logger';
-import { showToastError } from '@/utils/toast';
-import { AssetsContext } from '@/contexts/assets-context';
-import BigNumber from 'bignumber.js';
 import useAsyncEffect from 'use-async-effect';
 import { getListTokensByWallet } from '@Services/soul';
 import { SoulEventType } from '@/enums/soul';
-import { getUserSelector } from '@/state/user/selector';
-import { useSelector } from 'react-redux';
-import { Token } from '@/interfaces/token';
-// import useAsyncEffect from "use-async-effect";
-// import {getListTokensByWallet} from "@Services/soul";
+import { ISoul } from '@/interfaces/api/soul';
+import dayjs from 'dayjs';
+import web3Instance from '@/connections/custom-web3-provider';
+import Discord from './Discord';
 
-const ClaimPage = () => {
+const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
-  const [isWalletConnected, setWalletConnected] = useState<boolean>(false);
-  const [_isWalletConnected_localhost, setWalletConnected_localhost] =
-    useState<any>();
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [isReceiveAble, setIsReceiveAble] = useState<boolean>(true);
-  const [claimStatus, setClaimStatus] = useState<string>('');
+  const [claimStatus, setClaimStatus] = useState<'idle' | 'waiting' | 'success'>('idle');
   const { account, provider } = useWeb3React();
-  const [totalGM, setTotalGM] = useState<number>(0);
-  const [signature, setSignature] = useState<string>('');
-  const [isWaitingForConfirm, setIsWaitingForConfirm] =
-    useState<boolean>(false);
-  const [transactionHash, setTransactionHash] = useState<string>('');
-  const { onDisconnect, onConnect, requestBtcAddress } =
-    useContext(WalletContext);
-  const { btcBalance, tcBalance } = useContext(AssetsContext);
-  const [haveEnoughBalance, setHaveEnoughBalance] = useState<boolean>(false);
-  const user = useSelector(getUserSelector);
-  const [mintAt, setMintAt] = useState<string | number>('');
-  const [isFetchingApi, setIsFetchingApi] = useState<boolean>(false);
+  const [transactionHash, setTransactionHash] = useState<string | null>(null);
+  const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
+  const [_isFetchingApi, setIsFetchingApi] = useState(false);
+  const [soulToken, setSoulToken] = useState<ISoul | null>(null);
 
-  //todo add type kevin
-  const [soulToken, setSoulToken] = useState<Token | null>(null);
-
-  const { run: call } = useContractOperation<IMintParams, Transaction | null>({
-    operation: useMint,
-    inscribeable: true,
-  });
-
-  const handleConnectWallet = async () => {
-    try {
-      setIsConnecting(true);
-      await onConnect();
-      await requestBtcAddress();
-    } catch (err) {
-      logger.error(err);
-      setWalletConnected(false);
-      onDisconnect();
-      setIsClaimed(false);
-      setClaimStatus('time');
-      localStorage.setItem('isWalletConnected', 'false');
-
-      showToastError({
-        message: (err as Error).message,
-      });
-    } finally {
-      setIsConnecting(false);
-      setWalletConnected(true);
-    }
-  };
-
-  const handleClaimed = async () => {
-    try {
-      setIsWaitingForConfirm(true);
-      if (isWalletConnected) {
-        await call({
-          address: account as string,
-          totalGM: totalGM,
-          signature: signature,
-          txSuccessCallback: txSuccessCallback,
-        });
-      } else {
-        handleConnectWallet();
-      }
-    } catch (err) {
-      logger.error(err);
-    } finally {
-      setIsWaitingForConfirm(false);
-    }
-  };
-
-  const txSuccessCallback = async (transaction: Transaction | null) => {
-    if (!transaction || !account) return;
-    const txHash = transaction.hash;
-    if (!txHash) return;
-    const storageKey = `${SoulEventType.MINT}_${account}`;
-    localStorage.setItem(storageKey, txHash);
-  };
-
-  // Connect wallet
-  useEffect(() => {
-    const walletConnectedValue = localStorage.getItem('isWalletConnected');
-    const walletConnected = walletConnectedValue === 'true';
-
-    setWalletConnected_localhost(walletConnectedValue);
-    setWalletConnected(walletConnected);
-
-    if (account && user?.walletAddress && !isConnecting) {
-      setWalletConnected(true);
-      localStorage.setItem('isWalletConnected', 'true'); // Update localStorage when the wallet is connected
-    } else {
-      setWalletConnected(false);
-      setIsReceiveAble(true);
-      setIsClaimed(false);
-      setClaimStatus('');
-      localStorage.setItem('isWalletConnected', 'false'); // Update localStorage when the wallet is disconnected
-    }
-  }, [account, isConnecting, user?.walletAddress]);
-
-  // Check if this account is minted
   useAsyncEffect(async () => {
     try {
       setIsFetchingApi(true);
-      if (!isConnecting) {
-        const { items } = await getListTokensByWallet(account as string);
-        if (items.length) {
-          setSoulToken(items[0] || null);
-          setIsClaimed(true);
-          setClaimStatus('success');
+      const { items } = await getListTokensByWallet('account' as string);
+      if (items.length > 0 && items[0]) {
+        const soulItem = items[0];
+        setSoulToken(soulItem);
+        setIsClaimed(true);
+        setClaimStatus('success');
 
-          if (items[0].mintAt && Date.parse(items[0].mintAt)) {
-            const date = new Date(items[0].mint);
-            setMintAt(
-              date.toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true,
-              })
-            );
-          }
+        if (soulItem.mintedAt) {
+          const block = await web3Instance.getBlock(soulItem.mintedAt);
+          logger.info('block info', block)
+          const date = dayjs.unix(block.timestamp as number)
+          setMintedTimestamp(date.format('ddd, D MMM YYYY HH:mm:ss'));
         }
       }
-    } catch (e) {
-      logger.error('Error get tokens:', e);
+    } catch (err: unknown) {
+      logger.error('Error get tokens:', err);
     } finally {
       setIsFetchingApi(false);
     }
   }, [account]);
 
-  // Find transaction hash in localstorage
   useEffect(() => {
-    try {
-      if (!soulToken) {
-        const storageKey = `${SoulEventType.MINT}_${account}`;
-        const txHash = localStorage.getItem(storageKey) || '';
-        setTransactionHash(txHash.toString());
-      }
-    } catch (e) {
-      logger.error('Error get transaction hash:', e);
-    }
-  }, [soulToken]);
+    if (!account || isClaimed) return;
 
-  //
-  useAsyncEffect(async () => {
-    let res: any;
-    try {
-      res = await generateSignature({
-        wallet_address: account,
-      });
-    } catch (err) {
-      logger.error(err);
-    } finally {
-      setSignature(res?.signature);
-      setTotalGM(Number(res?.gm));
-    }
-  }, [account]);
+    const storageKey = `${SoulEventType.MINT}_${account}`;
+    const txHash = localStorage.getItem(storageKey);
+    if (!txHash) return;
+
+    setTransactionHash(txHash.toString());
+  }, [account, isClaimed]);
 
   useEffect(() => {
-    setIsReceiveAble(!!signature);
-  }, [signature]);
+    logger.log('account', account)
+    logger.log('transactionHash', transactionHash)
 
-  // Check balance
-  useEffect(() => {
-    const userTcBalance = new BigNumber(tcBalance);
-    const userBtcBalance = new BigNumber(btcBalance);
-    if (
-      userTcBalance.isGreaterThan(0) &&
-      userBtcBalance.isGreaterThan(0) &&
-      account
-    ) {
-      setHaveEnoughBalance(true);
-    }
-  }, [account, btcBalance, tcBalance]);
+    if (!account || !provider || !transactionHash) return;
 
-  // Check transaction status
-  useEffect(() => {
-    if (account && !isConnecting) {
-      const fetchTransactionStatus = async () => {
-        try {
-          if (!isWalletConnected) return;
-          if (provider) {
-            const receipt = await provider.getTransactionReceipt(
-              transactionHash
-            );
-            if (receipt.status === 1) {
-              setIsClaimed(true);
-              setClaimStatus('success');
-            } else if (receipt.status === 0) {
-              setIsClaimed(false);
-              setClaimStatus('');
-            } else if (
-              receipt.status === null ||
-              receipt.status === undefined
-            ) {
-              setIsClaimed(true);
-              setClaimStatus('waiting');
-            } else {
-              setIsClaimed(false);
-              setClaimStatus('');
-            }
-          }
-        } catch (error) {
-          logger.error('Error retrieving transaction receipt:', error);
+    const fetchTransactionStatus = async () => {
+      try {
+        const receipt = await provider.getTransactionReceipt(
+          transactionHash
+        );
+
+        if (receipt.status === 1) {
+          setIsClaimed(true);
+          setClaimStatus('success');
+        } else if (receipt.status === 0) {
+          setIsClaimed(false);
+          setClaimStatus('idle');
+        } else if (
+          receipt.status === null ||
+          receipt.status === undefined
+        ) {
+          setIsClaimed(true);
+          setClaimStatus('waiting');
+        } else {
+          setIsClaimed(false);
+          setClaimStatus('idle');
         }
-      };
+      } catch (error) {
+        logger.error('Error retrieving transaction receipt:', error);
+      }
+    };
 
+    fetchTransactionStatus();
+
+    const intervalId = setInterval(() => {
       fetchTransactionStatus();
+    }, 10000);
 
-      const intervalId = setInterval(() => {
-        fetchTransactionStatus();
-      }, 10000);
-
-      return () => {
-        clearInterval(intervalId);
-      };
-    }
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [
     provider,
     transactionHash,
-    isWalletConnected,
     account,
-    isConnecting,
-    haveEnoughBalance,
   ]);
-
-  useEffect(() => {
-    const storageKey = `${SoulEventType.MINT}_${account}`;
-    const txHash = localStorage.getItem(storageKey) || '';
-    setTransactionHash(txHash.toString());
-  }, [account]);
 
   return (
     <div className={s.claimPage}>
       <Container className={s.container}>
         <Row className={s.row}>
-          <Col lg={{ span: 4, offset: 4 }} className={s.column}>
-            <div className={`${s.wrapBox} ${isClaimed ? s.isClaimed : ''}`}>
-              <div className={s.successNoti}>
-                <p className={s.status}>Claim success</p>
-                <span className={s.dot}></span>
-                <p className={s.date}>{mintAt}</p>
-              </div>
+          <Col lg={{ span: 8, offset: 2 }} className={s.column}>
+            <div className={`${s.wrapBox}`}>
+              <h3 className={s.blockTitle}>Eligible adopters</h3>
+              {isClaimed && (
+                <div className={s.successNoti}>
+                  <p className={s.status}>Claim success</p>
+                  <span className={s.dot}></span>
+                  {mintedTimestamp && <p className={s.date}>{mintedTimestamp}</p>}
+                </div>
+              )}
               <div
-                className={`${s.claimBox} ${
-                  claimStatus === 'success' ? s.success : ''
-                }`}
+                className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''}`}
               >
                 <ClaimImg
                   isClaimed={isClaimed}
@@ -281,23 +128,9 @@ const ClaimPage = () => {
                   claimStatus={claimStatus}
                 />
                 <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
-                {!isClaimed ? (
-                  <ClaimField
-                    isWaitingForConfirm={isWaitingForConfirm}
-                    handleClaimed={handleClaimed}
-                    handleConnectWallet={handleConnectWallet}
-                    isConnectedWallet={isWalletConnected}
-                    isReceiveAble={isReceiveAble}
-                    isConnecting={isConnecting}
-                    haveEnoughBalance={haveEnoughBalance}
-                    isClaimed={isClaimed}
-                    isFetchingApi={isFetchingApi}
-                  />
-                ) : (
-                  ''
-                )}
               </div>
             </div>
+            <Discord />
           </Col>
         </Row>
       </Container>

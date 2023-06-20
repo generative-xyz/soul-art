@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react';
-import { AnimateContext } from '@Context/Animate';
+import { AnimateContext } from '@/contexts/animate-context';
 import { Frames } from '@Animations/Frames';
 import s from './styles.module.scss';
 import Living from '../Living';
@@ -35,7 +35,8 @@ const FrameTop: React.FC = () => {
     endIn: 80,
     startOut: 155,
     endOut: 165,
-  });
+  },
+  );
 
   const processing = (frame: number) => {
     part1Frame(frame);
@@ -61,9 +62,8 @@ const FrameTop: React.FC = () => {
           width={1920}
           height={1080}
           className={s.info_main}
-          urlFrame={`${CDN_URL}/video-block/output_%d.jpg`}
-          // webmFrame={`https://cdn.generative.xyz/pages/home/block-3-2/block-3-v2-%d.png.webp`}
-          totalFrames={90}
+          urlFrame={`${CDN_URL}/LP_02_Compress/v-%d.jpg`}
+          totalFrames={92}
           onProcessing={processing}
           start={registerLoader}
           end={unRegisterLoader}
