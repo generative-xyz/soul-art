@@ -4,11 +4,13 @@
   &_box {
     width: 100%;
     // min-height: 100vh;
+    z-index: 100;
     margin: 0 auto;
     position: relative;
     background: #ffffff;
     display: flex;
     justify-content: center;
+    // min-height: 50px;
   }
 
   &_container {
@@ -20,74 +22,78 @@
     background: #ffffff;
     border: 1px solid #ececec;
     font-size: rem(16px);
+    border-radius: rem(100px);
+    padding: rem(18px) rem(28px);
+    align-items: center;
+    bottom: rem(32px);
 
-    @include mobile {
-      white-space: nowrap;
-      flex-direction: column;
-      justify-content: flex-start;
-      bottom: rem(16px);
-      border-radius: rem(40px) rem(40px) 0 0;
-      bottom: 0;
-      max-width: 100%;
-      // gap: rem(4px);
-      padding: rem(12px);
-    }
+    // @include mobile {
+    //   white-space: nowrap;
+    //   flex-direction: column;
+    //   justify-content: flex-start;
+    //   bottom: rem(16px);
+    //   border-radius: rem(40px) rem(40px) 0 0;
+    //   bottom: 0;
+    //   max-width: 100%;
+    //   // gap: rem(4px);
+    //   padding: rem(12px);
+    // }
 
-    @include tabletMid {
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: row;
-      bottom: rem(24px);
-      border-radius: rem(100px);
-      max-width: rem(740px);
-      // gap: rem(8px);
-      padding: rem(8px);
-    }
+    // @include tabletMid {
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   flex-direction: row;
+    //   bottom: rem(24px);
+    //   border-radius: rem(100px);
+    //   max-width: rem(740px);
+    //   // gap: rem(8px);
+    //   padding: rem(8px);
+    // }
 
-    @include tablet {
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: row;
-      bottom: rem(32px);
-      border-radius: rem(100px);
-      max-width: rem(740px);
-      // gap: rem(8px);
-      padding: rem(8px);
-    }
+    // @include tablet {
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   flex-direction: row;
+    //   bottom: rem(32px);
+    //   border-radius: rem(100px);
+    //   max-width: rem(740px);
+    //   // gap: rem(8px);
+    //   padding: rem(8px);
+    // }
 
-    @include pcSmall {
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: row;
-      bottom: rem(32px);
-      border-radius: rem(100px);
-      max-width: rem(740px);
-      padding: rem(8px);
-      // gap: rem(8px);
-    }
+    // @include pcSmall {
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   flex-direction: row;
+    //   bottom: rem(32px);
+    //   border-radius: rem(100px);
+    //   max-width: rem(740px);
+    //   padding: rem(8px);
+    //   // gap: rem(8px);
+    // }
 
-    @include pcS2M {
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: row;
-      bottom: rem(32px);
-      border-radius: rem(100px);
-      max-width: rem(740px);
-      // gap: rem(8px);
-      padding: rem(8px);
-    }
+    // @include pcS2M {
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   flex-direction: row;
+    //   bottom: rem(32px);
+    //   border-radius: rem(100px);
+    //   max-width: rem(740px);
+    //   // gap: rem(8px);
+    //   padding: rem(8px);
+    // }
 
-    @include pcWide {
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: row;
-      white-space: nowrap;
-      bottom: rem(32px);
-      border-radius: rem(100px);
-      max-width: rem(740px);
-      // gap: rem(8px);
-      padding: rem(8px);
-    }
+    // @include pcWide {
+    //   justify-content: space-between;
+    //   align-items: center;
+    //   flex-direction: row;
+    //   white-space: nowrap;
+    //   bottom: rem(32px);
+    //   border-radius: rem(100px);
+    //   max-width: rem(740px);
+    //   // gap: rem(8px);
+    //   padding: rem(8px);
+    // }
   }
 
   &_leftContainer {
@@ -262,11 +268,7 @@
     justify-content: center;
     font-size: rem(16px);
     line-height: rem(18px);
-
-    p {
-      margin-bottom: 0;
-      margin: 0 rem(8px);
-    }
+    gap: rem(8px);
   }
 
   &_chevronUp {
@@ -283,6 +285,16 @@
     border: 1px solid #000;
     border-radius: 50%;
     opacity: 0;
+    position: absolute;
+    right: 0;
+    transform: translateX(calc(100% + 4px));
+
+    .dots_circle {
+      width: rem(8px);
+      height: rem(8px);
+      border-radius: 50%;
+      background: #000;
+    }
 
     &_active {
       opacity: 1;
@@ -314,6 +326,7 @@
     padding: rem(20px);
     width: 100%;
     margin-bottom: rem(25px);
+    transform: translate3d(0px, -20px, 0px) !important;
 
     &:after {
       height: 3%;

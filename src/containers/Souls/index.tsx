@@ -12,6 +12,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import soulsStyles from './souls.module.scss';
 import { ROUTE_PATH } from '@/constants/route-path';
 import Link from 'next/link';
+import AttributeSort from '@/containers/Attribute';
 
 const LIMIT_PAGE = 32;
 
@@ -168,6 +169,7 @@ export const SoulsContainer: React.FC = () => {
           </Container>
         </div>
       </InfiniteScroll>
+      <AttributeSort attributes={attributes || []} />
     </>
   );
 };
