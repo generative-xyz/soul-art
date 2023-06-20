@@ -6,7 +6,7 @@ import { IToken, ITokenDetail } from '@/interfaces/api/marketplace';
 import { getCollectionNFTList } from '@/services/marketplace';
 import AuctionInfo from '../Item/AuctionInfo';
 import Info from '../Item/Info';
-import DetailImg from '../Item/MiddleImg';
+import DetailImg from '../Item/DetailImg';
 import MoreSection from './MoreSection';
 import s from './style.module.scss';
 

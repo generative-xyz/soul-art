@@ -8,10 +8,10 @@ import { AssetsProvider } from '@/contexts/assets-context';
 import ThemeProvider, { ThemedGlobalStyle } from '@/theme/theme';
 import store from '@/state';
 import { Toaster } from 'react-hot-toast';
-import '@/styles/index.scss';
 import ClientOnly from '@/components/Utils/ClientOnly';
 import { CDN_URL } from '@/configs';
 import NextNprogress from 'nextjs-progressbar';
+import '@/styles/index.scss';
 
 export default function App({ Component, pageProps }: AppProps) {
   const { seoInfo = {} } = pageProps;
