@@ -36,8 +36,6 @@
     @include mobile {
         flex-direction: column;
         gap: rem(20px);
-        width: 90%;
-        margin: 0 auto;
 
         .item-img {
             width: 100%;

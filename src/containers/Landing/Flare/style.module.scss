@@ -88,31 +88,3 @@
   }
 }
 
-.mobileFlare {
-  .image {
-    width: 100%;
-
-    img {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  .container {
-    .wrapSectionContent {
-      padding-bottom: rem(60px);
-
-      &_inner {
-        margin-bottom: rem(24px);
-
-        .sectionContent {
-          padding-top: rem(24px);
-          color: #fff;
-          font-size: rem(20px);
-          line-height: rem(28px);
-          text-align: center;
-        }
-      }
-    }
-  }
-}

@@ -1,0 +1,38 @@
+.mobileSubLiving {
+    .image {
+        width: 100%;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .container {
+        background: #000;
+
+        .wrapContent {
+            padding-top: rem(24px);
+            padding-bottom: rem(60px);
+
+            .sectionContent {
+                color: #fff;
+                font-size: rem(20px);
+                line-height: rem(28px);
+                margin-bottom: rem(24px);
+                text-align: center;
+            }
+
+            .tag {
+                display: flex;
+                justify-content: center;
+
+                a {
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+}
