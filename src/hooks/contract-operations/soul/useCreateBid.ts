@@ -14,31 +14,28 @@ import { Transaction } from 'ethers';
 import { useCallback, useContext } from 'react';
 import * as TC_SDK from 'trustless-computer-sdk';
 
-export interface IMintParams {
-  address: string;
-  user?: string;
-  totalGM: number;
-  signature: string;
+export interface ICreateBidParams {
+  tokenId: number;
+  amount: string;
   txSuccessCallback?: (_tx: Transaction | null) => Promise<void>;
 }
 
-const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
+const useCreateBid: ContractOperationHook<ICreateBidParams, Transaction | null> = () => {
   const { account, provider } = useWeb3React();
   const contract = useContract(SOUL_CONTRACT, SoulAbiJson.abi, true);
   const { btcBalance, feeRate } = useContext(AssetsContext);
 
   const estimateGas = useCallback(
-    async (params: IMintParams): Promise<string> => {
+    async (params: ICreateBidParams): Promise<string> => {
       if (account && provider && contract) {
-        const { address, totalGM, signature } = params;
-        const gasLimit = await contract.estimateGas.mint(
-          address,
-          totalGM,
-          signature
+        const { tokenId, amount } = params;
+        const gasLimit = await contract.estimateGas.createBid(
+          tokenId,
+          amount
         );
         const gasLimitBN = new BigNumber(gasLimit.toString());
         const gasBuffer = gasLimitBN.times(1.1).decimalPlaces(0);
-        logger.debug('Mint estimate gas', gasBuffer.toString());
+        logger.debug('Create auction estimate gas', gasBuffer.toString());
         return gasBuffer.toString();
       }
       return '500000';
@@ -47,11 +44,11 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
   );
 
   const call = useCallback(
-    async (params: IMintParams): Promise<Transaction | null> => {
+    async (params: ICreateBidParams): Promise<Transaction | null> => {
       if (account && provider && contract) {
-        logger.debug('useMint', params);
+        logger.debug('useCreateBid', params);
 
-        const { address, totalGM, signature, txSuccessCallback } = params;
+        const { tokenId, amount, txSuccessCallback } = params;
 
         const estimatedFee = TC_SDK.estimateInscribeFee({
           tcTxSizeByte: TRANSFER_TX_SIZE,
@@ -70,7 +67,7 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
         const gasLimit = await estimateGas(params);
         const transaction = await contract
           .connect(provider.getSigner())
-          .mint(address, totalGM, signature, {
+          .createAuction(tokenId, amount, {
             gasLimit,
           });
 
@@ -90,8 +87,8 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
     estimateGas: estimateGas,
     call: call,
     dAppType: DAppType.SOUL,
-    operationName: 'Adopt',
+    operationName: 'Create Bid',
   };
 };
 
-export default useMint;
+export default useCreateBid;
