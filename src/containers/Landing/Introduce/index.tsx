@@ -158,7 +158,7 @@ const Introduce: React.FC = () => {
   return (
     <>
       {isMobile ? (
-        <MobileIntroduce isShow={isShow} handleOpenModal={handleOpenModal} />
+        <MobileIntroduce isShow={isShow} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
       ) : (
         <DesktopIntroduce />
       )}

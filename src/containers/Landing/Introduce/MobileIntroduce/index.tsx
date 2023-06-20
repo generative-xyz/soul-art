@@ -11,15 +11,18 @@ import Text from '@Animations/Text';
 import { CDN_URL } from '@/configs';
 import ImageFrame from '@/components/ImageFrame';
 import classNames from 'classnames';
+import HeroModal from '../Modal';
 
 type IMobileIntroduce = {
   isShow: boolean;
   handleOpenModal: () => void;
+  handleCloseModal: () => void;
 };
 
 const MobileIntroduce: React.FC<IMobileIntroduce> = ({
   isShow,
   handleOpenModal,
+  handleCloseModal,
 }) => {
   return (
     <div className={`${s.mobileIntroduce} ${isShow ? s.popupOpen : ''}`}>
@@ -116,6 +119,7 @@ const MobileIntroduce: React.FC<IMobileIntroduce> = ({
           </div>
         </div>
       </Container>
+      <HeroModal showModal={isShow} closeModal={handleCloseModal} />
     </div>
   );
 };
