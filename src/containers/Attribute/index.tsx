@@ -7,7 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Button, Dropdown } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
 import IconSVG from '@/components/IconSVG';
 import { CDN_URL } from '@/configs';
@@ -69,13 +69,13 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   return (
     <div className={attributeStyles.attribute_box}>
       <div className={attributeStyles.attribute_container}>
-        <div className={attributeStyles.attribute_leftContainer}>
-          <Button className={attributeStyles.attribute_button}>Adopt</Button>
-          {/* <Button className={attributeStyles.attribute_button}>
+        {/* <div className={attributeStyles.attribute_leftContainer}> */}
+        {/* <Button className={attributeStyles.attribute_button}>Adopt</Button> */}
+        {/* <Button className={attributeStyles.attribute_button}>
             Live auction
           </Button>
           <Button className={attributeStyles.attribute_button}>You own</Button> */}
-        </div>
+        {/* </div> */}
         <div className={attributeStyles.attribute_rightContainer}>
           {/* <Dropdown onSelect={handleSelect}>
             <Dropdown.Toggle
@@ -114,7 +114,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown> */}
-          <div className={attributeStyles.attribute_divide} />
+          {/* <div className={attributeStyles.attribute_divide} /> */}
           <Dropdown drop="up">
             <Dropdown.Toggle as={FilterToggle} id="dropdown-custom-components">
               <div className={attributeStyles.attribute_filter}>
@@ -131,11 +131,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                       attributeStyles.attribute_iconLive_active
                   )}
                 >
-                  <IconSVG
-                    src={`${CDN_URL}/ellipse-live.svg`}
-                    maxWidth="8"
-                    maxHeight="8"
-                  />
+                  <div className={attributeStyles.dots_circle}></div>
                 </div>
               </div>
             </Dropdown.Toggle>
