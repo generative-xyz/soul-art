@@ -31,14 +31,18 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
       <Accordion.Header
         className={accordionStyles.filterAttribute_accordionHeader}
       >
-        <div className={accordionStyles.filterAttribute_title} id={eventKey === "0" ? "panelsStayOpen-headingOne" : ""}>
+        <div
+          className={accordionStyles.filterAttribute_title}
+          id={eventKey === '0' ? 'panelsStayOpen-headingOne' : ''}
+        >
           {headerContent}
         </div>
       </Accordion.Header>
-      <Accordion.Body
-        className={ accordionStyles.accordion_body}
-      >
-        <div className={accordionStyles.filterAttribute_content} id={eventKey === "0" ? "panelsStayOpen-headingOne" : ""}>
+      <Accordion.Body className={accordionStyles.accordion_body}>
+        <div
+          className={accordionStyles.filterAttribute_content}
+          id={eventKey === '0' ? 'panelsStayOpen-headingOne' : ''}
+        >
           {bodyContent}
         </div>
       </Accordion.Body>
@@ -50,7 +54,11 @@ const AccordionComponent: React.FC<AccordionComponentProps> = ({
   attributes,
 }) => {
   return (
-    <Accordion defaultActiveKey="0" alwaysOpen>
+    <Accordion
+      defaultActiveKey="0"
+      alwaysOpen
+      className={accordionStyles.accordion_container}
+    >
       {attributes?.map(({ traitName, traitValuesStat }, index) => (
         <AccordionContent
           key={index}
