@@ -54,14 +54,14 @@ const NAV_CONTENT: NavContent[] = [
     title: 'Story',
     url: ROUTE_PATH.HOME,
   },
-  {
-    title: 'Art',
-    url: ROUTE_PATH.ART,
-  },
   // {
-  //   title: 'FAQs',
-  //   url: '/faq',
+  //   title: 'Art',
+  //   url: ROUTE_PATH.ART,
   // },
+  {
+    title: 'FAQs',
+    url: ROUTE_PATH.FAQS,
+  },
 ];
 
 const Header = ({
