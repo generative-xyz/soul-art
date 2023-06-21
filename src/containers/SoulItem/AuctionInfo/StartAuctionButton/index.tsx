@@ -65,6 +65,7 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
     if (!txHash) return;
 
     setInscribing(true);
+    let intervalId: NodeJS.Timer;
 
     const fetchTransactionStatus = async () => {
       try {
@@ -75,6 +76,9 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
         if (receipt.status === 1) {
           logger.info('tx done');
           localStorage.removeItem(key);
+          setInscribing(false);
+          clearInterval(intervalId);
+          window.location.reload();
         }
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);
@@ -83,7 +87,7 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
 
     fetchTransactionStatus();
 
-    const intervalId = setInterval(() => {
+    intervalId = setInterval(() => {
       fetchTransactionStatus();
     }, 30000);
 
