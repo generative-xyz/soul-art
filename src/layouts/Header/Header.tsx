@@ -272,7 +272,6 @@ const Header = ({
                       </div>
                     </div>
                   </div>
-                  <div className="divider" />
                   <div className={headerStyles.menu_content}>
                     <div className={headerStyles.menu_title}>BTC Address</div>
                     <div className={headerStyles.menu_item}>

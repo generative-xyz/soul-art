@@ -14,6 +14,7 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import Link from 'next/link';
 import AttributeSort from '@/containers/Attribute';
 import Spinner from '@/components/Spinner';
+import logger from '@/services/logger';
 
 const LIMIT_PAGE = 32;
 
@@ -52,6 +53,16 @@ export const SoulsContainer: React.FC = () => {
       try {
         setIsFetching(true);
 
+        const { sortBy, sort, owner } = pick(router.query, [
+          'sortBy',
+          'sort',
+          'owner',
+        ]) as {
+          sortBy?: string;
+          sort?: number;
+          owner?: string;
+        };
+
         const query: {
           page: number;
           limit: number;
@@ -65,8 +76,9 @@ export const SoulsContainer: React.FC = () => {
           limit: LIMIT_PAGE,
           isShowAll: undefined,
           isBigFile: undefined,
-          sortBy: undefined,
-          sort: 1,
+          owner: owner || undefined,
+          sortBy: sortBy || undefined,
+          sort: sort || undefined,
         };
         let attributesQuery;
 
@@ -113,6 +125,7 @@ export const SoulsContainer: React.FC = () => {
   useEffect(() => {
     if (isFetchSuccessAttributes && attributes) {
       fetchSouls();
+      logger.info('fetchSouls');
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
@@ -124,7 +137,7 @@ export const SoulsContainer: React.FC = () => {
     );
   }
 
-  if (souls && souls.length === 0) {
+  if (souls && souls.length === 0 && !router.query) {
     return (
       <div className={soulsStyles.emptyWrapper}>
         <div className={soulsStyles.empty}>

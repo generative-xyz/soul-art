@@ -9,14 +9,18 @@ import React, {
 } from 'react';
 import { Dropdown } from 'react-bootstrap';
 
+import Button from '@/components/Button';
 import IconSVG from '@/components/IconSVG';
 import { CDN_URL } from '@/configs';
 import { IAttribute } from '@/interfaces/attributes';
+import { getUserSelector } from '@/state/user/selector';
 import classNames from 'classnames';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import AccordionComponent from './Accordion';
 import attributeStyles from './attribute.module.scss';
+import cs from 'classnames';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -45,6 +49,9 @@ export interface ISubmitValues {
 
 const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   // const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [filterYourSoul, setFilterYourSoul] = useState(false);
+  const user = useSelector(getUserSelector);
+
   const router = useRouter();
 
   const [isEnabledAttributesFilter, setIsEnabledAttributesFilter] =
@@ -52,15 +59,52 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
 
   // const handleSelect = (eventKey: string | null) => {
   //   setSelectedOption(eventKey);
+  //   router.push(
+  //     {
+  //       query: { sortBy: eventKey },
+  //     },
+  //     undefined,
+  //     { shallow: true }
+  //   );
   // };
 
   const handleOnSubmit = useCallback((submitVal: ISubmitValues) => {
     setIsEnabledAttributesFilter(!!submitVal.attributes.length);
   }, []);
 
+  const handleGetAllTokens = () => {
+    router.push(
+      {
+        query: {},
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
   const syncAttributesState = useMemo<boolean>(() => {
     return attributes.some(attr => router.query[attr.traitName]);
   }, [attributes]);
+
+  const handleFilterMyToken = () => {
+    if (user && user.walletAddress) {
+      router.push(
+        {
+          query: { owner: user.walletAddress },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (router.query.owner) {
+      setFilterYourSoul(true);
+    } else {
+      setFilterYourSoul(false);
+    }
+  }, [router.query]);
 
   useEffect(() => {
     setIsEnabledAttributesFilter(syncAttributesState);
@@ -69,13 +113,32 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   return (
     <div className={attributeStyles.attribute_box}>
       <div className={attributeStyles.attribute_container}>
-        {/* <div className={attributeStyles.attribute_leftContainer}> */}
-        {/* <Button className={attributeStyles.attribute_button}>Adopt</Button> */}
-        {/* <Button className={attributeStyles.attribute_button}>
+        <div className={attributeStyles.attribute_leftContainer}>
+          <Button
+            className={cs(
+              attributeStyles.attribute_button,
+              !filterYourSoul && attributeStyles.active
+            )}
+            onClick={handleGetAllTokens}
+          >
+            All
+          </Button>
+          <Button
+            className={cs(
+              attributeStyles.attribute_button,
+              filterYourSoul && attributeStyles.active
+            )}
+            onClick={handleFilterMyToken}
+          >
+            Your Soul
+          </Button>
+
+          {/* <Button className={attributeStyles.attribute_button}>Adopt</Button> */}
+          {/* <Button className={attributeStyles.attribute_button}>
             Live auction
           </Button>
           <Button className={attributeStyles.attribute_button}>You own</Button> */}
-        {/* </div> */}
+        </div>
         <div className={attributeStyles.attribute_rightContainer}>
           {/* <Dropdown onSelect={handleSelect}>
             <Dropdown.Toggle
@@ -114,7 +177,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown> */}
-          {/* <div className={attributeStyles.attribute_divide} /> */}
+          <div className={attributeStyles.attribute_divide} />
           <Dropdown drop="up">
             <Dropdown.Toggle as={FilterToggle} id="dropdown-custom-components">
               <div className={attributeStyles.attribute_filter}>

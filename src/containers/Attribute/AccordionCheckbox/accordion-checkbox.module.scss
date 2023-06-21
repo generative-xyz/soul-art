@@ -1,10 +1,9 @@
 .filterAttribute {
-
   &_content {
     font-size: 14px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 20px;
+    gap: 12px;
 
     &_item {
       cursor: pointer;
@@ -13,8 +12,8 @@
       justify-content: space-between;
       flex-direction: row;
       line-height: 100%;
-      background: #FFFFFF;
-      border: 1px solid #ECECEC;
+      background: #ffffff;
+      border: 1px solid #ececec;
       box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.08);
       border-radius: 8px;
       color: black;
@@ -29,14 +28,14 @@
       justify-content: space-between;
       flex-direction: row;
       line-height: 100%;
-      background: #FFFFFF;
+      background: #ffffff;
       border: 1px solid #000;
       box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.08);
       border-radius: 8px;
       color: black;
       border-radius: 8px;
       padding: 8px;
-      transition: .2s ease-in-out;
+      transition: 0.2s ease-in-out;
     }
 
     &_checkbox {
@@ -45,10 +44,11 @@
       flex-direction: row;
       align-items: center;
 
-      &>div {
+      & > div {
         margin-left: 8px;
         font-weight: 400;
         font-size: 14px;
+        white-space: nowrap;
 
         input {
           width: 15px;
@@ -60,9 +60,9 @@
     &_percent {
       padding: 2px 8px;
       border-radius: 20px;
-      background: #F6F6F6;
+      background: #f6f6f6;
       font-size: 14px;
-      color: #5B5B5B;
+      color: #5b5b5b;
     }
   }
 }
@@ -87,7 +87,7 @@
       height: 0;
       width: 0;
 
-      &:checked~.container_checkmark {
+      &:checked ~ .container_checkmark {
         background-color: #000;
         border: 1px solid black;
       }
@@ -101,22 +101,22 @@
     height: 18px;
     width: 18px;
     background-color: #fff;
-    border: 1px solid #B6B6B6;
+    border: 1px solid #b6b6b6;
     border-radius: 4px;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       display: none;
     }
   }
 
-  &:hover input~.container_checkmark {
+  &:hover input ~ .container_checkmark {
     background-color: #ccc;
   }
 }
 
-.container_checkbox input:checked~.container_checkmark::after {
+.container_checkbox input:checked ~ .container_checkmark::after {
   display: block;
 }
 
