@@ -62,7 +62,7 @@ const Introduce: React.FC = () => {
               animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
               className={s['introduceBox-subTitle']}
             >
-              The first-ever cryptoart protocol & a new kind of art.
+              The first-ever cryptoart protocol powering a new kind of art.
             </Text>
             <div className={s['introduceBox-desc-wrapper']}>
               <Text
@@ -108,9 +108,7 @@ const Introduce: React.FC = () => {
                 </span>
               </Link>
               <Link
-                href={
-                  'https://newbitcoindex.com/token?address=0x2fe8d5A64afFc1d703aECa8a566f5e9FaeE0C003'
-                }
+                href={'https://newbitcoincity.com/gm '}
                 className={cs(s.button, s.trans)}
                 target="_blank"
               >
@@ -151,7 +149,9 @@ const Introduce: React.FC = () => {
                   <div
                     className={classNames(s['wrap-video'], s['wrap-pdf'])}
                     onClick={() => {
-                      window.open(`https://newbitcoincity.com/souls/whitepaper.pdf`);
+                      window.open(
+                        `https://newbitcoincity.com/souls/whitepaper.pdf`
+                      );
                     }}
                   >
                     <ImageFrame type={'small'}>
