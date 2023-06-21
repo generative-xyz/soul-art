@@ -1,4 +1,4 @@
-.modal {
+.bidModal {
   margin: 0 auto;
   width: 100%;
 
@@ -110,6 +110,7 @@
       border-radius: 12px;
       padding: rem(16px);
       gap: rem(20px);
+      margin-bottom: rem(32px);
 
       &_wrapper {
         display: flex;
@@ -137,7 +138,6 @@
 
     &_highestInput {
       width: 100%;
-      margin: rem(16px) 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -145,20 +145,33 @@
       gap: rem(10px);
       border: 1px solid #ececec;
       border-radius: rem(8px);
+      margin-top: rem(16px);
+
+      &.error {
+        border: 1px solid #ff4747;
+      }
 
       input {
         color: #000;
-        font-weight: 500;
-        font-size: 20px;
+        font-weight: 400;
+        font-size: rem(20px);
         line-height: 140%;
+        width: 100%;
       }
 
       &_classifyBuy {
         color: #000;
-        margin-bottom: 0;
         font-weight: 500;
-        font-size: 20px;
+        font-size: rem(20px);
         line-height: 140%;
+      }
+
+      &_errorMessage {
+        color: #ff4747;
+        font-weight: 400;
+        font-size: rem(14px);
+        line-height: 140%;
+        margin-top: rem(8px);
       }
 
       &_desc {
@@ -166,7 +179,7 @@
         font-size: rem(16px);
         line-height: 140%;
         color: #2e2e2e;
-        margin-bottom: 0;
+        margin-top: rem(16px);
       }
     }
 
@@ -187,7 +200,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-bottom: 32px;
+      margin-bottom: rem(32px);
     }
 
     &_availableButtonStyle {
@@ -234,26 +247,37 @@
       }
     }
   }
+}
 
-  &_footer {
+.modalFooter {
+  margin-top: rem(32px);
+
+  .bidBtn {
     width: 100%;
-    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: rem(16px) rem(40px);
+    gap: rem(10px);
+    background: #000000;
+    border-radius: 100px;
+    color: #fff;
+    font-weight: 500;
+    font-size: rem(16px);
+    line-height: rem(18px);
 
-    &_button {
-      margin: rem(32px) 0 0 0;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      padding: rem(16px) rem(40px);
-      gap: rem(10px);
-      background: #000000;
-      border-radius: 100px;
-      color: #fff;
-      font-weight: 500;
-      font-size: rem(16px);
-      line-height: rem(18px);
+    &:hover {
+      background: #fff;
+      color: #000;
+      transition: 0.5s $easeOutQuart;
+      border: 1px solid #000;
+    }
+
+    &:disabled {
+      background: #f4f4f4;
+      color: #898989;
+      border: none;
     }
   }
 }

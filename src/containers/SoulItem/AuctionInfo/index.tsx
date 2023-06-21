@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import IconSVG from '@/components/IconSVG';
 import { CDN_URL } from '@/configs';
 import { ITokenDetail } from '@/interfaces/api/marketplace';
@@ -6,31 +6,37 @@ import { shortenAddress } from '@/utils';
 import { useWeb3React } from '@web3-react/core';
 import { jsNumberForAddress } from 'react-jazzicon';
 import Jazzicon from 'react-jazzicon/dist/Jazzicon';
-import useAsyncEffect from 'use-async-effect';
-import useGMBalanceOf from '@/hooks/contract-operations/gm/useGMBalanceOf';
-import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import StartAuctionButton from './StartAuctionButton';
 import CreateBidButton from './CreateBidButton';
 import s from './style.module.scss';
+import { AuctionContext } from '@/contexts/auction-context';
+import { AuctionStatus } from '@/enums/soul';
+import SettleAuctionButton from './SettleAuctionButton';
 
 type AuctionProps = {
   data: ITokenDetail;
 };
 const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
-  const { account, provider } = useWeb3React();
-  const [isOwnerEligible, setIsOwnerEligible] = useState<boolean | null>(null);
-  const { run: getGmBalance } = useContractOperation({
-    operation: useGMBalanceOf,
-    inscribeable: false,
-  });
+  const { account } = useWeb3React();
+  const { auction } = useContext(AuctionContext);
 
-  useAsyncEffect(async () => {
-    if (!data.owner || !provider) return
-    const gmBalance = await getGmBalance({
-      address: data.owner
-    });
-    setIsOwnerEligible(gmBalance.isGreaterThan(1e18));
-  }, [data.owner, provider, getGmBalance]);
+  const auctionAction = useMemo(() => {
+    // if (!auction || !auction.available) return <></>;
+    // if (auction.auctionStatus === AuctionStatus.INPROGRESS) {
+    if (true) {
+      return (
+        <CreateBidButton data={data} />
+      )
+    } else if (auction.auctionStatus === AuctionStatus.ENDED) {
+      return (
+        <SettleAuctionButton data={data} />
+      )
+    } else {
+      return (
+        <StartAuctionButton data={data} />
+      )
+    }
+  }, [auction]);
 
   return (
     <div className={s.auctionInfo}>
@@ -38,7 +44,7 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
       <div className={s.content_warning}>
         <div className={s.content_warning_iconUser}>
           <Jazzicon diameter={28} seed={jsNumberForAddress(data.owner)} />
-          {!isOwnerEligible && (
+          {(!!auction?.available) && (
             <div className={s.content_warning_iconWarning}>
               <IconSVG
                 maxWidth="20"
@@ -47,18 +53,23 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
             </div>
           )}
         </div>
-        {!isOwnerEligible && (
+        {(!!auction?.available) ? (
           <div className={s.content_warning_showAddress}>
             {account === data.owner
               ? 'You are'
               : `${shortenAddress(data.owner)} is `}
             not eligible to own Soul
           </div>
+        ) : (
+          <div className={s.content_address}>
+            {account === data.owner
+              ? 'You'
+              : `${shortenAddress(data.owner)}`}
+          </div>
         )}
       </div>
       <div className={s.divider}></div>
-      <StartAuctionButton data={data} />
-      <CreateBidButton data={data} />
+      {auctionAction}
     </div>
   );
 };

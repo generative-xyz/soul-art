@@ -8,17 +8,17 @@ interface IFormatDate {
   formatPattern?: string;
 }
 
-const formatDateTime = ({ dateTime, formatPattern = FORMAT_PATTERN }: IFormatDate) =>
+export const formatDateTime = ({ dateTime, formatPattern = FORMAT_PATTERN }: IFormatDate) =>
   dayjs(dateTime).format(formatPattern);
 
-const formatTimeStamp = (timestamp: number) => new Date(timestamp).toISOString().replace('T', ' ').replace('.000Z', '');
+export const formatTimeStamp = (timestamp: number) => new Date(timestamp).toISOString().replace('T', ' ').replace('.000Z', '');
 
 interface IUnixExpired {
   unixTime: number | string | undefined;
   expiredMin?: number;
 }
 
-const isExpiredUnixTime = ({ unixTime, expiredMin = 1 }: IUnixExpired) => {
+export const isExpiredUnixTime = ({ unixTime, expiredMin = 1 }: IUnixExpired) => {
   if (!unixTime || !isNumber(unixTime)) return false;
   const now = Math.floor(new Date().getTime() / 1000);
   expiredMin = expiredMin * 60;
@@ -30,21 +30,13 @@ interface IExpired {
   expiredMin?: number;
 }
 
-const isExpiredTime = ({ time, expiredMin = 1 }: IExpired) => {
+export const isExpiredTime = ({ time, expiredMin = 1 }: IExpired) => {
   if (!time || !isNumber(time)) return false;
   const now = Math.floor(new Date().getTime());
   expiredMin = expiredMin * 60;
   return now - Number(time) > expiredMin;
 };
 
-function getCurrentUnixTimestamp() {
+export function getCurrentUnixTimestamp() {
   return Math.floor(Date.now() / 1000);
 }
-
-export {
-  formatDateTime,
-  isExpiredUnixTime,
-  isExpiredTime,
-  getCurrentUnixTimestamp,
-  formatTimeStamp,
-};

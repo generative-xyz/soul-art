@@ -30,6 +30,7 @@ import { useSelector } from 'react-redux';
 import { Wrapper } from './Header.styled';
 import MenuMobile from './MenuMobile';
 import headerStyles from './header.module.scss';
+import { formatEthPrice } from '@/utils/format';
 
 type NavContent = {
   title: string;
@@ -200,9 +201,8 @@ const Header = ({
                         id={'warning-gm'}
                         placement="left"
                         show={!eligibleOwner}
-                        className={`${headerStyles.tooltip_body} ${
-                          !eligibleOwner ? '' : 'd-none'
-                        }`}
+                        className={`${headerStyles.tooltip_body} ${!eligibleOwner ? '' : 'd-none'
+                          }`}
                       >
                         <div className={headerStyles.tooltip_content}>
                           <p>You are not owning over 1GM</p>

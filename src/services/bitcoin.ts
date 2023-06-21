@@ -8,7 +8,7 @@ import {
 } from '@/interfaces/api/bitcoin';
 import BigNumber from 'bignumber.js';
 import * as TC_SDK from 'trustless-computer-sdk';
-import { TC_NETWORK_RPC } from '@/configs';
+import { BLOCKSTREAM_URL, TC_NETWORK_RPC } from '@/configs';
 import logger from './logger';
 
 const BINANCE_API_URL = 'https://api.binance.com/api/v3';
@@ -49,7 +49,7 @@ export const getPendingUTXOs = async (btcAddress: string): Promise<IPendingUTXO[
   let pendingUTXOs = [];
   if (!btcAddress) return [];
   try {
-    const res = await fetch(`https://blockstream.info/api/address/${btcAddress}/txs`).then(res => {
+    const res = await fetch(`${BLOCKSTREAM_URL}/address/${btcAddress}/txs`).then(res => {
       return res.json();
     });
     pendingUTXOs = (res || []).filter((item: IPendingUTXO) => !item.status.confirmed);

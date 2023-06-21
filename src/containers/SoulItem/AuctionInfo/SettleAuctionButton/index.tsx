@@ -1,5 +1,5 @@
 import { ITokenDetail } from "@/interfaces/api/marketplace";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from './styles.module.scss';
 import Button from "@/components/Button";
 import useContractOperation from "@/hooks/contract-operations/useContractOperation";
@@ -11,13 +11,13 @@ import { useSelector } from "react-redux";
 import { getUserSelector } from "@/state/user/selector";
 import { useWeb3React } from "@web3-react/core";
 import { toStorageKey } from "@/utils";
-import { AuctionContext } from "@/contexts/auction-context";
+import useSettleAuction from "@/hooks/contract-operations/soul/useSettleAuction";
 
 interface IProps {
   data: ITokenDetail;
 }
 
-const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
+const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
   const [processing, setProcessing] = useState(false);
   const [inscribing, setInscribing] = useState(false);
@@ -25,11 +25,10 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
     operationName,
   } = useCreateAuction();
   const { run: createAuction } = useContractOperation({
-    operation: useCreateAuction,
+    operation: useSettleAuction,
     inscribeable: true
   });
   const { provider } = useWeb3React();
-  const { fetchAuction } = useContext(AuctionContext);
 
   const onTxSuccessCallback = async (tx: Transaction | null): Promise<void> => {
     if (!tx || !user?.walletAddress) return;
@@ -75,12 +74,12 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
           txHash
         );
 
-        if (receipt && receipt.status !== 1) return;
-        logger.info('tx done');
-        localStorage.removeItem(key);
-        setInscribing(false);
-        intervalId && clearInterval(intervalId);
-        fetchAuction();
+        if (receipt.status === 1) {
+          logger.info('tx done');
+          localStorage.removeItem(key);
+          setInscribing(false);
+          intervalId && clearInterval(intervalId);
+        }
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);
       }
@@ -90,7 +89,7 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
 
     intervalId = setInterval(() => {
       fetchTransactionStatus();
-    }, 60000);
+    }, 30000);
 
     return () => {
       intervalId && clearInterval(intervalId);
@@ -103,9 +102,9 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
       className={s.startAuctionButton}
       onClick={handleStartAuction}
     >
-      {(processing || inscribing) ? 'Processing...' : 'Start auction'}
+      {(processing || inscribing) ? 'Processing...' : 'Settle auction'}
     </Button>
   )
 }
 
-export default React.memo(StartAuctionButton);
+export default React.memo(SettleAuctionButton);

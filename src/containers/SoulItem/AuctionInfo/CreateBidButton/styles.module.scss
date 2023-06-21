@@ -35,6 +35,12 @@
         transition: 0.5s $easeOutQuart;
         border: 1px solid #000;
       }
+
+      &:disabled {
+        background: #f4f4f4;
+        color: #898989;
+        border: none;
+      }
     }
   }
 
@@ -89,6 +95,7 @@
       font-weight: 500;
       line-height: 140%;
       color: #000;
+      min-width: rem(106px);
     }
   }
 }

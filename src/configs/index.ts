@@ -18,6 +18,7 @@ export const TC_URL: string = process.env.NEXT_PUBLIC_TC_WEB_URL!;
 export const TRANSFER_TX_SIZE = 1000;
 export const BIG_FILE_PROJECT_ID = '420';
 export const MULTIPART_CHUNK_SIZE = 32000000; // 32Mb
+export const BLOCKSTREAM_URL = process.env.NEXT_PUBLIC_BLOCKSTREAM_URL!;
 
 // Event
 export const CLAIM_START_TIME = '2023-06-22 14:00:00'

@@ -98,7 +98,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     }, 10000);
 
     return () => {
-      clearInterval(intervalId);
+      intervalId && clearInterval(intervalId);
     };
   }, [provider, transactionHash, account]);
 
@@ -119,9 +119,8 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                 </div>
               )}
               <div
-                className={`${s.claimBox} ${
-                  claimStatus === 'success' ? s.success : ''
-                }`}
+                className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''
+                  }`}
               >
                 <ClaimImg
                   isClaimed={isClaimed}

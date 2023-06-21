@@ -14,14 +14,19 @@ class CustomWeb3Provider {
     return gasPrice;
   }
 
-  async getBlock(blockNumer: number): Promise<BlockTransactionString> {
-    const blockTransaction = await this.web3.eth.getBlock(blockNumer);
+  async getBlock(blockNumber: number): Promise<BlockTransactionString> {
+    const blockTransaction = await this.web3.eth.getBlock(blockNumber);
     return blockTransaction;
+  }
+
+  async getCurrentBlockNumber(): Promise<number> {
+    const blockNumber = await this.web3.eth.getBlockNumber();
+    return blockNumber;
   }
 
   async calculateAverageBlockTime(): Promise<number> {
     const latestBlockNumber = await this.web3.eth.getBlockNumber();
-    const numBlocksToAverage = 1000;
+    const numBlocksToAverage = 50;
     let totalBlockTime = 0;
 
     for (let i = latestBlockNumber; i > latestBlockNumber - numBlocksToAverage; i--) {

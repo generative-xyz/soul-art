@@ -2,6 +2,10 @@
   margin: 0 auto;
   width: 100%;
 
+  :global(.modal-dialog) {
+    min-width: rem(582px);
+  }
+
   :global(.modal-body) {
     padding: 0;
   }
@@ -50,6 +54,5 @@
     border-radius: rem(20px);
     overflow: hidden;
     background: #fff;
-    min-width: rem(582px);
   }
 }

@@ -10,6 +10,7 @@ import DetailImg from './DetailImg';
 import MoreSection from './MoreSection';
 import s from './style.module.scss';
 import TabsComponent from './Tabs';
+import { AuctionProvider } from '@/contexts/auction-context';
 
 const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
   const [_isFetchingMoreItems, setIsFetchingMoreItems] = useState(false);
@@ -62,8 +63,10 @@ const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
       <Container>
         <Row>
           <Col lg={4}>
-            <AuctionInfo data={soulDetail} />
-            <TabsComponent />
+            <AuctionProvider>
+              <AuctionInfo data={soulDetail} />
+              <TabsComponent />
+            </AuctionProvider>
           </Col>
           <Col lg={5}>
             <DetailImg
