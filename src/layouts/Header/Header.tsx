@@ -4,6 +4,7 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import { AssetsContext } from '@/contexts/assets-context';
 import { WalletContext } from '@/contexts/wallet-context';
 import { DappsTabs } from '@/enums/tabs';
+import ModalDeposit from '@/layouts/Header/Modal/ModalDeposit';
 import logger from '@/services/logger';
 import {
   getIsAuthenticatedSelector,
@@ -29,6 +30,7 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { useSelector } from 'react-redux';
 import { Wrapper } from './Header.styled';
 import MenuMobile from './MenuMobile';
+import ModalWithdraw from './Modal/ModalWithdraw';
 import headerStyles from './header.module.scss';
 import { formatEthPrice } from '@/utils/format';
 
@@ -84,7 +86,7 @@ const Header = ({
   const homepage = router.pathname === ROUTE_PATH.HOME;
 
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const { gmBalance } = useContext(AssetsContext);
+  const { gmBalance, btcBalance, tcBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
   const { account } = useWeb3React();
 
@@ -92,9 +94,10 @@ const Header = ({
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   const [eligibleOwner, setEligibleOwner] = useState(false);
+  const [showDepositModal, setShowDepositModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
 
   const handleConnectWallet = async () => {
     try {
@@ -117,6 +120,52 @@ const Header = ({
     showToastSuccess({
       message: 'Copied',
     });
+  };
+
+  const renderTokenBlock = (
+    title: string,
+    balance: string,
+    token: string,
+    address?: string
+  ) => {
+    let icon = '';
+    switch (token) {
+      case 'BTC':
+        icon = `${CDN_URL}/ic-btc.svg`;
+
+        break;
+
+      default:
+        icon = `${CDN_URL}/ic_tc.svg`;
+        break;
+    }
+
+    return (
+      <div className={headerStyles.menu_content}>
+        <div className={headerStyles.menu_info}>
+          <div className={headerStyles.menu_title}>{title}</div>
+          <div className={headerStyles.menu_item}>
+            <div className={headerStyles.menu_item_address}>
+              <IconSVG src={icon} maxWidth="24" maxHeight="24" />
+              <p>{formatLongAddress(address || '')}</p>
+            </div>
+            <div onClick={() => onClickCopy(user?.walletAddress || '')}>
+              <IconSVG
+                src={`${CDN_URL}/ic-copy.svg`}
+                color={'#fff'}
+                maxWidth="16"
+                className={headerStyles.copy_icon}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={headerStyles.menu_item_balance}>
+          <p>
+            {balance} {token}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -185,152 +234,161 @@ const Header = ({
           </Link>
 
           {isAuthenticated ? (
-            <Dropdown
-              show={showDropdown}
-              onMouseEnter={() => setShowDropdown(true)}
-              onMouseLeave={() => setShowDropdown(false)}
-            >
-              <Dropdown.Toggle
-                as={WalletToggle}
-                id="dropdown-custom-components"
-              >
-                <div className={headerStyles.profile_container}>
-                  <OverlayTrigger
-                    overlay={
-                      <Tooltip
-                        id={'warning-gm'}
-                        placement="left"
-                        show={!eligibleOwner}
-                        className={`${headerStyles.tooltip_body} ${!eligibleOwner ? '' : 'd-none'
-                          }`}
-                      >
-                        <div className={headerStyles.tooltip_content}>
-                          <p>You are not owning over 1GM</p>
-                          <p>
-                            Your art will be adopted by someone else at any
-                            time.
-                          </p>
-                        </div>
-                      </Tooltip>
-                    }
-                    placement="bottom"
+            <div className={headerStyles.wallets}>
+              <Dropdown className={headerStyles.auction_wallet}>
+                <Dropdown.Toggle
+                  as={WalletToggle}
+                  id="dropdown-custom-components"
+                >
+                  <div
+                    className={cs(
+                      headerStyles.profile_container,
+                      headerStyles.profile_auction_wallet_container
+                    )}
                   >
+                    <p className={headerStyles.profile_auction_wallet}>
+                      Auction Wallet
+                    </p>
+                    <div className={cs(headerStyles.profile_amount)}>
+                      {gmBalance}&nbsp;GM
+                      <IconSVG
+                        src={`${CDN_URL}/ic-add-fill.svg`}
+                        maxWidth="20"
+                      />
+                    </div>
+                  </div>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={headerStyles.menu_wrapper}>
+                  <div className={headerStyles.menu_container}>
                     <div
-                      className={cs(
-                        headerStyles.profile_amount,
-                        !eligibleOwner && headerStyles.warning
-                      )}
+                      onClick={() => setShowDepositModal(true)}
+                      className={headerStyles.menu_box}
                     >
                       <IconSVG
-                        src={`${CDN_URL}/ic-warning.svg`}
-                        maxWidth={'20'}
-                        maxHeight={'20'}
-                        className={`${!eligibleOwner ? '' : 'd-none'}`}
-                      ></IconSVG>
-                      {`${formatEthPrice(gmBalance)} GM`}
+                        src={`${CDN_URL}/ic-coin-hand.svg`}
+                        maxWidth="20"
+                      />
+                      <p>Deposit</p>
                     </div>
-                  </OverlayTrigger>
+                    <div
+                      onClick={() => {
+                        setShowWithdrawModal(true);
+                      }}
+                      className={headerStyles.menu_box}
+                    >
+                      <IconSVG
+                        src={`${CDN_URL}/ic-coins-rotate.svg`}
+                        maxWidth="20"
+                      />
+                      <p>Withdraw</p>
+                    </div>
+                  </div>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Dropdown>
+                <Dropdown.Toggle
+                  as={WalletToggle}
+                  id="dropdown-custom-components"
+                >
+                  <div className={headerStyles.profile_container}>
+                    <OverlayTrigger
+                      overlay={
+                        <Tooltip
+                          id={'warning-gm'}
+                          placement="left"
+                          show={!eligibleOwner}
+                          className={`${headerStyles.tooltip_body} ${!eligibleOwner ? '' : 'd-none'
+                            }`}
+                        >
+                          <div className={headerStyles.tooltip_content}>
+                            <p>You are not owning over 1GM</p>
+                            <p>
+                              Your art will be adopted by someone else at any
+                              time.
+                            </p>
+                          </div>
+                        </Tooltip>
+                      }
+                      placement="bottom"
+                    >
+                      <div
+                        className={cs(
+                          headerStyles.profile_amount,
+                          !eligibleOwner && headerStyles.warning
+                        )}
+                      >
+                        <IconSVG
+                          src={`${CDN_URL}/ic-warning.svg`}
+                          maxWidth={'20'}
+                          maxHeight={'20'}
+                          className={`${!eligibleOwner ? '' : 'd-none'}`}
+                        ></IconSVG>
+                        {gmBalance}&nbsp;GM
+                      </div>
+                    </OverlayTrigger>
 
-                  <div className={headerStyles.profile_avatar}>
-                    {account ? (
-                      <Jazzicon
-                        diameter={32}
-                        seed={jsNumberForAddress(account)}
-                      />
-                    ) : (
-                      <img
-                        src={`${CDN_URL}/icons/ic-avatar.svg`}
-                        alt="default avatar"
-                      />
+                    <div className={headerStyles.profile_avatar}>
+                      {account ? (
+                        <Jazzicon
+                          diameter={32}
+                          seed={jsNumberForAddress(account)}
+                        />
+                      ) : (
+                        <img
+                          src={`${CDN_URL}/icons/ic-avatar.svg`}
+                          alt="default avatar"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={headerStyles.menu_wrapper}>
+                  <div className={headerStyles.menu_container}>
+                    {renderTokenBlock(
+                      'TC Address',
+                      tcBalance,
+                      `TC`,
+                      user?.walletAddress
                     )}
-                  </div>
-                </div>
-              </Dropdown.Toggle>
-              <Dropdown.Menu className={headerStyles.menu_wrapper}>
-                <div className={headerStyles.menu_container}>
-                  <div className={headerStyles.menu_content}>
-                    <div className={headerStyles.menu_title}>TC Address</div>
-                    <div className={headerStyles.menu_item}>
-                      <div className={headerStyles.menu_item_address}>
-                        <IconSVG
-                          src={`${CDN_URL}/ic_tc.svg`}
-                          maxWidth="28"
-                          maxHeight="28"
-                        />
-                        <p>{formatLongAddress(user?.walletAddress || '')}</p>
-                      </div>
-                      <div
-                        onClick={() => onClickCopy(user?.walletAddress || '')}
-                      >
-                        <IconSVG
-                          src={`${CDN_URL}/ic-copy.svg`}
-                          color={'#fff'}
-                          maxWidth="16"
-                          className={headerStyles.copy_icon}
-                        />
-                      </div>
+                    {renderTokenBlock(
+                      'BTC Address',
+                      btcBalance,
+                      `BTC`,
+                      user?.walletAddressBtcTaproot
+                    )}
+                    <div
+                      onClick={() =>
+                        window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
+                      }
+                      className={headerStyles.menu_box}
+                    >
+                      <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
+                      <p>Profile</p>
                     </div>
-                  </div>
-                  <div className="divider" />
-                  <div className={headerStyles.menu_content}>
-                    <div className={headerStyles.menu_title}>BTC Address</div>
-                    <div className={headerStyles.menu_item}>
-                      <div className={headerStyles.menu_item_address}>
-                        <IconSVG
-                          src={`${CDN_URL}/ic-btc.svg`}
-                          maxWidth="28"
-                          maxHeight="28"
-                        />
-                        <p>
-                          {formatLongAddress(
-                            user?.walletAddressBtcTaproot || ''
-                          )}
-                        </p>
-                      </div>
-                      <div
-                        onClick={() =>
-                          onClickCopy(user?.walletAddressBtcTaproot || '')
-                        }
-                      >
-                        <IconSVG
-                          src={`${CDN_URL}/ic-copy.svg`}
-                          color="white"
-                          maxWidth="16"
-                          className={headerStyles.copy_icon}
-                        />
-                      </div>
+                    <div
+                      onClick={() =>
+                        window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
+                      }
+                      className={headerStyles.menu_box}
+                    >
+                      <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
+                      <p>Wallet</p>
                     </div>
+                    <div className={headerStyles.menu_divider} />
+                    <Button
+                      onClick={onDisconnect}
+                      className={headerStyles.menu_box}
+                    >
+                      <IconSVG
+                        src={`${CDN_URL}/disconnect.svg`}
+                        maxWidth="16"
+                      />
+                      <p>Disconnect</p>
+                    </Button>
                   </div>
-                  <div className={headerStyles.menu_divider}></div>
-                  <div
-                    onClick={() =>
-                      window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
-                    }
-                    className={headerStyles.menu_box}
-                  >
-                    <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
-                    <p>Profile</p>
-                  </div>
-                  <div
-                    onClick={() =>
-                      window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
-                    }
-                    className={headerStyles.menu_box}
-                  >
-                    <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
-                    <p>Wallet</p>
-                  </div>
-                  <div className={headerStyles.menu_divider} />
-                  <Button
-                    onClick={onDisconnect}
-                    className={headerStyles.menu_box}
-                  >
-                    <IconSVG src={`${CDN_URL}/disconnect.svg`} maxWidth="16" />
-                    <p>Disconnect</p>
-                  </Button>
-                </div>
-              </Dropdown.Menu>
-            </Dropdown>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
           ) : (
             <Button
               disabled={isConnecting}
@@ -351,24 +409,34 @@ const Header = ({
   };
 
   return (
-    <Wrapper
-      className={classNames(
-        headerStyles.header,
-        theme ? headerStyles[theme] : '',
-        'dark'
-      )}
-      style={{ height }}
-    >
-      <div className="container">
-        {isAnimation ? (
-          <AnimFade>
-            <ContentHeader />
-          </AnimFade>
-        ) : (
-          <ContentHeader />
+    <>
+      <Wrapper
+        className={classNames(
+          headerStyles.header,
+          theme ? headerStyles[theme] : '',
+          'dark'
         )}
-      </div>
-    </Wrapper>
+        style={{ height }}
+      >
+        <div className="container">
+          {isAnimation ? (
+            <AnimFade>
+              <ContentHeader />
+            </AnimFade>
+          ) : (
+            <ContentHeader />
+          )}
+        </div>
+      </Wrapper>
+      <ModalDeposit
+        show={showDepositModal}
+        handleClose={() => setShowDepositModal(false)}
+      />
+      <ModalWithdraw
+        show={showWithdrawModal}
+        handleClose={() => setShowWithdrawModal(false)}
+      />
+    </>
   );
 };
 
