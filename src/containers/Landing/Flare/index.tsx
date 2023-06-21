@@ -52,14 +52,14 @@ const Flare: React.FC = () => {
                 <div className={s.wrapSectionContent_inner}>
                   <div ref={lPart1} className={s.wrapSectionContent_item}>
                     <Text className={s.sectionContent}>
-                      {` Ownership assumes an exceptional definition within the world of SOULS.
+                      {` Ownership assumes an exceptional definition within the world of Souls.
 Since Souls cannot be transferred or sold, they represent a very close personal connection to your beliefs. A soul searches for a new connection with someone whose belief is strong when it senses a decline in your attention.`}
                     </Text>
                   </div>
 
                   <div ref={lPart2} className={s.wrapSectionContent_item}>
                     <Text className={s.sectionContent}>
-                      {`When you adopt a Soul, the funds contribute to the support of the SOULS DAO. This self-governing and decentralized organization is dedicated to nurturing the community and advancing forthcoming endeavors.`}
+                      {`When you adopt a Soul, the funds contribute to the support of the Souls DAO. This self-governing and decentralized organization is dedicated to nurturing the community and advancing forthcoming endeavors.`}
                     </Text>
                   </div>
                 </div>

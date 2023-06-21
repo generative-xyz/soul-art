@@ -134,13 +134,11 @@ const SectionFlys = (): JSX.Element => {
               animOption={{ offset: 0, screen: 0, type: 'paragraph' }}
               className={s.sectionContent}
             >
-              {`Every SOUL has a design with the sun as its focal point. The sun has a rich metaphorical meaning in addition to its literal meaning of warmth and light. It is reminiscent of the "good morning" salutation that is frequently used in the crypto community, denoting optimism and the beginning of a new chapter.`}
+              {`Every Soul has a design with the sun as its focal point. The sun has a rich metaphorical meaning in addition to its literal meaning of warmth and light. It is reminiscent of the "good morning" salutation that is frequently used in the crypto community, denoting optimism and the beginning of a new chapter.`}
             </Text>
             <AnimFade className={s.tag} offset={0.2}>
               <TextAnimate>
-                <span>
-                The “Good Morning” piece of Generative Art
-                </span>
+                <span>The “Good Morning” piece of Generative Art</span>
               </TextAnimate>
             </AnimFade>
           </div>

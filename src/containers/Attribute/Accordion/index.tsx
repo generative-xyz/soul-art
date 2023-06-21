@@ -4,6 +4,7 @@ import { Accordion } from 'react-bootstrap';
 import AccordionCheckBox from '../AccordionCheckbox';
 import { IAttribute } from '@/interfaces/attributes';
 import accordionStyles from './accordion.module.scss';
+import { useRouter } from 'next/router';
 
 type AccordionContentProps = {
   eventKey: string;
@@ -53,37 +54,45 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
 const AccordionComponent: React.FC<AccordionComponentProps> = ({
   attributes,
 }) => {
+  const router = useRouter();
+
   return (
     <Accordion
       defaultActiveKey="0"
       alwaysOpen
       className={accordionStyles.accordion_container}
     >
-      {attributes?.map(({ traitName, traitValuesStat }, index) => (
-        <AccordionContent
-          key={index}
-          eventKey={String(index)}
-          headerContent={`${traitName}${
-            traitValuesStat.length ? ` (${traitValuesStat.length})` : ''
-          }`}
-          bodyContent={
-            <>
-              {traitValuesStat.map(({ value, rarity }, indexData) => {
-                return (
-                  <React.Fragment key={indexData}>
-                    <AccordionCheckBox
-                      traitName={traitName}
-                      key={index}
-                      title={value}
-                      labelData={Math.round(rarity)}
-                    />
-                  </React.Fragment>
-                );
-              })}
-            </>
-          }
-        />
-      ))}
+      {attributes?.map(({ traitName, traitValuesStat }, index) => {
+        const currentQuery = router.query[traitName] as string;
+
+        const selectedValues = currentQuery?.split(',').length;
+
+        return (
+          <AccordionContent
+            key={index}
+            eventKey={String(index)}
+            headerContent={`${traitName} ${
+              selectedValues > 0 ? `(${selectedValues})` : ''
+            }`}
+            bodyContent={
+              <>
+                {traitValuesStat.map(({ value, rarity }, indexData) => {
+                  return (
+                    <React.Fragment key={indexData}>
+                      <AccordionCheckBox
+                        traitName={traitName}
+                        key={index}
+                        title={value}
+                        labelData={Math.round(rarity)}
+                      />
+                    </React.Fragment>
+                  );
+                })}
+              </>
+            }
+          />
+        );
+      })}
     </Accordion>
   );
 };
