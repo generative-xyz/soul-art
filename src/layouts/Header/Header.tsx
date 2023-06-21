@@ -4,6 +4,7 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import { AssetsContext } from '@/contexts/assets-context';
 import { WalletContext } from '@/contexts/wallet-context';
 import { DappsTabs } from '@/enums/tabs';
+import ModalDeposit from '@/layouts/Header/Modal/ModalDeposit';
 import logger from '@/services/logger';
 import {
   getIsAuthenticatedSelector,
@@ -29,8 +30,8 @@ import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { useSelector } from 'react-redux';
 import { Wrapper } from './Header.styled';
 import MenuMobile from './MenuMobile';
+import ModalWithdraw from './Modal/ModalWithdraw';
 import headerStyles from './header.module.scss';
-import px2rem from '@/utils/px2rem';
 
 type NavContent = {
   title: string;
@@ -94,6 +95,8 @@ const Header = ({
   const [isConnecting, setIsConnecting] = useState(false);
 
   const [eligibleOwner, setEligibleOwner] = useState(false);
+  const [showDepositModal, setShowDepositModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
 
   const handleConnectWallet = async () => {
     try {
@@ -257,14 +260,22 @@ const Header = ({
                 </Dropdown.Toggle>
                 <Dropdown.Menu className={headerStyles.menu_wrapper}>
                   <div className={headerStyles.menu_container}>
-                    <div onClick={() => {}} className={headerStyles.menu_box}>
+                    <div
+                      onClick={() => setShowDepositModal(true)}
+                      className={headerStyles.menu_box}
+                    >
                       <IconSVG
                         src={`${CDN_URL}/ic-coin-hand.svg`}
                         maxWidth="20"
                       />
                       <p>Deposit</p>
                     </div>
-                    <div onClick={() => {}} className={headerStyles.menu_box}>
+                    <div
+                      onClick={() => {
+                        setShowWithdrawModal(true);
+                      }}
+                      className={headerStyles.menu_box}
+                    >
                       <IconSVG
                         src={`${CDN_URL}/ic-coins-rotate.svg`}
                         maxWidth="20"
@@ -399,24 +410,34 @@ const Header = ({
   };
 
   return (
-    <Wrapper
-      className={classNames(
-        headerStyles.header,
-        theme ? headerStyles[theme] : '',
-        'dark'
-      )}
-      style={{ height }}
-    >
-      <div className="container">
-        {isAnimation ? (
-          <AnimFade>
-            <ContentHeader />
-          </AnimFade>
-        ) : (
-          <ContentHeader />
+    <>
+      <Wrapper
+        className={classNames(
+          headerStyles.header,
+          theme ? headerStyles[theme] : '',
+          'dark'
         )}
-      </div>
-    </Wrapper>
+        style={{ height }}
+      >
+        <div className="container">
+          {isAnimation ? (
+            <AnimFade>
+              <ContentHeader />
+            </AnimFade>
+          ) : (
+            <ContentHeader />
+          )}
+        </div>
+      </Wrapper>
+      <ModalDeposit
+        show={showDepositModal}
+        handleClose={() => setShowDepositModal(false)}
+      />
+      <ModalWithdraw
+        show={showWithdrawModal}
+        handleClose={() => setShowWithdrawModal(false)}
+      />
+    </>
   );
 };
 
