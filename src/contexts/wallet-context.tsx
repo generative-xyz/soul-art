@@ -29,6 +29,7 @@ import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/constants/route-path';
 import * as TC_SDK from 'trustless-computer-sdk';
 import logger from '@/services/logger';
+import { APP_ENV } from '@/configs';
 
 export interface IWalletContext {
   onDisconnect: () => Promise<void>;
@@ -107,7 +108,7 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
       method: TC_SDK.RequestMethod.account,
       redirectURL: window.location.origin + window.location.pathname,
       target: '_self',
-      isMainnet: false,
+      isMainnet: APP_ENV === 'production',
     });
   }, []);
 
