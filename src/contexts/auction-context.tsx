@@ -75,7 +75,8 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
   }, [fetchAuction]);
 
   useAsyncEffect(() => {
-    if (!biddable || !auction || (auction.auctionStatus !== AuctionStatus.INPROGRESS)) {
+    setBiddable(true);
+    if (!auction || (auction.auctionStatus !== AuctionStatus.INPROGRESS)) {
       setBiddable(false);
       return;
     };
@@ -83,7 +84,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
     let intervalId: NodeJS.Timer;
 
     const checkBiddableStatus = async (): Promise<void> => {
-      const endBlock = auction.endTime as unknown as number;
+      const endBlock = Number(auction.endTime);
       const currentBlock = await web3Instance.getCurrentBlockNumber();
       if (endBlock <= currentBlock) {
         setBiddable(false);
@@ -92,11 +93,12 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
     }
 
     intervalId = setInterval(checkBiddableStatus, 15000);
+    checkBiddableStatus();
 
     return () => {
       intervalId && clearInterval(intervalId);
     }
-  }, [auction, biddable])
+  }, [auction])
 
   const contextValues = useMemo((): IAuctionContext => {
     return {

@@ -85,7 +85,7 @@ const useSettleAuction: ContractOperationHook<ISettleAuctionParams, Transaction 
     estimateGas: estimateGas,
     call: call,
     dAppType: DAppType.SOUL,
-    operationName: 'Create Auction',
+    operationName: 'Settle Auction',
   };
 };
 

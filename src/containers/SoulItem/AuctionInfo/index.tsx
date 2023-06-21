@@ -21,9 +21,8 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
   const { auction } = useContext(AuctionContext);
 
   const auctionAction = useMemo(() => {
-    // if (!auction || !auction.available) return <></>;
-    // if (auction.auctionStatus === AuctionStatus.INPROGRESS) {
-    if (true) {
+    if (!auction || !auction.available) return <></>;
+    if (auction.auctionStatus === AuctionStatus.INPROGRESS) {
       return (
         <CreateBidButton data={data} />
       )

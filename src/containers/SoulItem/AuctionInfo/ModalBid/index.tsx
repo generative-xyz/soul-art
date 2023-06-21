@@ -20,6 +20,7 @@ import * as TC_SDK from 'trustless-computer-sdk';
 import { TRANSFER_TX_SIZE } from "@/configs";
 import BigNumber from 'bignumber.js';
 import web3Instance from '@/connections/custom-web3-provider';
+import EstimatedFee from "@/components/EstimatedFee";
 
 interface IProps {
   show: boolean;
@@ -59,7 +60,7 @@ const ModalBid: React.FC<IProps> = ({
       errors.amount = 'Invalid number. Amount must be greater than 0.'
     } else {
       calculateEstBtcFee();
-      calculateEstTcFee(values.amount);
+      calculateEstTcFee(values.amount.toString());
     }
     return errors;
   }
@@ -196,18 +197,12 @@ const ModalBid: React.FC<IProps> = ({
                 bidder.
               </p>
             </div>
-            <div className={s.bidModal_divide} />
             <div className={s.bidModal_body_fee}>
-              <div className={s.bidModal_body_feeContent}>
-                <p>TC network fee</p>
-                <p>{`${formatEthPrice(estTCFee, '-')} TC`}</p>
-              </div>
-              <div className={s.bidModal_body_feeContent}>
-                <p>TC network fee</p>
-                <p>{`${formatBTCPrice(estBTCFee, '-')} BTC`}</p>
-              </div>
+              <EstimatedFee
+                estimateBTCGas={estBTCFee}
+                estimateTCGas={estTCFee}
+              />
             </div>
-            <div className={s.bidModal_divide} />
             <div className={s.modalFooter}>
               <Button
                 disabled={!isValid}

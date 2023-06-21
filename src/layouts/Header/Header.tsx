@@ -12,7 +12,7 @@ import {
 } from '@/state/user/selector';
 import { showToastError, showToastSuccess } from '@/utils/toast';
 import { AnimFade } from '@Animations/Fade';
-import { formatLongAddress } from '@trustless-computer/dapp-core';
+import { formatBTCPrice, formatLongAddress } from '@trustless-computer/dapp-core';
 import { useWeb3React } from '@web3-react/core';
 import { default as classNames, default as cs } from 'classnames';
 import copy from 'copy-to-clipboard';
@@ -250,7 +250,7 @@ const Header = ({
                       Auction Wallet
                     </p>
                     <div className={cs(headerStyles.profile_amount)}>
-                      {gmBalance}&nbsp;GM
+                      {`${formatEthPrice(gmBalance)} GM`}
                       <IconSVG
                         src={`${CDN_URL}/ic-add-fill.svg`}
                         maxWidth="20"
@@ -323,7 +323,7 @@ const Header = ({
                           maxHeight={'20'}
                           className={`${!eligibleOwner ? '' : 'd-none'}`}
                         ></IconSVG>
-                        {gmBalance}&nbsp;GM
+                        {`${formatEthPrice(gmBalance)} GM`}
                       </div>
                     </OverlayTrigger>
 
@@ -346,13 +346,13 @@ const Header = ({
                   <div className={headerStyles.menu_container}>
                     {renderTokenBlock(
                       'TC Address',
-                      tcBalance,
+                      formatEthPrice(tcBalance),
                       `TC`,
                       user?.walletAddress
                     )}
                     {renderTokenBlock(
                       'BTC Address',
-                      btcBalance,
+                      formatBTCPrice(btcBalance),
                       `BTC`,
                       user?.walletAddressBtcTaproot
                     )}
