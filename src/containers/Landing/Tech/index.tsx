@@ -37,7 +37,7 @@ const Tech: React.FC = () => {
     },
     {
       id: 6,
-      title: 'SoulDeparture',
+      title: 'Soul Departure',
       img: `${CDN_URL}/solagif/SoulDeparture.gif`,
       content: `When a Soul is about to leave its owner, indicated by the GM balance falling below a threshold (currently set at 1 $GM), a remarkable transformation takes place. The sun disappears, leaving behind a momentary void and the artwork undergoes a glitch effect. A reminder of the transient nature of ownership and the need for active engagement and care in nurturing the Souls.`,
     },
