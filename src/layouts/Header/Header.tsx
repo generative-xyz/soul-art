@@ -30,6 +30,7 @@ import { useSelector } from 'react-redux';
 import { Wrapper } from './Header.styled';
 import MenuMobile from './MenuMobile';
 import headerStyles from './header.module.scss';
+import px2rem from '@/utils/px2rem';
 
 type NavContent = {
   title: string;
@@ -83,7 +84,7 @@ const Header = ({
   const homepage = router.pathname === ROUTE_PATH.HOME;
 
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const { gmBalance } = useContext(AssetsContext);
+  const { gmBalance, btcBalance, tcBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
   const { account } = useWeb3React();
 
@@ -91,7 +92,6 @@ const Header = ({
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
 
   const [eligibleOwner, setEligibleOwner] = useState(false);
 
@@ -116,6 +116,52 @@ const Header = ({
     showToastSuccess({
       message: 'Copied',
     });
+  };
+
+  const renderTokenBlock = (
+    title: string,
+    balance: string,
+    token: string,
+    address?: string
+  ) => {
+    let icon = '';
+    switch (token) {
+      case 'BTC':
+        icon = `${CDN_URL}/ic-btc.svg`;
+
+        break;
+
+      default:
+        icon = `${CDN_URL}/ic_tc.svg`;
+        break;
+    }
+
+    return (
+      <div className={headerStyles.menu_content}>
+        <div className={headerStyles.menu_info}>
+          <div className={headerStyles.menu_title}>{title}</div>
+          <div className={headerStyles.menu_item}>
+            <div className={headerStyles.menu_item_address}>
+              <IconSVG src={icon} maxWidth="24" maxHeight="24" />
+              <p>{formatLongAddress(address || '')}</p>
+            </div>
+            <div onClick={() => onClickCopy(user?.walletAddress || '')}>
+              <IconSVG
+                src={`${CDN_URL}/ic-copy.svg`}
+                color={'#fff'}
+                maxWidth="16"
+                className={headerStyles.copy_icon}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={headerStyles.menu_item_balance}>
+          <p>
+            {balance} {token}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -185,12 +231,8 @@ const Header = ({
           </Link>
 
           {isAuthenticated ? (
-            <>
-              <Dropdown
-                show={showDropdown}
-                onMouseEnter={() => setShowDropdown(true)}
-                onMouseLeave={() => setShowDropdown(false)}
-              >
+            <div className={headerStyles.wallets}>
+              <Dropdown className={headerStyles.auction_wallet}>
                 <Dropdown.Toggle
                   as={WalletToggle}
                   id="dropdown-custom-components"
@@ -206,17 +248,27 @@ const Header = ({
                     </p>
                     <div className={cs(headerStyles.profile_amount)}>
                       {gmBalance}&nbsp;GM
+                      <IconSVG
+                        src={`${CDN_URL}/ic-add-fill.svg`}
+                        maxWidth="20"
+                      />
                     </div>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className={headerStyles.menu_wrapper}>
                   <div className={headerStyles.menu_container}>
                     <div onClick={() => {}} className={headerStyles.menu_box}>
-                      <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
+                      <IconSVG
+                        src={`${CDN_URL}/ic-coin-hand.svg`}
+                        maxWidth="20"
+                      />
                       <p>Deposit</p>
                     </div>
                     <div onClick={() => {}} className={headerStyles.menu_box}>
-                      <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
+                      <IconSVG
+                        src={`${CDN_URL}/ic-coins-rotate.svg`}
+                        maxWidth="20"
+                      />
                       <p>Withdraw</p>
                     </div>
                   </div>
@@ -282,60 +334,18 @@ const Header = ({
                 </Dropdown.Toggle>
                 <Dropdown.Menu className={headerStyles.menu_wrapper}>
                   <div className={headerStyles.menu_container}>
-                    <div className={headerStyles.menu_content}>
-                      <div className={headerStyles.menu_title}>TC Address</div>
-                      <div className={headerStyles.menu_item}>
-                        <div className={headerStyles.menu_item_address}>
-                          <IconSVG
-                            src={`${CDN_URL}/ic_tc.svg`}
-                            maxWidth="28"
-                            maxHeight="28"
-                          />
-                          <p>{formatLongAddress(user?.walletAddress || '')}</p>
-                        </div>
-                        <div
-                          onClick={() => onClickCopy(user?.walletAddress || '')}
-                        >
-                          <IconSVG
-                            src={`${CDN_URL}/ic-copy.svg`}
-                            color={'#fff'}
-                            maxWidth="16"
-                            className={headerStyles.copy_icon}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="divider" />
-                    <div className={headerStyles.menu_content}>
-                      <div className={headerStyles.menu_title}>BTC Address</div>
-                      <div className={headerStyles.menu_item}>
-                        <div className={headerStyles.menu_item_address}>
-                          <IconSVG
-                            src={`${CDN_URL}/ic-btc.svg`}
-                            maxWidth="28"
-                            maxHeight="28"
-                          />
-                          <p>
-                            {formatLongAddress(
-                              user?.walletAddressBtcTaproot || ''
-                            )}
-                          </p>
-                        </div>
-                        <div
-                          onClick={() =>
-                            onClickCopy(user?.walletAddressBtcTaproot || '')
-                          }
-                        >
-                          <IconSVG
-                            src={`${CDN_URL}/ic-copy.svg`}
-                            color="white"
-                            maxWidth="16"
-                            className={headerStyles.copy_icon}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className={headerStyles.menu_divider}></div>
+                    {renderTokenBlock(
+                      'TC Address',
+                      tcBalance,
+                      `TC`,
+                      user?.walletAddress
+                    )}
+                    {renderTokenBlock(
+                      'BTC Address',
+                      btcBalance,
+                      `BTC`,
+                      user?.walletAddressBtcTaproot
+                    )}
                     <div
                       onClick={() =>
                         window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
@@ -368,7 +378,7 @@ const Header = ({
                   </div>
                 </Dropdown.Menu>
               </Dropdown>
-            </>
+            </div>
           ) : (
             <Button
               disabled={isConnecting}
