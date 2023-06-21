@@ -5,4 +5,5 @@ export const ROUTE_PATH = {
   CLAIM: '/souls/adopt',
   ART: '/souls/art',
   DEMO: '/souls/demo',
+  FAQS: '/souls/faqs',
 };

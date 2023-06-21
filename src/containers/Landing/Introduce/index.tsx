@@ -50,19 +50,54 @@ const Introduce: React.FC = () => {
               size={'d1'}
               color={'white-primary'}
               animOption={{ screen: 0, offset: 0, type: 'heading' }}
-              className={s['introduceBox-title']}
+              className={`${s['introduceBox-title']} text-uppercase`}
             >
-              Souls: The Soulbound Art Protocol
+              Souls
             </Text>
             <Text
               as={'p'}
-              size={'24'}
+              size={'28'}
               color={'white-primary'}
+              fontWeight="regular"
               animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
-              className={s['introduceBox-desc']}
+              className={s['introduceBox-subTitle']}
             >
-              {`Souls is a new kind of art (“soulbound”) and the first-ever art protocol. Souls cannot be bought or sold. A nurtured Soul will stay with you forever, but a neglected Soul might leave you to find a new home. All Souls are interconnected — creating a collective performance art experience. The Souls protocol is managed by the collector-run DAO and powered by the cryptocurrency Good Morning (GM).`}
+              The first-ever cryptoart protocol powering a new kind of art.
             </Text>
+            <div className={s['introduceBox-desc-wrapper']}>
+              <Text
+                as={'p'}
+                size={'20'}
+                color={'white-primary'}
+                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+                className={s['introduceBox-desc']}
+              >
+                Managed by the community-run DAO and powered by the
+                cryptocurrency GM, Souls is a revolutionary cryptoart protocol
+                for experiencing art on Bitcoin.
+              </Text>
+              <Text
+                as={'p'}
+                size={'20'}
+                color={'white-primary'}
+                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+                className={s['introduceBox-desc']}
+              >
+                Souls are soulbound artworks that can’t be bought or sold. As
+                on-chain living art, a nurtured Soul will stay with you forever,
+                but a neglected Soul might leave you and find a new home.
+              </Text>
+              <Text
+                as={'p'}
+                size={'20'}
+                color={'white-primary'}
+                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+                className={s['introduceBox-desc']}
+              >
+                But above all, Souls are interconnected and perform their
+                ever-changing artworks not as one but collectively.
+              </Text>
+            </div>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
               <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
@@ -73,15 +108,11 @@ const Introduce: React.FC = () => {
                 </span>
               </Link>
               <Link
-                href={'https://discord.gg/sBTeHRW5Xb'}
+                href={'https://newbitcoincity.com/gm '}
                 className={cs(s.button, s.trans)}
                 target="_blank"
               >
-                <IconSVG
-                  src={`${CDN_URL}/ic-discord.svg`}
-                  maxWidth={'20'}
-                ></IconSVG>
-                Join Discord
+                Get GM
               </Link>
             </AnimFade>
 
@@ -118,13 +149,15 @@ const Introduce: React.FC = () => {
                   <div
                     className={classNames(s['wrap-video'], s['wrap-pdf'])}
                     onClick={() => {
-                      window.open(`https://newbitcoincity.com/souls.pdf`);
+                      window.open(
+                        `https://newbitcoincity.com/souls/whitepaper.pdf`
+                      );
                     }}
                   >
                     <ImageFrame type={'small'}>
                       <div className={s.content}>
                         <IconSVG
-                          src={`${CDN_URL}/icon-pdf.svg`}
+                          src={`${CDN_URL}/icon-pdf-s.svg`}
                           maxWidth={'45'}
                           maxHeight={'55'}
                           className={s.modalPlay}
