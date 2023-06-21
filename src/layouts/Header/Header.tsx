@@ -125,8 +125,9 @@ const Header = ({
   const ContentHeader = (): JSX.Element => {
     return (
       <div
-        className={`content-header d-flex justify-content-between align-items-center w-100 ${homepage ? 'dark' : ''
-          }`}
+        className={`content-header d-flex justify-content-between align-items-center w-100 ${
+          homepage ? 'dark' : ''
+        }`}
       >
         <div className={headerStyles.nav_container}>
           {NAV_CONTENT.map(({ title, url }) => {
@@ -184,153 +185,190 @@ const Header = ({
           </Link>
 
           {isAuthenticated ? (
-            <Dropdown
-              show={showDropdown}
-              onMouseEnter={() => setShowDropdown(true)}
-              onMouseLeave={() => setShowDropdown(false)}
-            >
-              <Dropdown.Toggle
-                as={WalletToggle}
-                id="dropdown-custom-components"
+            <>
+              <Dropdown
+                show={showDropdown}
+                onMouseEnter={() => setShowDropdown(true)}
+                onMouseLeave={() => setShowDropdown(false)}
               >
-                <div className={headerStyles.profile_container}>
-                  <OverlayTrigger
-                    overlay={
-                      <Tooltip
-                        id={'warning-gm'}
-                        placement="left"
-                        show={!eligibleOwner}
-                        className={`${headerStyles.tooltip_body} ${
-                          !eligibleOwner ? '' : 'd-none'
-                        }`}
+                <Dropdown.Toggle
+                  as={WalletToggle}
+                  id="dropdown-custom-components"
+                >
+                  <div
+                    className={cs(
+                      headerStyles.profile_container,
+                      headerStyles.profile_auction_wallet_container
+                    )}
+                  >
+                    <p className={headerStyles.profile_auction_wallet}>
+                      Auction Wallet
+                    </p>
+                    <div className={cs(headerStyles.profile_amount)}>
+                      {gmBalance}&nbsp;GM
+                    </div>
+                  </div>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={headerStyles.menu_wrapper}>
+                  <div className={headerStyles.menu_container}>
+                    <div onClick={() => {}} className={headerStyles.menu_box}>
+                      <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
+                      <p>Deposit</p>
+                    </div>
+                    <div onClick={() => {}} className={headerStyles.menu_box}>
+                      <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
+                      <p>Withdraw</p>
+                    </div>
+                  </div>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Dropdown>
+                <Dropdown.Toggle
+                  as={WalletToggle}
+                  id="dropdown-custom-components"
+                >
+                  <div className={headerStyles.profile_container}>
+                    <OverlayTrigger
+                      overlay={
+                        <Tooltip
+                          id={'warning-gm'}
+                          placement="left"
+                          show={!eligibleOwner}
+                          className={`${headerStyles.tooltip_body} ${
+                            !eligibleOwner ? '' : 'd-none'
+                          }`}
+                        >
+                          <div className={headerStyles.tooltip_content}>
+                            <p>You are not owning over 1GM</p>
+                            <p>
+                              Your art will be adopted by someone else at any
+                              time.
+                            </p>
+                          </div>
+                        </Tooltip>
+                      }
+                      placement="bottom"
+                    >
+                      <div
+                        className={cs(
+                          headerStyles.profile_amount,
+                          !eligibleOwner && headerStyles.warning
+                        )}
                       >
-                        <div className={headerStyles.tooltip_content}>
-                          <p>You are not owning over 1GM</p>
+                        <IconSVG
+                          src={`${CDN_URL}/ic-warning.svg`}
+                          maxWidth={'20'}
+                          maxHeight={'20'}
+                          className={`${!eligibleOwner ? '' : 'd-none'}`}
+                        ></IconSVG>
+                        {gmBalance}&nbsp;GM
+                      </div>
+                    </OverlayTrigger>
+
+                    <div className={headerStyles.profile_avatar}>
+                      {account ? (
+                        <Jazzicon
+                          diameter={32}
+                          seed={jsNumberForAddress(account)}
+                        />
+                      ) : (
+                        <img
+                          src={`${CDN_URL}/icons/ic-avatar.svg`}
+                          alt="default avatar"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={headerStyles.menu_wrapper}>
+                  <div className={headerStyles.menu_container}>
+                    <div className={headerStyles.menu_content}>
+                      <div className={headerStyles.menu_title}>TC Address</div>
+                      <div className={headerStyles.menu_item}>
+                        <div className={headerStyles.menu_item_address}>
+                          <IconSVG
+                            src={`${CDN_URL}/ic_tc.svg`}
+                            maxWidth="28"
+                            maxHeight="28"
+                          />
+                          <p>{formatLongAddress(user?.walletAddress || '')}</p>
+                        </div>
+                        <div
+                          onClick={() => onClickCopy(user?.walletAddress || '')}
+                        >
+                          <IconSVG
+                            src={`${CDN_URL}/ic-copy.svg`}
+                            color={'#fff'}
+                            maxWidth="16"
+                            className={headerStyles.copy_icon}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="divider" />
+                    <div className={headerStyles.menu_content}>
+                      <div className={headerStyles.menu_title}>BTC Address</div>
+                      <div className={headerStyles.menu_item}>
+                        <div className={headerStyles.menu_item_address}>
+                          <IconSVG
+                            src={`${CDN_URL}/ic-btc.svg`}
+                            maxWidth="28"
+                            maxHeight="28"
+                          />
                           <p>
-                            Your art will be adopted by someone else at any
-                            time.
+                            {formatLongAddress(
+                              user?.walletAddressBtcTaproot || ''
+                            )}
                           </p>
                         </div>
-                      </Tooltip>
-                    }
-                    placement="bottom"
-                  >
+                        <div
+                          onClick={() =>
+                            onClickCopy(user?.walletAddressBtcTaproot || '')
+                          }
+                        >
+                          <IconSVG
+                            src={`${CDN_URL}/ic-copy.svg`}
+                            color="white"
+                            maxWidth="16"
+                            className={headerStyles.copy_icon}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className={headerStyles.menu_divider}></div>
                     <div
-                      className={cs(
-                        headerStyles.profile_amount,
-                        !eligibleOwner && headerStyles.warning
-                      )}
+                      onClick={() =>
+                        window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
+                      }
+                      className={headerStyles.menu_box}
+                    >
+                      <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
+                      <p>Profile</p>
+                    </div>
+                    <div
+                      onClick={() =>
+                        window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
+                      }
+                      className={headerStyles.menu_box}
+                    >
+                      <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
+                      <p>Wallet</p>
+                    </div>
+                    <div className={headerStyles.menu_divider} />
+                    <Button
+                      onClick={onDisconnect}
+                      className={headerStyles.menu_box}
                     >
                       <IconSVG
-                        src={`${CDN_URL}/ic-warning.svg`}
-                        maxWidth={'20'}
-                        maxHeight={'20'}
-                        className={`${!eligibleOwner ? '' : 'd-none'}`}
-                      ></IconSVG>
-                      {`${formatEthPrice(gmBalance)} GM`}
-                    </div>
-                  </OverlayTrigger>
-
-                  <div className={headerStyles.profile_avatar}>
-                    {account ? (
-                      <Jazzicon
-                        diameter={32}
-                        seed={jsNumberForAddress(account)}
+                        src={`${CDN_URL}/disconnect.svg`}
+                        maxWidth="16"
                       />
-                    ) : (
-                      <img
-                        src={`${CDN_URL}/icons/ic-avatar.svg`}
-                        alt="default avatar"
-                      />
-                    )}
+                      <p>Disconnect</p>
+                    </Button>
                   </div>
-                </div>
-              </Dropdown.Toggle>
-              <Dropdown.Menu className={headerStyles.menu_wrapper}>
-                <div className={headerStyles.menu_container}>
-                  <div className={headerStyles.menu_content}>
-                    <div className={headerStyles.menu_title}>TC Address</div>
-                    <div className={headerStyles.menu_item}>
-                      <div className={headerStyles.menu_item_address}>
-                        <IconSVG
-                          src={`${CDN_URL}/ic_tc.svg`}
-                          maxWidth="28"
-                          maxHeight="28"
-                        />
-                        <p>{formatLongAddress(user?.walletAddress || '')}</p>
-                      </div>
-                      <div
-                        onClick={() => onClickCopy(user?.walletAddress || '')}
-                      >
-                        <IconSVG
-                          src={`${CDN_URL}/ic-copy.svg`}
-                          color={'#fff'}
-                          maxWidth="16"
-                          className={headerStyles.copy_icon}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="divider" />
-                  <div className={headerStyles.menu_content}>
-                    <div className={headerStyles.menu_title}>BTC Address</div>
-                    <div className={headerStyles.menu_item}>
-                      <div className={headerStyles.menu_item_address}>
-                        <IconSVG
-                          src={`${CDN_URL}/ic-btc.svg`}
-                          maxWidth="28"
-                          maxHeight="28"
-                        />
-                        <p>
-                          {formatLongAddress(
-                            user?.walletAddressBtcTaproot || ''
-                          )}
-                        </p>
-                      </div>
-                      <div
-                        onClick={() =>
-                          onClickCopy(user?.walletAddressBtcTaproot || '')
-                        }
-                      >
-                        <IconSVG
-                          src={`${CDN_URL}/ic-copy.svg`}
-                          color="white"
-                          maxWidth="16"
-                          className={headerStyles.copy_icon}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={headerStyles.menu_divider}></div>
-                  <div
-                    onClick={() =>
-                      window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
-                    }
-                    className={headerStyles.menu_box}
-                  >
-                    <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
-                    <p>Profile</p>
-                  </div>
-                  <div
-                    onClick={() =>
-                      window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
-                    }
-                    className={headerStyles.menu_box}
-                  >
-                    <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
-                    <p>Wallet</p>
-                  </div>
-                  <div className={headerStyles.menu_divider} />
-                  <Button
-                    onClick={onDisconnect}
-                    className={headerStyles.menu_box}
-                  >
-                    <IconSVG src={`${CDN_URL}/disconnect.svg`} maxWidth="16" />
-                    <p>Disconnect</p>
-                  </Button>
-                </div>
-              </Dropdown.Menu>
-            </Dropdown>
+                </Dropdown.Menu>
+              </Dropdown>
+            </>
           ) : (
             <Button
               disabled={isConnecting}
