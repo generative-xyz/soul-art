@@ -38,7 +38,7 @@ const Introduce: React.FC = () => {
     <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>
       <Container className={s.container}>
         <Col
-          xs={{ span: 11, offset: 0 }}
+          xs={{ span: 12, offset: 0 }}
           sm={{ span: 6, offset: 0 }}
           md={{ span: 6, offset: 1 }}
           lg={{ span: 6, offset: 1 }}
