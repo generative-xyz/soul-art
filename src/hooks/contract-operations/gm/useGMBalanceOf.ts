@@ -18,7 +18,7 @@ const useGMBalanceOf = ({
       return balanceData / 1e18;
     }
     return 0;
-  }, [walletAddress, provider, contract]);
+  }, [walletAddress, contract]);
 
   return {
     call,
