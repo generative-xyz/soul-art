@@ -28,7 +28,7 @@ const useDeposit: ContractOperationHook<IDepositParams, Transaction | null> = ()
     async (): Promise<string> => {
       return '500000';
     },
-    [contract, provider, account]
+    []
   );
 
   const call = useCallback(

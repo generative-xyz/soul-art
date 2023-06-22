@@ -127,7 +127,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
 
     setCurrentAssets(undefined);
     return undefined;
-  }, [btcAddress]);
+  }, [btcAddress, fetchAssets]);
 
   const btcBalance = React.useMemo(() => {
     if (btcAddress) {
@@ -199,7 +199,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       logger.error(err);
     }
 
-  }, [fetchFeeRate, fetchTCBalance, getAvailableAssetsCreateTx]);
+  }, [fetchFeeRate, fetchTCBalance, getAvailableAssetsCreateTx, fetchGMBalance, fetchGMDepositBalance]);
 
   useEffect(() => {
     fetchBtcAssets();

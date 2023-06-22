@@ -67,7 +67,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     if (!txHash) return;
 
     setTransactionHash(txHash.toString());
-  }, [account, isClaimed]);
+  }, [account, isClaimed, operationName]);
 
   useEffect(() => {
     logger.log('account', account);
