@@ -5,10 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {
-  ICollectedUTXOResp,
-  IFeeRate,
-} from '@/interfaces/api/bitcoin';
+import { ICollectedUTXOResp, IFeeRate } from '@/interfaces/api/bitcoin';
 import { useAppSelector } from '@/state/hooks';
 import { getUserSelector } from '@/state/user/selector';
 import {
@@ -42,7 +39,7 @@ const initialValue: IAssetsContext = {
     fastestFee: 25,
     halfHourFee: 20,
     hourFee: 15,
-  }
+  },
 };
 
 export const AssetsContext = React.createContext<IAssetsContext>(initialValue);
@@ -62,14 +59,16 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   const [feeRate, setFeeRate] = useState<IFeeRate>(initialValue.feeRate);
   const { run: getTokenBalance } = useContractOperation({
     operation: useTokenBalance,
-    inscribeable: false
-  })
+    inscribeable: false,
+  });
   const { run: getDepositBalance } = useContractOperation({
     operation: useGetDepositBalance,
-    inscribeable: false
-  })
+    inscribeable: false,
+  });
 
-  const fetchAssets = useCallback(async (): Promise<ICollectedUTXOResp | undefined> => {
+  const fetchAssets = useCallback(async (): Promise<
+    ICollectedUTXOResp | undefined
+  > => {
     if (!btcAddress || !tcAddress) return undefined;
     try {
       const res = await getCollectedUTXO(btcAddress, tcAddress);
@@ -151,7 +150,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     if (!tcAddress) return;
     try {
       const gmBalance = await getTokenBalance({
-        contractAddress: GM_ADDRESS
+        contractAddress: GM_ADDRESS,
       });
       setGmBalance(gmBalance.toString());
     } catch (err: unknown) {
@@ -198,8 +197,13 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     } catch (err: unknown) {
       logger.error(err);
     }
-
-  }, [fetchFeeRate, fetchTCBalance, getAvailableAssetsCreateTx, fetchGMBalance, fetchGMDepositBalance]);
+  }, [
+    fetchFeeRate,
+    fetchTCBalance,
+    getAvailableAssetsCreateTx,
+    fetchGMBalance,
+    fetchGMDepositBalance,
+  ]);
 
   useEffect(() => {
     fetchBtcAssets();
@@ -225,13 +229,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       gmBalance,
       gmDepositBalance,
     };
-  }, [
-    btcBalance,
-    feeRate,
-    tcBalance,
-    gmBalance,
-    gmDepositBalance,
-  ]);
+  }, [btcBalance, feeRate, tcBalance, gmBalance, gmDepositBalance]);
 
   return (
     <AssetsContext.Provider value={contextValues}>
