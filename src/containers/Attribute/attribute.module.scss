@@ -35,12 +35,13 @@
     justify-content: flex-start;
     font-size: rem(16px);
     gap: rem(8px);
+    margin-right: rem(24px);
   }
 
   &_rightContainer {
     display: flex;
     align-items: center;
-    padding-left: rem(24px);
+    margin-left: rem(20px);
 
     &_dropdownToggle {
       width: 100%;

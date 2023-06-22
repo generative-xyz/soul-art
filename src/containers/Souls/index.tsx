@@ -151,7 +151,7 @@ export const SoulsContainer: React.FC = () => {
             Be the first one to adopt a Soul. Adopt a Soul here.
           </p>
           <Link href={ROUTE_PATH.CLAIM} className={soulsStyles.empty_adopt}>
-            Adopt Souls
+            Adopt a Soul
           </Link>
         </div>
       </div>
@@ -161,7 +161,7 @@ export const SoulsContainer: React.FC = () => {
   return (
     <>
       <InfiniteScroll
-        className="list"
+        className={`${soulsStyles.list} small-scrollbar`}
         dataLength={souls?.length || 0}
         hasMore={true}
         loader={
@@ -173,7 +173,7 @@ export const SoulsContainer: React.FC = () => {
         }
         next={debounceLoadMore}
       >
-        <div className={soulsStyles.art}>
+        <div className={`${soulsStyles.art} small-scrollbar`} id="soul-list">
           <Container className={soulsStyles.grid_container}>
             {souls &&
               souls.length > 0 &&
