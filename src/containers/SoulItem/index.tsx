@@ -11,10 +11,20 @@ import MoreSection from './MoreSection';
 import s from './style.module.scss';
 import TabsComponent from './Tabs';
 import { AuctionProvider } from '@/contexts/auction-context';
+import web3Instance from '@/connections/custom-web3-provider';
+import useAsyncEffect from 'use-async-effect';
 
 const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
   const [_isFetchingMoreItems, setIsFetchingMoreItems] = useState(false);
   const [souls, setSouls] = useState<IToken[]>([]);
+  const [_settingFeatures, setSettingFeatures] = useState<string[] | null>(
+    null
+  );
+
+  useAsyncEffect(async () => {
+    const features = await web3Instance.getSettingFeatures();
+    if (features.length > 0) setSettingFeatures(features);
+  }, []);
 
   const fetchSouls = useCallback(async (page = 1, isFetchMore = false) => {
     try {
