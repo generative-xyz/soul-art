@@ -67,8 +67,7 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
 
     setInscribing(true);
 
-    // eslint-disable-next-line prefer-const
-    let intervalId: NodeJS.Timer;
+    let intervalId: NodeJS.Timer | null = null;
 
     const fetchTransactionStatus = async () => {
       try {

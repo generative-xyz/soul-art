@@ -81,8 +81,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
       return;
     };
 
-    // eslint-disable-next-line prefer-const
-    let intervalId: NodeJS.Timer;
+    let intervalId: NodeJS.Timer | null = null;
 
     const checkBiddableStatus = async (): Promise<void> => {
       const endBlock = Number(auction.endTime);

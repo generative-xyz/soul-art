@@ -67,9 +67,7 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
     if (!txHash) return;
 
     setInscribing(true);
-
-    // eslint-disable-next-line prefer-const
-    let intervalId: NodeJS.Timer;
+    let intervalId: NodeJS.Timer | null = null;
 
     const fetchTransactionStatus = async () => {
       try {
