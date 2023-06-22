@@ -22,7 +22,10 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
     walletAddress: data.owner,
   });
 
-  const itemName = useMemo(() => `Soul #${data.tokenId}`, [data.tokenId]);
+  const itemName = useMemo(
+    () => (!!data.name ? data.name : `Soul #${data.tokenId}`),
+    [data.tokenId, data.name]
+  );
 
   useAsyncEffect(async () => {
     if (data.owner) {
