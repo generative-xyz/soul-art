@@ -29,7 +29,7 @@ const Tech: React.FC = () => {
         'When the GM token price rises, the Souls soar higher in the sky, symbolizing the collective optimism and excitement within the community.',
     },
     {
-      id: 1,
+      id: 3,
       title: 'Weather',
       img: `${CDN_URL}/solagif/event.gif`,
       content: `The artwork's weather reflects the community's emotions. Fear (FUD) brings stormy clouds, caution, and uncertainty. Belief (HOLD) creates a clear and sunny sky, representing optimism. In moments of greed (FOMO), enchanting effects like rainbows, sun flares, and sun pillars appear, adding excitement to the scene.
