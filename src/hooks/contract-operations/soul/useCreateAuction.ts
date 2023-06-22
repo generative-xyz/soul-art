@@ -78,7 +78,7 @@ const useCreateAuction: ContractOperationHook<ICreateAuctionParams, Transaction 
 
       return null;
     },
-    [account, provider, contract, btcBalance, feeRate]
+    [account, provider, contract, btcBalance, feeRate, estimateGas]
   );
 
   return {

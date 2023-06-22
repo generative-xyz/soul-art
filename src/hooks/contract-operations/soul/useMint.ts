@@ -83,7 +83,7 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
 
       return null;
     },
-    [account, provider, contract, btcBalance, feeRate]
+    [account, provider, contract, btcBalance, feeRate, estimateGas]
   );
 
   return {

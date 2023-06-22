@@ -1,18 +1,19 @@
 import { ContractOperationHook, DAppType } from '@/interfaces/contract-operation';
-import SoulAbiJson from '@/abis/soul.json';
+import Erc721AbiJson from '@/abis/erc721.json';
 import { useWeb3React } from '@web3-react/core';
 import { useCallback, useContext } from 'react';
 import logger from '@/services/logger';
 import { Transaction } from 'ethers';
-import { SOUL_CONTRACT, TRANSFER_TX_SIZE } from '@/configs';
-import { useContract } from '@/hooks/useContract';
+import { TRANSFER_TX_SIZE } from '@/configs';
 import BigNumber from 'bignumber.js';
 import * as TC_SDK from 'trustless-computer-sdk';
 import { formatBTCPrice } from '@/utils/format';
 import { AssetsContext } from '@/contexts/assets-context';
+import { getContract } from '@/utils';
 
 export interface ISetApprovalForAllParams {
   operator: string;
+  contractAddress: string;
 }
 
 const useSetApprovalForAll: ContractOperationHook<
@@ -20,13 +21,13 @@ const useSetApprovalForAll: ContractOperationHook<
   Transaction | null
 > = () => {
   const { account, provider } = useWeb3React();
-  const contract = useContract(SOUL_CONTRACT, SoulAbiJson.abi, true);
   const { btcBalance, feeRate } = useContext(AssetsContext);
 
   const estimateGas = useCallback(
     async (params: ISetApprovalForAllParams): Promise<string> => {
-      if (account && provider && contract) {
-        const { operator } = params;
+      const { operator, contractAddress } = params;
+      if (account && provider) {
+        const contract = getContract(contractAddress, Erc721AbiJson.abi, provider);
         const gasLimit = await contract.estimateGas.setApprovalForAll(operator, true, {
           from: account
         });
@@ -37,15 +38,16 @@ const useSetApprovalForAll: ContractOperationHook<
       }
       return '500000';
     },
-    [contract, provider, account]
+    [provider, account]
   );
 
   const call = useCallback(
     async (params: ISetApprovalForAllParams): Promise<Transaction | null> => {
       logger.debug('useSetApprovalForAll', params);
+      const { operator, contractAddress } = params;
 
-      if (account && provider && contract) {
-        const { operator } = params;
+      if (account && provider) {
+        const contract = getContract(contractAddress, Erc721AbiJson.abi, provider);
 
         const estimatedFee = TC_SDK.estimateInscribeFee({
           tcTxSizeByte: TRANSFER_TX_SIZE,
@@ -71,7 +73,7 @@ const useSetApprovalForAll: ContractOperationHook<
 
       return null;
     },
-    [account, provider],
+    [account, provider, btcBalance, feeRate, estimateGas]
   );
 
   return {

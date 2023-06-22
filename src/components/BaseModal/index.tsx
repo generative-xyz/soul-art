@@ -46,9 +46,6 @@ const BaseModal: React.FC<PropsWithChildren<IProps>> = ({
         <Modal.Body className={s.modal_body}>
           {children}
         </Modal.Body>
-        <Modal.Footer className={s.modal_footer}>
-
-        </Modal.Footer>
       </div>
     </Modal>
   )

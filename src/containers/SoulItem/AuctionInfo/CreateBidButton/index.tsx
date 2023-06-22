@@ -1,5 +1,5 @@
 import { ITokenDetail } from '@/interfaces/api/marketplace';
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import s from './styles.module.scss';
 import Button from '@/components/Button';
 import ModalBid from '../ModalBid';

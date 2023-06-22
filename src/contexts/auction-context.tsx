@@ -81,6 +81,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
       return;
     };
 
+    // eslint-disable-next-line prefer-const
     let intervalId: NodeJS.Timer;
 
     const checkBiddableStatus = async (): Promise<void> => {
@@ -92,8 +93,8 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
       }
     }
 
-    intervalId = setInterval(checkBiddableStatus, 15000);
     checkBiddableStatus();
+    intervalId = setInterval(checkBiddableStatus, 15000);
 
     return () => {
       intervalId && clearInterval(intervalId);

@@ -10,7 +10,7 @@ import useCreateBid, { ICreateBidParams } from "@/hooks/contract-operations/soul
 import useContractOperation from "@/hooks/contract-operations/useContractOperation";
 import logger from "@/services/logger";
 import { showToastError } from "@/utils/toast";
-import { formatEthPrice, formatBTCPrice } from "@/utils/format";
+import { formatEthPrice } from "@/utils/format";
 import { Formik } from 'formik';
 import Web3 from 'web3';
 import { isValidNumber } from "@/utils";
@@ -38,6 +38,7 @@ const ModalBid: React.FC<IProps> = ({
   data
 }: IProps): React.ReactElement => {
   const { auction, auctionEndTime } = useContext(AuctionContext);
+  const { gmDepositBalance } = useContext(AssetsContext);
   const { feeRate } = useContext(AssetsContext);
   const [estBTCFee, setEstBTCFee] = useState<string | null>(null);
   const [estTCFee, setEstTCFee] = useState<string | null>(null);
@@ -169,7 +170,7 @@ const ModalBid: React.FC<IProps> = ({
                 </div>
                 <div className={s.bidModal_body_highestPrice}>
                   <p className={s.bidModal_body_highestPrice_label}>Auction Wallet</p>
-                  <p className={s.bidModal_body_highestPrice_value}>1.5 GM</p>
+                  <p className={s.bidModal_body_highestPrice_value}>{`${formatEthPrice(gmDepositBalance)} GM`}</p>
                 </div>
               </div>
               <div className={cs(s.bidModal_body_highestInput, {

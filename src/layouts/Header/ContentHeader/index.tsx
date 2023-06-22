@@ -207,13 +207,13 @@ const ContentHeader = (): JSX.Element => {
                         />
                         <p>
                           {formatLongAddress(
-                            user?.walletAddressBtcTaproot || ''
+                            user?.btcAddress || ''
                           )}
                         </p>
                       </div>
                       <div
                         onClick={() =>
-                          onClickCopy(user?.walletAddressBtcTaproot || '')
+                          onClickCopy(user?.btcAddress || '')
                         }
                       >
                         <IconSVG

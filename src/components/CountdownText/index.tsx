@@ -1,8 +1,5 @@
 import React, { ReactElement } from 'react';
 import s from './styles.module.scss';
-import {
-  CLAIM_START_TIME
-} from '@/configs';
 import cs from 'classnames';
 import useCountdown from '@/hooks/useCountdown';
 

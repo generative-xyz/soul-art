@@ -1,6 +1,10 @@
 import { TC_NETWORK_RPC } from '@/configs';
 import Web3 from 'web3';
 import { BlockTransactionString } from 'web3-eth';
+import { AbiItem } from 'web3-utils'
+import ERC20AbiJson from '@/abis/erc20.json';
+import BigNumber from 'bignumber.js';
+import logger from '@/services/logger';
 
 class CustomWeb3Provider {
   private web3: Web3;
@@ -42,6 +46,18 @@ class CustomWeb3Provider {
 
     const averageBlockTime = totalBlockTime / numBlocksToAverage;
     return averageBlockTime;
+  }
+
+  async getErc20Balance(erc20Address: string, walletAddress: string): Promise<BigNumber> {
+    try {
+      const tokenContract = new this.web3.eth.Contract(ERC20AbiJson.abi as Array<AbiItem>, erc20Address);
+      const balance = await tokenContract.methods.balanceOf(walletAddress).call();
+
+      return new BigNumber(balance.toString());
+    } catch (err: unknown) {
+      logger.error(err);
+      return new BigNumber('0');
+    }
   }
 }
 

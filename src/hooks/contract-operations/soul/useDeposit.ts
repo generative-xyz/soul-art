@@ -25,17 +25,7 @@ const useDeposit: ContractOperationHook<IDepositParams, Transaction | null> = ()
   const { btcBalance, feeRate } = useContext(AssetsContext);
 
   const estimateGas = useCallback(
-    async (params: IDepositParams): Promise<string> => {
-      if (account && provider && contract) {
-        const { amount } = params;
-        const gasLimit = await contract.estimateGas.deposit(amount, {
-          from: account,
-        });
-        const gasLimitBN = new BigNumber(gasLimit.toString());
-        const gasBuffer = gasLimitBN.times(1.1).decimalPlaces(0);
-        logger.debug('Estimated gas', gasBuffer.toString());
-        return gasBuffer.toString();
-      }
+    async (): Promise<string> => {
       return '500000';
     },
     [contract, provider, account]
@@ -62,7 +52,7 @@ const useDeposit: ContractOperationHook<IDepositParams, Transaction | null> = ()
           );
         }
 
-        const gasLimit = await estimateGas(params);
+        const gasLimit = await estimateGas();
         const transaction = await contract
           .connect(provider.getSigner())
           .deposit(amount, {

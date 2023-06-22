@@ -82,19 +82,15 @@ const Header = ({
   theme?: string;
 }) => {
   const router = useRouter();
-
   const homepage = router.pathname === ROUTE_PATH.HOME;
-
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const { gmBalance, btcBalance, tcBalance } = useContext(AssetsContext);
+  const { gmBalance, btcBalance, tcBalance, gmDepositBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
   const { account } = useWeb3React();
-
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
-
   const [eligibleOwner, setEligibleOwner] = useState(false);
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
@@ -250,7 +246,7 @@ const Header = ({
                       Auction Wallet
                     </p>
                     <div className={cs(headerStyles.profile_amount)}>
-                      {`${formatEthPrice(gmBalance)} GM`}
+                      {`${formatEthPrice(gmDepositBalance)} GM`}
                       <IconSVG
                         src={`${CDN_URL}/ic-add-fill.svg`}
                         maxWidth="20"
@@ -354,7 +350,7 @@ const Header = ({
                       'BTC Address',
                       formatBTCPrice(btcBalance),
                       `BTC`,
-                      user?.walletAddressBtcTaproot
+                      user?.btcAddress
                     )}
                     <div
                       onClick={() =>

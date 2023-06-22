@@ -20,23 +20,23 @@ const EstimatedFee: React.FC<IProps> = ({
         <div className="est-fee-options">
           <div className={`est-fee-item`}>
             <p className="est-fee-item-title">TC network fee</p>
-            <p className="est-fee-item-value">
-              {estimateTCGas ? (
-                `~ ${formatEthPrice(estimateTCGas)} TC`
-              ) : (
-                <EllipsisLoading />
-              )}
-            </p>
+            {estimateTCGas ? (
+              <p className="est-fee-item-value">
+                {`~ ${formatEthPrice(estimateTCGas)} TC`}
+              </p>
+            ) : (
+              <EllipsisLoading />
+            )}
           </div>
           <div className={`est-fee-item`}>
             <p className="est-fee-item-title">BTC network fee</p>
-            <p className="est-fee-item-value">
-              {estimateBTCGas ? (
-                `~ ${formatBTCPrice(estimateBTCGas)} BTC`
-              ) : (
-                <EllipsisLoading />
-              )}
-            </p>
+            {estimateBTCGas ? (
+              <p className="est-fee-item-value">
+                {`~ ${formatBTCPrice(estimateBTCGas)} BTC`}
+              </p>
+            ) : (
+              <EllipsisLoading />
+            )}
           </div>
         </div>
       </div>

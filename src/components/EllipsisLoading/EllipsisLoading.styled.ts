@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  width: 20px;
+  height: 20px;
+  
   .lds-ellipsis {
     display: inline-block;
     position: relative;

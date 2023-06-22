@@ -7,10 +7,10 @@ export type Token = {
   image: string;
   animationUrl: string;
   animation_url: string;
-  attributes: Array<any>;
+  attributes: Array<unknown>;
   genNFTAddr: string;
   owner: User;
-  project: any;
+  project: unknown;
   mintedTime: string;
   creatorProfile?: User;
   ownerAddr: string;

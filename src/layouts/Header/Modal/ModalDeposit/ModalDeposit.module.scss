@@ -11,7 +11,7 @@
   border-radius: rem(12px);
   margin-bottom: rem(32px);
 
-  p {
+  .deposit_guide {
     font-size: rem(16px);
     line-height: calc(22 / 16);
     margin-bottom: rem(16px);
@@ -68,8 +68,12 @@
   font-size: rem(20px);
   line-height: calc(28 / 20);
 
+  &.error {
+    border: 1px solid #ff4747;
+  }
+
   input {
-    flex: 0.5;
+    width: 100%;
   }
 
   .modal_input_right {
@@ -95,6 +99,14 @@
   }
 }
 
+.errorMessage {
+  color: #ff4747;
+  font-weight: 400;
+  font-size: rem(12px);
+  line-height: 140%;
+  margin-top: rem(8px);
+}
+
 .cta_btn {
   width: 100%;
   text-align: center;
@@ -104,4 +116,16 @@
   font-size: rem(16px);
   line-height: calc(18 / 16);
   font-weight: 500;
+
+  &:hover {
+    background: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
+
+  &:disabled {
+    background: #f4f4f4;
+    color: #898989;
+    border: none;
+  }
 }
