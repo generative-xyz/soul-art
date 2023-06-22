@@ -146,7 +146,7 @@ const ContentHeader = (): JSX.Element => {
                         maxWidth={'20'}
                         maxHeight={'20'}
                       ></IconSVG>
-                      {gmBalance}&nbsp;GM
+                      {`${formatEthPrice(gmBalance)} GM`}
                     </div>
                   </OverlayTrigger>
 
@@ -207,13 +207,13 @@ const ContentHeader = (): JSX.Element => {
                         />
                         <p>
                           {formatLongAddress(
-                            user?.walletAddressBtcTaproot || ''
+                            user?.btcAddress || ''
                           )}
                         </p>
                       </div>
                       <div
                         onClick={() =>
-                          onClickCopy(user?.walletAddressBtcTaproot || '')
+                          onClickCopy(user?.btcAddress || '')
                         }
                       >
                         <IconSVG

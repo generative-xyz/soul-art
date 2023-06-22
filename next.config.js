@@ -13,10 +13,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.generative.xyz',
       },
-      {
-        protocol: 'https',
-        hostname: '**.souldao.art',
-      },
     ],
   },
   sassOptions: {

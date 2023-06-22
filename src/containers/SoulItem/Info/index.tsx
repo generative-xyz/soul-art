@@ -1,5 +1,5 @@
 import { ITokenDetail } from '@/interfaces/api/marketplace';
-import TabAttributes from '../AuctionInfo/Tabs/TabAttributes';
+import TabAttributes from '../Tabs/TabAttributes';
 import s from './style.module.scss';
 
 const Info = ({ data }: { data: ITokenDetail }) => {

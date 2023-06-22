@@ -16,9 +16,12 @@ const useCountdown = (utcTime: string) => {
     const interval = setInterval(() => {
       const now = dayjs().utc();
       const diff = dayjs.duration(dayjs.utc(utcTime).diff(now));
-      setHours(diff.hours() + diff.days() * 24);
-      setMinutes(diff.minutes());
-      setSeconds(diff.seconds());
+      const diffHour = diff.hours() + diff.days() * 24;
+      const diffMin = diff.minutes();
+      const diffSec = diff.seconds();
+      setHours(diffHour > 0 ? diffHour : 0);
+      setMinutes(diffMin > 0 ? diffMin : 0);
+      setSeconds(diffSec > 0 ? diffSec : 0);
     }, 1000);
 
     return () => clearInterval(interval);

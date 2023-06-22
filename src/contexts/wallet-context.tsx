@@ -113,7 +113,7 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
   }, []);
 
   useEffect(() => {
-    if (user?.walletAddress && !user.walletAddressBtcTaproot) {
+    if (user?.walletAddress && !user.btcAddress) {
       const taprootAddress = bitcoinStorage.getUserTaprootAddress(
         user?.walletAddress
       );

@@ -2,7 +2,7 @@ import px2rem from '@/utils/px2rem';
 import styled from 'styled-components';
 
 export const StyledToastConfirm = styled.div`
-  font-size: ${px2rem(24)};
+  font-size: ${px2rem(16)};
   font-weight: 400;
   width: ${px2rem(410)};
   display: flex;

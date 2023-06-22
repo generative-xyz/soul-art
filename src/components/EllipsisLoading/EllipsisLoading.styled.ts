@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  width: 20px;
+  height: 20px;
+  
   .lds-ellipsis {
     display: inline-block;
     position: relative;
@@ -14,7 +17,7 @@ export const Wrapper = styled.div`
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background: #fff;
+    background: #000;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
 

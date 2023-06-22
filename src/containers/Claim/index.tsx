@@ -3,14 +3,18 @@ import { Col, Container, Row } from 'react-bootstrap';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
-// import ClaimButton from './ClaimButton';
 import { CLAIM_START_TIME } from '@/configs';
-import { SoulEventType } from '@/enums/soul';
 import useTimeComparison from '@/hooks/useTimeComparison';
 import { ISoul } from '@/interfaces/api/soul';
 import logger from '@/services/logger';
 import { useWeb3React } from '@web3-react/core';
 import Discord from './Discord';
+import useMint from '@/hooks/contract-operations/soul/useMint';
+import { toStorageKey } from '@/utils';
+import useAsyncEffect from 'use-async-effect';
+import { getListTokensByWallet } from '@/services/soul';
+import dayjs from 'dayjs';
+import web3Instance from '@/connections/custom-web3-provider';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -19,46 +23,51 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   >('idle');
   const { account, provider } = useWeb3React();
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
-  const [mintedTimestamp, _setMintedTimestamp] = useState<null | string>(null);
-  // const [isFetchingApi, setIsFetchingApi] = useState(false);
-  const [soulToken, _setSoulToken] = useState<ISoul | null>(null);
+  const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
+  const [_isFetchingApi, setIsFetchingApi] = useState(false);
+  const [soulToken, setSoulToken] = useState<ISoul | null>(null);
+  const {
+    operationName
+  } = useMint()
   const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
   const isEventStarted =
     claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
 
-  // useAsyncEffect(async () => {
-  //   try {
-  //     setIsFetchingApi(true);
-  //     const { items } = await getListTokensByWallet('account' as string);
-  //     if (items.length > 0 && items[0]) {
-  //       const soulItem = items[0];
-  //       setSoulToken(soulItem);
-  //       setIsClaimed(true);
-  //       setClaimStatus('success');
+  useAsyncEffect(async () => {
+    if (!account) return;
 
-  //       if (soulItem.mintedAt) {
-  //         const block = await web3Instance.getBlock(soulItem.mintedAt);
-  //         logger.info('block info', block);
-  //         const date = dayjs.unix(block.timestamp as number);
-  //         setMintedTimestamp(date.format('ddd, D MMM YYYY HH:mm:ss'));
-  //       }
-  //     }
-  //   } catch (err: unknown) {
-  //     logger.error('Error get tokens:', err);
-  //   } finally {
-  //     setIsFetchingApi(false);
-  //   }
-  // }, [account]);
+    try {
+      setIsFetchingApi(true);
+      const { items } = await getListTokensByWallet(account);
+      if (items.length > 0 && items[0]) {
+        const soulItem = items[0];
+        setSoulToken(soulItem);
+        setIsClaimed(true);
+        setClaimStatus('success');
+
+        if (soulItem.mintedAt) {
+          const block = await web3Instance.getBlock(soulItem.mintedAt);
+          logger.info('block info', block);
+          const date = dayjs.unix(block.timestamp as number);
+          setMintedTimestamp(date.format('ddd, D MMM YYYY HH:mm:ss'));
+        }
+      }
+    } catch (err: unknown) {
+      logger.error('Error get tokens:', err);
+    } finally {
+      setIsFetchingApi(false);
+    }
+  }, [account]);
 
   useEffect(() => {
     if (!account || isClaimed) return;
 
-    const storageKey = `${SoulEventType.MINT}_${account.toLowerCase()}`;
-    const txHash = localStorage.getItem(storageKey);
+    const key = toStorageKey(operationName, account);
+    const txHash = localStorage.getItem(key);
     if (!txHash) return;
 
     setTransactionHash(txHash.toString());
-  }, [account, isClaimed]);
+  }, [account, isClaimed, operationName]);
 
   useEffect(() => {
     logger.log('account', account);
@@ -95,9 +104,9 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     }, 10000);
 
     return () => {
-      clearInterval(intervalId);
+      intervalId && clearInterval(intervalId);
     };
-  }, [provider, transactionHash, account]);
+  }, [provider, transactionHash, account, operationName]);
 
   return (
     <div className={s.claimPage}>
@@ -121,9 +130,8 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                 </div>
               )}
               <div
-                className={`${s.claimBox} ${
-                  claimStatus === 'success' ? s.success : ''
-                }`}
+                className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''
+                  }`}
               >
                 <ClaimImg
                   isClaimed={isClaimed}

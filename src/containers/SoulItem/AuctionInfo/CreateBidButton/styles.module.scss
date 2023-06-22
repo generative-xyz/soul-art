@@ -1,0 +1,101 @@
+.content {
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+
+  &_auction {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: rem(12px);
+
+    &_adoptButton {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: rem(50px);
+      background: #000000;
+      border-radius: 100px;
+      color: #fff;
+      gap: rem(10px);
+      padding: rem(16px) rem(40px);
+      font-weight: 500;
+      font-size: rem(16px);
+      line-height: rem(18px);
+      transition: 0.5s $easeOutQuart;
+
+      &:hover {
+        background: #fff;
+        color: #000;
+        transition: 0.5s $easeOutQuart;
+        border: 1px solid #000;
+      }
+
+      &:disabled {
+        background: #f4f4f4;
+        color: #898989;
+        border: none;
+      }
+    }
+  }
+
+  &_auctionLeft {
+    flex-direction: column;
+    justify-content: flex-start;
+
+    &_title {
+      font-size: rem(12px);
+      font-weight: 400;
+      color: #000;
+      opacity: 0.6;
+      line-height: 140%;
+    }
+
+    &_price {
+      font-size: rem(20px);
+      line-height: 140%;
+      color: #000;
+      font-weight: 500;
+    }
+  }
+
+  &_auctionRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(11px);
+
+    &_live {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: rem(10px);
+      height: rem(10px);
+      background: #0ac681;
+      position: relative;
+      border-radius: 100px;
+
+      &::after {
+        content: '';
+        width: rem(16px);
+        height: rem(16px);
+        position: absolute;
+        background: rgba(10, 198, 129, 0.2);
+        border-radius: 100px;
+      }
+    }
+
+    &_time {
+      font-size: rem(20px);
+      font-weight: 500;
+      line-height: 140%;
+      color: #000;
+      min-width: rem(106px);
+    }
+  }
+}

@@ -16,6 +16,7 @@ export const GM_ADDRESS: string = process.env.NEXT_PUBLIC_GM_CONTRACT!;
 export const TC_URL: string = process.env.NEXT_PUBLIC_TC_WEB_URL!;
 export const TRANSFER_TX_SIZE = 1000;
 export const MULTIPART_CHUNK_SIZE = 32000000; // 32Mb
+export const BLOCKSTREAM_URL = process.env.NEXT_PUBLIC_BLOCKSTREAM_URL!;
 
 // Event
 export const CLAIM_START_TIME = '2023-07-06 14:00:00';

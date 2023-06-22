@@ -1,4 +1,4 @@
-import SoulsAbiJson from '@/abis/soul.json';
+import SoulAbiJson from '@/abis/soul.json';
 import { SOUL_CONTRACT, TRANSFER_TX_SIZE } from '@/configs';
 import { AssetsContext } from '@/contexts/assets-context';
 import { useContract } from '@/hooks/useContract';
@@ -24,7 +24,7 @@ export interface IMintParams {
 
 const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
   const { account, provider } = useWeb3React();
-  const contract = useContract(SOUL_CONTRACT, SoulsAbiJson.abi, true);
+  const contract = useContract(SOUL_CONTRACT, SoulAbiJson.abi, true);
   const { btcBalance, feeRate } = useContext(AssetsContext);
 
   const estimateGas = useCallback(
@@ -53,10 +53,8 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
 
         const { address, totalGM, signature, txSuccessCallback } = params;
 
-        const tcTxSizeByte = TRANSFER_TX_SIZE;
-
         const estimatedFee = TC_SDK.estimateInscribeFee({
-          tcTxSizeByte: tcTxSizeByte,
+          tcTxSizeByte: TRANSFER_TX_SIZE,
           feeRatePerByte: feeRate.hourFee,
         });
 
@@ -69,16 +67,11 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
           );
         }
 
-        const gasLimit = await estimateGas({
-          address: address,
-          totalGM: totalGM,
-          signature: signature,
-        });
-
+        const gasLimit = await estimateGas(params);
         const transaction = await contract
           .connect(provider.getSigner())
           .mint(address, totalGM, signature, {
-            gasLimit: gasLimit,
+            gasLimit,
           });
 
         if (txSuccessCallback) {
@@ -90,7 +83,7 @@ const useMint: ContractOperationHook<IMintParams, Transaction | null> = () => {
 
       return null;
     },
-    [account, provider, contract, btcBalance, feeRate]
+    [account, provider, contract, btcBalance, feeRate, estimateGas]
   );
 
   return {

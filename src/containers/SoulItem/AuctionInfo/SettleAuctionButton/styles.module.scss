@@ -1,0 +1,29 @@
+.startAuctionButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: rem(50px);
+  background: #000000;
+  border-radius: 100px;
+  color: #fff;
+  gap: rem(10px);
+  padding: rem(16px) rem(40px);
+  font-weight: 500;
+  font-size: rem(16px);
+  line-height: rem(18px);
+  transition: 0.5s $easeOutQuart;
+
+  &:hover {
+    background: #fff;
+    color: #000;
+    transition: 0.5s $easeOutQuart;
+    border: 1px solid #000;
+  }
+
+  &:disabled {
+    background: #f4f4f4;
+    color: #898989;
+  }
+}
