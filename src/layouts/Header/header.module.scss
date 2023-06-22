@@ -86,33 +86,42 @@
   height: 20px;
 }
 
+.profile_auction_wallet_container {
+  min-width: 0;
+}
+
 .profile {
+  &_auction_wallet {
+    padding: 0 rem(6px);
+    font-size: rem(12px);
+    line-height: 29px;
+  }
+
   &_container {
     cursor: pointer;
     border-radius: 999px;
-    // background-color: rgba($color: #fff, $alpha: 0.1);
     border: 1px solid #ececec;
     color: white;
-    background-color: white;
+    background-color: $gray-primary;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 8px;
-    gap: 4px;
+    gap: 8px;
+    padding: rem(3px);
+    padding-left: rem(8px);
   }
 
   &_amount {
     border-radius: 999px;
-    // background-color: rgba($color: #fff, $alpha: 0.2);
-    background-color: $gray-primary;
+    background-color: white;
     color: #000;
     padding: 4px 8px;
     box-shadow: 0px 0px 12px -6px rgba(0, 0, 0, 0.08);
     font-size: 14px;
-    line-height: 20/14;
+    line-height: calc(20 / 14);
     display: flex;
     align-items: center;
-    gap: rem(5px);
+    gap: rem(2px);
 
     &.warning {
       color: $red-primary;
@@ -122,8 +131,6 @@
   &_avatar {
     width: 32px;
     height: 32px;
-    margin-right: -4px;
-    margin-left: 4px;
     background: linear-gradient(0deg, #7196ff -0.45%, #2a5ee8 71.18%);
     border: 1px solid $white-primary;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
@@ -199,7 +206,7 @@
     background-color: #ececec;
     height: 1px;
     width: 100%;
-    margin: rem(20px) 0;
+    margin-bottom: rem(20px);
   }
 
   &_wrapper {
@@ -218,17 +225,30 @@
     border: 1px solid rgba($color: #fff, $alpha: 0.1);
     box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
     border-radius: 20px;
-    padding: rem(16px);
+    padding: rem(20px) rem(16px);
     z-index: 6;
     background-color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 0;
+      width: 100%;
+      height: rem(15px);
+      background: transparent;
+    }
   }
 
   &_title {
     text-align: left;
     color: #000;
-    font-size: rem(16px);
+    font-size: rem(12px);
     line-height: 140%;
-    margin-bottom: rem(8px);
+    margin-bottom: rem(4px);
     font-style: normal;
     opacity: 0.6;
   }
@@ -241,8 +261,17 @@
     border: 1px solid #ececec;
     // border: 1px solid rgba($color: #fff, $alpha: 0.1);
     border-radius: rem(16px);
+    overflow: hidden;
+    margin-bottom: rem(20px);
+
+    &:first-of-type {
+      margin-bottom: rem(12px);
+    }
+  }
+
+  &_info {
     padding: rem(12px);
-    margin-bottom: rem(8px);
+    width: 100%;
   }
 
   &_item {
@@ -258,12 +287,23 @@
       justify-content: flex-start;
 
       p {
-        font-size: rem(16px);
+        font-size: rem(14px);
         line-height: 140%;
         margin-bottom: 0;
         margin-left: rem(8px);
         color: #000;
       }
+    }
+  }
+
+  &_item_balance {
+    padding: rem(10px) rem(12px);
+    background: $gray-primary;
+    width: 100%;
+
+    p {
+      font-size: rem(16px);
+      font-weight: 500;
     }
   }
 
@@ -273,12 +313,7 @@
     align-items: center;
     flex-direction: row;
     justify-content: flex-start;
-    margin-bottom: rem(16px);
-
-    svg,
-    path {
-      stroke: #000;
-    }
+    margin-bottom: rem(20px);
 
     p {
       margin-left: 8px;
@@ -290,6 +325,9 @@
     &:last-child {
       margin-bottom: 0;
     }
+    &:hover {
+      opacity: 0.6;
+    }
   }
 }
 
@@ -297,6 +335,11 @@
   svg,
   path {
     stroke: #000;
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.6;
   }
 }
 
@@ -308,6 +351,28 @@
   &:hover {
     text-decoration: none;
     opacity: 0.6;
+  }
+}
+
+.wallets {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+}
+
+.auction_wallet {
+  display: flex;
+  align-items: center;
+
+  .profile_container {
+    gap: 4px;
+    padding: rem(4.5px) rem(8px);
+    padding-right: rem(4.5px);
+  }
+
+  .menu_wrapper {
+    width: 100%;
+    min-width: rem(160px);
   }
 }
 
