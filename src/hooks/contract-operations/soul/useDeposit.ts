@@ -68,7 +68,7 @@ const useDeposit: ContractOperationHook<IDepositParams, Transaction | null> = ()
 
       return null;
     },
-    [account, provider, contract, btcBalance, feeRate]
+    [account, provider, contract, btcBalance, feeRate, estimateGas]
   );
 
   return {
