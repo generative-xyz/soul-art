@@ -15,21 +15,20 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 3;
 
     .columnTop {
       position: relative;
-      overflow: hidden;
       height: 100%;
+      display: flex !important;
+      align-items: center;
 
       .livingArtSection_images {
-        position: absolute;
-        top: rem(147px);
         z-index: 1;
         display: flex;
         gap: rem(40px);
         width: auto;
         height: fit-content;
+        margin-bottom: vh(120px);
 
         .wrapImg {
 
