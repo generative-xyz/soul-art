@@ -41,8 +41,8 @@
           @include min-tablet {
             margin-bottom: rem(40px);
           }
-          .introduceBox-desc {
-          }
+
+          .introduceBox-desc {}
         }
 
         .introduceBox-buttons {
@@ -168,7 +168,7 @@
 
           @include tablet {
             .wrap-video {
-              width: 40%;
+              width: 100%;
             }
           }
 
@@ -189,14 +189,14 @@
   &_actions {
     display: flex;
     gap: rem(20px);
-
     margin-top: rem(43px);
     padding-top: rem(43px);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 
     &_item {
       flex: 0 0 50%;
-      @include min-tablet {
+
+      @include pcSmall {
         flex: 0 0 rem(212px);
       }
 
