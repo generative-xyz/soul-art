@@ -230,7 +230,6 @@ const Header = ({
               color={homepage ? 'white' : 'black'}
             ></IconSVG>
           </Link>
-
           {isAuthenticated ? (
             <Dropdown>
               <Dropdown.Toggle

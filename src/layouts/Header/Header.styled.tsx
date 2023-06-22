@@ -282,6 +282,7 @@ const WalletAdress = styled(Tooltip)`
 
   .tooltip-arrow::before {
     border-bottom-color: #424242;
+    left: 80%;
   }
 `;
 

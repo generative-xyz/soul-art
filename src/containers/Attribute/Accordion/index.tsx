@@ -58,7 +58,7 @@ const AccordionComponent: React.FC<AccordionComponentProps> = ({
 
   return (
     <Accordion
-      defaultActiveKey="0"
+      defaultActiveKey={attributes.map((_, index) => String(index))}
       alwaysOpen
       className={accordionStyles.accordion_container}
     >

@@ -13,7 +13,6 @@ export const getCollectionNFTList = async (
   params: IGetCollectionNFTListParams
 ): Promise<IGetCollectionNFTListResponse> => {
   const { contract_address, ...rest } = params;
-  //   const qs = queryString.stringify(rest);
   const res = await apiClient.get(
     constructURL(`${API_PATH}/collections/${contract_address}/nfts`, rest)
   );
