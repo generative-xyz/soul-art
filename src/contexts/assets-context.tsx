@@ -198,8 +198,8 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     } catch (err: unknown) {
       logger.error(err);
     }
-
-  }, [fetchFeeRate, fetchTCBalance, getAvailableAssetsCreateTx, fetchGMBalance, fetchGMDepositBalance]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchFeeRate, fetchTCBalance, getAvailableAssetsCreateTx]);
 
   useEffect(() => {
     fetchBtcAssets();

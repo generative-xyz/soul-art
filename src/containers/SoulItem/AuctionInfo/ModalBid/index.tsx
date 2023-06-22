@@ -53,16 +53,22 @@ const ModalBid: React.FC<IProps> = ({
 
   const validateForm = (values: IFormValues): Record<string, string> => {
     const errors: Record<string, string> = {};
-    if (!values.amount) {
+    const { amount } = values;
+    const decimalRegex = /^\d+(\.\d{1,4})?$/; // Regular expression for numbers with up to 4 decimal places
+
+    if (!amount) {
       errors.amount = 'Amount is required.'
-    } else if (!isValidNumber(values.amount)) {
+    } else if (!isValidNumber(amount)) {
       errors.amount = 'Invalid number.'
-    } else if (parseFloat(values.amount) < 0) {
+    } else if (parseFloat(amount) < 0) {
       errors.amount = 'Invalid number. Amount must be greater than 0.'
+    } else if (!decimalRegex.test(amount)) {
+      errors.amount = 'Please enter a valid number with up to 4 decimal places.';
     } else {
       calculateEstBtcFee();
-      calculateEstTcFee(values.amount.toString());
+      calculateEstTcFee(amount.toString());
     }
+
     return errors;
   }
 
@@ -74,7 +80,7 @@ const ModalBid: React.FC<IProps> = ({
       const { amount } = values;
       await createBid({
         tokenId: Number(data.tokenId),
-        amount: Web3.utils.toWei(amount),
+        amount: Web3.utils.toWei(amount.toString()),
       });
     } catch (err: unknown) {
       logger.error(err);
@@ -99,12 +105,12 @@ const ModalBid: React.FC<IProps> = ({
   );
 
   const calculateEstTcFee = useCallback(async (amount: string) => {
-    if (!estimateGas || !data.tokenId || !show) return '0';
+    if (!estimateGas || !data.tokenId || !show || !amount) return '0';
     setEstTCFee(null);
     try {
       const payload: ICreateBidParams = {
         tokenId: data.tokenId as unknown as number,
-        amount: Web3.utils.toWei(amount),
+        amount: Web3.utils.toWei(amount.toString()),
       };
       const gasLimit = await estimateGas(payload);
       const gasPrice = await web3Instance.getGasPrice();
@@ -142,7 +148,7 @@ const ModalBid: React.FC<IProps> = ({
         {({ values, errors, touched, handleChange, handleSubmit, isValid }) => (
           <form onSubmit={handleSubmit}>
             <p className={s.bidModal_header_content_desc}>
-              Once your bid is placed, you will be the highest bidder in the auction.
+              You will be the highest bidder in the auction once your bid is submitted.
             </p>
             <div className={s.bidModal_body_address}>
               <div className={s.bidModal_body_addressContent}>
@@ -181,7 +187,7 @@ const ModalBid: React.FC<IProps> = ({
                   type="number"
                   value={values.amount}
                   onChange={handleChange}
-                  placeholder='0.0'
+                  placeholder='Bid more'
                 />
                 <p
                   className={
@@ -206,10 +212,10 @@ const ModalBid: React.FC<IProps> = ({
             </div>
             <div className={s.modalFooter}>
               <Button
-                disabled={!isValid}
+                disabled={!isValid || processing}
                 type="submit"
                 className={s.bidBtn}>
-                Bid
+                {processing ? 'Processing...' : 'Bid'}
               </Button>
             </div>
           </form>

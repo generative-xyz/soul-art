@@ -121,7 +121,7 @@
     line-height: calc(20 / 14);
     display: flex;
     align-items: center;
-    gap: rem(2px);
+    gap: rem(8px);
 
     &.warning {
       color: $red-primary;

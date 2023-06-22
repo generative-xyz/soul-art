@@ -35,7 +35,7 @@ const useCreateBid: ContractOperationHook<ICreateBidParams, Transaction | null> 
         );
         const gasLimitBN = new BigNumber(gasLimit.toString());
         const gasBuffer = gasLimitBN.times(1.1).decimalPlaces(0);
-        logger.debug('Create auction estimate gas', gasBuffer.toString());
+        logger.debug('Create bid estimate gas', gasBuffer.toString());
         return gasBuffer.toString();
       }
       return '500000';
@@ -67,8 +67,8 @@ const useCreateBid: ContractOperationHook<ICreateBidParams, Transaction | null> 
         const gasLimit = await estimateGas(params);
         const transaction = await contract
           .connect(provider.getSigner())
-          .createAuction(tokenId, amount, {
-            gasLimit,
+          .createBid(tokenId, amount, {
+            gasLimit: gasLimit,
           });
 
         if (txSuccessCallback) {

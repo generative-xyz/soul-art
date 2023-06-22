@@ -2,8 +2,6 @@ import { ITokenDetail } from "@/interfaces/api/marketplace";
 import React, { useEffect, useState } from "react";
 import s from './styles.module.scss';
 import Button from "@/components/Button";
-import useContractOperation from "@/hooks/contract-operations/useContractOperation";
-import useCreateAuction from "@/hooks/contract-operations/soul/useCreateAuction";
 import logger from "@/services/logger";
 import { showToastError } from "@/utils/toast";
 import { Transaction } from 'ethers';
@@ -11,6 +9,7 @@ import { useSelector } from "react-redux";
 import { getUserSelector } from "@/state/user/selector";
 import { useWeb3React } from "@web3-react/core";
 import { toStorageKey } from "@/utils";
+import useContractOperation from "@/hooks/contract-operations/useContractOperation";
 import useSettleAuction from "@/hooks/contract-operations/soul/useSettleAuction";
 
 interface IProps {
@@ -23,7 +22,7 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
   const [inscribing, setInscribing] = useState(false);
   const {
     operationName,
-  } = useCreateAuction();
+  } = useSettleAuction();
   const { run: createAuction } = useContractOperation({
     operation: useSettleAuction,
     inscribeable: true
