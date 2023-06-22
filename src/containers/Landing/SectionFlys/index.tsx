@@ -25,7 +25,7 @@ const SectionFlys = (): JSX.Element => {
     if (pageStatus === PAGE_READY) {
       registerLoader();
       const imgs: string[] = [];
-      for (let i = 1; i <= 22; i+=2) {
+      for (let i = 1; i <= 22; i += 2) {
         imgs.push(`${CDN_URL}/souls/1%20(${i}).jpg`);
       }
       loadImage(imgs).finally(() => {
@@ -60,7 +60,7 @@ const SectionFlys = (): JSX.Element => {
     dots: false,
     arrows: false,
     centerMode: true,
-    centerPadding: '20px',
+    centerPadding: '0px',
   };
 
   return (
