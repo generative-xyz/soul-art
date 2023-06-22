@@ -49,6 +49,7 @@
         .introduceBox-buttons {
           display: flex;
           gap: rem(12px);
+          flex-wrap: wrap;
 
           .button {
             padding: rem(11px) rem(24px);
@@ -59,6 +60,11 @@
             line-height: 18/16;
             transition: 0.5s $easeOutQuart;
             text-decoration: none;
+            flex: 0 0 100%;
+
+            @include min-tablet {
+              flex: 0 0 auto;
+            }
 
             &.init {
               border: 1px solid #fff;
@@ -67,6 +73,7 @@
               display: flex;
               align-items: center;
               gap: rem(16px);
+              justify-content: center;
 
               .countdown {
                 display: flex;
@@ -75,7 +82,11 @@
                 min-height: 24px;
 
                 span {
-                  width: 110px;
+                  width: 100%;
+
+                  @include min-tablet {
+                    width: rem(112px);
+                  }
                 }
               }
 
@@ -106,10 +117,10 @@
               }
             }
 
-            @include mobile {
-              font-size: rem(8px);
-              padding: rem(8px) rem(20px);
-            }
+
+            font-size: rem(14px);
+            padding: rem(8px) rem(20px);
+
 
             @include min-tablet {
               font-size: rem(16px);
@@ -195,7 +206,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 
     &_item {
-      flex: 0 0 50%;
+      flex: 0 0 calc(50% + #{rem(-20px)} / 2);
 
       @include pcSmall {
         flex: 0 0 rem(212px);
