@@ -1,5 +1,4 @@
 import { TAPROOT_ADDRESS } from '@/constants/storage-key';
-import localStorage from '@/utils/localstorage';
 
 class BitCoinStorage {
   private getUserTaprootKey = (evmAddress: string) => {
@@ -8,17 +7,17 @@ class BitCoinStorage {
 
   getUserTaprootAddress = (evmAddress: string): string | null => {
     const key = this.getUserTaprootKey(evmAddress);
-    return localStorage.get<string | null>(key);
+    return localStorage.getItem(key);
   };
 
   setUserTaprootAddress = (evmAddress: string, taprootAddress: string) => {
     const key = this.getUserTaprootKey(evmAddress);
-    return localStorage.set(key, taprootAddress);
+    return localStorage.setItem(key, taprootAddress);
   };
 
   removeUserTaprootAddress = (evmAddress: string) => {
     const key = this.getUserTaprootKey(evmAddress);
-    return localStorage.remove(key);
+    return localStorage.removeItem(key);
   };
 }
 

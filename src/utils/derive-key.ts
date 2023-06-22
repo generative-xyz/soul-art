@@ -4,7 +4,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import BIP32Factory from 'bip32';
 import ecc from '@bitcoinerlab/secp256k1';
 import bitcoinStorage from '@/utils/bitcoin-storage';
-import { clearAccessTokenStorage } from './auth-storage';
+import { clearAuthStorage } from './auth-storage';
 import { resetUser } from '@/state/user/reducer';
 import store from '@/state';
 import { ROUTE_PATH } from '@/constants/route-path';
@@ -101,7 +101,7 @@ export const generateBitcoinTaprootKey = async (address: string) => {
   } catch (error) {
     const isMetamaskAuthError = await isAuthMetamaskError(error, address);
     if (isMetamaskAuthError && !!store && !!store.dispatch) {
-      clearAccessTokenStorage();
+      clearAuthStorage();
       store.dispatch(resetUser());
       location.replace(ROUTE_PATH.HOME);
     }

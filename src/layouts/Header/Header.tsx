@@ -9,7 +9,6 @@ import {
   getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
-import { formatBTCPrice, formatEthPrice } from '@/utils/format';
 import { showToastError, showToastSuccess } from '@/utils/toast';
 import { AnimFade } from '@Animations/Fade';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
@@ -17,19 +16,26 @@ import { useWeb3React } from '@web3-react/core';
 import { default as classNames, default as cs } from 'classnames';
 import copy from 'copy-to-clipboard';
 import Link from 'next/link';
-import { HTMLAttributes, forwardRef, useContext, useState } from 'react';
+import { useRouter } from 'next/router';
+import {
+  HTMLAttributes,
+  forwardRef,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Button, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { useSelector } from 'react-redux';
 import { Wrapper } from './Header.styled';
 import MenuMobile from './MenuMobile';
 import headerStyles from './header.module.scss';
-import { useRouter } from 'next/router';
+import { formatBTCPrice, formatEthPrice } from '@/utils/format';
 
-// type NavContent = {
-//   title: string;
-//   url: string;
-// };
+type NavContent = {
+  title: string;
+  url: string;
+};
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -49,20 +55,20 @@ const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 
 WalletToggle.displayName = 'WalletToggle';
 
-// const NAV_CONTENT: NavContent[] = [
-//   {
-//     title: 'Story',
-//     url: ROUTE_PATH.HOME,
-//   },
-//   {
-//     title: 'Art',
-//     url: ROUTE_PATH.ART,
-//   },
-//   // {
-//   //   title: 'FAQs',
-//   //   url: '/faq',
-//   // },
-// ];
+const NAV_CONTENT: NavContent[] = [
+  {
+    title: 'Story',
+    url: ROUTE_PATH.HOME,
+  },
+  // {
+  //   title: 'Art',
+  //   url: ROUTE_PATH.ART,
+  // },
+  {
+    title: 'FAQs',
+    url: ROUTE_PATH.FAQS,
+  },
+];
 
 const Header = ({
   height,
@@ -78,14 +84,17 @@ const Header = ({
   const homepage = router.pathname === ROUTE_PATH.HOME;
 
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const { btcBalance, tcBalance, gmBalance } = useContext(AssetsContext);
+  const { gmBalance, btcBalance, tcBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
   const { account } = useWeb3React();
+
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  // const [showDropdown, setShowDropdown] = useState(false);
+
+  const [eligibleOwner, setEligibleOwner] = useState(false);
 
   const handleConnectWallet = async () => {
     try {
@@ -110,6 +119,56 @@ const Header = ({
     });
   };
 
+  const renderTokenBlock = (
+    title: string,
+    balance: string,
+    token: string,
+    address?: string
+  ) => {
+    let icon = '';
+    switch (token) {
+      case 'BTC':
+        icon = `${CDN_URL}/ic-btc.svg`;
+
+        break;
+
+      default:
+        icon = `${CDN_URL}/ic_tc.svg`;
+        break;
+    }
+
+    return (
+      <div className={headerStyles.menu_content}>
+        <div className={headerStyles.menu_info}>
+          <div className={headerStyles.menu_title}>{title}</div>
+          <div className={headerStyles.menu_item}>
+            <div className={headerStyles.menu_item_address}>
+              <IconSVG src={icon} maxWidth="24" maxHeight="24" />
+              <p>{formatLongAddress(address || '')}</p>
+            </div>
+            <div onClick={() => onClickCopy(user?.walletAddress || '')}>
+              <IconSVG
+                src={`${CDN_URL}/ic-copy.svg`}
+                color={'#fff'}
+                maxWidth="16"
+                className={headerStyles.copy_icon}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={headerStyles.menu_item_balance}>
+          <p>
+            {balance} {token}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    setEligibleOwner(parseFloat(gmBalance) > 1);
+  }, [gmBalance]);
+
   const ContentHeader = (): JSX.Element => {
     return (
       <div
@@ -118,7 +177,7 @@ const Header = ({
         }`}
       >
         <div className={headerStyles.nav_container}>
-          {/* {NAV_CONTENT.map(({ title, url }) => {
+          {NAV_CONTENT.map(({ title, url }) => {
             return (
               <Link
                 key={title}
@@ -130,41 +189,49 @@ const Header = ({
               </Link>
             );
           })}
-          <div className={headerStyles.divider}></div> */}
-          <Link
-            href={'https://newbitcoincity.com/'}
-            target="_blank"
-            className={`${headerStyles.nav_item}`}
-          >
-            New Bitcoin City
-            <IconSVG
-              maxWidth="20"
-              src={`${CDN_URL}/ic-arrow-up-right.svg`}
-              color={homepage ? 'white' : 'black'}
-              type="stroke"
-            />
-          </Link>
         </div>
 
         <Link className="logo" href={ROUTE_PATH.HOME}>
-          <IconSVG
-            src={`${CDN_URL}/ic-logo-white.svg`}
-            maxHeight={'32'}
-            maxWidth={'32'}
-            className={headerStyles.logo_svg}
-          />
+          Souls
         </Link>
         <MenuMobile
           isOpen={isOpenMenu}
           onCloseMenu={() => setIsOpenMenu(false)}
         />
         <div className={`rightContainer`}>
+          <Link
+            href={'https://newbitcoincity.com/'}
+            target="_blank"
+            className={`${headerStyles.nbc_link}`}
+          >
+            New Bitcoin City
+          </Link>
+          <Link
+            href={'https://discord.com/invite/yNbatuGMDG'}
+            target="_blank"
+            className={`${headerStyles.nbc_link}`}
+          >
+            <IconSVG
+              src={`${CDN_URL}/ic-discord.svg`}
+              maxWidth="20"
+              type="fill"
+              color={homepage ? 'white' : 'black'}
+            ></IconSVG>
+          </Link>
+          <Link
+            href={'https://twitter.com/NewBitcoinCity'}
+            target="_blank"
+            className={`${headerStyles.nbc_link}`}
+          >
+            <IconSVG
+              src={`${CDN_URL}/ic_twitter.svg`}
+              maxWidth="20"
+              type="fill"
+              color={homepage ? 'white' : 'black'}
+            ></IconSVG>
+          </Link>
           {isAuthenticated ? (
-            <Dropdown
-              show={showDropdown}
-              onMouseEnter={() => setShowDropdown(true)}
-              onMouseLeave={() => setShowDropdown(false)}
-            >
+            <Dropdown>
               <Dropdown.Toggle
                 as={WalletToggle}
                 id="dropdown-custom-components"
@@ -174,8 +241,11 @@ const Header = ({
                     overlay={
                       <Tooltip
                         id={'warning-gm'}
-                        placement="bottom"
-                        className={headerStyles.tooltip_body}
+                        placement="left"
+                        show={!eligibleOwner}
+                        className={`${headerStyles.tooltip_body} ${
+                          !eligibleOwner ? '' : 'd-none'
+                        }`}
                       >
                         <div className={headerStyles.tooltip_content}>
                           <p>You are not owning over 1GM</p>
@@ -191,24 +261,19 @@ const Header = ({
                     <div
                       className={cs(
                         headerStyles.profile_amount,
-                        headerStyles.warning
+                        !eligibleOwner && headerStyles.warning
                       )}
                     >
                       <IconSVG
                         src={`${CDN_URL}/ic-warning.svg`}
                         maxWidth={'20'}
                         maxHeight={'20'}
+                        className={`${!eligibleOwner ? '' : 'd-none'}`}
                       ></IconSVG>
                       {gmBalance}&nbsp;GM
                     </div>
                   </OverlayTrigger>
 
-                  <div className={headerStyles.profile_amount}>
-                    {formatEthPrice(tcBalance)}&nbsp;TC
-                  </div>
-                  <div className={headerStyles.profile_amount}>
-                    {formatBTCPrice(btcBalance)}&nbsp;BTC
-                  </div>
                   <div className={headerStyles.profile_avatar}>
                     {account ? (
                       <Jazzicon
@@ -226,59 +291,18 @@ const Header = ({
               </Dropdown.Toggle>
               <Dropdown.Menu className={headerStyles.menu_wrapper}>
                 <div className={headerStyles.menu_container}>
-                  <div className={headerStyles.menu_content}>
-                    <div className={headerStyles.menu_title}>TC Address</div>
-                    <div className={headerStyles.menu_item}>
-                      <div className={headerStyles.menu_item_address}>
-                        <IconSVG
-                          src={`${CDN_URL}/ic_tc.svg`}
-                          maxWidth="28"
-                          maxHeight="28"
-                        />
-                        <p>{formatLongAddress(user?.walletAddress || '')}</p>
-                      </div>
-                      <div
-                        onClick={() => onClickCopy(user?.walletAddress || '')}
-                      >
-                        <IconSVG
-                          src={`${CDN_URL}/ic-copy.svg`}
-                          color={'#fff'}
-                          maxWidth="16"
-                          className={headerStyles.copy_icon}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="divider" />
-                  <div className={headerStyles.menu_content}>
-                    <div className={headerStyles.menu_title}>BTC Address</div>
-                    <div className={headerStyles.menu_item}>
-                      <div className={headerStyles.menu_item_address}>
-                        <IconSVG
-                          src={`${CDN_URL}/ic-btc.svg`}
-                          maxWidth="28"
-                          maxHeight="28"
-                        />
-                        <p>
-                          {formatLongAddress(
-                            user?.walletAddressBtcTaproot || ''
-                          )}
-                        </p>
-                      </div>
-                      <div
-                        onClick={() =>
-                          onClickCopy(user?.walletAddressBtcTaproot || '')
-                        }
-                      >
-                        <IconSVG
-                          src={`${CDN_URL}/ic-copy.svg`}
-                          color="white"
-                          maxWidth="16"
-                          className={headerStyles.copy_icon}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  {renderTokenBlock(
+                    'TC Address',
+                    formatEthPrice(tcBalance),
+                    `TC`,
+                    user?.walletAddress
+                  )}
+                  {renderTokenBlock(
+                    'BTC Address',
+                    formatBTCPrice(btcBalance),
+                    `BTC`,
+                    user?.walletAddressBtcTaproot
+                  )}
                   <div className={headerStyles.menu_divider}></div>
                   <div
                     onClick={() =>

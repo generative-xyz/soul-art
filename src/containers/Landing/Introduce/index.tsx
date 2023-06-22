@@ -14,16 +14,12 @@ import { CDN_URL } from '@/configs';
 import classNames from 'classnames';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
-import MobileIntroduce from './MobileIntroduce';
 import { AnimFade } from '@/animations/Fade';
-import useWindowResize from '@/hooks/useWindowResize';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const { setAudioPlaying, lenis, setIsShowProgress } =
     useContext(AnimateContext);
-
-  const { isMobile } = useWindowResize();
 
   const handleOpenModal = () => {
     setIsShow(true);
@@ -38,131 +34,145 @@ const Introduce: React.FC = () => {
     lenis?.start();
   };
 
-  const DesktopIntroduce = () => {
-    return (
-      <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>
-        <Container className={s.container}>
-          <Col
-            xs={{ span: 11, offset: 0 }}
-            sm={{ span: 9, offset: 0 }}
-            md={{ span: 6, offset: 1 }}
-            lg={{ span: 6, offset: 1 }}
-            className={s.column}
-          >
-            <div className={s['introduceBox']}>
-              <Text
-                as={'h1'}
-                size={'d1'}
-                color={'white-primary'}
-                animOption={{ screen: 0, offset: 0, type: 'heading' }}
-                className={s['introduceBox-title']}
-              >
-                SOULS - The first-ever soulbound art
-              </Text>
+  return (
+    <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>
+      <Container className={s.container}>
+        <Col
+          xs={{ span: 12, offset: 0 }}
+          sm={{ span: 6, offset: 0 }}
+          md={{ span: 6, offset: 1 }}
+          lg={{ span: 6, offset: 1 }}
+          className={s.column}
+        >
+          <div className={s['introduceBox']}>
+            <Text
+              as={'h1'}
+              size={'d1'}
+              color={'white-primary'}
+              animOption={{ screen: 0, offset: 0, type: 'heading' }}
+              className={`${s['introduceBox-title']} text-uppercase`}
+            >
+              Souls
+            </Text>
+            <Text
+              as={'p'}
+              size={'28'}
+              color={'white-primary'}
+              fontWeight="regular"
+              animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+              className={s['introduceBox-subTitle']}
+            >
+              The first-ever cryptoart protocol powering a new kind of art.
+            </Text>
+            <div className={s['introduceBox-desc-wrapper']}>
               <Text
                 as={'p'}
-                size={'24'}
+                size={'20'}
                 color={'white-primary'}
                 animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
                 className={s['introduceBox-desc']}
               >
-                Souls are interconnected beings that can experience emotions
-                like fear, greed, and belief in their owner. These
-                non-transferable creations leave their owners if neglected, and
-                can only be adopted from the Soul orphanage. Step into this
-                realm and embrace the deep connection that awaits those who
-                embark on this incredible journey.
+                Managed by the community-run DAO and powered by the
+                cryptocurrency GM, Souls is a revolutionary cryptoart protocol
+                for experiencing art on Bitcoin.
               </Text>
+              <Text
+                as={'p'}
+                size={'20'}
+                color={'white-primary'}
+                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+                className={s['introduceBox-desc']}
+              >
+                Souls are soulbound artworks that can’t be bought or sold. As
+                on-chain living art, a nurtured Soul will stay with you forever,
+                but a neglected Soul might leave you and find a new home.
+              </Text>
+              <Text
+                as={'p'}
+                size={'20'}
+                color={'white-primary'}
+                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
+                className={s['introduceBox-desc']}
+              >
+                But above all, Souls are interconnected and perform their
+                ever-changing artworks not as one but collectively.
+              </Text>
+            </div>
 
-              <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
-                <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
-                  Adopt a Soul
-                  <span className={s.countdown}>
-                    <SonarWaveCircle />
-                    <CountdownText />
-                  </span>
-                </Link>
-                <Link
-                  href={'https://discord.gg/sBTeHRW5Xb'}
-                  className={cs(s.button, s.trans)}
-                  target="_blank"
-                >
-                  <IconSVG
-                    src={`${CDN_URL}/ic-discord.svg`}
-                    maxWidth={'20'}
-                  ></IconSVG>
-                  Join Discord
-                </Link>
-              </AnimFade>
+            <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
+              <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
+                Adopt a Soul
+                <span className={s.countdown}>
+                  <SonarWaveCircle />
+                  <CountdownText />
+                </span>
+              </Link>
+              <Link
+                href={'https://newbitcoincity.com/gm '}
+                className={cs(s.button, s.trans)}
+                target="_blank"
+              >
+                Get GM
+              </Link>
+            </AnimFade>
 
-              <div className={s.introduce_actions}>
-                <div className={s.introduce_actions_item}>
-                  <AnimFade className={s['introduceVideo']} screen={1}>
-                    <h5 className={s['introduceVideo-title']}>
-                      Watch the film
-                    </h5>
-                    <div className={s['wrap-video']} onClick={handleOpenModal}>
-                      <ImageFrame type={'small'}>
-                        <img
-                          src={`${CDN_URL}/poster-thumb.jpg`}
-                          alt="videoplay"
-                        />
+            <div className={s.introduce_actions}>
+              <div className={s.introduce_actions_item}>
+                <AnimFade className={s['introduceVideo']} screen={1}>
+                  <h5 className={s['introduceVideo-title']}>Watch the film</h5>
+                  <div className={s['wrap-video']} onClick={handleOpenModal}>
+                    <ImageFrame type={'small'}>
+                      <img
+                        src={`${CDN_URL}/poster-thumb.jpg`}
+                        alt="videoplay"
+                      />
+                      <IconSVG
+                        src={modalPlay}
+                        maxWidth={'40'}
+                        maxHeight={'40'}
+                        className={s.modalPlay}
+                      />
+                    </ImageFrame>
+                  </div>
+                </AnimFade>
+              </div>
+              <div
+                className={classNames(
+                  s.introduce_actions_item,
+                  s.introduce_actions_item__pdf
+                )}
+              >
+                <AnimFade className={s['introduceVideo']} screen={1}>
+                  <h5 className={s['introduceVideo-title']}>
+                    Read the Whitepaper
+                  </h5>
+                  <div
+                    className={classNames(s['wrap-video'], s['wrap-pdf'])}
+                    onClick={() => {
+                      window.open(
+                        `https://newbitcoincity.com/souls/whitepaper.pdf`
+                      );
+                    }}
+                  >
+                    <ImageFrame type={'small'}>
+                      <div className={s.content}>
                         <IconSVG
-                          src={modalPlay}
-                          maxWidth={'40'}
-                          maxHeight={'40'}
+                          src={`${CDN_URL}/icon-pdf-s.svg`}
+                          maxWidth={'45'}
+                          maxHeight={'55'}
                           className={s.modalPlay}
                         />
-                      </ImageFrame>
-                    </div>
-                  </AnimFade>
-                </div>
-                <div
-                  className={classNames(
-                    s.introduce_actions_item,
-                    s.introduce_actions_item__pdf
-                  )}
-                >
-                  <AnimFade className={s['introduceVideo']} screen={1}>
-                    <h5 className={s['introduceVideo-title']}>
-                      Read the Whitepaper
-                    </h5>
-                    <div
-                      className={classNames(s['wrap-video'], s['wrap-pdf'])}
-                      onClick={() => {
-                        window.open(`https://newbitcoincity.com/souls.pdf`);
-                      }}
-                    >
-                      <ImageFrame type={'small'}>
-                        <div className={s.content}>
-                          <IconSVG
-                            src={`${CDN_URL}/icon-pdf.svg`}
-                            maxWidth={'45'}
-                            maxHeight={'55'}
-                            className={s.modalPlay}
-                          />
-                        </div>
-                      </ImageFrame>
-                    </div>
-                  </AnimFade>
-                </div>
+                      </div>
+                    </ImageFrame>
+                  </div>
+                </AnimFade>
               </div>
             </div>
-          </Col>
-        </Container>
-        <HeroModal showModal={isShow} closeModal={handleCloseModal} />
-      </div>
-    );
-  };
-
-  return (
-    <>
-      {isMobile ? (
-        <MobileIntroduce isShow={isShow} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal}/>
-      ) : (
-        <DesktopIntroduce />
-      )}
-    </>
+          </div>
+        </Col>
+      </Container>
+      <HeroModal showModal={isShow} closeModal={handleCloseModal} />
+    </div>
   );
 };
 

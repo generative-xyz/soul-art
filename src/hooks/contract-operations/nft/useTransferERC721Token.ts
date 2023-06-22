@@ -1,5 +1,5 @@
 import { ContractOperationHook, DAppType } from '@/interfaces/contract-operation';
-import ERC721ABIJson from '@/abis/erc721.json';
+import ERC721AbiJson from '@/abis/erc721.json';
 import { useWeb3React } from '@web3-react/core';
 import { useCallback, useContext } from 'react';
 import { Transaction } from 'ethers';
@@ -30,7 +30,7 @@ const useTransferERC721Token: ContractOperationHook<
       if (account && provider && contractAddress) {
         const contract = getContract(
           contractAddress,
-          ERC721ABIJson.abi,
+          ERC721AbiJson.abi,
           provider,
           account,
         );

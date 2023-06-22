@@ -22,26 +22,33 @@
           color: #fff;
         }
 
-        .introduceBox-desc {
+        h1 {
+          margin-bottom: rem(12px) !important;
+        }
+
+        .introduceBox-desc-wrapper {
+          margin-top: rem(40px);
           margin-bottom: rem(40px);
           color: #fff;
+          display: flex;
+          flex-direction: column;
+          gap: rem(20px);
 
           @include mobile {
             margin-bottom: rem(20px);
           }
 
-          @include tablet {
-            margin-bottom: rem(30px);
-          }
-
-          @include pcSmall {
+          @include min-tablet {
             margin-bottom: rem(40px);
           }
+
+          .introduceBox-desc {}
         }
 
         .introduceBox-buttons {
           display: flex;
           gap: rem(12px);
+          flex-wrap: wrap;
 
           .button {
             padding: rem(11px) rem(24px);
@@ -52,6 +59,11 @@
             line-height: 18/16;
             transition: 0.5s $easeOutQuart;
             text-decoration: none;
+            flex: 0 0 100%;
+
+            @include min-tablet {
+              flex: 0 0 auto;
+            }
 
             &.init {
               border: 1px solid #fff;
@@ -60,6 +72,7 @@
               display: flex;
               align-items: center;
               gap: rem(16px);
+              justify-content: center;
 
               .countdown {
                 display: flex;
@@ -68,7 +81,11 @@
                 min-height: 24px;
 
                 span {
-                  width: 110px;
+                  width: 100%;
+
+                  @include min-tablet {
+                    width: rem(112px);
+                  }
                 }
               }
 
@@ -84,32 +101,29 @@
             }
 
             &.trans {
-              border: 1px solid rgba(255, 255, 255, 0.2);
-              background: rgba(255, 255, 255, 0.05);
+              border: 1px solid rgba(255, 255, 255, 0.8);
+              background: rgba(255, 255, 255, 0.1);
               color: #fff;
               display: flex;
               align-items: center;
               gap: rem(8px);
+              width: rem(200px);
+              justify-content: center;
 
               &:hover {
                 border: 1px solid #fff;
-                background: rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.35);
               }
             }
 
-            @include mobile {
-              font-size: rem(8px);
-              padding: rem(8px) rem(20px);
-            }
 
-            @include tablet {
-              font-size: rem(12px);
-              padding: rem(8px) rem(20px);
-            }
+            font-size: rem(14px);
+            padding: rem(8px) rem(20px);
 
-            @include pcSmall {
+
+            @include min-tablet {
               font-size: rem(16px);
-              padding: rem(16px) rem(40px);
+              padding: rem(11px) rem(24px);
             }
           }
         }
@@ -128,12 +142,7 @@
               margin-bottom: rem(10px);
             }
 
-            @include tablet {
-              font-size: rem(12px);
-              margin-bottom: rem(10px);
-            }
-
-            @include pcSmall {
+            @include min-tablet {
               font-size: rem(14px);
               margin-bottom: rem(12px);
             }
@@ -163,6 +172,17 @@
             }
           }
 
+          @include onlyMobile {
+            margin-top: rem(15px);
+            padding-top: rem(15px);
+          }
+
+          @include tablet {
+            .wrap-video {
+              width: 100%;
+            }
+          }
+
           @include pcSmall {
             .wrap-video {
               width: rem(212px);
@@ -180,21 +200,24 @@
   &_actions {
     display: flex;
     gap: rem(20px);
-
     margin-top: rem(43px);
     padding-top: rem(43px);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 
     &_item {
-      flex: 0 0 rem(212px);
+      flex: 0 0 calc(50% + #{rem(-20px)} / 2);
+
+      @include pcSmall {
+        flex: 0 0 rem(212px);
+      }
 
       &__pdf {
         :global(.imageFrame) {
           padding: rem(6px);
 
           .content {
-            height: rem(112px);
-            background: rgba(255, 255, 255, 1);
+            padding-bottom: (83/147) * 100%;
+            background: rgba(255, 255, 255, 0.1);
           }
         }
       }

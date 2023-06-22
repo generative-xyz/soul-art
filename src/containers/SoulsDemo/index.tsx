@@ -1,4 +1,4 @@
-import { getDemoSoulsNfts, getSoulDemoAttributes } from '@/services/demoSoul';
+import { getDemoSoulsNfts, getSoulDemoAttributes } from '@/services/demo-soul';
 import { debounce, pick } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Spinner } from 'react-bootstrap';

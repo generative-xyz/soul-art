@@ -1,7 +1,7 @@
 import { getSoulAttributes } from '@/services/soul';
 import { debounce, pick } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Container, Spinner } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import SoulsCard from '@/components/SoulCards';
 import { CDN_URL, SOUL_CONTRACT } from '@/configs';
 import { IToken } from '@/interfaces/api/marketplace';
@@ -12,11 +12,15 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import soulsStyles from './souls.module.scss';
 import { ROUTE_PATH } from '@/constants/route-path';
 import Link from 'next/link';
+import AttributeSort from '@/containers/Attribute';
+import Spinner from '@/components/Spinner';
+import logger from '@/services/logger';
 
 const LIMIT_PAGE = 32;
 
 export const SoulsContainer: React.FC = () => {
   const router = useRouter();
+  const [initialLoading, setInitialLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
   const [souls, setSouls] = useState<IToken[]>([]);
   const [attributes, setAttributes] = useState<IAttribute[]>();
@@ -49,6 +53,16 @@ export const SoulsContainer: React.FC = () => {
       try {
         setIsFetching(true);
 
+        const { sortBy, sort, owner } = pick(router.query, [
+          'sortBy',
+          'sort',
+          'owner',
+        ]) as {
+          sortBy?: string;
+          sort?: number;
+          owner?: string;
+        };
+
         const query: {
           page: number;
           limit: number;
@@ -62,8 +76,9 @@ export const SoulsContainer: React.FC = () => {
           limit: LIMIT_PAGE,
           isShowAll: undefined,
           isBigFile: undefined,
-          sortBy: undefined,
-          sort: 1,
+          owner: owner || undefined,
+          sortBy: sortBy || undefined,
+          sort: sort || undefined,
         };
         let attributesQuery;
 
@@ -101,6 +116,7 @@ export const SoulsContainer: React.FC = () => {
       } catch (error) {
       } finally {
         setIsFetching(false);
+        setInitialLoading(false);
       }
     },
     [router.query, attributes]
@@ -109,10 +125,19 @@ export const SoulsContainer: React.FC = () => {
   useEffect(() => {
     if (isFetchSuccessAttributes && attributes) {
       fetchSouls();
+      logger.info('fetchSouls');
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
-  if (!souls || souls.length === 0) {
+  if (initialLoading) {
+    return (
+      <div className="grid-center h-full-view">
+        <Spinner width={200} height={200} />
+      </div>
+    );
+  }
+
+  if (souls && souls.length === 0 && !router.query) {
     return (
       <div className={soulsStyles.emptyWrapper}>
         <div className={soulsStyles.empty}>
@@ -126,7 +151,7 @@ export const SoulsContainer: React.FC = () => {
             Be the first one to adopt a Soul. Adopt a Soul here.
           </p>
           <Link href={ROUTE_PATH.CLAIM} className={soulsStyles.empty_adopt}>
-            Adopt Souls
+            Adopt a Soul
           </Link>
         </div>
       </div>
@@ -136,7 +161,7 @@ export const SoulsContainer: React.FC = () => {
   return (
     <>
       <InfiniteScroll
-        className="list"
+        className={`${soulsStyles.list} small-scrollbar`}
         dataLength={souls?.length || 0}
         hasMore={true}
         loader={
@@ -148,7 +173,7 @@ export const SoulsContainer: React.FC = () => {
         }
         next={debounceLoadMore}
       >
-        <div className={soulsStyles.art}>
+        <div className={`${soulsStyles.art} small-scrollbar`} id="soul-list">
           <Container className={soulsStyles.grid_container}>
             {souls &&
               souls.length > 0 &&
@@ -168,6 +193,7 @@ export const SoulsContainer: React.FC = () => {
           </Container>
         </div>
       </InfiniteScroll>
+      <AttributeSort attributes={attributes || []} />
     </>
   );
 };

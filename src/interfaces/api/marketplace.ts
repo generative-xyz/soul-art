@@ -1,4 +1,3 @@
-import { IMAGE_TYPE } from '@/components/NFTDisplayBox/constant';
 import { IAttribute } from '../attributes';
 import { IOwnedBNS } from '../bns';
 import { ICollection } from './collection';
@@ -161,7 +160,7 @@ export interface ITokenDetail {
   tokenUri: string;
   attributes: ITokenAttributes[];
   metadataType: string;
-  contentType: IMAGE_TYPE;
+  contentType: string;
   createdAt: string;
   updatedAt: string;
   mintedAt: number;
@@ -187,6 +186,7 @@ export interface IGetCollectionNFTListParams extends IPagingParams {
   buyable?: boolean;
   from_price?: string;
   to_price?: string;
+  owner?: string;
 }
 
 export interface IGetCollectionNFTListResponse {

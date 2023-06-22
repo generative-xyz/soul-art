@@ -2,7 +2,7 @@
   &_item {
     border: none;
 
-    h2>button {
+    h2 > button {
       background: none !important;
       padding: 0;
       outline: none;
@@ -26,6 +26,12 @@
   }
 }
 
+.accordion_container {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24px);
+}
+
 .filterAttribute {
   &_accordionHeader {
     font-size: rem(16px);
@@ -40,33 +46,13 @@
     font-size: 16px;
     line-height: 140%;
     padding-left: 0;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
   }
 
   &_content {
     font-size: rem(14px);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: rem(20px);
-
-    @include mobile {
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: rem(10px);
-    }
-
-    @include tablet {
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: rem(20px);
-    }
-
-    @include pcSmall {
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: rem(20px);
-    }
-
-    @include pcS2M {
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: rem(20px);
-    }
+    grid-gap: rem(12px);
   }
 }

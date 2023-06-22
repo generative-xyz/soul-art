@@ -1,9 +1,9 @@
 .text {
   &.size {
-
     &-d1,
     &-d2,
-    &-32 {
+    &-32,
+    &-28 {
       font-family: var(--righteous-font);
       font-weight: 400;
       line-height: 100%;
@@ -61,6 +61,18 @@
 
       @include pcSmall {
         font-size: rem(32px);
+      }
+    }
+
+    &-28 {
+      font-size: rem(28px);
+
+      @include mobile {
+        font-size: rem(14px);
+      }
+
+      @include min-tablet {
+        font-size: rem(28px);
       }
     }
 

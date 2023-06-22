@@ -4,6 +4,7 @@ import { Accordion } from 'react-bootstrap';
 import AccordionCheckBox from '../AccordionCheckbox';
 import { IAttribute } from '@/interfaces/attributes';
 import accordionStyles from './accordion.module.scss';
+import { useRouter } from 'next/router';
 
 type AccordionContentProps = {
   eventKey: string;
@@ -31,14 +32,18 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
       <Accordion.Header
         className={accordionStyles.filterAttribute_accordionHeader}
       >
-        <div className={accordionStyles.filterAttribute_title} id={eventKey === "0" ? "panelsStayOpen-headingOne" : ""}>
+        <div
+          className={accordionStyles.filterAttribute_title}
+          id={eventKey === '0' ? 'panelsStayOpen-headingOne' : ''}
+        >
           {headerContent}
         </div>
       </Accordion.Header>
-      <Accordion.Body
-        className={ accordionStyles.accordion_body}
-      >
-        <div className={accordionStyles.filterAttribute_content} id={eventKey === "0" ? "panelsStayOpen-headingOne" : ""}>
+      <Accordion.Body className={accordionStyles.accordion_body}>
+        <div
+          className={accordionStyles.filterAttribute_content}
+          id={eventKey === '0' ? 'panelsStayOpen-headingOne' : ''}
+        >
           {bodyContent}
         </div>
       </Accordion.Body>
@@ -49,33 +54,45 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
 const AccordionComponent: React.FC<AccordionComponentProps> = ({
   attributes,
 }) => {
+  const router = useRouter();
+
   return (
-    <Accordion defaultActiveKey="0" alwaysOpen>
-      {attributes?.map(({ traitName, traitValuesStat }, index) => (
-        <AccordionContent
-          key={index}
-          eventKey={String(index)}
-          headerContent={`${traitName}${
-            traitValuesStat.length ? ` (${traitValuesStat.length})` : ''
-          }`}
-          bodyContent={
-            <>
-              {traitValuesStat.map(({ value, rarity }, indexData) => {
-                return (
-                  <React.Fragment key={indexData}>
-                    <AccordionCheckBox
-                      traitName={traitName}
-                      key={index}
-                      title={value}
-                      labelData={Math.round(rarity)}
-                    />
-                  </React.Fragment>
-                );
-              })}
-            </>
-          }
-        />
-      ))}
+    <Accordion
+      defaultActiveKey={attributes.map((_, index) => String(index))}
+      alwaysOpen
+      className={accordionStyles.accordion_container}
+    >
+      {attributes?.map(({ traitName, traitValuesStat }, index) => {
+        const currentQuery = router.query[traitName] as string;
+
+        const selectedValues = currentQuery?.split(',').length;
+
+        return (
+          <AccordionContent
+            key={index}
+            eventKey={String(index)}
+            headerContent={`${traitName} ${
+              selectedValues > 0 ? `(${selectedValues})` : ''
+            }`}
+            bodyContent={
+              <>
+                {traitValuesStat.map(({ value, rarity }, indexData) => {
+                  return (
+                    <React.Fragment key={indexData}>
+                      <AccordionCheckBox
+                        traitName={traitName}
+                        key={index}
+                        title={value}
+                        labelData={Math.round(rarity)}
+                      />
+                    </React.Fragment>
+                  );
+                })}
+              </>
+            }
+          />
+        );
+      })}
     </Accordion>
   );
 };

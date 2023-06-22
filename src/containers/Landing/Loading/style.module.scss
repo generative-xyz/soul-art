@@ -16,14 +16,6 @@
     @include mobile {
       width: 90%;
     }
-
-    @include tablet {
-      width: 70%;
-    }
-
-    @include pcSmall {
-      width: 100%;
-    }
   }
 
   .desc {
@@ -94,12 +86,24 @@
   }
 
   &_icon {
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+    width: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: rem(30px);
+
     &_inner {
       position: relative;
       width: rem(80px);
       height: rem(80px);
       animation: rotateLoop 4s infinite linear;
       will-change: transform;
+      display: flex;
+      justify-content: center;
+      flex: 0 0 auto;
 
       img {
         width: 100%;
@@ -117,27 +121,22 @@
     }
 
     &_dark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      //position: absolute;
+      //top: 0;
+      //left: 0;
+      //width: 100%;
+      //height: 100%;
     }
 
     &_text {
       font-size: rem(14px);
-      display: flex;
       gap: rem(5px);
-      transform: rotate(-90deg);
-      width: 0;
-      height: 0;
-      margin-left: rem(30px);
-      margin-bottom: rem(20px);
+      display: flex;
+      flex: 0 0 100%;
+      justify-content: center;
 
       &_counter {
         display: block;
-        width: rem(120px);
-        height: rem(30px);
       }
 
       span {
@@ -148,25 +147,9 @@
         font-size: rem(10px);
       }
 
-      @include tablet {
-        font-size: rem(12px);
-      }
-
-      @include pcSmall {
+      @include min-tablet {
         font-size: rem(14px);
       }
-    }
-
-    @include mobile {
-      bottom: rem(20px);
-    }
-
-    @include tablet {
-      bottom: rem(30px);
-    }
-
-    @include pcSmall {
-      bottom: rem(40px);
     }
   }
 

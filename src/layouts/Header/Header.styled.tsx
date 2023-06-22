@@ -35,8 +35,12 @@ const Wrapper = styled.header`
     position: absolute;
     top: 50%;
     left: 50%;
+    font-size: 28px;
+    line-height: 28px;
     transform: translate(-50%, -50%);
     z-index: 10;
+    color: #000;
+    font-family: var(--righteous-font);
   }
 
   .logo-title {
@@ -106,10 +110,20 @@ const Wrapper = styled.header`
         display: block;
       }
     }
+
+    @media screen and (max-width: 1024px) {
+      display: none;
+    }
   }
 
   .content-header {
     position: relative;
+  }
+
+  .dark {
+    .logo {
+      color: #fff;
+    }
   }
 `;
 
@@ -268,6 +282,7 @@ const WalletAdress = styled(Tooltip)`
 
   .tooltip-arrow::before {
     border-bottom-color: #424242;
+    left: 80%;
   }
 `;
 

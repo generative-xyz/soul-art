@@ -12,13 +12,19 @@
     display: flex;
     align-items: center;
     gap: rem(8px);
+
+    p {
+      font-size: rem(16px);
+      color: #898989;
+      font-weight: 300;
+    }
   }
 
   .claimContent_countdownText {
-    min-width: rem(130px);
+    min-width: rem(110px);
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: rem(16px);
     line-height: 140%;
     color: #000;
   }

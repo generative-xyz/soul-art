@@ -2,6 +2,7 @@ import { CDN_URL } from '@/configs';
 import s from './style.module.scss';
 import Explorer from '@/components/Explorer';
 import { ISoul } from '@/interfaces/api/soul';
+import React from 'react';
 
 type IClaimImgProps = {
   isClaimed: boolean;
@@ -34,4 +35,4 @@ const ClaimImg: React.FC<IClaimImgProps> = ({
   );
 };
 
-export default ClaimImg;
+export default React.memo(ClaimImg);
