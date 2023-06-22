@@ -69,7 +69,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
     setSelectedOption(eventKey);
     router.push(
       {
-        query: { sortBy: eventKey },
+        query: { sortBy: 'rarity', sort: eventKey === 'Top Rarity' ? -1 : 1 },
       },
       undefined,
       { shallow: true }
@@ -153,9 +153,13 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
       (isAuthenticated && user && router.query.owner !== user.walletAddress)
     ) {
       setFilterYourSoul(false);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { owner, ...rest } = router.query;
       router.push(
         {
-          query: {},
+          query: {
+            ...rest,
+          },
         },
         undefined,
         { shallow: true }

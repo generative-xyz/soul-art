@@ -22,15 +22,10 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
     walletAddress: data.owner,
   });
 
-  // const [show, setShow] = useState<boolean>(false);
-
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-
   const itemName = useMemo(() => `Soul #${data.tokenId}`, [data.tokenId]);
 
   useAsyncEffect(async () => {
-    if (data.owner && provider) {
+    if (data.owner) {
       const gmBalanceVal = await getOwnerGmBalance();
       setIsOwnerEligible(gmBalanceVal > 1);
     }
