@@ -40,10 +40,10 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   const isReceiveAble = useMemo(() => !!signature, [signature]);
 
   const txSuccessCallback = async (transaction: Transaction | null) => {
-    if (!transaction) return;
+    if (!transaction || !account) return;
     const txHash = transaction.hash;
     if (!txHash) return;
-    const storageKey = `${SoulEventType.MINT}_${account}`;
+    const storageKey = `${SoulEventType.MINT}_${account.toLowerCase()}`;
     localStorage.setItem(storageKey, txHash);
   };
 

@@ -1,23 +1,13 @@
 import IconSVG from '@/components/IconSVG';
 import s from './style.module.scss';
 import { successIcon, waitIcon } from '@/constants/asset';
+import React from 'react';
 
 type IStatusProps = {
   type: string;
 };
 
 const Status: React.FC<IStatusProps> = ({ type }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const TimeComp = () => {
-    return (
-      <div className={s.timeLeft}>
-        <div className={s.node}>
-          <span></span>
-        </div>
-      </div>
-    );
-  };
-
   const Received = () => {
     return (
       <div className={s.received}>
@@ -44,4 +34,4 @@ const Status: React.FC<IStatusProps> = ({ type }) => {
   );
 };
 
-export default Status;
+export default React.memo(Status);

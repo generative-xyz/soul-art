@@ -4,7 +4,6 @@ export * from './contract';
 export * from './helpers';
 export * from './image';
 export * from './opacify';
-export * from './localstorage';
 export * from './px2rem';
 export * from './sessionstorage';
 export * from './validate';

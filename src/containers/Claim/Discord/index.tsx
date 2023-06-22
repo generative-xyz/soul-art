@@ -35,4 +35,4 @@ const Discord: React.FC = (): React.ReactElement => {
   );
 };
 
-export default Discord;
+export default React.memo(Discord);

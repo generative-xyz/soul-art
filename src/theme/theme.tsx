@@ -63,6 +63,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
     body {
       --bs-body-font-family: ${bandeinsSansVariable.style.fontFamily};
       --righteous-font: ${righteous.style.fontFamily};
+      overflow-y: scroll;
     }
 
     @media screen and (min-width: 1920px) {

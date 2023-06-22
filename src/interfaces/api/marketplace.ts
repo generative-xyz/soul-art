@@ -186,6 +186,7 @@ export interface IGetCollectionNFTListParams extends IPagingParams {
   buyable?: boolean;
   from_price?: string;
   to_price?: string;
+  owner?: string;
 }
 
 export interface IGetCollectionNFTListResponse {

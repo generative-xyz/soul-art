@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
-import { Col, Container, Row } from 'react-bootstrap';
 // import ClaimButton from './ClaimButton';
-import { useWeb3React } from '@web3-react/core';
-import logger from '@/services/logger';
-import useAsyncEffect from 'use-async-effect';
-import { getListTokensByWallet } from '@Services/soul';
+import { CLAIM_START_TIME } from '@/configs';
 import { SoulEventType } from '@/enums/soul';
+import useTimeComparison from '@/hooks/useTimeComparison';
 import { ISoul } from '@/interfaces/api/soul';
-import dayjs from 'dayjs';
-import web3Instance from '@/connections/custom-web3-provider';
+import logger from '@/services/logger';
+import { useWeb3React } from '@web3-react/core';
 import Discord from './Discord';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
@@ -21,38 +19,41 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   >('idle');
   const { account, provider } = useWeb3React();
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
-  const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
-  const [_isFetchingApi, setIsFetchingApi] = useState(false);
-  const [soulToken, setSoulToken] = useState<ISoul | null>(null);
+  const [mintedTimestamp, _setMintedTimestamp] = useState<null | string>(null);
+  // const [isFetchingApi, setIsFetchingApi] = useState(false);
+  const [soulToken, _setSoulToken] = useState<ISoul | null>(null);
+  const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
+  const isEventStarted =
+    claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
 
-  useAsyncEffect(async () => {
-    try {
-      setIsFetchingApi(true);
-      const { items } = await getListTokensByWallet('account' as string);
-      if (items.length > 0 && items[0]) {
-        const soulItem = items[0];
-        setSoulToken(soulItem);
-        setIsClaimed(true);
-        setClaimStatus('success');
+  // useAsyncEffect(async () => {
+  //   try {
+  //     setIsFetchingApi(true);
+  //     const { items } = await getListTokensByWallet('account' as string);
+  //     if (items.length > 0 && items[0]) {
+  //       const soulItem = items[0];
+  //       setSoulToken(soulItem);
+  //       setIsClaimed(true);
+  //       setClaimStatus('success');
 
-        if (soulItem.mintedAt) {
-          const block = await web3Instance.getBlock(soulItem.mintedAt);
-          logger.info('block info', block);
-          const date = dayjs.unix(block.timestamp as number);
-          setMintedTimestamp(date.format('ddd, D MMM YYYY HH:mm:ss'));
-        }
-      }
-    } catch (err: unknown) {
-      logger.error('Error get tokens:', err);
-    } finally {
-      setIsFetchingApi(false);
-    }
-  }, [account]);
+  //       if (soulItem.mintedAt) {
+  //         const block = await web3Instance.getBlock(soulItem.mintedAt);
+  //         logger.info('block info', block);
+  //         const date = dayjs.unix(block.timestamp as number);
+  //         setMintedTimestamp(date.format('ddd, D MMM YYYY HH:mm:ss'));
+  //       }
+  //     }
+  //   } catch (err: unknown) {
+  //     logger.error('Error get tokens:', err);
+  //   } finally {
+  //     setIsFetchingApi(false);
+  //   }
+  // }, [account]);
 
   useEffect(() => {
     if (!account || isClaimed) return;
 
-    const storageKey = `${SoulEventType.MINT}_${account}`;
+    const storageKey = `${SoulEventType.MINT}_${account.toLowerCase()}`;
     const txHash = localStorage.getItem(storageKey);
     if (!txHash) return;
 
@@ -102,7 +103,12 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     <div className={s.claimPage}>
       <Container className={s.container}>
         <Row className={s.row}>
-          <Col lg={{ span: 8, offset: 2 }} className={s.column}>
+          <Col
+            lg={
+              isEventStarted ? { span: 4, offset: 4 } : { span: 8, offset: 2 }
+            }
+            className={s.column}
+          >
             <div className={`${s.wrapBox}`}>
               <h3 className={s.blockTitle}>The OG adopters</h3>
               {isClaimed && (
@@ -124,10 +130,15 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                   soulToken={soulToken}
                   claimStatus={claimStatus}
                 />
-                <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
+                <ClaimContent
+                  isEventStarted={isEventStarted}
+                  isClaimed={isClaimed}
+                  claimStatus={claimStatus}
+                />
+                {/* {isEventStarted && <ClaimButton isFetchingApi={isFetchingApi} />} */}
               </div>
             </div>
-            <Discord />
+            {!isEventStarted && <Discord />}
           </Col>
         </Row>
       </Container>
