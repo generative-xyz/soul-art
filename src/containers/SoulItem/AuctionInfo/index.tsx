@@ -23,27 +23,23 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
   const auctionAction = useMemo(() => {
     if (!auction || !auction.available) return <></>;
     if (auction.auctionStatus === AuctionStatus.INPROGRESS) {
-      return (
-        <CreateBidButton data={data} />
-      )
+      return <CreateBidButton data={data} />;
     } else if (auction.auctionStatus === AuctionStatus.ENDED) {
-      return (
-        <SettleAuctionButton data={data} />
-      )
+      return <SettleAuctionButton data={data} />;
     } else {
-      return (
-        <StartAuctionButton data={data} />
-      )
+      return <StartAuctionButton data={data} />;
     }
-  }, [auction]);
+  }, [auction, data]);
 
   return (
     <div className={s.auctionInfo}>
-      <p className={s.content_title}>{`Soul #${data.tokenId}`}</p>
+      <p className={s.content_title}>
+        {!!data.name ? data.name : `Soul #${data.tokenId}`}
+      </p>
       <div className={s.content_warning}>
         <div className={s.content_warning_iconUser}>
           <Jazzicon diameter={28} seed={jsNumberForAddress(data.owner)} />
-          {(!!auction?.available) && (
+          {!!auction?.available && (
             <div className={s.content_warning_iconWarning}>
               <IconSVG
                 maxWidth="20"
@@ -52,7 +48,7 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
             </div>
           )}
         </div>
-        {(!!auction?.available) ? (
+        {!!auction?.available ? (
           <div className={s.content_warning_showAddress}>
             {account === data.owner
               ? 'You are'
@@ -61,9 +57,7 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
           </div>
         ) : (
           <div className={s.content_address}>
-            {account === data.owner
-              ? 'You'
-              : `${shortenAddress(data.owner)}`}
+            {account === data.owner ? 'You' : `${shortenAddress(data.owner)}`}
           </div>
         )}
       </div>
@@ -73,4 +67,4 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
   );
 };
 
-export default React.memo(AuctionInfo); 
+export default React.memo(AuctionInfo);
