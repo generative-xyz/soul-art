@@ -1,0 +1,110 @@
+.auctionInfo {
+  margin-bottom: rem(32px);
+
+  @include mobile {
+    display: none;
+  }
+
+  @include pcSmall {
+    display: block;
+  }
+
+  .content {
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+
+    &_address {
+      font-size: rem(16px);
+      font-weight: 500;
+      line-height: 140%;
+    }
+
+    &_title {
+      font-size: rem(32px);
+      line-height: rem(44px);
+      margin-bottom: rem(8px);
+      color: #000;
+    }
+
+    &_warning {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: rem(8px);
+
+      &_iconUser {
+        position: relative;
+        width: rem(28px);
+        height: rem(28px);
+        border: 1px solid white;
+        box-shadow: 0px 4px 8px 0px #00000029;
+        border-radius: 50%;
+        max-width: rem(28px);
+
+        :global(.paper),
+        svg {
+          width: 100% !important;
+          height: 100% !important;
+        }
+      }
+
+      &_iconWarning {
+        position: absolute;
+        left: 50%;
+        bottom: -50%;
+        transform: translate(-50%, -50%);
+        color: red;
+      }
+
+      &_showAddress {
+        color: #ff4747;
+        font-size: rem(16px);
+        font-weight: 500;
+        line-height: 140%;
+      }
+    }
+
+    &_auction {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-direction: row;
+
+      &_adoptButton {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: rem(50px);
+        background: #000000;
+        border-radius: 100px;
+        color: #fff;
+        gap: rem(10px);
+        padding: rem(16px) rem(40px);
+        font-weight: 500;
+        font-size: rem(16px);
+        line-height: rem(18px);
+        margin: rem(12px) 0 rem(32px) 0;
+        transition: 0.5s $easeOutQuart;
+
+        &:hover {
+          background: #fff;
+          color: #000;
+          transition: 0.5s $easeOutQuart;
+          border: 1px solid #000;
+        }
+      }
+    }
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 0px;
+  border-top: 1px solid #ececec;
+  margin: rem(22px) 0 rem(24px) 0;
+}

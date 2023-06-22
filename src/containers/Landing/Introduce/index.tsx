@@ -10,7 +10,7 @@ import { Col, Container } from 'react-bootstrap';
 import { AnimateContext } from '@/contexts/animate-context';
 import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
-import { CDN_URL } from '@/configs';
+import { CDN_URL, CLAIM_START_TIME } from '@/configs';
 import classNames from 'classnames';
 import { modalPlay } from '@Constants/asset';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
@@ -104,7 +104,7 @@ const Introduce: React.FC = () => {
                 Adopt a Soul
                 <span className={s.countdown}>
                   <SonarWaveCircle />
-                  <CountdownText />
+                  <CountdownText countDownTo={CLAIM_START_TIME} />
                 </span>
               </Link>
               <Link

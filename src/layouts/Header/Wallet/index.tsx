@@ -101,12 +101,12 @@ const WalletHeader = () => {
               className="wallet-address"
               fontWeight="regular"
             >
-              {formatLongAddress(user?.walletAddressBtcTaproot || '')}
+              {formatLongAddress(user?.btcAddress || '')}
             </Text>
           </div>
           <div
             className="icCopy"
-            onClick={() => onClickCopy(user?.walletAddressBtcTaproot || '')}
+            onClick={() => onClickCopy(user?.btcAddress || '')}
           >
             <IconSVG
               src={`${CDN_URL}/icons/ic-copy-artifact.svg`}

@@ -53,7 +53,7 @@ const MenuMobile = ({ onCloseMenu, isOpen }: IProp) => {
           <div className="wallet mobile">
             <WalletBalance>
               <div className="balance">
-                <p> {gmBalance}&nbsp;GM</p>
+                <p> {`${formatEthPrice(gmBalance)} GM`}</p>
                 <span className="divider"></span>
                 <p>{formatBTCPrice(btcBalance)} BTC</p>
                 <span className="divider"></span>

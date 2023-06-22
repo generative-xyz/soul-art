@@ -1,6 +1,6 @@
 export type User = {
   name: string;
   id: string;
-  walletAddressBtcTaproot: string;
+  btcAddress: string;
   walletAddress: string;
 };

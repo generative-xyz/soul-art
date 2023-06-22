@@ -184,7 +184,7 @@ export const SoulsContainer: React.FC = () => {
                     href={`${ROUTE_PATH.HOME}/${item.tokenId}`}
                     image={!!item.imageCapture ? item.imageCapture : item.image}
                     tokenId={item.tokenId}
-                    title={`Soul #${item.tokenId}`}
+                    title={!!item.name ? item.name : `Souls #${item.tokenId}`}
                     ownerAddr={item.owner}
                     className={soulsStyles.grid_item}
                   />

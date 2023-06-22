@@ -5,7 +5,6 @@ export * from './helpers';
 export * from './image';
 export * from './opacify';
 export * from './px2rem';
-export * from './sessionstorage';
 export * from './validate';
 export * from './string';
 export * from './units';

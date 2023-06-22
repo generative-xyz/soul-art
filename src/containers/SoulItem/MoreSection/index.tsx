@@ -30,13 +30,13 @@ const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
         </Button>
       </h4>
       <div className={moreSectionStyles.grid}>
-        {soulItems?.map(({ tokenId, image, imageCapture, owner }) => (
+        {soulItems?.map(({ tokenId, image, imageCapture, owner, name }) => (
           <SoulsCard
             key={`token-${tokenId}`}
             href={`/souls/${tokenId}`}
             image={imageCapture ?? image}
             tokenId={tokenId}
-            title={`Souls #${tokenId}`}
+            title={!!name ? name : `Souls #${tokenId}`}
             ownerAddr={owner}
           />
         ))}

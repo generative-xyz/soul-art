@@ -5,66 +5,41 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {
-  ICollectedUTXOResp,
-  ITxHistory,
-  IFeeRate,
-} from '@/interfaces/api/bitcoin';
+import { ICollectedUTXOResp, IFeeRate } from '@/interfaces/api/bitcoin';
 import { useAppSelector } from '@/state/hooks';
 import { getUserSelector } from '@/state/user/selector';
 import {
   getCollectedUTXO,
   getFeeRate,
   getPendingUTXOs,
-  getTokenRate,
 } from '@/services/bitcoin';
-import { comingAmountBuilder, currentAssetsBuilder } from '@/utils/utxo';
-import debounce from 'lodash/debounce';
+import { currentAssetsBuilder } from '@/utils/utxo';
 import { useWeb3React } from '@web3-react/core';
 import * as TC_SDK from 'trustless-computer-sdk';
 import logger from '@/services/logger';
-import useGMBalanceOf from '@/hooks/contract-operations/gm/useGMBalanceOf';
-import useAsyncEffect from 'use-async-effect';
+import useTokenBalance from '@/hooks/contract-operations/erc20/useTokenBalance';
+import useContractOperation from '@/hooks/contract-operations/useContractOperation';
+import useGetDepositBalance from '@/hooks/contract-operations/soul/useGetDepositBalance';
+import { GM_ADDRESS } from '@/configs';
 
 export interface IAssetsContext {
   btcBalance: string;
   tcBalance: string;
   gmBalance: string;
-  currentAssets: ICollectedUTXOResp | undefined;
-  assets: ICollectedUTXOResp | undefined;
-  isLoadingAssets: boolean;
-  isLoadedAssets: boolean;
-  history: ITxHistory[];
+  gmDepositBalance: string;
   feeRate: IFeeRate;
-  comingAmount: number;
-  eth2btcRate: number;
-  fetchAssets: () => void;
-  debounceFetchData: () => void;
-  fetchFeeRate: () => Promise<void>;
-  getAvailableAssetsCreateTx: () => Promise<ICollectedUTXOResp | undefined>;
 }
 
 const initialValue: IAssetsContext = {
   btcBalance: '0',
   tcBalance: '0',
   gmBalance: '0',
-  currentAssets: undefined,
-  assets: undefined,
-  isLoadingAssets: false,
-  isLoadedAssets: false,
-  history: [],
+  gmDepositBalance: '0',
   feeRate: {
     fastestFee: 25,
     halfHourFee: 20,
     hourFee: 15,
   },
-  comingAmount: 0,
-  eth2btcRate: 0,
-  fetchAssets: () => new Promise<void>(r => r()),
-  debounceFetchData: () => new Promise<void>(r => r()),
-  fetchFeeRate: () => new Promise<void>(r => r()),
-  getAvailableAssetsCreateTx: () =>
-    new Promise<ICollectedUTXOResp | undefined>(() => null),
 };
 
 export const AssetsContext = React.createContext<IAssetsContext>(initialValue);
@@ -73,82 +48,88 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   children,
 }: PropsWithChildren): React.ReactElement => {
   const user = useAppSelector(getUserSelector);
-  const currentAddress = React.useMemo(() => {
-    return user?.walletAddressBtcTaproot || '';
-  }, [user?.walletAddressBtcTaproot]);
+  const btcAddress = user?.btcAddress || '';
   const { provider, account: tcAddress } = useWeb3React();
-  // UTXOs
-  const [assets, setAssets] = useState<ICollectedUTXOResp | undefined>();
   const [currentAssets, setCurrentAssets] = useState<
     ICollectedUTXOResp | undefined
   >();
-  const [isLoadingAssets, setIsLoadingAssets] = useState<boolean>(false);
-  const [isLoadedAssets, setIsLoadedAssets] = useState<boolean>(false);
   const [tcBalance, setTcBalance] = useState('0');
   const [gmBalance, setGmBalance] = useState('0');
-
-  // History
-  const [history, setHistory] = useState<ITxHistory[]>([]);
-  // Fee rate
+  const [gmDepositBalance, setGmDepositBalance] = useState('0');
   const [feeRate, setFeeRate] = useState<IFeeRate>(initialValue.feeRate);
-  const [comingAmount, setcomingAmount] = useState<number>(0);
-  const [eth2btcRate, setEth2BtcRate] = useState<number>(0);
+  const { run: getTokenBalance } = useContractOperation({
+    operation: useTokenBalance,
+    inscribeable: false,
+  });
+  const { run: getDepositBalance } = useContractOperation({
+    operation: useGetDepositBalance,
+    inscribeable: false,
+  });
 
-  const { call: getGmBalance } = useGMBalanceOf({ walletAddress: tcAddress });
-
-  const fetchAssets = async (): Promise<ICollectedUTXOResp | undefined> => {
-    if (!currentAddress || !tcAddress) return undefined;
+  const fetchAssets = useCallback(async (): Promise<
+    ICollectedUTXOResp | undefined
+  > => {
+    if (!btcAddress || !tcAddress) return undefined;
     try {
-      setIsLoadingAssets(true);
-      const res = await getCollectedUTXO(currentAddress, tcAddress);
-      setAssets(res);
+      const res = await getCollectedUTXO(btcAddress, tcAddress);
       return res;
     } catch (err) {
       logger.error(err);
-    } finally {
-      setIsLoadingAssets(false);
-      setIsLoadedAssets(true);
     }
     return undefined;
-  };
+  }, [btcAddress, tcAddress]);
 
-  const fetchData = async () => {
+  const fetchBtcAssets = useCallback(async () => {
+    if (!btcAddress) return;
+
     const [assets, pendingUTXOs] = await Promise.all([
       await fetchAssets(),
-      await getPendingUTXOs(currentAddress),
+      await getPendingUTXOs(btcAddress),
     ]);
 
-    // Current assets
-    let _currentAssets = undefined;
     if (assets) {
-      _currentAssets = currentAssetsBuilder({
+      const currentAssets = currentAssetsBuilder({
         current: assets,
         pending: pendingUTXOs,
       });
+      setCurrentAssets(currentAssets);
+      return;
     }
-    setCurrentAssets(_currentAssets);
+    setCurrentAssets(undefined);
+  }, [btcAddress, fetchAssets]);
 
-    // Coming amount...
-    const _comingAmount = comingAmountBuilder(currentAddress, pendingUTXOs);
-    setcomingAmount(_comingAmount);
-  };
-
-  const debounceFetchData = useCallback(debounce(fetchData, 300), [
-    currentAddress,
-    tcAddress,
-  ]);
-
-  const fetchFeeRate = async () => {
+  const fetchFeeRate = useCallback(async () => {
     try {
       const res = await getFeeRate();
       setFeeRate(res);
     } catch (error) {
       setFeeRate(initialValue.feeRate);
     }
-  };
+  }, []);
+
+  const getAvailableAssetsCreateTx = useCallback(async () => {
+    if (!btcAddress) return;
+
+    const [assets, pendingUTXOs] = await Promise.all([
+      await fetchAssets(),
+      await getPendingUTXOs(btcAddress),
+    ]);
+
+    if (assets) {
+      const currentAssets = currentAssetsBuilder({
+        current: assets,
+        pending: pendingUTXOs,
+      });
+      setCurrentAssets(currentAssets);
+      return;
+    }
+
+    setCurrentAssets(undefined);
+    return undefined;
+  }, [btcAddress, fetchAssets]);
 
   const btcBalance = React.useMemo(() => {
-    if (currentAddress) {
+    if (btcAddress) {
       const balance = TC_SDK.getBTCBalance({
         utxos: currentAssets?.txrefs || [],
         inscriptions: currentAssets?.inscriptions_by_outputs || {},
@@ -156,51 +137,39 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       return balance.toString();
     }
     return '0';
-  }, [currentAddress, currentAssets]);
+  }, [btcAddress, currentAssets]);
 
-  const fetchTCBalance = async () => {
+  const fetchTCBalance = useCallback(async () => {
     if (user?.walletAddress && provider) {
       const balance = await provider.getBalance(user.walletAddress);
       setTcBalance(balance.toString());
     }
-  };
+  }, [user?.walletAddress, provider]);
 
-  const getAvailableAssetsCreateTx = async () => {
-    const [assets, pendingUTXOs] = await Promise.all([
-      await fetchAssets(),
-      await getPendingUTXOs(currentAddress),
-    ]);
-    // Current assets
-    let _currentAssets = undefined;
-    if (assets) {
-      _currentAssets = currentAssetsBuilder({
-        current: assets,
-        pending: pendingUTXOs,
-      });
-    }
-    setCurrentAssets(_currentAssets);
-
-    return _currentAssets;
-  };
-
-  const getETH2BTCRate = async () => {
+  const fetchGMBalance = useCallback(async () => {
+    if (!tcAddress) return;
     try {
-      const rate = await getTokenRate();
-      setEth2BtcRate(rate);
+      const gmBalance = await getTokenBalance({
+        contractAddress: GM_ADDRESS,
+      });
+      setGmBalance(gmBalance.toString());
     } catch (err: unknown) {
       logger.error(err);
     }
-  };
+  }, [tcAddress, getTokenBalance]);
 
-  const fetchAssetsData = () => {
+  const fetchGMDepositBalance = useCallback(async () => {
+    try {
+      const depositBalance = await getDepositBalance();
+      setGmDepositBalance(depositBalance.toString());
+    } catch (err: unknown) {
+      logger.error(err);
+    }
+  }, [getDepositBalance]);
+
+  const fetchAssetsData = useCallback(() => {
     try {
       fetchFeeRate();
-    } catch (err: unknown) {
-      logger.error(err);
-    }
-
-    try {
-      getETH2BTCRate();
     } catch (err: unknown) {
       logger.error(err);
     }
@@ -210,70 +179,52 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     } catch (err: unknown) {
       logger.error(err);
     }
-  };
+
+    try {
+      getAvailableAssetsCreateTx();
+    } catch (err: unknown) {
+      logger.error(err);
+    }
+
+    try {
+      fetchGMBalance();
+    } catch (err: unknown) {
+      logger.error(err);
+    }
+
+    try {
+      fetchGMDepositBalance();
+    } catch (err: unknown) {
+      logger.error(err);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchFeeRate, fetchTCBalance, getAvailableAssetsCreateTx]);
 
   useEffect(() => {
-    if (currentAddress) {
-      debounceFetchData();
-    } else {
-      setHistory([]);
-    }
-  }, [currentAddress, setHistory, debounceFetchData]);
+    fetchBtcAssets();
+  }, [fetchBtcAssets]);
 
   useEffect(() => {
     fetchAssetsData();
 
-    const intervalID = setInterval(() => {
+    const intervalId = setInterval(() => {
       fetchAssetsData();
     }, 60000);
 
     return () => {
-      clearInterval(intervalID);
+      clearInterval(intervalId);
     };
-  }, [user, provider, currentAddress]);
-
-  useAsyncEffect(async () => {
-    if (tcAddress && provider) {
-      const gmBalanceVal = await getGmBalance();
-      setGmBalance(gmBalanceVal.toString());
-    }
-  }, [tcAddress, provider]);
+  }, [fetchAssetsData]);
 
   const contextValues = useMemo((): IAssetsContext => {
     return {
       btcBalance,
-      currentAssets,
-      assets,
-      isLoadingAssets,
-      isLoadedAssets,
-      history,
       feeRate,
-      comingAmount,
-      debounceFetchData,
-      eth2btcRate,
       tcBalance,
-      fetchAssets,
-      fetchFeeRate,
-      getAvailableAssetsCreateTx,
       gmBalance,
+      gmDepositBalance,
     };
-  }, [
-    tcBalance,
-    btcBalance,
-    currentAssets,
-    assets,
-    isLoadingAssets,
-    isLoadedAssets,
-    history,
-    feeRate,
-    comingAmount,
-    debounceFetchData,
-    eth2btcRate,
-    fetchAssets,
-    fetchFeeRate,
-    getAvailableAssetsCreateTx,
-    gmBalance,
-  ]);
+  }, [btcBalance, feeRate, tcBalance, gmBalance, gmDepositBalance]);
 
   return (
     <AssetsContext.Provider value={contextValues}>

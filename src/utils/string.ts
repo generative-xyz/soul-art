@@ -25,3 +25,7 @@ export const capitalizeFirstLetter = (string: string) => {
 export const stringToBuffer = (str: string): Buffer => {
   return Buffer.from(str);
 };
+
+export const isValidNumber = (str: string): boolean => {
+  return !isNaN(parseFloat(str)) && isFinite(parseFloat(str));
+}

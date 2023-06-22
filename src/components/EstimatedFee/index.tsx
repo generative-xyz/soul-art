@@ -1,55 +1,42 @@
-import React from 'react';
-import Text from '@/components/Text';
 import { formatBTCPrice, formatEthPrice } from '@/utils/format';
-import { Wrapper } from './EstimatedFee.styled';
+import React from 'react';
 import EllipsisLoading from '../EllipsisLoading';
+import { Wrapper } from './EstimatedFee.styled';
 
 interface IProps {
   estimateBTCGas: string | null;
   estimateTCGas: string | null;
   classNames?: string;
-  isBigFile?: boolean;
-  uploadView?: boolean;
 }
 
 const EstimatedFee: React.FC<IProps> = ({
   estimateBTCGas,
   estimateTCGas,
   classNames,
-  isBigFile = false,
-  uploadView = false,
 }: IProps): React.ReactElement => {
   return (
     <Wrapper className={classNames}>
       <div className="est-fee">
-        <Text
-          className="est-fee-title"
-          size="regular"
-          fontWeight="medium"
-          color="bg1"
-        >
-          Network fee estimation {isBigFile && uploadView && '(Reserve only)'}
-        </Text>
         <div className="est-fee-options">
           <div className={`est-fee-item`}>
-            <p className="est-fee-item-title">BTC network fee</p>
-            <p className="est-fee-item-value">
-              {estimateBTCGas ? (
-                `~ ${formatBTCPrice(estimateBTCGas)} BTC`
-              ) : (
-                <EllipsisLoading />
-              )}
-            </p>
+            <p className="est-fee-item-title">TC network fee</p>
+            {estimateTCGas ? (
+              <p className="est-fee-item-value">
+                {`~ ${formatEthPrice(estimateTCGas)} TC`}
+              </p>
+            ) : (
+              <EllipsisLoading />
+            )}
           </div>
           <div className={`est-fee-item`}>
-            <p className="est-fee-item-title">TC network fee</p>
-            <p className="est-fee-item-value">
-              {estimateTCGas ? (
-                `~ ${formatEthPrice(estimateTCGas)} TC`
-              ) : (
-                <EllipsisLoading />
-              )}
-            </p>
+            <p className="est-fee-item-title">BTC network fee</p>
+            {estimateBTCGas ? (
+              <p className="est-fee-item-value">
+                {`~ ${formatBTCPrice(estimateBTCGas)} BTC`}
+              </p>
+            ) : (
+              <EllipsisLoading />
+            )}
           </div>
         </div>
       </div>

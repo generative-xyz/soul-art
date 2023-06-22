@@ -42,39 +42,7 @@ export interface ITrackTx {
   inscription_number_list?: number[];
 }
 
-export enum HistoryStatusType {
-  pending = 'Pending',
-  failed = 'Failed',
-  success = 'Success',
-  cancelling = 'cancelling',
-  listing = 'listing',
-  matched = 'matched',
-  cancelled = 'cancelled',
-
-  waitingPayment = 'Waiting for payment',
-  receivedPayment = 'Payment received',
-  buying = 'Buying',
-  bought = 'Bought',
-  refunding = 'Refunding',
-  refunded = 'Refunded',
-  expired = 'Expired',
-}
-
 export type HistoryStatusColor = '#ff7e21' | '#24c087' | '#ff4747' | '#5b5b5b';
-
-export interface ITxHistory {
-  txhash: string;
-  status: HistoryStatusType;
-  statusColor: HistoryStatusColor;
-  type: TrackTxType;
-  inscription_id: string;
-  inscription_number: number;
-  send_amount: number;
-  created_at: string;
-  isExpired: boolean;
-  inscription_list: string[];
-  inscription_number_list: number[];
-}
 
 export interface IListingPayload {
   raw_psbt: string; // base64
@@ -190,41 +158,4 @@ export interface IReqSubmitTxs {
 
 export interface IReqSubmitTxsParams {
   txs: IReqSubmitTxs;
-}
-
-export interface ITxHistoryBuyInsETH {
-  id: string;
-  order_id: string;
-  inscription_id: string;
-  amount_btc: number;
-  amount_eth: string;
-  user_id: string;
-  receive_address: string;
-  refund_address: string;
-  expired_at: number;
-  created_at: string;
-  buy_tx: string;
-  refund_tx: string;
-  fee_rate: number;
-  status: HistoryStatusType;
-  statusColor: HistoryStatusColor;
-  inscription_list: string[];
-  order_list: string[];
-}
-
-export interface ITxHistoryPurchase {
-  order_id: string;
-  type: HistoryStatusType;
-  timestamp: string;
-  inscription_id: string;
-  txhash: string;
-  amount: string;
-  status: HistoryStatusType;
-  statusColor: HistoryStatusColor;
-}
-
-export interface IHistoryResp {
-  txs: ITxHistory[];
-  txsETH: ITxHistoryBuyInsETH[];
-  txsPurchase: ITxHistoryPurchase[];
 }

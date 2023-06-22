@@ -3,13 +3,13 @@ import { ConnectionType } from '@/connections';
 
 export interface UserState {
   selectedWallet?: ConnectionType;
-  walletAddressBtcTaproot?: string;
+  btcAddress?: string;
   walletAddress?: string;
 }
 
 export const initialState: UserState = {
   selectedWallet: undefined,
-  walletAddressBtcTaproot: undefined,
+  btcAddress: undefined,
   walletAddress: undefined,
 };
 
@@ -24,12 +24,12 @@ const userSlice = createSlice({
       state.walletAddress = payload;
     },
     updateTaprootWallet(state, { payload }) {
-      state.walletAddressBtcTaproot = payload;
+      state.btcAddress = payload;
     },
     resetUser(state) {
       state.selectedWallet = undefined;
       state.walletAddress = undefined;
-      state.walletAddressBtcTaproot = undefined;
+      state.btcAddress = undefined;
     },
   },
 });
