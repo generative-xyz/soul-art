@@ -4,6 +4,7 @@ import IconSVG from '@/components/IconSVG';
 import { ROUTE_PATH } from '@/constants/route-path';
 import Link from 'next/link';
 import TabsStyles from './style.module.scss';
+import TabFeatures from './TabFeatures';
 
 const auctionTabHeader = [
   // {
@@ -261,6 +262,7 @@ const TabsComponent = () => {
               {auctionHeader.type === 'desc' && <TabDescription />}
               {/* {auctionHeader.type === 'attr' && < TabAttribute />} */}
               {auctionHeader.type === 'inter' && <TabInteraction />}
+              {auctionHeader.type === 'features' && <TabFeatures />}
             </div>
           </Tab>
         );
