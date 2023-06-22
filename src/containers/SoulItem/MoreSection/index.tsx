@@ -33,7 +33,7 @@ const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
         {soulItems?.map(({ tokenId, image, imageCapture, owner }) => (
           <SoulsCard
             key={`token-${tokenId}`}
-            href={`/${tokenId}`}
+            href={`/souls/${tokenId}`}
             image={imageCapture ?? image}
             tokenId={tokenId}
             title={`Souls #${tokenId}`}

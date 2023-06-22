@@ -5,20 +5,21 @@ import TextAnimate from '@Components/TextAnimate';
 import { useScrollFixed } from '@Hooks/useScorllFixed';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { PAGE_READY } from '@Constants/common';
-import { gsap } from 'gsap';
 import { CDN_URL } from '@/configs';
 import { AnimateContext } from '@/contexts/animate-context';
 import loadImage from 'image-promise';
 import { MathMap } from '@Services/Animate/AnimateMathUtil';
 import { Col, Container } from 'react-bootstrap';
+import Slider from 'react-slick';
 
 const SectionFlys = (): JSX.Element => {
   const { pageStatus, registerLoader, unRegisterLoader } =
     useContext(AnimateContext);
   const refBox = useRef<HTMLDivElement | null>(null);
   const refImages = useRef<HTMLDivElement | null>(null);
-  const refCurrent = useRef<number>(-1);
+  const refContainer = useRef<HTMLDivElement | null>(null);
   const [urls, setUrls] = useState<string[]>([]);
+  const [maxWidthScroll, setMaxWidthScroll] = useState<number>();
 
   useEffect(() => {
     if (pageStatus === PAGE_READY) {
@@ -40,86 +41,51 @@ const SectionFlys = (): JSX.Element => {
     };
   }, [pageStatus, registerLoader, unRegisterLoader]);
 
-  useScrollFixed(refBox, 22 * 100, self => {
+  useEffect(() => {
+    setMaxWidthScroll(refImages.current?.scrollWidth);
+  }, [refImages.current?.scrollWidth]);
+
+  useScrollFixed(refBox, maxWidthScroll!, self => {
     const m = self.progress * 100;
-    const index = Math.floor(MathMap(m, 0, 100, 0, 21));
+    const width =
+      ((refContainer.current?.clientWidth || 0) / (maxWidthScroll || 1)) * 100;
+    const scroll = MathMap(m, 0, 100, 0, 100 - width);
 
-    if (refCurrent.current !== index) {
-      if (refCurrent.current < index) {
-        const current = refImages.current?.children[index];
-        const prev = refImages.current?.children[index - 1];
-        if (current) {
-          gsap.fromTo(
-            current,
-            { y: window.innerHeight, opacity: 0 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: 'power3.out',
-              zIndex: index,
-            }
-          );
-        }
-
-        if (prev)
-          gsap.to(prev, {
-            opacity: 0,
-            y: -window.innerHeight,
-            duration: 0.5,
-            ease: 'power3.out',
-            zIndex: index,
-          });
-      } else {
-        const current = refImages.current?.children[index];
-        const prev = refImages.current?.children[index + 1];
-        if (current) {
-          gsap.fromTo(
-            current,
-            { y: -window.innerHeight, opacity: 0 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: 'power3.out',
-              zIndex: index,
-            }
-          );
-        }
-
-        if (prev)
-          gsap.to(prev, {
-            opacity: 0,
-            y: 1000,
-            duration: 0.5,
-            ease: 'power3.out',
-            zIndex: index,
-          });
-      }
-
-      refCurrent.current = index;
+    if (refImages.current) {
+      refImages.current.style.transform = `translateX(${-scroll}%)`;
     }
   });
+
+  const settings = {
+    dots: false,
+    arrows: false,
+    centerMode: true,
+    centerPadding: '20px',
+  };
 
   return (
     <div ref={refBox} className={s.livingArtSection}>
       <Container className={s.containerTop}>
-        <Col
-          xs={{ span: 8, offset: 2 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 8, offset: 2 }}
-          className={s.columnTop}
-        >
+        <Col ref={refContainer} xs={12} md={12} lg={12} className={s.columnTop}>
           <div ref={refImages} className={s.livingArtSection_images}>
-            {urls.map(url => {
+            {urls.map((url, index) => {
               return (
-                <>
+                <div className={s.wrapImg} key={index}>
                   <img src={url} alt="img" />
-                </>
+                </div>
               );
             })}
           </div>
         </Col>
+        <Slider className={s.mobileSlider} {...settings}>
+          {urls.map((url, index) => {
+            return (
+              <div className={s.wrapImg} key={index}>
+                <img src={url} alt="img" />
+              </div>
+            );
+          })}
+        </Slider>
       </Container>
 
       <Container className={s.container}>
@@ -134,13 +100,11 @@ const SectionFlys = (): JSX.Element => {
               animOption={{ offset: 0, screen: 0, type: 'paragraph' }}
               className={s.sectionContent}
             >
-              {`Every SOUL has a design with the sun as its focal point. The sun has a rich metaphorical meaning in addition to its literal meaning of warmth and light. It is reminiscent of the "good morning" salutation that is frequently used in the crypto community, denoting optimism and the beginning of a new chapter.`}
+              {`Every Soul has a design with the sun as its focal point. The sun has a rich metaphorical meaning in addition to its literal meaning of warmth and light. It is reminiscent of the "good morning" salutation that is frequently used in the crypto community, denoting optimism and the beginning of a new chapter.`}
             </Text>
             <AnimFade className={s.tag} offset={0.2}>
               <TextAnimate>
-                <span>
-                The “Good Morning” piece of Generative Art
-                </span>
+                <span>The “Good Morning” piece of Generative Art</span>
               </TextAnimate>
             </AnimFade>
           </div>

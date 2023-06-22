@@ -228,7 +228,6 @@ const Header = ({
               color={homepage ? 'white' : 'black'}
             ></IconSVG>
           </Link>
-
           {isAuthenticated ? (
             <div className={headerStyles.wallets}>
               <Dropdown className={headerStyles.auction_wallet}>

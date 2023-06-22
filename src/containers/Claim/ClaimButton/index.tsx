@@ -46,8 +46,8 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
     if (!transaction || !account) return;
     const txHash = transaction.hash;
     if (!txHash) return;
-    const key = toStorageKey(operationName, account);
-    localStorage.setItem(key, txHash);
+    const storageKey = toStorageKey(operationName, account);
+    localStorage.setItem(storageKey, txHash);
   };
 
   const handleConnectWallet = async () => {

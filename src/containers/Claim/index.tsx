@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
-import { Col, Container, Row } from 'react-bootstrap';
-// import ClaimButton from './ClaimButton';
-import { useWeb3React } from '@web3-react/core';
-import logger from '@/services/logger';
-import useAsyncEffect from 'use-async-effect';
-import { getListTokensByWallet } from '@Services/soul';
+import { CLAIM_START_TIME } from '@/configs';
+import useTimeComparison from '@/hooks/useTimeComparison';
 import { ISoul } from '@/interfaces/api/soul';
-import dayjs from 'dayjs';
-import web3Instance from '@/connections/custom-web3-provider';
+import logger from '@/services/logger';
+import { useWeb3React } from '@web3-react/core';
 import Discord from './Discord';
 import useMint from '@/hooks/contract-operations/soul/useMint';
 import { toStorageKey } from '@/utils';
+import useAsyncEffect from 'use-async-effect';
+import { getListTokensByWallet } from '@/services/soul';
+import dayjs from 'dayjs';
+import web3Instance from '@/connections/custom-web3-provider';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -27,12 +28,17 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   const [soulToken, setSoulToken] = useState<ISoul | null>(null);
   const {
     operationName
-  } = useMint();
+  } = useMint()
+  const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
+  const isEventStarted =
+    claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
 
   useAsyncEffect(async () => {
+    if (!account) return;
+
     try {
       setIsFetchingApi(true);
-      const { items } = await getListTokensByWallet('account' as string);
+      const { items } = await getListTokensByWallet(account);
       if (items.length > 0 && items[0]) {
         const soulItem = items[0];
         setSoulToken(soulItem);
@@ -100,13 +106,18 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     return () => {
       intervalId && clearInterval(intervalId);
     };
-  }, [provider, transactionHash, account]);
+  }, [provider, transactionHash, account, operationName]);
 
   return (
     <div className={s.claimPage}>
       <Container className={s.container}>
         <Row className={s.row}>
-          <Col lg={{ span: 8, offset: 2 }} className={s.column}>
+          <Col
+            lg={
+              isEventStarted ? { span: 4, offset: 4 } : { span: 8, offset: 2 }
+            }
+            className={s.column}
+          >
             <div className={`${s.wrapBox}`}>
               <h3 className={s.blockTitle}>The OG adopters</h3>
               {isClaimed && (
@@ -127,10 +138,15 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                   soulToken={soulToken}
                   claimStatus={claimStatus}
                 />
-                <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
+                <ClaimContent
+                  isEventStarted={isEventStarted}
+                  isClaimed={isClaimed}
+                  claimStatus={claimStatus}
+                />
+                {/* {isEventStarted && <ClaimButton isFetchingApi={isFetchingApi} />} */}
               </div>
             </div>
-            <Discord />
+            {!isEventStarted && <Discord />}
           </Col>
         </Row>
       </Container>

@@ -108,6 +108,7 @@
     justify-content: space-between;
     gap: 8px;
     padding: rem(3px);
+    padding-left: rem(8px);
   }
 
   &_amount {
@@ -120,7 +121,7 @@
     line-height: calc(20 / 14);
     display: flex;
     align-items: center;
-    gap: rem(8px);
+    gap: rem(2px);
 
     &.warning {
       color: $red-primary;
@@ -163,7 +164,7 @@
     &::before {
       position: absolute;
       content: '';
-      left: 48%;
+      left: 66%;
       bottom: 100%;
       border-bottom: 6px solid #fff;
       border-top: 6px solid transparent;

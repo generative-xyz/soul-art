@@ -14,6 +14,7 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import Link from 'next/link';
 import AttributeSort from '@/containers/Attribute';
 import Spinner from '@/components/Spinner';
+import logger from '@/services/logger';
 
 const LIMIT_PAGE = 32;
 
@@ -52,6 +53,16 @@ export const SoulsContainer: React.FC = () => {
       try {
         setIsFetching(true);
 
+        const { sortBy, sort, owner } = pick(router.query, [
+          'sortBy',
+          'sort',
+          'owner',
+        ]) as {
+          sortBy?: string;
+          sort?: number;
+          owner?: string;
+        };
+
         const query: {
           page: number;
           limit: number;
@@ -65,8 +76,9 @@ export const SoulsContainer: React.FC = () => {
           limit: LIMIT_PAGE,
           isShowAll: undefined,
           isBigFile: undefined,
-          sortBy: undefined,
-          sort: 1,
+          owner: owner || undefined,
+          sortBy: sortBy || undefined,
+          sort: sort || undefined,
         };
         let attributesQuery;
 
@@ -113,6 +125,7 @@ export const SoulsContainer: React.FC = () => {
   useEffect(() => {
     if (isFetchSuccessAttributes && attributes) {
       fetchSouls();
+      logger.info('fetchSouls');
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
@@ -124,7 +137,7 @@ export const SoulsContainer: React.FC = () => {
     );
   }
 
-  if (souls && souls.length === 0) {
+  if (souls && souls.length === 0 && !router.query) {
     return (
       <div className={soulsStyles.emptyWrapper}>
         <div className={soulsStyles.empty}>
@@ -138,7 +151,7 @@ export const SoulsContainer: React.FC = () => {
             Be the first one to adopt a Soul. Adopt a Soul here.
           </p>
           <Link href={ROUTE_PATH.CLAIM} className={soulsStyles.empty_adopt}>
-            Adopt Souls
+            Adopt a Soul
           </Link>
         </div>
       </div>
@@ -148,7 +161,7 @@ export const SoulsContainer: React.FC = () => {
   return (
     <>
       <InfiniteScroll
-        className="list"
+        className={`${soulsStyles.list} small-scrollbar`}
         dataLength={souls?.length || 0}
         hasMore={true}
         loader={
@@ -160,7 +173,7 @@ export const SoulsContainer: React.FC = () => {
         }
         next={debounceLoadMore}
       >
-        <div className={soulsStyles.art}>
+        <div className={`${soulsStyles.art} small-scrollbar`} id="soul-list">
           <Container className={soulsStyles.grid_container}>
             {souls &&
               souls.length > 0 &&

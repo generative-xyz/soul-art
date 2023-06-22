@@ -23,77 +23,10 @@
     border: 1px solid #ececec;
     font-size: rem(16px);
     border-radius: rem(100px);
-    padding: rem(18px) rem(28px);
+    // padding: rem(18px) rem(28px);
+    padding: rem(8px);
     align-items: center;
     bottom: rem(32px);
-
-    // @include mobile {
-    //   white-space: nowrap;
-    //   flex-direction: column;
-    //   justify-content: flex-start;
-    //   bottom: rem(16px);
-    //   border-radius: rem(40px) rem(40px) 0 0;
-    //   bottom: 0;
-    //   max-width: 100%;
-    //   // gap: rem(4px);
-    //   padding: rem(12px);
-    // }
-
-    // @include tabletMid {
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   flex-direction: row;
-    //   bottom: rem(24px);
-    //   border-radius: rem(100px);
-    //   max-width: rem(740px);
-    //   // gap: rem(8px);
-    //   padding: rem(8px);
-    // }
-
-    // @include tablet {
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   flex-direction: row;
-    //   bottom: rem(32px);
-    //   border-radius: rem(100px);
-    //   max-width: rem(740px);
-    //   // gap: rem(8px);
-    //   padding: rem(8px);
-    // }
-
-    // @include pcSmall {
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   flex-direction: row;
-    //   bottom: rem(32px);
-    //   border-radius: rem(100px);
-    //   max-width: rem(740px);
-    //   padding: rem(8px);
-    //   // gap: rem(8px);
-    // }
-
-    // @include pcS2M {
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   flex-direction: row;
-    //   bottom: rem(32px);
-    //   border-radius: rem(100px);
-    //   max-width: rem(740px);
-    //   // gap: rem(8px);
-    //   padding: rem(8px);
-    // }
-
-    // @include pcWide {
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   flex-direction: row;
-    //   white-space: nowrap;
-    //   bottom: rem(32px);
-    //   border-radius: rem(100px);
-    //   max-width: rem(740px);
-    //   // gap: rem(8px);
-    //   padding: rem(8px);
-    // }
   }
 
   &_leftContainer {
@@ -101,30 +34,15 @@
     align-items: center;
     justify-content: flex-start;
     font-size: rem(16px);
-
-    @include mobile {
-      gap: 0;
-      justify-content: space-between;
-      padding-left: rem(10px);
-      // padding: 0 rem(10px);
-    }
-
-    @include tablet {
-      gap: rem(8px);
-    }
-
-    @include pcSmall {
-      gap: rem(8px);
-    }
-
-    @include pcS2M {
-      gap: rem(8px);
-    }
+    gap: rem(8px);
+    margin-right: rem(24px);
   }
 
   &_rightContainer {
     display: flex;
     align-items: center;
+    gap: rem(16px);
+    margin-left: rem(20px);
 
     &_dropdownToggle {
       width: 100%;
@@ -134,22 +52,8 @@
       content: none !important;
     }
 
-    @include mobile {
-      justify-content: space-between;
-      // padding: 0 rem(12px);
-    }
-
-    @include min-tablet {
-      justify-content: space-around;
-      justify-content: flex-end;
-    }
-
-    @include pcSmall {
-      justify-content: flex-end;
-    }
-
-    @include pcS2M {
-      justify-content: flex-end;
+    .attribute_rarity_option:hover {
+      opacity: 0.6;
     }
   }
 
@@ -181,7 +85,7 @@
       padding: rem(12px) rem(24px);
     }
 
-    &:first-child {
+    &.active {
       background: #000;
       color: #f6f6f6;
     }
@@ -237,29 +141,6 @@
     }
   }
 
-  &_divide {
-    height: rem(24px);
-    width: 1px;
-    border: 1px solid #ececec;
-    margin: 0 rem(18.5px) 0 rem(22px);
-
-    @include mobile {
-      display: none;
-    }
-
-    @include tablet {
-      display: block;
-    }
-
-    @include pcSmall {
-      display: block;
-    }
-
-    @include pcS2M {
-      display: block;
-    }
-  }
-
   &_filter {
     cursor: pointer;
     display: flex;
@@ -267,8 +148,15 @@
     align-items: center;
     justify-content: center;
     font-size: rem(16px);
-    line-height: rem(18px);
+    line-height: rem(42px);
     gap: rem(8px);
+    padding-right: rem(12px);
+  }
+
+  &_divide {
+    width: 1px;
+    height: 24px;
+    background: #ececec;
   }
 
   &_chevronUp {
@@ -276,8 +164,8 @@
   }
 
   &_iconLive {
-    width: rem(12px);
-    height: rem(12px);
+    width: 0;
+    height: 0;
     line-height: 100%;
     display: flex;
     align-items: center;
@@ -285,9 +173,10 @@
     border: 1px solid #000;
     border-radius: 50%;
     opacity: 0;
-    position: absolute;
-    right: 0;
-    transform: translateX(calc(100% + 4px));
+    transition: all 0.5s ease-in-out;
+    // position: absolute;
+    right: -4px;
+    // transform: translateX(calc(100%));
 
     .dots_circle {
       width: rem(8px);
@@ -298,6 +187,8 @@
 
     &_active {
       opacity: 1;
+      width: rem(12px);
+      height: rem(12px);
     }
   }
 }
@@ -317,16 +208,19 @@
   width: 100%;
 
   &_container {
-    position: relative;
+    position: fixed !important;
     overflow: hidden;
     margin-right: rem(-10px);
     border: 1px solid #ececec;
     box-shadow: 0px 0px rem(24px) rem(-6px) rgba(0, 0, 0, 0.12);
     border-radius: rem(20px);
     padding: rem(20px);
-    width: 100%;
-    margin-bottom: rem(25px);
-    transform: translate3d(0px, -20px, 0px) !important;
+    width: 100vw;
+    max-width: rem(715px);
+    height: 55vh;
+    left: 50% !important;
+
+    transform: translate(-50%, -100px) !important;
 
     &:after {
       height: 3%;
@@ -337,44 +231,6 @@
       bottom: 0;
       left: 0;
       right: 0;
-    }
-
-    @include mobile {
-      height: auto;
-      width: auto;
-      max-height: 370px;
-      min-width: 370px;
-      margin: 0 auto rem(65px) -8px;
-    }
-
-    @include tabletMid {
-      height: auto;
-      max-height: 460px;
-      min-width: 735px;
-      margin: 0 rem(-18px) rem(25px) rem(-15px);
-    }
-
-    @include tabletWide {
-      height: auto;
-      max-height: rem(460px);
-      min-width: rem(740px);
-      margin: 0 rem(-20px) rem(25px) 0;
-    }
-
-    @include pcSmall {
-      height: auto;
-      max-height: rem(460px);
-      width: rem(740px);
-      margin: 0 rem(-20px) rem(25px) rem(-379px);
-      overflow: hidden;
-    }
-
-    @include pcWide {
-      height: auto;
-      // max-height: rem(460px);
-      max-height: 60vh;
-      min-width: rem(740px);
-      // margin: 0 auto rem(25px) rem(-605px);
     }
   }
 
