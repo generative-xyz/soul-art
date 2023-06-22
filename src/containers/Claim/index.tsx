@@ -3,7 +3,7 @@ import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
 import s from './style.module.scss';
 import { Col, Container, Row } from 'react-bootstrap';
-// import ClaimButton from './ClaimButton';
+import ClaimButton from './ClaimButton';
 import { useWeb3React } from '@web3-react/core';
 import logger from '@/services/logger';
 import useAsyncEffect from 'use-async-effect';
@@ -13,6 +13,8 @@ import { ISoul } from '@/interfaces/api/soul';
 import dayjs from 'dayjs';
 import web3Instance from '@/connections/custom-web3-provider';
 import Discord from './Discord';
+import useTimeComparison from '@/hooks/useTimeComparison';
+import { CLAIM_START_TIME } from '@/configs';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -22,8 +24,10 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   const { account, provider } = useWeb3React();
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
   const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
-  const [_isFetchingApi, setIsFetchingApi] = useState(false);
+  const [isFetchingApi, setIsFetchingApi] = useState(false);
   const [soulToken, setSoulToken] = useState<ISoul | null>(null);
+  const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
+  const isEventStarted = claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
 
   useAsyncEffect(async () => {
     try {
@@ -52,7 +56,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   useEffect(() => {
     if (!account || isClaimed) return;
 
-    const storageKey = `${SoulEventType.MINT}_${account}`;
+    const storageKey = `${SoulEventType.MINT}_${account.toLowerCase()}`;
     const txHash = localStorage.getItem(storageKey);
     if (!txHash) return;
 
@@ -102,7 +106,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     <div className={s.claimPage}>
       <Container className={s.container}>
         <Row className={s.row}>
-          <Col lg={{ span: 8, offset: 2 }} className={s.column}>
+          <Col lg={isEventStarted ? { span: 4, offset: 4 } : { span: 8, offset: 2 }} className={s.column}>
             <div className={`${s.wrapBox}`}>
               <h3 className={s.blockTitle}>The OG adopters</h3>
               {isClaimed && (
@@ -115,19 +119,19 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                 </div>
               )}
               <div
-                className={`${s.claimBox} ${
-                  claimStatus === 'success' ? s.success : ''
-                }`}
+                className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''
+                  }`}
               >
                 <ClaimImg
                   isClaimed={isClaimed}
                   soulToken={soulToken}
                   claimStatus={claimStatus}
                 />
-                <ClaimContent isClaimed={isClaimed} claimStatus={claimStatus} />
+                <ClaimContent isEventStarted={isEventStarted} isClaimed={isClaimed} claimStatus={claimStatus} />
+                {isEventStarted && <ClaimButton isFetchingApi={isFetchingApi} />}
               </div>
             </div>
-            <Discord />
+            {!isEventStarted && <Discord />}
           </Col>
         </Row>
       </Container>

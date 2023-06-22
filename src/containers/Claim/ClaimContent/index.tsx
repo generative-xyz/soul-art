@@ -2,14 +2,17 @@ import CountdownText from '@/components/CountdownText';
 import Status from './Status';
 import s from './style.module.scss';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
+import React from 'react';
 
 type IClaimContentProps = {
   isClaimed: boolean;
   claimStatus: string;
+  isEventStarted: boolean;
 };
 const ClaimContent: React.FC<IClaimContentProps> = ({
   isClaimed,
   claimStatus,
+  isEventStarted,
 }) => {
   const ClaimDesc = () => {
     return (
@@ -33,11 +36,13 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
           <p className={`${s.claimContent_title} ${isClaimed ? s.true : ''}`}>
             Souls
           </p>
-          <div className={s.claimContent_countdownWrapper}>
-            <p>Adopt your Soul in</p>
-            <SonarWaveCircle />
-            <CountdownText className={s.claimContent_countdownText} />
-          </div>
+          {!isEventStarted && (
+            <div className={s.claimContent_countdownWrapper}>
+              <p>Adopt your Soul in</p>
+              <SonarWaveCircle />
+              <CountdownText className={s.claimContent_countdownText} />
+            </div>
+          )}
         </div>
         <Status type={claimStatus} />
       </div>
@@ -46,4 +51,4 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
   );
 };
 
-export default ClaimContent;
+export default React.memo(ClaimContent);
