@@ -24,13 +24,13 @@ const useGetUserBid: ContractOperationHook<IGetUserBidParams, BigNumber> = () =>
       if (account && contract) {
         logger.debug('useGetUserBid', params)
         const { tokenId, auctionId } = params;
-
+        const auctionHex = new BigNumber(auctionId).toString(16);
         const balance = await contract
-          ._bidderAuctions(tokenId, auctionId, account, {
+          ._bidderAuctions(tokenId, '0x' + auctionHex, account, {
             from: account
           });
 
-        return new BigNumber(balance.toString(0));
+        return new BigNumber(balance.toString());
       }
 
       return new BigNumber('0');
