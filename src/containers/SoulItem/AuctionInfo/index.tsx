@@ -31,6 +31,8 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
     }
   }, [auction, data]);
 
+  console.log('🚀 ~ data.owner:', data.owner);
+
   return (
     <div className={s.auctionInfo}>
       <p className={s.content_title}>

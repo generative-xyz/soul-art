@@ -1,5 +1,6 @@
 import SoulAbiJson from '@/abis/soul.json';
 import { SOUL_CONTRACT } from '@/configs';
+import { FeatureStatus } from '@/constants/feature';
 import { useContract } from '@/hooks/useContract';
 import {
   ContractOperationHook,
@@ -35,17 +36,17 @@ const useCheckFeatureStatus: ContractOperationHook<
               owner,
               feature
             );
+            const checkIsUnlocked = await contract._features(
+              tokenId,
+              owner,
+              feature
+            );
 
-            if (checkCanUnlock) {
-              const checkIsUnlocked = await contract._features(
-                tokenId,
-                owner,
-                feature
-              );
-              return checkIsUnlocked ? 1 : 2;
-            }
-
-            return 0;
+            if (!checkCanUnlock && checkIsUnlocked)
+              return FeatureStatus['Unlocked'];
+            if (checkCanUnlock && !checkIsUnlocked)
+              return FeatureStatus['Available'];
+            return FeatureStatus['Locked'];
           })
         );
 
