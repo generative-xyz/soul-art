@@ -23,6 +23,10 @@ const auctionTabHeader = [
     title: 'Interactions',
     type: 'inter',
   },
+  {
+    title: 'Features',
+    type: 'feat',
+  },
 ];
 
 // const liveAuctionData = [
@@ -262,7 +266,7 @@ const TabsComponent = () => {
               {auctionHeader.type === 'desc' && <TabDescription />}
               {/* {auctionHeader.type === 'attr' && < TabAttribute />} */}
               {auctionHeader.type === 'inter' && <TabInteraction />}
-              {auctionHeader.type === 'features' && <TabFeatures />}
+              {auctionHeader.type === 'feat' && <TabFeatures />}
             </div>
           </Tab>
         );
