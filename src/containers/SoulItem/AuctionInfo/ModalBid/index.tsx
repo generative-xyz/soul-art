@@ -75,6 +75,7 @@ const ModalBid: React.FC<IProps> = ({
     const decimalRegex = /^\d+(\.\d{1,4})?$/;
     if (!decimalRegex.test(amount)) {
       errors.amount = 'Please enter a valid number with up to 4 decimal places.';
+      return errors;
     }
 
     if (parseFloat(amount) < 0) {
@@ -85,14 +86,17 @@ const ModalBid: React.FC<IProps> = ({
     const gmDepositBalanceBN = new BigNumber(gmDepositBalance);
     const amountBN = new BigNumber(amount).times(1e18);
     const newHighestBig = new BigNumber(auction?.highestBid || 0).times(1.1);
+
     if (amountBN.isLessThan(newHighestBig)) {
       errors.amount = `Amount must be greater than ${formatEthPrice(newHighestBig.toString())} GM.`
       return errors;
     }
+
     if (amountBN.isGreaterThan(gmDepositBalanceBN)) {
       errors.amount = `Amount must be less than or equal auction wallet balance ${formatEthPrice(gmDepositBalanceBN.toString())} GM.`
       return errors;
     }
+
     calculateEstBtcFee();
     calculateEstTcFee(amount.toString());
     return errors;
