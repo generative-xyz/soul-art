@@ -35,8 +35,6 @@ const useContractOperation = <P, R>(
   const router = useRouter();
 
   const checkAndSwitchChainIfNecessary = async (): Promise<void> => {
-    logger.debug('currentChainID', walletChainId);
-
     if (walletChainId !== chainId) {
       await switchChain(chainId);
     }

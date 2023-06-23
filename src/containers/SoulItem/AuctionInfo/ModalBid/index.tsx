@@ -61,40 +61,69 @@ const ModalBid: React.FC<IProps> = ({
   const validateForm = (values: IFormValues): Record<string, string> => {
     const errors: Record<string, string> = {};
     const { amount } = values;
-    const gmDepositBalanceBN = new BigNumber(gmDepositBalance);
-    const amountBN = new BigNumber(amount).times(1e18);
-    const newHighestBig = new BigNumber(auction?.highestBid || 0).times(1.1);
-    const decimalRegex = /^\d+(\.\d{1,4})?$/;
 
     if (!amount) {
       errors.amount = 'Amount is required.'
-    } else if (!isValidNumber(amount)) {
-      errors.amount = 'Invalid number.'
-    } else if (!decimalRegex.test(amount)) {
-      errors.amount = 'Please enter a valid number with up to 4 decimal places.';
-    } else if (parseFloat(amount) < 0) {
-      errors.amount = 'Amount must be greater than 0.'
-    } else if (amountBN.isLessThan(newHighestBig)) {
-      errors.amount = `Amount must be greater than ${formatEthPrice(newHighestBig.toString())} GM.`
-    } else if (amountBN.isGreaterThan(gmDepositBalanceBN)) {
-      errors.amount = `Amount must be less than or equal auction wallet balance ${formatEthPrice(gmDepositBalanceBN.toString())} GM.`
-    } else {
-      calculateEstBtcFee();
-      calculateEstTcFee(amount.toString());
+      return errors;
     }
 
+    if (!isValidNumber(amount)) {
+      errors.amount = 'Invalid number.'
+      return errors;
+    }
+
+    const decimalRegex = /^\d+(\.\d{1,4})?$/;
+    if (!decimalRegex.test(amount)) {
+      errors.amount = 'Please enter a valid number with up to 4 decimal places.';
+    }
+
+    if (parseFloat(amount) < 0) {
+      errors.amount = 'Amount must be greater than 0.'
+      return errors;
+    }
+
+    const gmDepositBalanceBN = new BigNumber(gmDepositBalance);
+    const amountBN = new BigNumber(amount).times(1e18);
+    const newHighestBig = new BigNumber(auction?.highestBid || 0).times(1.1);
+    if (amountBN.isLessThan(newHighestBig)) {
+      errors.amount = `Amount must be greater than ${formatEthPrice(newHighestBig.toString())} GM.`
+      return errors;
+    }
+    if (amountBN.isGreaterThan(gmDepositBalanceBN)) {
+      errors.amount = `Amount must be less than or equal auction wallet balance ${formatEthPrice(gmDepositBalanceBN.toString())} GM.`
+      return errors;
+    }
+    calculateEstBtcFee();
+    calculateEstTcFee(amount.toString());
     return errors;
   }
 
   const handleSubmit = async (values: IFormValues): Promise<void> => {
     if (processing) return;
 
+    if (!userBid) {
+      showToastError({
+        message: `User's bidding information not found.`
+      })
+      return;
+    }
+
+    if (!auction) {
+      showToastError({
+        message: `Auction information not found.`
+      })
+      return;
+    }
+
     try {
       setProcessing(true);
       const { amount } = values;
+      const newAmount = new BigNumber(amount).times(1e18);
+      const currentUserBid = new BigNumber(userBid);
+      const bidAmount = newAmount.minus(currentUserBid);
       await createBid({
         tokenId: Number(data.tokenId),
-        amount: Web3.utils.toWei(amount.toString()),
+        amount: bidAmount.toString(),
       });
     } catch (err: unknown) {
       logger.error(err);
@@ -172,7 +201,7 @@ const ModalBid: React.FC<IProps> = ({
         validate={validateForm}
         onSubmit={handleSubmit}
       >
-        {({ values, errors, touched, handleChange, handleSubmit, isValid }) => (
+        {({ values, errors, touched, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <p className={s.bidModal_header_content_desc}>
               You will be the highest bidder in the auction once your bid is submitted.
@@ -218,7 +247,7 @@ const ModalBid: React.FC<IProps> = ({
                   type="number"
                   value={values.amount}
                   onChange={handleChange}
-                  placeholder='Bid more'
+                  placeholder='0.00'
                 />
                 <p
                   className={
@@ -232,14 +261,14 @@ const ModalBid: React.FC<IProps> = ({
               )}
               <ul className={s.bidModal_body_highestInput_desc}>
                 <li>
-                  Your GM <strong>will be returned</strong> if there is a higher
-                  bidder.
-                </li>
-                <li>
                   90% of the proceeds from the winning bids go to the Souls DAO, reinforcing the financial sustainability and growth of the ecosystem.
                 </li>
                 <li>
                   The remaining 10% of the winning bids go to the Souls core team as artist royalties.
+                </li>
+                <li>
+                  Your GM <strong>will be returned</strong> if there is a higher
+                  bidder.
                 </li>
               </ul>
             </div>
@@ -251,7 +280,7 @@ const ModalBid: React.FC<IProps> = ({
             </div>
             <div className={s.modalFooter}>
               <Button
-                disabled={!isValid || processing}
+                disabled={processing}
                 type="submit"
                 className={s.bidBtn}>
                 {processing ? 'Processing...' : 'Bid'}

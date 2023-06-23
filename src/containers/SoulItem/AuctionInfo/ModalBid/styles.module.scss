@@ -166,6 +166,14 @@
         line-height: 140%;
       }
 
+      &_totalBid {
+        margin-top: rem(8px);
+        color: #000;
+        font-weight: 500;
+        font-size: rem(14px);
+        line-height: 1.4;
+      }
+
       &_errorMessage {
         color: #ff4747;
         font-weight: 400;
@@ -175,11 +183,16 @@
       }
 
       &_desc {
-        font-weight: 400;
-        font-size: rem(16px);
-        line-height: 140%;
-        color: #2e2e2e;
-        margin-top: rem(16px);
+        list-style: disc;
+        padding-left: rem(14px);
+
+        li {
+          font-weight: 400;
+          font-size: rem(14px);
+          line-height: 140%;
+          color: #2e2e2e;
+          margin-top: rem(12px);
+        }
       }
     }
 
