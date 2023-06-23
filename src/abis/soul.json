@@ -1299,19 +1299,19 @@
       "name": "getSettingFeatures",
       "outputs": [
         {
-          "internalType": "string[10]",
+          "internalType": "string[11]",
           "name": "features",
-          "type": "string[10]"
+          "type": "string[11]"
         },
         {
-          "internalType": "uint16[10]",
+          "internalType": "uint16[11]",
           "name": "balances",
-          "type": "uint16[10]"
+          "type": "uint16[11]"
         },
         {
-          "internalType": "uint16[10]",
+          "internalType": "uint16[11]",
           "name": "holdTimes",
-          "type": "uint16[10]"
+          "type": "uint16[11]"
         }
       ],
       "stateMutability": "view",

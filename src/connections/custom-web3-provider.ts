@@ -80,11 +80,7 @@ class CustomWeb3Provider {
         SoulAbiJson.abi as Array<AbiItem>,
         SOUL_CONTRACT
       );
-      const res = await contract.methods.getSettingFeatures().call();
-      console.log(
-        '🚀 ~ CustomWeb3Provider ~ getSettingFeatures ~ features:',
-        res
-      );
+      const { features } = await contract.methods.getSettingFeatures().call();
       return features;
     } catch (err: unknown) {
       logger.error(err);

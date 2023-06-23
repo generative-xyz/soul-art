@@ -6,6 +6,7 @@ import {
   ContractOperationHook,
   DAppType,
 } from '@/interfaces/contract-operation';
+import logger from '@/services/logger';
 import { useWeb3React } from '@web3-react/core';
 import { Transaction } from 'ethers';
 import { useCallback } from 'react';
@@ -31,6 +32,7 @@ const useCheckFeatureStatus: ContractOperationHook<
 
         const featureStatus = await Promise.all(
           featureList.map(async feature => {
+            logger.debug(feature);
             const checkCanUnlock = await contract.canUnlockFeature(
               tokenId,
               owner,

@@ -9,6 +9,7 @@ export enum Feature {
   'feature_thunder' = 'Thunder',
   'feature_rain' = 'Rain',
   'feature_sunaura' = 'Sun Aura',
+  'feature_sunpillar' = 'Sun Pillar',
 }
 
 export enum FeatureStatus {

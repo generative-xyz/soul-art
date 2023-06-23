@@ -26,7 +26,6 @@ const TabFeatures = ({ owner }: { owner: string }) => {
   });
 
   const [settingFeatures, setSettingFeatures] = useState<string[] | null>(null);
-  console.log('🚀 ~ TabFeatures ~ settingFeatures:', settingFeatures);
   const [featuresStatus, setFeaturesStatus] = useState<number[] | null>(null);
 
   // Get current setting features
