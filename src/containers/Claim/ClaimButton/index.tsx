@@ -35,7 +35,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   const [minting, setMinting] = useState(false);
   const { run: call } = useContractOperation<IMintParams, Transaction | null>({
     operation: useMint,
-    inscribeable: true,
+    inscribable: true,
   });
   const {
     operationName

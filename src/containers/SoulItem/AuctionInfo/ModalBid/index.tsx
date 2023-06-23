@@ -21,6 +21,8 @@ import { TRANSFER_TX_SIZE } from "@/configs";
 import BigNumber from 'bignumber.js';
 import web3Instance from '@/connections/custom-web3-provider';
 import EstimatedFee from "@/components/EstimatedFee";
+import useGetUserBid from "@/hooks/contract-operations/soul/useGetUserBid";
+import useAsyncEffect from "use-async-effect";
 
 interface IProps {
   show: boolean;
@@ -43,9 +45,14 @@ const ModalBid: React.FC<IProps> = ({
   const [estBTCFee, setEstBTCFee] = useState<string | null>(null);
   const [estTCFee, setEstTCFee] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
+  const [userBid, setUserBid] = useState<string | null>(null);
+  const { run: getUserBid } = useContractOperation({
+    operation: useGetUserBid,
+    inscribable: false
+  });
   const { run: createBid } = useContractOperation({
     operation: useCreateBid,
-    inscribeable: true
+    inscribable: true
   });
   const {
     estimateGas
@@ -54,16 +61,23 @@ const ModalBid: React.FC<IProps> = ({
   const validateForm = (values: IFormValues): Record<string, string> => {
     const errors: Record<string, string> = {};
     const { amount } = values;
-    const decimalRegex = /^\d+(\.\d{1,4})?$/; // Regular expression for numbers with up to 4 decimal places
+    const gmDepositBalanceBN = new BigNumber(gmDepositBalance);
+    const amountBN = new BigNumber(amount).times(1e18);
+    const newHighestBig = new BigNumber(auction?.highestBid || 0).times(1.1);
+    const decimalRegex = /^\d+(\.\d{1,4})?$/;
 
     if (!amount) {
       errors.amount = 'Amount is required.'
     } else if (!isValidNumber(amount)) {
       errors.amount = 'Invalid number.'
-    } else if (parseFloat(amount) < 0) {
-      errors.amount = 'Invalid number. Amount must be greater than 0.'
     } else if (!decimalRegex.test(amount)) {
       errors.amount = 'Please enter a valid number with up to 4 decimal places.';
+    } else if (parseFloat(amount) < 0) {
+      errors.amount = 'Amount must be greater than 0.'
+    } else if (amountBN.isLessThan(newHighestBig)) {
+      errors.amount = `Amount must be greater than ${formatEthPrice(newHighestBig.toString())} GM.`
+    } else if (amountBN.isGreaterThan(gmDepositBalanceBN)) {
+      errors.amount = `Amount must be less than or equal auction wallet balance ${formatEthPrice(gmDepositBalanceBN.toString())} GM.`
     } else {
       calculateEstBtcFee();
       calculateEstTcFee(amount.toString());
@@ -128,6 +142,19 @@ const ModalBid: React.FC<IProps> = ({
     [setEstTCFee, estimateGas, data, show],
   );
 
+  useAsyncEffect(async () => {
+    if (!show || !auction || !data) return;
+    try {
+      const balance = await getUserBid({
+        tokenId: data.tokenId,
+        auctionId: auction.chainAuctionId,
+      });
+      setUserBid(balance.toString());
+    } catch (err: unknown) {
+      logger.error(err);
+    }
+  }, [auction, show, data]);
+
   if (!auction) return <></>;
 
   return (
@@ -175,6 +202,10 @@ const ModalBid: React.FC<IProps> = ({
                   <p className={s.bidModal_body_highestPrice_value}>{`${formatEthPrice(auction.highestBid)} GM`}</p>
                 </div>
                 <div className={s.bidModal_body_highestPrice}>
+                  <p className={s.bidModal_body_highestPrice_label}>Your bid</p>
+                  <p className={s.bidModal_body_highestPrice_value}>{userBid ? `${formatEthPrice(userBid)} GM` : '-'}</p>
+                </div>
+                <div className={s.bidModal_body_highestPrice}>
                   <p className={s.bidModal_body_highestPrice_label}>Auction Wallet</p>
                   <p className={s.bidModal_body_highestPrice_value}>{`${formatEthPrice(gmDepositBalance)} GM`}</p>
                 </div>
@@ -199,10 +230,18 @@ const ModalBid: React.FC<IProps> = ({
               {errors.amount && touched.amount && (
                 <p className={s.bidModal_body_highestInput_errorMessage}>{errors.amount}</p>
               )}
-              <p className={s.bidModal_body_highestInput_desc}>
-                Your GM <strong>will be returned</strong> if there is a higher
-                bidder.
-              </p>
+              <ul className={s.bidModal_body_highestInput_desc}>
+                <li>
+                  Your GM <strong>will be returned</strong> if there is a higher
+                  bidder.
+                </li>
+                <li>
+                  90% of the proceeds from the winning bids go to the Souls DAO, reinforcing the financial sustainability and growth of the ecosystem.
+                </li>
+                <li>
+                  The remaining 10% of the winning bids go to the Souls core team as artist royalties.
+                </li>
+              </ul>
             </div>
             <div className={s.bidModal_body_fee}>
               <EstimatedFee
@@ -226,4 +265,3 @@ const ModalBid: React.FC<IProps> = ({
 }
 
 export default ModalBid;
-

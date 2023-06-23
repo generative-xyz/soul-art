@@ -4,6 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { useCallback } from 'react';
 import { getContract } from '@/utils';
 import logger from '@/services/logger';
+import BigNumber from 'bignumber.js';
 
 export interface IGetAllowanceAmountParams {
   operatorAddress: string;
@@ -12,12 +13,12 @@ export interface IGetAllowanceAmountParams {
 
 const useGetAllowanceAmount: ContractOperationHook<
   IGetAllowanceAmountParams,
-  number
+  BigNumber
 > = () => {
   const { account, provider } = useWeb3React();
 
   const call = useCallback(
-    async (params: IGetAllowanceAmountParams): Promise<number> => {
+    async (params: IGetAllowanceAmountParams): Promise<BigNumber> => {
       logger.debug('useGetAllowanceAmount', params);
       if (account && provider) {
         const { operatorAddress, contractAddress } = params;
@@ -25,10 +26,10 @@ const useGetAllowanceAmount: ContractOperationHook<
         const allowance = await contract.allowance(account, operatorAddress, {
           from: account
         });
-        return allowance.toString();
+        return new BigNumber(allowance.toString());
       }
 
-      return 0;
+      return new BigNumber('0');
     },
     [account, provider],
   );
