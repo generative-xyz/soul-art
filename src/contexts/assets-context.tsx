@@ -59,11 +59,11 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   const [feeRate, setFeeRate] = useState<IFeeRate>(initialValue.feeRate);
   const { run: getTokenBalance } = useContractOperation({
     operation: useTokenBalance,
-    inscribeable: false,
+    inscribable: false,
   });
   const { run: getDepositBalance } = useContractOperation({
     operation: useGetDepositBalance,
-    inscribeable: false,
+    inscribable: false,
   });
 
   const fetchAssets = useCallback(async (): Promise<

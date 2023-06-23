@@ -4,5 +4,5 @@
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["jazzicon", "Jazzicon"]
+  "cSpell.words": ["bignumber", "Formik", "inscribable", "jazzicon", "Jazzicon"]
 }

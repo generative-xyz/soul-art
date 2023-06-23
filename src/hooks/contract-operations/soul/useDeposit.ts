@@ -74,8 +74,8 @@ const useDeposit: ContractOperationHook<IDepositParams, Transaction | null> = ()
   return {
     estimateGas: estimateGas,
     call: call,
-    dAppType: DAppType.SOUL,
-    operationName: 'Deposit',
+    dAppType: DAppType.GM,
+    operationName: 'Deposit token',
   };
 };
 

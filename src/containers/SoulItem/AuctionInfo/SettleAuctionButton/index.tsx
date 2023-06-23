@@ -1,5 +1,5 @@
 import { ITokenDetail } from "@/interfaces/api/marketplace";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import s from './styles.module.scss';
 import Button from "@/components/Button";
 import logger from "@/services/logger";
@@ -8,9 +8,10 @@ import { Transaction } from 'ethers';
 import { useSelector } from "react-redux";
 import { getUserSelector } from "@/state/user/selector";
 import { useWeb3React } from "@web3-react/core";
-import { toStorageKey } from "@/utils";
+import { sleep, toStorageKey } from "@/utils";
 import useContractOperation from "@/hooks/contract-operations/useContractOperation";
 import useSettleAuction from "@/hooks/contract-operations/soul/useSettleAuction";
+import { AuctionContext } from "@/contexts/auction-context";
 
 interface IProps {
   data: ITokenDetail;
@@ -25,9 +26,10 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
   } = useSettleAuction();
   const { run: createAuction } = useContractOperation({
     operation: useSettleAuction,
-    inscribeable: true
+    inscribable: true
   });
   const { provider } = useWeb3React();
+  const { fetchAuction } = useContext(AuctionContext);
 
   const onTxSuccessCallback = async (tx: Transaction | null): Promise<void> => {
     if (!tx || !user?.walletAddress) return;
@@ -77,8 +79,10 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
         if (receipt.status === 1) {
           logger.info('tx done');
           localStorage.removeItem(key);
-          setInscribing(false);
           intervalId && clearInterval(intervalId);
+          await sleep(60000);
+          setInscribing(false);
+          fetchAuction();
         }
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);

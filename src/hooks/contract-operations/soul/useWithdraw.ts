@@ -14,11 +14,7 @@ import { Transaction } from 'ethers';
 import { useCallback, useContext } from 'react';
 import * as TC_SDK from 'trustless-computer-sdk';
 
-export interface IWithdrawParams {
-  txSuccessCallback?: (_tx: Transaction | null) => Promise<void>;
-}
-
-const useWithdraw: ContractOperationHook<IWithdrawParams, Transaction | null> = () => {
+const useWithdraw: ContractOperationHook<unknown, Transaction | null> = () => {
   const { account, provider } = useWeb3React();
   const contract = useContract(SOUL_CONTRACT, SoulAbiJson.abi, true);
   const { btcBalance, feeRate } = useContext(AssetsContext);
@@ -40,11 +36,9 @@ const useWithdraw: ContractOperationHook<IWithdrawParams, Transaction | null> = 
   );
 
   const call = useCallback(
-    async (params: IWithdrawParams): Promise<Transaction | null> => {
+    async (): Promise<Transaction | null> => {
       if (account && provider && contract) {
-        logger.debug('useDeposit', params);
-
-        const { txSuccessCallback } = params;
+        logger.debug('useDeposit');
 
         const estimatedFee = TC_SDK.estimateInscribeFee({
           tcTxSizeByte: TRANSFER_TX_SIZE,
@@ -67,10 +61,6 @@ const useWithdraw: ContractOperationHook<IWithdrawParams, Transaction | null> = 
             gasLimit,
             from: account,
           });
-
-        if (txSuccessCallback) {
-          await txSuccessCallback(transaction);
-        }
 
         return transaction;
       }

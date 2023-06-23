@@ -7,6 +7,10 @@ import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
 import { AuctionContext } from '@/contexts/auction-context';
 import { formatEthPrice } from '@/utils/format';
+import useContractOperation from '@/hooks/contract-operations/useContractOperation';
+import useGetBalanceOf from '@/hooks/contract-operations/soul/useGetBalanceOf';
+import logger from '@/services/logger';
+import ModalError from '../ModalError';
 
 interface IProps {
   data: ITokenDetail;
@@ -14,10 +18,29 @@ interface IProps {
 
 const CreateBidButton: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
   const { auction, auctionEndTime, biddable } = useContext(AuctionContext);
-  const [show, setShow] = useState<boolean>(false);
+  const { run: getBalanceOf } = useContractOperation({
+    operation: useGetBalanceOf,
+    inscribable: false,
+  });
+  const [showBidModal, setShowBidModal] = useState<boolean>(false);
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCloseBidModal = () => setShowBidModal(false);
+
+  const handleShowBidModal = async () => {
+    try {
+      const tokenBalanceBN = await getBalanceOf();
+      if (tokenBalanceBN.isGreaterThan(0)) {
+        setShowErrorModal(true);
+        return;
+      }
+      setShowBidModal(true);
+    } catch (err: unknown) {
+      logger.error(err);
+    }
+  }
+
+  const handleCloseErrorModal = () => setShowErrorModal(false);
 
   if (!auction) {
     return <></>;
@@ -45,17 +68,21 @@ const CreateBidButton: React.FC<IProps> = ({ data }: IProps): React.ReactElement
           )}
         </div>
         <Button
-          // disabled={!biddable}
+          disabled={!biddable}
           className={s.content_auction_adoptButton}
-          onClick={handleShow}
+          onClick={handleShowBidModal}
         >
           {biddable ? 'Bid' : 'Bidding period ended'}
         </Button>
       </div>
       <ModalBid
-        show={show}
-        handleClose={handleClose}
+        show={showBidModal}
+        handleClose={handleCloseBidModal}
         data={data}
+      />
+      <ModalError
+        show={showErrorModal}
+        handleClose={handleCloseErrorModal}
       />
     </>
   )

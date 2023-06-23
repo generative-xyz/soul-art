@@ -1,20 +1,20 @@
-import { getSoulAttributes } from '@/services/soul';
-import { debounce, pick } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import InfiniteLoading from '@/components/InfiniteLoading';
 import SoulsCard from '@/components/SoulCards';
+import Spinner from '@/components/Spinner';
 import { CDN_URL, SOUL_CONTRACT } from '@/configs';
+import { ROUTE_PATH } from '@/constants/route-path';
+import AttributeSort from '@/containers/Attribute';
 import { IToken } from '@/interfaces/api/marketplace';
 import { IAttribute } from '@/interfaces/attributes';
-import { getCollectionNFTList } from '@/services/marketplace';
-import { useRouter } from 'next/router';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import soulsStyles from './souls.module.scss';
-import { ROUTE_PATH } from '@/constants/route-path';
-import Link from 'next/link';
-import AttributeSort from '@/containers/Attribute';
-import Spinner from '@/components/Spinner';
 import logger from '@/services/logger';
+import { getCollectionNFTList } from '@/services/marketplace';
+import { getSoulAttributes } from '@/services/soul';
+import { debounce, pick } from 'lodash';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Container } from 'react-bootstrap';
+import soulsStyles from './souls.module.scss';
 
 const LIMIT_PAGE = 32;
 
@@ -25,6 +25,7 @@ export const SoulsContainer: React.FC = () => {
   const [souls, setSouls] = useState<IToken[]>([]);
   const [attributes, setAttributes] = useState<IAttribute[]>();
   const [isFetchSuccessAttributes, setIsSuccessAttributes] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchAttributes = async () => {
     try {
@@ -113,6 +114,10 @@ export const SoulsContainer: React.FC = () => {
           setSouls(data.items);
           // setSouls([]);
         }
+
+        if (data.items.length < LIMIT_PAGE) {
+          setHasMore(false);
+        }
       } catch (error) {
       } finally {
         setIsFetching(false);
@@ -160,19 +165,7 @@ export const SoulsContainer: React.FC = () => {
 
   return (
     <>
-      <InfiniteScroll
-        className={`${soulsStyles.list} small-scrollbar`}
-        dataLength={souls?.length || 0}
-        hasMore={true}
-        loader={
-          isFetching && (
-            <div className="loading">
-              <Spinner />
-            </div>
-          )
-        }
-        next={debounceLoadMore}
-      >
+      <div className={`${soulsStyles.list} small-scrollbar`}>
         <div className={`${soulsStyles.art} small-scrollbar`} id="soul-list">
           <Container className={soulsStyles.grid_container}>
             {souls &&
@@ -191,8 +184,13 @@ export const SoulsContainer: React.FC = () => {
                 );
               })}
           </Container>
+          <InfiniteLoading
+            fetchMoreData={debounceLoadMore}
+            isLoading={isFetching}
+            hasMoreData={hasMore}
+          />
         </div>
-      </InfiniteScroll>
+      </div>
       <AttributeSort attributes={attributes || []} />
     </>
   );
