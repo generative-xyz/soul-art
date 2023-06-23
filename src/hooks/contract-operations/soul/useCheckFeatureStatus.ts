@@ -17,26 +17,37 @@ export interface ICheckFeatureStatusParams {
 
 const useCheckFeatureStatus: ContractOperationHook<
   ICheckFeatureStatusParams,
-  boolean[] | null
+  number[] | null
 > = () => {
   const { account, provider } = useWeb3React();
   const contract = useContract(SOUL_CONTRACT, SoulAbiJson.abi, true);
 
   const call = useCallback(
-    async (params: ICheckFeatureStatusParams): Promise<boolean[] | null> => {
+    async (params: ICheckFeatureStatusParams): Promise<number[] | null> => {
       if (account && provider && contract) {
         const { tokenId, featureList } = params;
 
         const featureStatus = await Promise.all(
           featureList.map(async feature => {
-            const tx = await contract.canUnlockFeature(
+            const checkCanUnlock = await contract.canUnlockFeature(
               tokenId,
               account,
               feature
             );
-            return tx;
+
+            if (checkCanUnlock) {
+              const checkIsUnlocked = await contract._features(
+                tokenId,
+                account,
+                feature
+              );
+              return checkIsUnlocked ? 1 : 2;
+            }
+
+            return 0;
           })
         );
+
         return featureStatus;
       }
       return null;

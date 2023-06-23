@@ -10,3 +10,9 @@ export enum Feature {
   'feature_rain' = 'Rain',
   'feature_sunaura' = 'Sun Aura',
 }
+
+export enum FeatureStatus {
+  LOCKED = 'Locked', // 0
+  UNLOCKED = 'Unlocked', // 1
+  AVAILABLE = 'Available', // 2
+}

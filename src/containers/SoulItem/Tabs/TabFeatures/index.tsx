@@ -13,12 +13,6 @@ import {
 } from '@/state/user/selector';
 import logger from '@/services/logger';
 
-enum FeatureStatus {
-  LOCKED = 'Locked',
-  UNLOCKED = 'Unlocked',
-  AVAILABLE = 'Available',
-}
-
 const TabFeatures = () => {
   const router = useRouter();
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
@@ -61,7 +55,7 @@ const TabFeatures = () => {
       {settingFeatures &&
         settingFeatures.length > 0 &&
         settingFeatures.map((feat, index) => (
-          <div className={s.feature_list}>
+          <div className={s.feature_list} key={`${feat}-${index}`}>
             <p>{Feature[feat as keyof typeof Feature]}</p>
             <p>{featuresStatus ? `${featuresStatus[index]}` : 'LOCKED'}</p>
           </div>
