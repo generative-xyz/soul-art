@@ -61,6 +61,20 @@ const SectionFlys = (): JSX.Element => {
     arrows: false,
     centerMode: true,
     centerPadding: '0px',
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (

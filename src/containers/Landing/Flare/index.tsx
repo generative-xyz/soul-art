@@ -17,6 +17,8 @@ const Flare: React.FC = () => {
   const lPart1 = useRef<HTMLDivElement | null>(null);
   const lPart2 = useRef<HTMLDivElement | null>(null);
 
+  const { isMobile } = useWindowResize();
+
   const part1Frame = useFrameProcessing(lPart1, {
     startIn: 0,
     endIn: 0,
@@ -39,8 +41,6 @@ const Flare: React.FC = () => {
   );
 
   useScrollFixed(refBox, 1200, onUpdate);
-
-  const { isMobile } = useWindowResize();
 
   const DesktopFlare = () => {
     return (

@@ -1,20 +1,22 @@
 .introduce {
   width: 100%;
-  height: 100vh;
+  height: auto;
   position: relative;
   background: rgba($color: #000000, $alpha: 0);
   z-index: 3;
+  padding: 10vh 0 3vh 0;
 
   .container {
     height: 100%;
+    z-index: 2;
+    position: relative;
 
     .column {
       height: 100%;
 
       .introduceBox {
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
+        position: unset;
+        padding-top: 45vh;
 
         .introduceBox-title {
           font-family: var(--righteous-font);
@@ -27,19 +29,15 @@
         }
 
         .introduceBox-desc-wrapper {
-          margin-top: rem(40px);
-          margin-bottom: rem(40px);
+          margin-top: rem(25px);
+          margin-bottom: rem(25px);
           color: #fff;
           display: flex;
           flex-direction: column;
           gap: rem(20px);
 
-          @include mobile {
-            margin-bottom: rem(20px);
-          }
-
-          @include min-tablet {
-            margin-bottom: rem(40px);
+          @include pcSmall {
+            margin-bottom: rem(43px);
           }
 
           .introduceBox-desc {}
@@ -84,7 +82,7 @@
                   width: 100%;
 
                   @include min-tablet {
-                    width: rem(112px);
+                    width: rem(115px);
                   }
                 }
               }
@@ -125,6 +123,10 @@
               font-size: rem(16px);
               padding: rem(11px) rem(24px);
             }
+          }
+
+          @include min-tablet {
+            flex-wrap: unset;
           }
         }
 
@@ -172,11 +174,6 @@
             }
           }
 
-          @include onlyMobile {
-            margin-top: rem(15px);
-            padding-top: rem(15px);
-          }
-
           @include tablet {
             .wrap-video {
               width: 100%;
@@ -189,6 +186,13 @@
             }
           }
         }
+
+        @include min-tablet {
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+          padding-top: unset;
+        }
       }
     }
   }
@@ -200,12 +204,16 @@
   &_actions {
     display: flex;
     gap: rem(20px);
-    margin-top: rem(43px);
-    padding-top: rem(43px);
+    margin-top: rem(25px);
+    padding-top: rem(25px);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 
     &_item {
       flex: 0 0 calc(50% + #{rem(-20px)} / 2);
+
+      @include min-tablet {
+        flex: 0 0 calc(35% + #{rem(-20px)} / 2);
+      }
 
       @include pcSmall {
         flex: 0 0 rem(212px);
@@ -221,6 +229,36 @@
           }
         }
       }
+    }
+
+    @include pcSmall {
+      margin-top: rem(43px);
+      padding-top: rem(43px);
+    }
+  }
+
+  @include min-tablet {
+    height: 100vh;
+    padding: unset;
+  }
+
+  .mobileBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @include min-tablet {
+      display: none;
     }
   }
 }

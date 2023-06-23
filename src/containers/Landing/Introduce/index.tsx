@@ -6,7 +6,7 @@ import IconSVG from '@/components/IconSVG';
 import HeroModal from './Modal';
 import { useContext, useState } from 'react';
 import { Col, Container } from 'react-bootstrap';
-import { modalPlay } from '@/constants/asset';
+import { mobileIntroduce, modalPlay } from '@/constants/asset';
 import { AnimateContext } from '@/contexts/animate-context';
 import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
@@ -36,11 +36,13 @@ const Introduce: React.FC = () => {
 
   return (
     <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>
+      <div className={s.mobileBg}>
+        <img src={mobileIntroduce} alt="background" />
+      </div>
       <Container className={s.container}>
         <Col
           xs={{ span: 12, offset: 0 }}
-          sm={{ span: 6, offset: 0 }}
-          md={{ span: 6, offset: 1 }}
+          sm={{ span: 8, offset: 0 }}
           lg={{ span: 6, offset: 1 }}
           className={s.column}
         >
@@ -116,7 +118,7 @@ const Introduce: React.FC = () => {
               </Link>
             </AnimFade>
 
-            <div className={s.introduce_actions}>
+            <AnimFade className={s.introduce_actions} screen={1}>
               <div className={s.introduce_actions_item}>
                 <AnimFade className={s['introduceVideo']} screen={1}>
                   <h5 className={s['introduceVideo-title']}>Watch the film</h5>
@@ -167,7 +169,7 @@ const Introduce: React.FC = () => {
                   </div>
                 </AnimFade>
               </div>
-            </div>
+            </AnimFade>
           </div>
         </Col>
       </Container>
