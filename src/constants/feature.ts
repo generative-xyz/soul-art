@@ -12,7 +12,7 @@ export enum Feature {
 }
 
 export enum FeatureStatus {
-  LOCKED = 'Locked', // 0
-  UNLOCKED = 'Unlocked', // 1
-  AVAILABLE = 'Available', // 2
+  'Locked', // 0
+  'Unlocked', // 1
+  'Available', // 2
 }

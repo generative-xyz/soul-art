@@ -11,6 +11,7 @@ import { useCallback } from 'react';
 
 export interface ICheckFeatureStatusParams {
   tokenId: string;
+  owner: string;
   featureList: string[];
   txSuccessCallback?: (_tx: Transaction | null) => Promise<void>;
 }
@@ -19,26 +20,26 @@ const useCheckFeatureStatus: ContractOperationHook<
   ICheckFeatureStatusParams,
   number[] | null
 > = () => {
-  const { account, provider } = useWeb3React();
+  const { provider } = useWeb3React();
   const contract = useContract(SOUL_CONTRACT, SoulAbiJson.abi, true);
 
   const call = useCallback(
     async (params: ICheckFeatureStatusParams): Promise<number[] | null> => {
-      if (account && provider && contract) {
-        const { tokenId, featureList } = params;
+      if (provider && contract) {
+        const { tokenId, owner, featureList } = params;
 
         const featureStatus = await Promise.all(
           featureList.map(async feature => {
             const checkCanUnlock = await contract.canUnlockFeature(
               tokenId,
-              account,
+              owner,
               feature
             );
 
             if (checkCanUnlock) {
               const checkIsUnlocked = await contract._features(
                 tokenId,
-                account,
+                owner,
                 feature
               );
               return checkIsUnlocked ? 1 : 2;
@@ -52,7 +53,7 @@ const useCheckFeatureStatus: ContractOperationHook<
       }
       return null;
     },
-    [contract, provider, account]
+    [contract, provider]
   );
 
   return {

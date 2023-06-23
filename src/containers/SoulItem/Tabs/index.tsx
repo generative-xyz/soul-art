@@ -5,6 +5,7 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import Link from 'next/link';
 import TabsStyles from './style.module.scss';
 import TabFeatures from './TabFeatures';
+import { IToken } from '@/interfaces/api/marketplace';
 
 const auctionTabHeader = [
   // {
@@ -248,7 +249,7 @@ const TabInteraction = () => {
 const CDN_URL =
   'https://storage.googleapis.com/generative-static-prod/soul-art';
 
-const TabsComponent = () => {
+const TabsComponent = ({ data }: { data: IToken }) => {
   return (
     <Tabs defaultActiveKey="0" className={TabsStyles.content_auction_tabs}>
       {auctionTabHeader.map((auctionHeader, index) => {
@@ -266,7 +267,9 @@ const TabsComponent = () => {
               {auctionHeader.type === 'desc' && <TabDescription />}
               {/* {auctionHeader.type === 'attr' && < TabAttribute />} */}
               {auctionHeader.type === 'inter' && <TabInteraction />}
-              {auctionHeader.type === 'feat' && <TabFeatures />}
+              {auctionHeader.type === 'feat' && (
+                <TabFeatures owner={data.owner} />
+              )}
             </div>
           </Tab>
         );

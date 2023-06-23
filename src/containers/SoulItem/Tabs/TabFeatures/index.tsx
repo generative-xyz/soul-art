@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import web3Instance from '@/connections/custom-web3-provider';
 import useAsyncEffect from 'use-async-effect';
 import s from './TabFeatures.module.scss';
-import { Feature } from '@/constants/feature';
+import { Feature, FeatureStatus } from '@/constants/feature';
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import useCheckFeatureStatus from '@/hooks/contract-operations/soul/useCheckFeatureStatus';
 import { useRouter } from 'next/router';
@@ -12,8 +12,9 @@ import {
   getUserSelector,
 } from '@/state/user/selector';
 import logger from '@/services/logger';
+import UnlockFeature from './UnlockFeature';
 
-const TabFeatures = () => {
+const TabFeatures = ({ owner }: { owner: string }) => {
   const router = useRouter();
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const user = useSelector(getUserSelector);
@@ -25,8 +26,7 @@ const TabFeatures = () => {
   });
 
   const [settingFeatures, setSettingFeatures] = useState<string[] | null>(null);
-  const [featuresStatus, setFeaturesStatus] = useState<boolean[] | null>(null);
-  console.log('🚀 ~ TabFeatures ~ featuresStatus:', featuresStatus);
+  const [featuresStatus, setFeaturesStatus] = useState<number[] | null>(null);
 
   // Get current setting features
   useAsyncEffect(async () => {
@@ -40,6 +40,7 @@ const TabFeatures = () => {
       if (!isAuthenticated || !user?.walletAddress || !settingFeatures) return;
       const res = await checkFeaturesStatus({
         tokenId,
+        owner,
         featureList: settingFeatures,
       });
       setFeaturesStatus(res);
@@ -48,7 +49,8 @@ const TabFeatures = () => {
     }
   }, [settingFeatures, isAuthenticated, user?.walletAddress]);
 
-  // const status = FeatureStatus.LOCKED;
+
+
 
   return (
     <div className={s.wrapper}>
@@ -57,7 +59,19 @@ const TabFeatures = () => {
         settingFeatures.map((feat, index) => (
           <div className={s.feature_list} key={`${feat}-${index}`}>
             <p>{Feature[feat as keyof typeof Feature]}</p>
-            <p>{featuresStatus ? `${featuresStatus[index]}` : 'LOCKED'}</p>
+            <UnlockFeature></UnlockFeature>
+{/*             
+            <p>
+
+              {!!featuresStatus &&
+                `${
+                  FeatureStatus[
+                    featuresStatus[
+                      index
+                    ] as unknown as keyof typeof FeatureStatus
+                  ]
+                }`}
+            </p> */}
           </div>
         ))}
     </div>
