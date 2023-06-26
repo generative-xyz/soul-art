@@ -13,6 +13,7 @@ import Jazzicon from 'react-jazzicon/dist/Jazzicon';
 import { jsNumberForAddress } from 'react-jazzicon';
 import Link from 'next/link';
 import { TC_EXPLORER_URL } from '@/configs';
+import Empty from '@/components/Empty';
 
 const LIMIT_PAGE = 20;
 
@@ -57,7 +58,12 @@ const TabBidders: React.FC = (): React.ReactElement => {
 
   return (
     <div className={s.tabLive}>
-      {bidders.map((bidder, index) => (
+      {bidders.length === 0 && (
+        <div className={s.emptyWrapper}>
+          <Empty />
+        </div>
+      )}
+      {bidders.length > 0 && bidders.map((bidder, index) => (
         <Link href={`${TC_EXPLORER_URL}/address/${bidder.sender}`} target='_blank' className={s.tabLiveItem} key={index}>
           <div className={s.tabLiveLeft}>
             {bidder.avatar ? (

@@ -1,5 +1,5 @@
 import { SOUL_CONTRACT } from '@/configs';
-import { ISoul } from '@/interfaces/api/soul';
+import { IGetSoulHistoryParams, IGetSoulHistoryResponse, ISoul } from '@/interfaces/api/soul';
 import { IAttribute } from '@/interfaces/attributes';
 import { camelCaseKeys } from '@/utils/helpers';
 import { constructURL } from '@/utils/url';
@@ -78,5 +78,11 @@ export const getListTokensByWallet = async (
   const res = await apiClient.get(
     `/marketplace/collections/0x85802F1f36F549334EeeEf6715Ed16555ed7178b/nfts?owner=${walletAddress}`
   );
+  return Object(camelCaseKeys(res));
+};
+
+export const getSoulHistories = async (params: IGetSoulHistoryParams): Promise<IGetSoulHistoryResponse> => {
+  const { tokenId } = params;
+  const res = await apiClient.get(`${API_PATH}/${tokenId}/history`);
   return Object(camelCaseKeys(res));
 };

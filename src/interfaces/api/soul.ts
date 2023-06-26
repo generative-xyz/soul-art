@@ -1,5 +1,6 @@
 import { IAttribute } from '../attributes';
 import { ICollection } from './collection';
+import { IPagingParams } from './query';
 
 export interface ISoul {
   deletedAt: string | null;
@@ -24,4 +25,13 @@ export interface ISoul {
   collectionAddress: string;
   contentType: string;
   image: string;
+}
+
+export interface IGetSoulHistoryParams extends IPagingParams {
+  tokenId: string;
+}
+
+export interface IGetSoulHistoryResponse extends IPagingParams {
+  items: Array<unknown>;
+  total: number;
 }

@@ -3,16 +3,17 @@ import { CDN_URL } from '@/configs';
 
 export type TEmpty = {
   infoText?: string;
+  theme?: 'dark' | 'light',
 };
 
-const Empty = ({ infoText = '' }: TEmpty) => {
+const Empty = ({ infoText = 'No data found', }: TEmpty) => {
   return (
     <StyledEmpty>
       <img
         width={95}
         height={95}
-        src={`${CDN_URL}/icons/empty-white.svg`}
-        alt="Not found item"
+        src={`${CDN_URL}/empty-icon.svg`}
+        alt="Empty icon"
         className={'image'}
       />
       <p className="content">{infoText}</p>
