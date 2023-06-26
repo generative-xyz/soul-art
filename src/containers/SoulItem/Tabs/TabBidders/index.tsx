@@ -66,10 +66,10 @@ const TabBidders: React.FC = (): React.ReactElement => {
       {bidders.length > 0 && bidders.map((bidder, index) => (
         <Link href={`${TC_EXPLORER_URL}/address/${bidder.sender}`} target='_blank' className={s.tabLiveItem} key={index}>
           <div className={s.tabLiveLeft}>
-            {bidder.avatar ? (
+            {bidder.bidderAvatar ? (
               <img
-                src={bidder.avatar}
-                className={s.avatar}
+                src={bidder.bidderAvatar}
+                className={s.bidderAvatar}
                 width={48}
                 height={48}
               />
@@ -80,7 +80,7 @@ const TabBidders: React.FC = (): React.ReactElement => {
               />
             )}
             <p className={s.tabLiveLeftAddress}>
-              {formatLongAddress(`${bidder.sender}`)}
+              {bidder.bidderName ? bidder.bidderName : formatLongAddress(`${bidder.sender}`)}
             </p>
           </div>
           <div className={s.tabLiveRight}>

@@ -13,8 +13,8 @@ export interface IAuction {
 export interface IAuctionBidder {
   amount: string;
   sender: string;
-  avatar: string;
-  name: string;
+  bidderAvatar: string;
+  bidderName: string;
   time: string;
 }
 
