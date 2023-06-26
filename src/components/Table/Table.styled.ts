@@ -17,17 +17,14 @@ export const StyledTable = styled.div`
     }
 
     .tableHead {
-      border-bottom: 1px solid $black;
-
       &_item {
         font-weight: 500;
         line-height: ${px2rem(24)};
         color: #b6b6b6;
         position: sticky;
         top: 0;
-        /* background-color: ${({ theme }: { theme: DefaultTheme }) => theme.white}; */
         z-index: 10;
-        font-size: 14px;
+        font-size: ${px2rem(14)};
 
         @media screen and (max-width: ${({ theme }: { theme: DefaultTheme }) => theme.breakpoint.lg}) {
           font-size: ${px2rem(14)};

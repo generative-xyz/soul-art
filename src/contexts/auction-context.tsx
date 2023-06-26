@@ -13,6 +13,7 @@ import web3Instance from '@/connections/custom-web3-provider';
 import dayjs from 'dayjs';
 import useAsyncEffect from 'use-async-effect';
 import { AuctionStatus } from '@/enums/soul';
+import { sleep } from '@/utils';
 
 export interface IAuctionContext {
   auction: IAuction | null;
@@ -43,6 +44,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
   const getAuctionEndTime = useCallback(async () => {
     if (!auction || auction.auctionStatus !== AuctionStatus.INPROGRESS) {
       setAuctionEndTime(null);
+      setBiddable(false);
       return;
     }
     const endBlock = auction.endTime as unknown as number;
@@ -84,6 +86,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
 
   useAsyncEffect(() => {
     setBiddable(true);
+
     if (!auction || auction.auctionStatus !== AuctionStatus.INPROGRESS) {
       setBiddable(false);
       return;
@@ -95,8 +98,10 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
       const endBlock = Number(auction.endTime);
       const currentBlock = await web3Instance.getCurrentBlockNumber();
       if (endBlock <= currentBlock) {
-        setBiddable(false);
         intervalId && clearInterval(intervalId);
+        await sleep(60000);
+        await fetchAuction();
+        setBiddable(false);
       }
     };
 
@@ -106,7 +111,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
     return () => {
       intervalId && clearInterval(intervalId);
     };
-  }, [auction]);
+  }, [auction, fetchAuction]);
 
   const contextValues = useMemo((): IAuctionContext => {
     return {

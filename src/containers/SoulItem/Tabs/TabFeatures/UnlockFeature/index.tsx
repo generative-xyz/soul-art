@@ -91,14 +91,12 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
       try {
         const receipt = await provider.getTransactionReceipt(txHash);
 
-        if (receipt && receipt.status !== 1) return;
-        else if (receipt.status === null || receipt.status === undefined) {
-          return;
+        if (receipt?.status === 1 || receipt?.status === 0) {
+          logger.info('tx done', key);
+          localStorage.removeItem(key);
+          setInscribing(false);
+          intervalId && clearInterval(intervalId);
         }
-        logger.info('tx done');
-        localStorage.removeItem(key);
-        setInscribing(false);
-        intervalId && clearInterval(intervalId);
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);
       }

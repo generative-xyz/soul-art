@@ -12,6 +12,7 @@ import { getUserSelector } from '@/state/user/selector';
 import { useWeb3React } from '@web3-react/core';
 import { sleep, toStorageKey } from '@/utils';
 import { AuctionContext } from '@/contexts/auction-context';
+import { TC_URL } from '@/configs';
 
 interface IProps {
   data: ITokenDetail;
@@ -41,6 +42,15 @@ const StartAuctionButton: React.FC<IProps> = ({
 
   const handleStartAuction = async () => {
     if (processing) return;
+
+    if (inscribing) {
+      showToastError({
+        message: 'Please go to Wallet check your transaction status.',
+        url: TC_URL,
+        linkText: 'Go to wallet',
+      });
+      return;
+    }
 
     try {
       setProcessing(true);
@@ -73,15 +83,14 @@ const StartAuctionButton: React.FC<IProps> = ({
       try {
         const receipt = await provider.getTransactionReceipt(txHash);
 
-        if (receipt && receipt.status !== 1) return;
-        else if (receipt.status === 0) {
+        if (receipt?.status === 1 || receipt?.status === 0) {
+          logger.info('tx done', key);
+          localStorage.removeItem(key);
+          intervalId && clearInterval(intervalId);
+          await sleep(60000);
+          setInscribing(false);
+          fetchAuction();
         }
-        logger.info('tx done');
-        localStorage.removeItem(key);
-        intervalId && clearInterval(intervalId);
-        await sleep(60000);
-        setInscribing(false);
-        fetchAuction();
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);
       }
@@ -100,7 +109,7 @@ const StartAuctionButton: React.FC<IProps> = ({
 
   return (
     <Button
-      disabled={processing || inscribing}
+      disabled={processing}
       className={s.startAuctionButton}
       onClick={handleStartAuction}
     >

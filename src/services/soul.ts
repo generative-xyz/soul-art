@@ -76,7 +76,7 @@ export const getListTokensByWallet = async (
   walletAddress: string
 ): Promise<{ items: Array<ISoul>; totalItem: number }> => {
   const res = await apiClient.get(
-    `/marketplace/collections/0x85802F1f36F549334EeeEf6715Ed16555ed7178b/nfts?owner=${walletAddress}`
+    `/marketplace/collections/${SOUL_CONTRACT}/nfts?owner=${walletAddress}`
   );
   return Object(camelCaseKeys(res));
 };

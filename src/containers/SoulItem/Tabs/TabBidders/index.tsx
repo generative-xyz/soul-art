@@ -14,10 +14,14 @@ import { jsNumberForAddress } from 'react-jazzicon';
 import Link from 'next/link';
 import { TC_EXPLORER_URL } from '@/configs';
 import Empty from '@/components/Empty';
+import ImageWrapper from '@/components/ImageWrapper';
+import { useSelector } from 'react-redux';
+import { getUserSelector } from '@/state/user/selector';
 
 const LIMIT_PAGE = 20;
 
 const TabBidders: React.FC = (): React.ReactElement => {
+  const user = useSelector(getUserSelector);
   const { auction } = useContext(AuctionContext);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
@@ -31,7 +35,7 @@ const TabBidders: React.FC = (): React.ReactElement => {
       const { items, total } = await getBidderList({
         page,
         limit: LIMIT_PAGE,
-        dbAuctionId: auction.dbAuctionId,
+        dbAuctionID: auction.dbAuctionId,
       });
 
       if (page === 1) {
@@ -67,21 +71,26 @@ const TabBidders: React.FC = (): React.ReactElement => {
         <Link href={`${TC_EXPLORER_URL}/address/${bidder.sender}`} target='_blank' className={s.tabLiveItem} key={index}>
           <div className={s.tabLiveLeft}>
             {bidder.bidderAvatar ? (
-              <img
+              <ImageWrapper
                 src={bidder.bidderAvatar}
                 className={s.bidderAvatar}
-                width={48}
-                height={48}
+                width={40}
+                height={40}
               />
             ) : (
               <Jazzicon
-                diameter={48}
+                diameter={40}
                 seed={jsNumberForAddress(bidder.sender)}
               />
             )}
             <p className={s.tabLiveLeftAddress}>
               {bidder.bidderName ? bidder.bidderName : formatLongAddress(`${bidder.sender}`)}
             </p>
+            {bidder.sender.toLowerCase() === user?.walletAddress?.toLowerCase() && (
+              <div className={s.currentUserTag}>
+                You
+              </div>
+            )}
           </div>
           <div className={s.tabLiveRight}>
             <p className={s.tabLiveRightPrice}>

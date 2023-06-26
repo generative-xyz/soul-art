@@ -12,6 +12,7 @@ import { sleep, toStorageKey } from "@/utils";
 import useContractOperation from "@/hooks/contract-operations/useContractOperation";
 import useSettleAuction from "@/hooks/contract-operations/soul/useSettleAuction";
 import { AuctionContext } from "@/contexts/auction-context";
+import { TC_URL } from "@/configs";
 
 interface IProps {
   data: ITokenDetail;
@@ -39,8 +40,17 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
     localStorage.setItem(key, txHash);
   }
 
-  const handleStartAuction = async () => {
+  const handleSettleAuction = async () => {
     if (processing) return;
+
+    if (inscribing) {
+      showToastError({
+        message: 'Please go to Wallet check your transaction status.',
+        url: TC_URL,
+        linkText: 'Go to wallet',
+      })
+      return;
+    }
 
     try {
       setProcessing(true);
@@ -76,8 +86,8 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
           txHash
         );
 
-        if (receipt.status === 1) {
-          logger.info('tx done');
+        if (receipt?.status === 1 || receipt?.status === 0) {
+          logger.info('tx done', key);
           localStorage.removeItem(key);
           intervalId && clearInterval(intervalId);
           await sleep(60000);
@@ -102,9 +112,9 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
 
   return (
     <Button
-      disabled={processing || inscribing}
+      disabled={processing}
       className={s.startAuctionButton}
-      onClick={handleStartAuction}
+      onClick={handleSettleAuction}
     >
       {(processing || inscribing) ? 'Processing...' : 'Settle auction'}
     </Button>

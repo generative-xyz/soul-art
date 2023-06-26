@@ -30,12 +30,12 @@ const TabsComponent = ({
         title: 'Features',
         type: 'feat',
       },
-      // {
-      //   title: 'History',
-      //   type: 'history',
-      // },
+      {
+        title: 'History',
+        type: 'history',
+      },
     ];
-    if (auction && auction.auctionStatus === AuctionStatus.INPROGRESS) {
+    if (auction && auction.auctionStatus === AuctionStatus.INPROGRESS || auction && auction.auctionStatus === AuctionStatus.ENDED) {
       header.unshift({
         title: 'Bidders',
         type: 'bidders',
