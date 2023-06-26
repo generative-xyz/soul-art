@@ -13,22 +13,22 @@ const CountdownText: React.FC<IProps> = ({ className, countDownTo, showDay = fal
   const { days, totalHours, hours, minutes, seconds } = useCountdown(
     countDownTo,
   );
+  const displayDay = showDay || (totalHours && totalHours > 72);
 
   return (
     <span className={cs(s.countdownText, className)}>
-      {showDay && (
+      {displayDay && (
         <>
           {`${days !== null ? `${days}d` : '--'} : ${hours !== null ? `${hours}h` : '--'} : ${minutes !== null ? `${minutes}m` : '--'
             }`}
         </>
       )}
-      {!showDay && (
+      {!displayDay && (
         <>
           {`${totalHours !== null ? `${totalHours}h` : '--'} : ${minutes !== null ? `${minutes}m` : '--'
             } : ${seconds !== null ? `${seconds}s` : '--'}`}
         </>
       )}
-
     </span>
   );
 };
