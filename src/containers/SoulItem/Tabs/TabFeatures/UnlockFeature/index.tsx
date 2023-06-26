@@ -40,7 +40,6 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
 
   const onTxSuccessCallback = async (transaction: Transaction | null) => {
     if (!transaction || !account) return;
-    debugger;
     const txHash = transaction.hash;
     if (!txHash) return;
     const storageKey = toStorageKey(operationName, account);
