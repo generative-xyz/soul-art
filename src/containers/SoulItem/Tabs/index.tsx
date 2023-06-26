@@ -8,6 +8,7 @@ import TabInteraction from './TabInteraction';
 import s from './style.module.scss';
 import { AuctionContext } from '@/contexts/auction-context';
 import { AuctionStatus } from '@/enums/soul';
+import TabHistory from './TabHistory';
 // import TabHistory from './TabHistory';
 
 const TabsComponent = ({
@@ -35,7 +36,10 @@ const TabsComponent = ({
         type: 'history',
       },
     ];
-    if (auction && auction.auctionStatus === AuctionStatus.INPROGRESS || auction && auction.auctionStatus === AuctionStatus.ENDED) {
+    if (
+      (auction && auction.auctionStatus === AuctionStatus.INPROGRESS) ||
+      (auction && auction.auctionStatus === AuctionStatus.ENDED)
+    ) {
       header.unshift({
         title: 'Bidders',
         type: 'bidders',
@@ -64,6 +68,7 @@ const TabsComponent = ({
                   mintedBlock={data.blockNumber}
                 />
               )}
+              {tab.type === 'history' && <TabHistory data={data} />}
             </div>
           </Tab>
         );
