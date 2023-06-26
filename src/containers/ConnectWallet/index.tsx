@@ -27,7 +27,7 @@ const ConnectWallet: React.FC = (): React.ReactElement => {
       await requestBtcAddress();
     } catch (err) {
       showToastError({
-        message: (err as Error).message,
+        message: 'Rejected request',
       });
       logger.error(err);
       onDisconnect();

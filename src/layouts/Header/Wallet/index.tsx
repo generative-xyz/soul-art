@@ -44,7 +44,7 @@ const WalletHeader = () => {
       logger.error(err);
       onDisconnect();
       showToastError({
-        message: (err as Error).message,
+        message: 'Rejected request',
       });
     } finally {
       setIsConnecting(false);
