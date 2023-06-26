@@ -71,8 +71,8 @@ const UnlockFeature = ({ status, feat }: { status: number; feat: string }) => {
       try {
         const receipt = await provider.getTransactionReceipt(txHash);
 
-        if (receipt && receipt.status !== 1) return;
-        logger.info('tx done');
+        if (receipt?.status === 1 || receipt?.status === 0) return;
+        logger.info('tx done', key);
         localStorage.removeItem(key);
         setInscribing(false);
         intervalId && clearInterval(intervalId);

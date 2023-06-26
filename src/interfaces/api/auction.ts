@@ -23,7 +23,7 @@ export interface IGetAuctionDetailParams {
 }
 
 export interface IGetBidderListParams extends IPagingParams {
-  dbAuctionId: string;
+  dbAuctionID: string;
 }
 
 export interface IGetBidderListResponse {

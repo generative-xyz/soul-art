@@ -35,7 +35,7 @@ const TabsComponent = ({
         type: 'history',
       },
     ];
-    if (auction && auction.auctionStatus === AuctionStatus.INPROGRESS) {
+    if (auction && auction.auctionStatus === AuctionStatus.INPROGRESS || auction && auction.auctionStatus === AuctionStatus.ENDED) {
       header.unshift({
         title: 'Bidders',
         type: 'bidders',

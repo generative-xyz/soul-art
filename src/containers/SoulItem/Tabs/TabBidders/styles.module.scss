@@ -32,6 +32,16 @@
   color: #000;
 }
 
+.currentUserTag {
+  padding: rem(2px) rem(8px);
+  border-radius: 100px;
+  background: rgba(10, 198, 129, 0.2);
+  color: #0ac681;
+  font-size: rem(14px);
+  font-weight: 500;
+  line-height: 140%;
+}
+
 .tabLiveRight {
   display: flex;
   flex-direction: column;
