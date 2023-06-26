@@ -172,6 +172,7 @@ export interface ITokenDetail {
   makeOffers?: ITokenOffer[];
   buyable: boolean;
   bnsData?: IOwnedBNS[];
+  blockNumber?: number | string;
 }
 
 export interface IGetCollectionNFTListParams extends IPagingParams {

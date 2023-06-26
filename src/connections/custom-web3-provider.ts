@@ -85,17 +85,21 @@ class CustomWeb3Provider {
     }
   }
 
-  async getSettingFeatures(): Promise<string[]> {
+  async getSettingFeatures(): Promise<{
+    features: string[];
+    balances: number[];
+    holdTimes: number[];
+  } | null> {
     try {
       const contract = new this.web3.eth.Contract(
         SoulAbiJson.abi as Array<AbiItem>,
         SOUL_CONTRACT
       );
-      const { features } = await contract.methods.getSettingFeatures().call();
-      return features;
+      const res = await contract.methods.getSettingFeatures().call();
+      return res;
     } catch (err: unknown) {
       logger.error(err);
-      return [];
+      return null;
     }
   }
 }

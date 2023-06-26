@@ -13,7 +13,7 @@ export const showToastError = ({
 }) => {
   toast.remove();
   toast.error(
-    (t) => (
+    t => (
       <ToastError
         id={t.id}
         message={message || 'Something went wrong. Please try again later.'}
@@ -28,7 +28,7 @@ export const showToastError = ({
         maxWidth: '900px',
         borderLeft: '4px solid #FF4747',
       },
-    },
+    }
   );
 };
 
@@ -43,7 +43,7 @@ export const showToastSuccess = ({
 }) => {
   toast.remove();
   toast.success(
-    (t) => (
+    t => (
       <ToastConfirm id={t.id} url={url} message={message} linkText={linkText} />
     ),
     {
@@ -53,6 +53,6 @@ export const showToastSuccess = ({
         maxWidth: '900px',
         borderLeft: '4px solid #00AA6C',
       },
-    },
+    }
   );
 };

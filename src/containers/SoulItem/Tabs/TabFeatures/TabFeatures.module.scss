@@ -1,8 +1,17 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: rem(18px);
+  gap: rem(12px);
   margin-top: rem(24px);
+  height: calc(80vh - 202px);
+  overflow: scroll;
+}
+
+.feature_wrapper {
+  padding: rem(10px);
+  background: #f6f6f6;
+  border: 1px solid #ececec;
+  border-radius: 8px;
 }
 
 .feature_list {
@@ -10,9 +19,13 @@
   align-items: center;
   justify-content: space-between;
   font-size: rem(16px);
+  background: #ffffff;
+  padding: rem(16px);
+  box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.18);
+  border-radius: 6px;
 
-  p:nth-child(2) {
-    opacity: 0.6;
-    text-transform: uppercase;
-  }
+  // p:nth-child(2) {
+  //   opacity: 0.6;
+  //   text-transform: uppercase;
+  // }
 }

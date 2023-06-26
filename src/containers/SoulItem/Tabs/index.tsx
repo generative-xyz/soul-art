@@ -8,7 +8,7 @@ import TabInteraction from './TabInteraction';
 import s from './style.module.scss';
 import { AuctionContext } from '@/contexts/auction-context';
 import { AuctionStatus } from '@/enums/soul';
-import TabHistory from './TabHistory';
+// import TabHistory from './TabHistory';
 
 const TabsComponent = ({
   data,
@@ -44,7 +44,6 @@ const TabsComponent = ({
     return header;
   }, [auction]);
 
-
   return (
     <Tabs defaultActiveKey="0" className={s.tabs}>
       {tabList.map((tab, index) => {
@@ -59,8 +58,12 @@ const TabsComponent = ({
               {tab.type === 'bidders' && <TabBidders />}
               {tab.type === 'desc' && <TabDescription />}
               {tab.type === 'inter' && <TabInteraction />}
-              {tab.type === 'feat' && <TabFeatures owner={data.owner} />}
-              {tab.type === 'history' && <TabHistory data={data} />}
+              {tab.type === 'feat' && (
+                <TabFeatures
+                  owner={data.owner}
+                  mintedBlock={data.blockNumber}
+                />
+              )}
             </div>
           </Tab>
         );

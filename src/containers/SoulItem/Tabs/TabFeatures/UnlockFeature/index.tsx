@@ -12,15 +12,24 @@ import { showToastError } from '@/utils/toast';
 import { useSelector } from 'react-redux';
 import { getUserSelector } from '@/state/user/selector';
 import { useRouter } from 'next/router';
+import IconSVG from '@/components/IconSVG';
+import { CDN_URL, TC_URL } from '@/configs';
+import cs from 'classnames';
 
-const UnlockFeature = ({ status, feat }: { status: number; feat: string }) => {
+interface Props {
+  status: number;
+  feat: string;
+  isOwner?: boolean;
+}
+
+const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
   const { account, provider } = useWeb3React();
   const router = useRouter();
   const { tokenId } = router.query as { tokenId: string };
   const user = useSelector(getUserSelector);
 
-  const [_processing, setProcessing] = useState(false);
-  const [_inscribing, setInscribing] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [inscribing, setInscribing] = useState(false);
 
   const { run: unlockFeature } = useContractOperation({
     operation: useUnlockFeature,
@@ -31,6 +40,7 @@ const UnlockFeature = ({ status, feat }: { status: number; feat: string }) => {
 
   const onTxSuccessCallback = async (transaction: Transaction | null) => {
     if (!transaction || !account) return;
+    debugger;
     const txHash = transaction.hash;
     if (!txHash) return;
     const storageKey = toStorageKey(operationName, account);
@@ -40,6 +50,16 @@ const UnlockFeature = ({ status, feat }: { status: number; feat: string }) => {
   const handleUnlockFeature = async () => {
     try {
       setProcessing(true);
+
+      if (inscribing) {
+        showToastError({
+          message: 'Please go to Wallet to check your transaction status.',
+          url: TC_URL,
+          linkText: 'Go to wallet',
+        });
+        return;
+      }
+
       await unlockFeature({
         tokenId: Number(tokenId),
         feature: feat,
@@ -72,6 +92,9 @@ const UnlockFeature = ({ status, feat }: { status: number; feat: string }) => {
         const receipt = await provider.getTransactionReceipt(txHash);
 
         if (receipt && receipt.status !== 1) return;
+        else if (receipt.status === null || receipt.status === undefined) {
+          return;
+        }
         logger.info('tx done');
         localStorage.removeItem(key);
         setInscribing(false);
@@ -94,15 +117,49 @@ const UnlockFeature = ({ status, feat }: { status: number; feat: string }) => {
 
   switch (status) {
     case FeatureStatus['Locked']:
-      return <div className={s.text_red}>Locked</div>;
+      return (
+        <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>
+          <IconSVG
+            src={`${CDN_URL}/ic-key.svg`}
+            maxWidth={'16'}
+            maxHeight={'16'}
+          />
+          Unlock
+        </Button>
+      );
     case FeatureStatus['Unlocked']:
-      return <div className={s.text_green}>Unlocked</div>;
+      return (
+        <div className={s.unlocked}>
+          <IconSVG
+            src={`${CDN_URL}/ic-check.svg`}
+            maxWidth={'16'}
+            maxHeight={'16'}
+          />
+          Unlocked
+        </div>
+      );
     case FeatureStatus['Available']:
       return (
         <div>
-          <Button className={s.unlock_btn} onClick={handleUnlockFeature}>
-            Unlock
-          </Button>
+          {isOwner ? (
+            <Button className={s.unlock_btn} onClick={handleUnlockFeature}>
+              <IconSVG
+                src={`${CDN_URL}/ic-key.svg`}
+                maxWidth={'16'}
+                maxHeight={'16'}
+              />
+              {processing ? 'Processing...' : 'Unlock'}
+            </Button>
+          ) : (
+            <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>
+              <IconSVG
+                src={`${CDN_URL}/ic-key.svg`}
+                maxWidth={'16'}
+                maxHeight={'16'}
+              />
+              Locked
+            </Button>
+          )}
         </div>
       );
 
