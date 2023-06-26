@@ -35,7 +35,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
   const [auctionEndTime, setAuctionEndTime] = useState<string | null>(null);
 
   const getAuctionEndTime = useCallback(async () => {
-    if (!auction) {
+    if (!auction || auction.auctionStatus !== AuctionStatus.INPROGRESS) {
       setAuctionEndTime(null);
       return;
     };

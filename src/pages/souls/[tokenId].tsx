@@ -14,7 +14,9 @@ interface IProps {
   item: ITokenDetail;
 }
 
-const SoulDetailPage: NextPage<IProps> = ({ item }: IProps): React.ReactElement => {
+const SoulDetailPage: NextPage<IProps> = ({
+  item,
+}: IProps): React.ReactElement => {
   return (
     <Layout>
       {/*<Banner type={'normal'} />*/}
@@ -40,7 +42,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         seoInfo: {
           title: `${SEO_TITLE} | Soul #${tokenId}`,
           description: `Soul #${tokenId}`,
-          image: data.image || SEO_IMAGE,
+          image: data.imageCapture || SEO_IMAGE,
         },
       },
     };

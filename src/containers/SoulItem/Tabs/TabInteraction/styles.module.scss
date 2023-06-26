@@ -1,0 +1,29 @@
+.tabInter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin: rem(16px) 0;
+}
+
+.tabInterKeyText {
+  background: #ffffff;
+  width: rem(32px);
+  height: rem(32px);
+  text-align: center;
+  font-size: rem(16px);
+  border-radius: rem(8px);
+  font-weight: 600;
+  line-height: 140%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  offset: 0px, 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
+  margin-right: rem(16px);
+}
+
+.tabInterKeyDesc {
+  font-size: rem(16px);
+  line-height: 140%;
+}
