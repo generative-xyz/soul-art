@@ -1,12 +1,39 @@
 .unlock_btn {
-  padding: rem(4px) rem(12px);
+  padding: rem(11px) rem(26px);
   background-color: #000;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8px);
+  font-size: rem(14px);
+  line-height: calc(18 / 14);
+  min-width: rem(133px);
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &.locked {
+    background: #b6b6b6;
+    backdrop-filter: blur(2px);
+  }
 }
 
 .text_red {
   color: red;
 }
-.text_green {
-  color: rgb(30, 220, 30);
+.unlocked {
+  color: #0ac681;
+  min-width: rem(133px);
+  font-size: rem(14px);
+  line-height: calc(18 / 14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8px);
+  padding: rem(11px) rem(26px);
+  background: rgba(10, 198, 129, 0.15);
+  backdrop-filter: blur(2px);
+  border-radius: 100px;
 }

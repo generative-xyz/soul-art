@@ -1,5 +1,11 @@
-import React, { PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
-import { IAuction } from "@/interfaces/api/auction";
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { IAuction } from '@/interfaces/api/auction';
 import { getAuctionDetail } from '@/services/auction';
 import logger from '@/services/logger';
 import { useRouter } from 'next/router';
@@ -23,8 +29,8 @@ const initialValue: IAuctionContext = {
   biddable: true,
 };
 
-
-export const AuctionContext = React.createContext<IAuctionContext>(initialValue);
+export const AuctionContext =
+  React.createContext<IAuctionContext>(initialValue);
 
 export const AuctionProvider: React.FC<PropsWithChildren> = ({
   children,
@@ -40,11 +46,11 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
       setAuctionEndTime(null);
       setBiddable(false);
       return;
-    };
+    }
     const endBlock = auction.endTime as unknown as number;
     const currentBlock = await web3Instance.getCurrentBlockNumber();
     const avgBlockTime = await web3Instance.calculateAverageBlockTime();
-    logger.debug('avgBlockTime', avgBlockTime)
+    logger.debug('avgBlockTime', avgBlockTime);
     const now = dayjs().unix();
     const endTimestamp = now + (endBlock - currentBlock) * avgBlockTime;
     if (endTimestamp <= 0) {
@@ -52,7 +58,9 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
       setBiddable(false);
       return;
     }
-    const endTime = dayjs.utc(endTimestamp * 1000).format('YYYY-MM-DD HH:mm:ss');
+    const endTime = dayjs
+      .utc(endTimestamp * 1000)
+      .format('YYYY-MM-DD HH:mm:ss');
     setAuctionEndTime(endTime);
   }, [auction]);
 
@@ -79,10 +87,10 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
   useAsyncEffect(() => {
     setBiddable(true);
 
-    if (!auction || (auction.auctionStatus !== AuctionStatus.INPROGRESS)) {
+    if (!auction || auction.auctionStatus !== AuctionStatus.INPROGRESS) {
       setBiddable(false);
       return;
-    };
+    }
 
     let intervalId: NodeJS.Timer | null = null;
 
@@ -95,15 +103,15 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
         await fetchAuction();
         setBiddable(false);
       }
-    }
+    };
 
     checkBiddableStatus();
     intervalId = setInterval(checkBiddableStatus, 15000);
 
     return () => {
       intervalId && clearInterval(intervalId);
-    }
-  }, [auction, fetchAuction])
+    };
+  }, [auction, fetchAuction]);
 
   const contextValues = useMemo((): IAuctionContext => {
     return {
@@ -112,16 +120,11 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
       auctionEndTime,
       biddable,
     };
-  }, [
-    biddable,
-    auction,
-    fetchAuction,
-    auctionEndTime,
-  ]);
+  }, [biddable, auction, fetchAuction, auctionEndTime]);
 
   return (
     <AuctionContext.Provider value={contextValues}>
       {children}
     </AuctionContext.Provider>
   );
-}
+};
