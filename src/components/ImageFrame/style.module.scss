@@ -1,192 +1,188 @@
 .imageFrame {
-    position: relative;
-    padding: rem(10px);
+  position: relative;
+  padding: rem(10px);
 
-    >span {
-        transition: .5s $easeOutQuart;
+  .top-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 8px;
+      background: #fff;
     }
 
-    .top-left {
-        position: absolute;
-        top: 0;
-        left: 0;
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 1px;
+      background: #fff;
+    }
+  }
 
-        &::before {
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 1px;
-            height: 8px;
-            background: #fff;
-        }
+  .top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
 
-        &::after {
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 1px;
-            background: #fff;
-        }
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      width: 1px;
+      height: 8px;
+      background: #fff;
     }
 
-    .top-right {
-        position: absolute;
-        top: 0;
-        right: 0;
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 1px;
+      background: #fff;
+      transform: translateX(-100%);
+    }
+  }
 
-        &::before {
-            position: absolute;
-            content: '';
-            top: 0;
-            right: 0;
-            width: 1px;
-            height: 8px;
-            background: #fff;
-        }
+  .bottom-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
 
-        &::after {
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 1px;
-            background: #fff;
-            transform: translateX(-100%);
-        }
+    &::before {
+      position: absolute;
+      content: '';
+      bottom: 0;
+      left: 0;
+      width: 1px;
+      height: 8px;
+      background: #fff;
     }
 
-    .bottom-left {
-        position: absolute;
-        bottom: 0;
-        left: 0;
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 1px;
+      background: #fff;
+    }
+  }
 
-        &::before {
-            position: absolute;
-            content: '';
-            bottom: 0;
-            left: 0;
-            width: 1px;
-            height: 8px;
-            background: #fff;
-        }
+  .bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
-        &::after {
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 1px;
-            background: #fff;
-        }
+    &::before {
+      position: absolute;
+      content: '';
+      bottom: 0;
+      left: 0;
+      width: 1px;
+      height: 8px;
+      background: #fff;
     }
 
-    .bottom-right {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-
-        &::before {
-            position: absolute;
-            content: '';
-            bottom: 0;
-            left: 0;
-            width: 1px;
-            height: 8px;
-            background: #fff;
-        }
-
-        &::after {
-            position: absolute;
-            content: '';
-            top: 0;
-            left: 0;
-            width: 8px;
-            height: 1px;
-            background: #fff;
-            transform: translateX(-100%);
-        }
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 1px;
+      background: #fff;
+      transform: translateX(-100%);
     }
+  }
 
-    .line-top {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background: rgba(#fff, 0.2);
+  .line-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(#fff, 0.2);
+  }
+
+  .line-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(#fff, 0.2);
+  }
+
+  .line-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: rgba(#fff, 0.2);
+  }
+
+  .line-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: rgba(#fff, 0.2);
+  }
+
+  &.small {
+    padding: rem(5px);
+
+    &:hover {
+      .line-top {
+        top: 3px;
+      }
+
+      .line-bottom {
+        bottom: 3px;
+      }
+
+      .line-right {
+        right: 3px;
+      }
+
+      .line-left {
+        left: 3px;
+      }
+
+      .top-left {
+        top: 3px;
+        left: 3px;
+      }
+
+      .top-right {
+        top: 3px;
+        right: 3px;
+      }
+
+      .bottom-left {
+        bottom: 3px;
+        left: 3px;
+      }
+
+      .bottom-right {
+        bottom: 3px;
+        right: 3px;
+      }
     }
-
-    .line-bottom {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background: rgba(#fff, 0.2);
-    }
-
-    .line-left {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 1px;
-        height: 100%;
-        background: rgba(#fff, 0.2);
-    }
-
-    .line-right {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 1px;
-        height: 100%;
-        background: rgba(#fff, 0.2);
-    }
-
-    &.small {
-        padding: rem(5px);
-
-        &:hover {
-            .line-top {
-                top: 3px;
-            }
-
-            .line-bottom {
-                bottom: 3px;
-            }
-
-            .line-right {
-                right: 3px;
-            }
-
-            .line-left {
-                left: 3px;
-            }
-
-            .top-left {
-                top: 3px;
-                left: 3px;
-            }
-
-            .top-right {
-                top: 3px;
-                right: 3px;
-            }
-
-            .bottom-left {
-                bottom: 3px;
-                left: 3px;
-            }
-
-            .bottom-right {
-                bottom: 3px;
-                right: 3px;
-            }
-        }
-    }
+  }
 }

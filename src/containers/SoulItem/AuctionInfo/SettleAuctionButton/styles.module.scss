@@ -13,13 +13,9 @@
   font-weight: 500;
   font-size: rem(16px);
   line-height: rem(18px);
-  transition: 0.5s $easeOutQuart;
 
   &:hover {
-    background: #fff;
-    color: #000;
-    transition: 0.5s $easeOutQuart;
-    border: 1px solid #000;
+    background: #444;
   }
 
   &:disabled {

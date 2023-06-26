@@ -1,6 +1,5 @@
 import { shortenAddress } from '@/utils';
 import soulsCardStyles from './soulscard.module.scss';
-
 import Link from 'next/link';
 import Card from 'react-bootstrap/Card';
 import { jsNumberForAddress } from 'react-jazzicon';

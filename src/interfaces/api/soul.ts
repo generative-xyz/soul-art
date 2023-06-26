@@ -13,7 +13,7 @@ export interface ISoul {
   attributes: IAttribute[];
   metadata: string;
   metadataType: string;
-  animationFileRrl: string;
+  animationFileUrl: string;
   imageCapture: string;
   tokenId: string;
   tokenIdInt: number;

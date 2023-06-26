@@ -2,13 +2,14 @@
   max-height: rem(500px);
   overflow-y: auto;
   overflow-x: hidden;
+  margin-top: rem(20px);
 }
 
 .tabLiveItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: rem(20px);
+  margin-bottom: rem(20px);
 
   &:hover {
     text-decoration: none;
