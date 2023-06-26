@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: rem(18px);
+  margin-top: rem(24px);
+}
+
+.feature_list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: rem(16px);
+
+  p:nth-child(2) {
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+}

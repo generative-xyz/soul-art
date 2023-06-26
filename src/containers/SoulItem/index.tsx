@@ -65,7 +65,7 @@ const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
           <Col lg={4}>
             <AuctionProvider>
               <AuctionInfo data={soulDetail} />
-              <TabsComponent />
+              <TabsComponent data={soulDetail} />
             </AuctionProvider>
           </Col>
           <Col lg={5}>
