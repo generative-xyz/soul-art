@@ -3,10 +3,10 @@ import { TransactionResponse } from '@ethersproject/abstract-provider';
 export enum DAppType {
   ERC721 = 'NFT', // NFTs
   ERC20 = 'Token', // Tokens
-  BFS = 'Artifact', // Artifactx
+  BFS = 'Artifact', // Artifact
   BNS = 'Name', // Name
   SOUL = 'Soul',
-  GM = 'Gm',
+  GM = 'GM',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

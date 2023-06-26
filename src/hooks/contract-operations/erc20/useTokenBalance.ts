@@ -4,6 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { useCallback } from 'react';
 import { getContract } from '@/utils';
 import logger from '@/services/logger';
+import BigNumber from 'bignumber.js';
 
 export interface IGetTokenBalanceParams {
   contractAddress: string;
@@ -11,24 +12,24 @@ export interface IGetTokenBalanceParams {
 
 const useTokenBalance: ContractOperationHook<
   IGetTokenBalanceParams,
-  string
+  BigNumber
 > = () => {
   const { account, provider } = useWeb3React();
 
   const call = useCallback(
-    async (params: IGetTokenBalanceParams): Promise<string> => {
+    async (params: IGetTokenBalanceParams): Promise<BigNumber> => {
       logger.debug('useTokenBalance', params);
-      
+
       if (account && provider) {
         const { contractAddress } = params;
         const contract = getContract(contractAddress, ERC20ABIJson.abi, provider, account);
         const balance = await contract.balanceOf(account, {
           from: account
         });
-        return balance.toString();
+        return new BigNumber(balance.toString());
       }
 
-      return '0';
+      return new BigNumber('0');
     },
     [account, provider],
   );

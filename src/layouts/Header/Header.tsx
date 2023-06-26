@@ -245,7 +245,7 @@ const Header = ({
                       Auction Wallet
                     </p>
                     <div className={cs(headerStyles.profile_amount)}>
-                      {`${formatEthPrice(gmDepositBalance)} GM`}
+                      <span>{`${formatEthPrice(gmDepositBalance)} GM`}</span>
                       <IconSVG
                         src={`${CDN_URL}/ic-add-fill.svg`}
                         maxWidth="20"

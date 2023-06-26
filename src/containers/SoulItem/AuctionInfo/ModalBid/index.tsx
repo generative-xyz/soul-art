@@ -21,6 +21,8 @@ import { TRANSFER_TX_SIZE } from "@/configs";
 import BigNumber from 'bignumber.js';
 import web3Instance from '@/connections/custom-web3-provider';
 import EstimatedFee from "@/components/EstimatedFee";
+import useGetUserBid from "@/hooks/contract-operations/soul/useGetUserBid";
+import useAsyncEffect from "use-async-effect";
 
 interface IProps {
   show: boolean;
@@ -43,9 +45,14 @@ const ModalBid: React.FC<IProps> = ({
   const [estBTCFee, setEstBTCFee] = useState<string | null>(null);
   const [estTCFee, setEstTCFee] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
+  const [userBid, setUserBid] = useState<string | null>(null);
+  const { run: getUserBid } = useContractOperation({
+    operation: useGetUserBid,
+    inscribable: false
+  });
   const { run: createBid } = useContractOperation({
     operation: useCreateBid,
-    inscribeable: true
+    inscribable: true
   });
   const {
     estimateGas
@@ -53,28 +60,74 @@ const ModalBid: React.FC<IProps> = ({
 
   const validateForm = (values: IFormValues): Record<string, string> => {
     const errors: Record<string, string> = {};
-    if (!values.amount) {
+    const { amount } = values;
+
+    if (!amount) {
       errors.amount = 'Amount is required.'
-    } else if (!isValidNumber(values.amount)) {
-      errors.amount = 'Invalid number.'
-    } else if (parseFloat(values.amount) < 0) {
-      errors.amount = 'Invalid number. Amount must be greater than 0.'
-    } else {
-      calculateEstBtcFee();
-      calculateEstTcFee(values.amount.toString());
+      return errors;
     }
+
+    if (!isValidNumber(amount)) {
+      errors.amount = 'Invalid number.'
+      return errors;
+    }
+
+    const decimalRegex = /^\d+(\.\d{1,4})?$/;
+    if (!decimalRegex.test(amount)) {
+      errors.amount = 'Please enter a valid number with up to 4 decimal places.';
+      return errors;
+    }
+
+    if (parseFloat(amount) < 0) {
+      errors.amount = 'Amount must be greater than 0.'
+      return errors;
+    }
+
+    const gmDepositBalanceBN = new BigNumber(gmDepositBalance);
+    const amountBN = new BigNumber(amount).times(1e18);
+    const newHighestBig = new BigNumber(auction?.highestBid || 0).times(1.1);
+
+    if (amountBN.isLessThan(newHighestBig)) {
+      errors.amount = `Amount must be greater than ${formatEthPrice(newHighestBig.toString())} GM.`
+      return errors;
+    }
+
+    if (amountBN.isGreaterThan(gmDepositBalanceBN)) {
+      errors.amount = `Amount must be less than or equal auction wallet balance ${formatEthPrice(gmDepositBalanceBN.toString())} GM.`
+      return errors;
+    }
+
+    calculateEstBtcFee();
+    calculateEstTcFee(amount.toString());
     return errors;
   }
 
   const handleSubmit = async (values: IFormValues): Promise<void> => {
     if (processing) return;
 
+    if (!userBid) {
+      showToastError({
+        message: `User's bidding information not found.`
+      })
+      return;
+    }
+
+    if (!auction) {
+      showToastError({
+        message: `Auction information not found.`
+      })
+      return;
+    }
+
     try {
       setProcessing(true);
       const { amount } = values;
+      const newAmount = new BigNumber(amount).times(1e18);
+      const currentUserBid = new BigNumber(userBid);
+      const bidAmount = newAmount.minus(currentUserBid);
       await createBid({
         tokenId: Number(data.tokenId),
-        amount: Web3.utils.toWei(amount),
+        amount: bidAmount.toString(),
       });
     } catch (err: unknown) {
       logger.error(err);
@@ -99,12 +152,12 @@ const ModalBid: React.FC<IProps> = ({
   );
 
   const calculateEstTcFee = useCallback(async (amount: string) => {
-    if (!estimateGas || !data.tokenId || !show) return '0';
+    if (!estimateGas || !data.tokenId || !show || !amount) return '0';
     setEstTCFee(null);
     try {
       const payload: ICreateBidParams = {
         tokenId: data.tokenId as unknown as number,
-        amount: Web3.utils.toWei(amount),
+        amount: Web3.utils.toWei(amount.toString()),
       };
       const gasLimit = await estimateGas(payload);
       const gasPrice = await web3Instance.getGasPrice();
@@ -121,6 +174,19 @@ const ModalBid: React.FC<IProps> = ({
   },
     [setEstTCFee, estimateGas, data, show],
   );
+
+  useAsyncEffect(async () => {
+    if (!show || !auction || !data) return;
+    try {
+      const balance = await getUserBid({
+        tokenId: data.tokenId,
+        auctionId: auction.chainAuctionId,
+      });
+      setUserBid(balance.toString());
+    } catch (err: unknown) {
+      logger.error(err);
+    }
+  }, [auction, show, data]);
 
   if (!auction) return <></>;
 
@@ -139,10 +205,10 @@ const ModalBid: React.FC<IProps> = ({
         validate={validateForm}
         onSubmit={handleSubmit}
       >
-        {({ values, errors, touched, handleChange, handleSubmit, isValid }) => (
+        {({ values, errors, touched, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <p className={s.bidModal_header_content_desc}>
-              Once your bid is placed, you will be the highest bidder in the auction.
+              You will be the highest bidder in the auction once your bid is submitted.
             </p>
             <div className={s.bidModal_body_address}>
               <div className={s.bidModal_body_addressContent}>
@@ -169,6 +235,10 @@ const ModalBid: React.FC<IProps> = ({
                   <p className={s.bidModal_body_highestPrice_value}>{`${formatEthPrice(auction.highestBid)} GM`}</p>
                 </div>
                 <div className={s.bidModal_body_highestPrice}>
+                  <p className={s.bidModal_body_highestPrice_label}>Your bid</p>
+                  <p className={s.bidModal_body_highestPrice_value}>{userBid ? `${formatEthPrice(userBid)} GM` : '-'}</p>
+                </div>
+                <div className={s.bidModal_body_highestPrice}>
                   <p className={s.bidModal_body_highestPrice_label}>Auction Wallet</p>
                   <p className={s.bidModal_body_highestPrice_value}>{`${formatEthPrice(gmDepositBalance)} GM`}</p>
                 </div>
@@ -181,7 +251,7 @@ const ModalBid: React.FC<IProps> = ({
                   type="number"
                   value={values.amount}
                   onChange={handleChange}
-                  placeholder='0.0'
+                  placeholder='0.00'
                 />
                 <p
                   className={
@@ -193,10 +263,18 @@ const ModalBid: React.FC<IProps> = ({
               {errors.amount && touched.amount && (
                 <p className={s.bidModal_body_highestInput_errorMessage}>{errors.amount}</p>
               )}
-              <p className={s.bidModal_body_highestInput_desc}>
-                Your GM <strong>will be returned</strong> if there is a higher
-                bidder.
-              </p>
+              <ul className={s.bidModal_body_highestInput_desc}>
+                <li>
+                  90% of the proceeds from the winning bids go to the Souls DAO, reinforcing the financial sustainability and growth of the ecosystem.
+                </li>
+                <li>
+                  The remaining 10% of the winning bids go to the Souls core team as artist royalties.
+                </li>
+                <li>
+                  Your GM <strong>will be returned</strong> if there is a higher
+                  bidder.
+                </li>
+              </ul>
             </div>
             <div className={s.bidModal_body_fee}>
               <EstimatedFee
@@ -206,10 +284,10 @@ const ModalBid: React.FC<IProps> = ({
             </div>
             <div className={s.modalFooter}>
               <Button
-                disabled={!isValid}
+                disabled={processing}
                 type="submit"
                 className={s.bidBtn}>
-                Bid
+                {processing ? 'Processing...' : 'Bid'}
               </Button>
             </div>
           </form>
@@ -220,4 +298,3 @@ const ModalBid: React.FC<IProps> = ({
 }
 
 export default ModalBid;
-

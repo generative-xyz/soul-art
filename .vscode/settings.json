@@ -4,5 +4,18 @@
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["jazzicon", "Jazzicon"]
+  "cSpell.words": [
+    "behaviours",
+    "bignumber",
+    "FOMO",
+    "Formik",
+    "HODL",
+    "inscribable",
+    "jazzicon",
+    "Jazzicon",
+    "microlevel",
+    "personalises",
+    "soulbound",
+    "trustlessly"
+  ]
 }

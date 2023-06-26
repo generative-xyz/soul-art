@@ -34,19 +34,30 @@ class CustomWeb3Provider {
     const numBlocksToAverage = 50;
     let totalBlockTime = 0;
 
+    const blockPromises = [];
     for (
       let i = latestBlockNumber;
       i > latestBlockNumber - numBlocksToAverage;
       i--
     ) {
-      const block = await this.getBlock(i);
+      blockPromises.push(this.getBlock(i));
+    }
 
-      if (block && block.timestamp) {
-        const previousBlock = await this.getBlock(i - 1);
-        if (previousBlock && previousBlock.timestamp) {
-          totalBlockTime +=
-            (block.timestamp as number) - (previousBlock.timestamp as number);
-        }
+    const blocks = await Promise.all(blockPromises);
+
+    for (let i = 1; i < blocks.length; i++) {
+      const block = blocks[i];
+      const previousBlock = blocks[i - 1];
+
+      if (
+        block &&
+        block.timestamp &&
+        previousBlock &&
+        previousBlock.timestamp
+      ) {
+        totalBlockTime += Math.abs(
+          (block.timestamp as number) - (previousBlock.timestamp as number)
+        );
       }
     }
 

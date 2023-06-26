@@ -19,12 +19,12 @@ const UnlockFeature = ({ status, feat }: { status: number; feat: string }) => {
   const { tokenId } = router.query as { tokenId: string };
   const user = useSelector(getUserSelector);
 
-  const [processing, setProcessing] = useState(false);
-  const [inscribing, setInscribing] = useState(false);
+  const [_processing, setProcessing] = useState(false);
+  const [_inscribing, setInscribing] = useState(false);
 
   const { run: unlockFeature } = useContractOperation({
     operation: useUnlockFeature,
-    inscribeable: true,
+    inscribable: true,
   });
 
   const { operationName } = useUnlockFeature();

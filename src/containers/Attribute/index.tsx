@@ -99,7 +99,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
         });
         setOwnerHasSoul(res.totalItem > 0);
       } catch (err: unknown) {
-        logger.debug("failed to get owner's Soul");
+        logger.error("failed to get owner's Soul");
       }
     }
   }, []);
@@ -250,7 +250,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                   className={classNames(
                     attributeStyles.attribute_iconLive,
                     isEnabledAttributesFilter &&
-                      attributeStyles.attribute_iconLive_active
+                    attributeStyles.attribute_iconLive_active
                   )}
                 >
                   <div className={attributeStyles.dots_circle}></div>

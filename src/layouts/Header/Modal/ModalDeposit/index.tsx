@@ -42,24 +42,24 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
   const { feeRate } = useContext(AssetsContext);
   const { run: getAllowanceAmount } = useContractOperation<
     IGetAllowanceAmountParams,
-    number
+    BigNumber
   >({
     operation: useGetAllowanceAmount,
-    inscribeable: false,
+    inscribable: false,
   });
   const { run: approveTokenAmount } = useContractOperation<
     IApproveTokenAmountParams,
     Transaction | null
   >({
     operation: useApproveTokenAmount,
-    inscribeable: false,
+    inscribable: false,
   });
   const {
     operationName: approveTokenOp
   } = useApproveTokenAmount();
   const { run: depositGmToSoul } = useContractOperation({
     operation: useDeposit,
-    inscribeable: true
+    inscribable: true
   });
 
   const {
@@ -100,11 +100,10 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
       if (!approvedCache) {
         logger.debug('approving token amount...');
 
-        const allowanceAmount = await getAllowanceAmount({
+        const allowanceAmountBN = await getAllowanceAmount({
           contractAddress: GM_ADDRESS,
           operatorAddress: SOUL_CONTRACT,
         });
-        const allowanceAmountBN = new BigNumber(allowanceAmount);
         logger.debug('allowance Amount', allowanceAmountBN.toString());
 
         // Convert amount to bn

@@ -1,5 +1,5 @@
 import SoulAbiJson from '@/abis/soul.json';
-import { GM_ADDRESS, SOUL_CONTRACT } from '@/configs';
+import { SOUL_CONTRACT } from '@/configs';
 import { useContract } from '@/hooks/useContract';
 import {
   ContractOperationHook,
@@ -7,22 +7,24 @@ import {
 } from '@/interfaces/contract-operation';
 import logger from '@/services/logger';
 import { useWeb3React } from '@web3-react/core';
-import { useCallback } from 'react';
 import BigNumber from 'bignumber.js';
+import { useCallback } from 'react';
 
-const useGetDepositBalance: ContractOperationHook<void, BigNumber> = () => {
+const useGetBalanceOf: ContractOperationHook<void, BigNumber> = () => {
   const { account } = useWeb3React();
   const contract = useContract(SOUL_CONTRACT, SoulAbiJson.abi, true);
 
   const call = useCallback(
     async (): Promise<BigNumber> => {
       if (account && contract) {
-        logger.debug('useGetDepositBalance')
+        logger.debug('useGetBalanceOf')
 
-        const transaction = await contract
-          ._biddingBalance(account, GM_ADDRESS);
+        const balance = await contract
+          .balanceOf(account, {
+            from: account
+          });
 
-        return new BigNumber(transaction.toString());
+        return new BigNumber(balance.toString());
       }
 
       return new BigNumber('0');
@@ -33,8 +35,8 @@ const useGetDepositBalance: ContractOperationHook<void, BigNumber> = () => {
   return {
     call: call,
     dAppType: DAppType.SOUL,
-    operationName: 'Get Deposit Balance',
+    operationName: 'Get Balance Of',
   };
 };
 
-export default useGetDepositBalance;
+export default useGetBalanceOf;

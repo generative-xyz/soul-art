@@ -10,7 +10,7 @@ import { Transaction } from 'ethers';
 import { useSelector } from "react-redux";
 import { getUserSelector } from "@/state/user/selector";
 import { useWeb3React } from "@web3-react/core";
-import { toStorageKey } from "@/utils";
+import { sleep, toStorageKey } from "@/utils";
 import { AuctionContext } from "@/contexts/auction-context";
 
 interface IProps {
@@ -26,7 +26,7 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
   } = useCreateAuction();
   const { run: createAuction } = useContractOperation({
     operation: useCreateAuction,
-    inscribeable: true
+    inscribable: true
   });
   const { provider } = useWeb3React();
   const { fetchAuction } = useContext(AuctionContext);
@@ -78,8 +78,9 @@ const StartAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElem
         if (receipt && receipt.status !== 1) return;
         logger.info('tx done');
         localStorage.removeItem(key);
-        setInscribing(false);
         intervalId && clearInterval(intervalId);
+        await sleep(60000);
+        setInscribing(false);
         fetchAuction();
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);

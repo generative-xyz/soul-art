@@ -22,7 +22,7 @@ const TabFeatures = ({ owner }: { owner: string }) => {
   const { tokenId } = router.query as { tokenId: string };
   const { run: checkFeaturesStatus } = useContractOperation({
     operation: useCheckFeatureStatus,
-    inscribeable: false,
+    inscribable: false,
   });
 
   const [settingFeatures, setSettingFeatures] = useState<string[] | null>(null);

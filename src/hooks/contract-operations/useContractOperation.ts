@@ -12,7 +12,7 @@ import { APP_ENV } from '@/configs';
 
 interface IParams<P, R> {
   operation: ContractOperationHook<P, R>;
-  inscribeable?: boolean;
+  inscribable?: boolean;
   chainId?: SupportedChainId;
 }
 
@@ -26,7 +26,7 @@ const useContractOperation = <P, R>(
   const {
     operation,
     chainId = SupportedChainId.TRUSTLESS_COMPUTER,
-    inscribeable = true,
+    inscribable = true,
   } = args;
   const { call, dAppType, operationName } = operation();
   const { chainId: walletChainId } = useWeb3React();
@@ -35,8 +35,6 @@ const useContractOperation = <P, R>(
   const router = useRouter();
 
   const checkAndSwitchChainIfNecessary = async (): Promise<void> => {
-    logger.debug('currentChainID', walletChainId);
-
     if (walletChainId !== chainId) {
       await switchChain(chainId);
     }
@@ -47,7 +45,7 @@ const useContractOperation = <P, R>(
       // This function does not handle error
       // It delegates error to caller
 
-      if (inscribeable && (!isAuthenticated || !user?.walletAddress)) {
+      if (inscribable && (!isAuthenticated || !user?.walletAddress)) {
         router.push(`${ROUTE_PATH.CONNECT_WALLET}`);
         throw Error('Please connect wallet to continue.');
       }
@@ -55,13 +53,12 @@ const useContractOperation = <P, R>(
       // Check & switch network if necessary
       await checkAndSwitchChainIfNecessary();
 
-      if (!inscribeable) {
+      if (!inscribable) {
         // Make TC transaction
         const tx: R = await call({
           ...params,
         });
 
-        logger.debug('tcTX', tx);
         return tx;
       }
 
@@ -69,7 +66,6 @@ const useContractOperation = <P, R>(
       const tx: R = await call({
         ...params,
       });
-      logger.debug('tcTX', tx);
 
       if (tx === null) {
         throw Error('Rejected request.');

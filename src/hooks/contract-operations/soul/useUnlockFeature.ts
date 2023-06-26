@@ -58,14 +58,14 @@ const useUnlockFeature: ContractOperationHook<
           feeRatePerByte: feeRate.hourFee,
         });
 
-        // const balanceInBN = new BigNumber(btcBalance);
-        // if (balanceInBN.isLessThan(estimatedFee.totalFee)) {
-        //   throw Error(
-        //     `Insufficient BTC balance. Please top up at least ${formatBTCPrice(
-        //       estimatedFee.totalFee.toString()
-        //     )} BTC.`
-        //   );
-        // }
+        const balanceInBN = new BigNumber(btcBalance);
+        if (balanceInBN.isLessThan(estimatedFee.totalFee)) {
+          throw Error(
+            `Insufficient BTC balance. Please top up at least ${formatBTCPrice(
+              estimatedFee.totalFee.toString()
+            )} BTC.`
+          );
+        }
 
         const gasLimit = await estimateGas(params);
         const transaction = await contract
