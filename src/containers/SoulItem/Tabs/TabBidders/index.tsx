@@ -14,6 +14,7 @@ import { jsNumberForAddress } from 'react-jazzicon';
 import Link from 'next/link';
 import { TC_EXPLORER_URL } from '@/configs';
 import Empty from '@/components/Empty';
+import ImageWrapper from '@/components/ImageWrapper';
 
 const LIMIT_PAGE = 20;
 
@@ -67,15 +68,15 @@ const TabBidders: React.FC = (): React.ReactElement => {
         <Link href={`${TC_EXPLORER_URL}/address/${bidder.sender}`} target='_blank' className={s.tabLiveItem} key={index}>
           <div className={s.tabLiveLeft}>
             {bidder.bidderAvatar ? (
-              <img
+              <ImageWrapper
                 src={bidder.bidderAvatar}
                 className={s.bidderAvatar}
-                width={48}
-                height={48}
+                width={40}
+                height={40}
               />
             ) : (
               <Jazzicon
-                diameter={48}
+                diameter={40}
                 seed={jsNumberForAddress(bidder.sender)}
               />
             )}

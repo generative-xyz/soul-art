@@ -80,7 +80,7 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
           </>
         )}
       </div>
-      <div className={s.divider}></div>
+      {(auction && auction.available) && (<div className={s.divider}></div>)}
       {auctionAction}
     </div>
   );
