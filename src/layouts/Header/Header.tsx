@@ -12,7 +12,10 @@ import {
 } from '@/state/user/selector';
 import { showToastError, showToastSuccess } from '@/utils/toast';
 import { AnimFade } from '@Animations/Fade';
-import { formatBTCPrice, formatLongAddress } from '@trustless-computer/dapp-core';
+import {
+  formatBTCPrice,
+  formatLongAddress,
+} from '@trustless-computer/dapp-core';
 import { useWeb3React } from '@web3-react/core';
 import { default as classNames, default as cs } from 'classnames';
 import copy from 'copy-to-clipboard';
@@ -84,7 +87,8 @@ const Header = ({
   const router = useRouter();
   const homepage = router.pathname === ROUTE_PATH.HOME;
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const { gmBalance, btcBalance, tcBalance, gmDepositBalance } = useContext(AssetsContext);
+  const { gmBalance, btcBalance, tcBalance, gmDepositBalance } =
+    useContext(AssetsContext);
   const user = useSelector(getUserSelector);
   const { account } = useWeb3React();
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
@@ -145,7 +149,7 @@ const Header = ({
               <IconSVG src={icon} maxWidth="24" maxHeight="24" />
               <p>{formatLongAddress(address || '')}</p>
             </div>
-            <div onClick={() => onClickCopy(user?.walletAddress || '')}>
+            <div onClick={() => onClickCopy(address || '')}>
               <IconSVG
                 src={`${CDN_URL}/ic-copy.svg`}
                 color={'#fff'}
@@ -171,8 +175,9 @@ const Header = ({
   const ContentHeader = (): JSX.Element => {
     return (
       <div
-        className={`content-header d-flex justify-content-between align-items-center w-100 ${homepage ? 'dark' : ''
-          }`}
+        className={`content-header d-flex justify-content-between align-items-center w-100 ${
+          homepage ? 'dark' : ''
+        }`}
       >
         <div className={headerStyles.nav_container}>
           {NAV_CONTENT.map(({ title, url }) => {
@@ -292,8 +297,9 @@ const Header = ({
                           id={'warning-gm'}
                           placement="left"
                           show={!eligibleOwner}
-                          className={`${headerStyles.tooltip_body} ${!eligibleOwner ? '' : 'd-none'
-                            }`}
+                          className={`${headerStyles.tooltip_body} ${
+                            !eligibleOwner ? '' : 'd-none'
+                          }`}
                         >
                           <div className={headerStyles.tooltip_content}>
                             <p>You are not owning over 1GM</p>
