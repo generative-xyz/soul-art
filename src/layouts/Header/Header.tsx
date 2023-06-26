@@ -363,15 +363,6 @@ const Header = ({
                       }
                       className={headerStyles.menu_box}
                     >
-                      <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
-                      <p>Profile</p>
-                    </div>
-                    <div
-                      onClick={() =>
-                        window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
-                      }
-                      className={headerStyles.menu_box}
-                    >
                       <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
                       <p>Wallet</p>
                     </div>
