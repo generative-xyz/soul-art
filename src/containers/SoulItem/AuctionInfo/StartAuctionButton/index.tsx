@@ -34,7 +34,7 @@ const StartAuctionButton: React.FC<IProps> = ({
 
   const onTxSuccessCallback = async (tx: Transaction | null): Promise<void> => {
     if (!tx || !user?.walletAddress) return;
-    const key = toStorageKey(operationName, user.walletAddress);
+    const key = toStorageKey(operationName, `${data.tokenId}_${user.walletAddress}`);
     const txHash = tx.hash;
     if (!txHash) return;
     localStorage.setItem(key, txHash);
@@ -71,7 +71,7 @@ const StartAuctionButton: React.FC<IProps> = ({
   useEffect(() => {
     if (!user?.walletAddress || !provider) return;
 
-    const key = toStorageKey(operationName, user.walletAddress);
+    const key = toStorageKey(operationName, `${data.tokenId}_${user.walletAddress}`);
     const txHash = localStorage.getItem(key);
 
     if (!txHash) return;
