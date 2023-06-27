@@ -16,7 +16,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import soulsStyles from './souls.module.scss';
 
-const LIMIT_PAGE = 32;
+const LIMIT_PAGE = 20;
 
 export const SoulsContainer: React.FC = () => {
   const router = useRouter();

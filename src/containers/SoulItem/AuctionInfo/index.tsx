@@ -24,9 +24,9 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
   const auctionAction = useMemo(() => {
     if (!auction || !auction.available) return <></>;
     if (auction.auctionStatus === AuctionStatus.INPROGRESS) {
-      return <CreateBidButton data={data} />;
+      return <CreateBidButton tokenId={data.tokenId} imageCapture={data.imageCapture || ''} />;
     } else if (auction.auctionStatus === AuctionStatus.ENDED) {
-      return <SettleAuctionButton data={data} />;
+      return <SettleAuctionButton tokenId={data.tokenId} />;
     } else {
       return <StartAuctionButton data={data} />;
     }
@@ -74,7 +74,7 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
               </div>
             ) : (
               <Link target='_blank' href={`${TC_EXPLORER_URL}/address/${data.owner}`} className={s.content_address}>
-                {account === data.owner ? 'You' : `${shortenAddress(data.owner)}`}
+                {account?.toLowerCase() === data.owner.toLowerCase() ? 'You' : `${shortenAddress(data.owner)}`}
               </Link>
             )}
           </>

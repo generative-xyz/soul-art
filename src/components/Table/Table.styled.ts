@@ -6,6 +6,7 @@ export const StyledTable = styled.div`
     position: relative;
     overflow: scroll;
     color: ${({ theme }: { theme: DefaultTheme }) => theme.text1};
+    width: 100%;
 
     & > :not(caption) > * > * {
       padding: {

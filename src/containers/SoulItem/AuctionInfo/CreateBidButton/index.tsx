@@ -1,4 +1,3 @@
-import { ITokenDetail } from '@/interfaces/api/marketplace';
 import React, { useContext, useState } from 'react';
 import s from './styles.module.scss';
 import Button from '@/components/Button';
@@ -13,10 +12,11 @@ import logger from '@/services/logger';
 import ModalError from '../ModalError';
 
 interface IProps {
-  data: ITokenDetail;
+  tokenId: string;
+  imageCapture: string;
 }
 
-const CreateBidButton: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
+const CreateBidButton: React.FC<IProps> = ({ tokenId, imageCapture }: IProps): React.ReactElement => {
   const { auction, auctionEndTime, biddable } = useContext(AuctionContext);
   const { run: getBalanceOf } = useContractOperation({
     operation: useGetBalanceOf,
@@ -78,7 +78,8 @@ const CreateBidButton: React.FC<IProps> = ({ data }: IProps): React.ReactElement
       <ModalBid
         show={showBidModal}
         handleClose={handleCloseBidModal}
-        data={data}
+        tokenId={tokenId}
+        imageCapture={imageCapture}
       />
       <ModalError
         show={showErrorModal}

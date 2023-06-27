@@ -6,4 +6,5 @@ export const ROUTE_PATH = {
   ART: '/souls/art',
   DEMO: '/souls/demo',
   FAQS: '/souls/faqs',
+  STATUS: '/souls/adopt-status',
 };

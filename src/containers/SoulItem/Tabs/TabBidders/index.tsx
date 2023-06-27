@@ -3,7 +3,7 @@ import s from './styles.module.scss';
 import { formatLongAddress } from '@trustless-computer/dapp-core';
 import { AuctionContext } from '@/contexts/auction-context';
 import { getBidderList } from '@/services/auction';
-import { IAuctionBidder } from '@/interfaces/api/auction';
+import { IAuctionBid } from '@/interfaces/api/auction';
 import uniqBy from 'lodash/uniqBy';
 import { formatEthPrice } from '@/utils/format';
 import { formatDateTime } from '@/utils/time';
@@ -25,12 +25,13 @@ const TabBidders: React.FC = (): React.ReactElement => {
   const { auction } = useContext(AuctionContext);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
-  const [bidders, setBidders] = useState<Array<IAuctionBidder>>([]);
+  const [bidders, setBidders] = useState<Array<IAuctionBid>>([]);
 
   const fetchBidders = async (p?: number) => {
     if (!auction) return;
 
     try {
+      setLoading(true);
       const page = p || Math.floor(bidders.length / LIMIT_PAGE) + 1;
       const { items, total } = await getBidderList({
         page,
@@ -64,7 +65,7 @@ const TabBidders: React.FC = (): React.ReactElement => {
     <div className={s.tabLive}>
       {bidders.length === 0 && (
         <div className={s.emptyWrapper}>
-          <Empty />
+          <Empty infoText='Waiting for the first bidder' />
         </div>
       )}
       {bidders.length > 0 && bidders.map((bidder, index) => (

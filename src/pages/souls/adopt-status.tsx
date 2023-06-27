@@ -1,8 +1,14 @@
+import AdoptStatus from '@/containers/AdoptStatus';
 import Layout from '@/layouts';
+import { NextPage } from 'next';
 import React from 'react';
 
-const AdoptStatus = () => {
-  return <Layout>AdoptStatus</Layout>;
+const AdoptStatusPage: NextPage = (): React.ReactElement => {
+  return (
+    <Layout>
+      <AdoptStatus />
+    </Layout>
+  );
 };
 
-export default AdoptStatus;
+export default AdoptStatusPage;

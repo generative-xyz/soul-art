@@ -1,4 +1,3 @@
-import { ITokenDetail } from "@/interfaces/api/marketplace";
 import React, { useContext, useEffect, useState } from "react";
 import s from './styles.module.scss';
 import Button from "@/components/Button";
@@ -13,12 +12,15 @@ import useContractOperation from "@/hooks/contract-operations/useContractOperati
 import useSettleAuction from "@/hooks/contract-operations/soul/useSettleAuction";
 import { AuctionContext } from "@/contexts/auction-context";
 import { TC_URL } from "@/configs";
+import cs from 'classnames';
 
 interface IProps {
-  data: ITokenDetail;
+  tokenId: string;
+  title?: string;
+  className?: string;
 }
 
-const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
+const SettleAuctionButton: React.FC<IProps> = ({ tokenId, title = 'Settle auction', className }: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
   const [processing, setProcessing] = useState(false);
   const [inscribing, setInscribing] = useState(false);
@@ -55,7 +57,7 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
     try {
       setProcessing(true);
       await createAuction({
-        tokenId: Number(data.tokenId),
+        tokenId: Number(tokenId),
         txSuccessCallback: onTxSuccessCallback
       });
     } catch (err: unknown) {
@@ -113,10 +115,10 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
   return (
     <Button
       disabled={processing}
-      className={s.startAuctionButton}
+      className={cs(s.startAuctionButton, className)}
       onClick={handleSettleAuction}
     >
-      {(processing || inscribing) ? 'Processing...' : 'Settle auction'}
+      {(processing || inscribing) ? 'Processing...' : title}
     </Button>
   )
 }

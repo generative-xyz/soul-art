@@ -49,7 +49,7 @@ const TabsComponent = ({
   }, [auction]);
 
   return (
-    <Tabs defaultActiveKey="0" className={s.tabs}>
+    <Tabs defaultActiveKey="0" className={s.tabs} mountOnEnter>
       {tabList.map((tab, index) => {
         return (
           <Tab

@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useState } from "react";
-import { ITokenDetail } from "@/interfaces/api/marketplace";
 import BaseModal from '@/components/BaseModal'
 import SonarWaveCircle from "@/components/SonarWaveCircle";
 import CountdownText from "@/components/CountdownText";
@@ -23,11 +22,13 @@ import web3Instance from '@/connections/custom-web3-provider';
 import EstimatedFee from "@/components/EstimatedFee";
 import useGetUserBid from "@/hooks/contract-operations/soul/useGetUserBid";
 import useAsyncEffect from "use-async-effect";
+import ImageWrapper from "@/components/ImageWrapper";
 
 interface IProps {
   show: boolean;
   handleClose: () => void;
-  data: ITokenDetail;
+  tokenId: string;
+  imageCapture: string;
 }
 
 interface IFormValues {
@@ -37,7 +38,8 @@ interface IFormValues {
 const ModalBid: React.FC<IProps> = ({
   show,
   handleClose,
-  data
+  tokenId,
+  imageCapture,
 }: IProps): React.ReactElement => {
   const { auction, auctionEndTime } = useContext(AuctionContext);
   const { gmDepositBalance } = useContext(AssetsContext);
@@ -126,7 +128,7 @@ const ModalBid: React.FC<IProps> = ({
       const currentUserBid = new BigNumber(userBid);
       const bidAmount = newAmount.minus(currentUserBid);
       await createBid({
-        tokenId: Number(data.tokenId),
+        tokenId: Number(tokenId),
         amount: bidAmount.toString(),
       });
     } catch (err: unknown) {
@@ -152,11 +154,11 @@ const ModalBid: React.FC<IProps> = ({
   );
 
   const calculateEstTcFee = useCallback(async (amount: string) => {
-    if (!estimateGas || !data.tokenId || !show || !amount) return '0';
+    if (!estimateGas || !tokenId || !show || !amount) return '0';
     setEstTCFee(null);
     try {
       const payload: ICreateBidParams = {
-        tokenId: data.tokenId as unknown as number,
+        tokenId: tokenId as unknown as number,
         amount: Web3.utils.toWei(amount.toString()),
       };
       const gasLimit = await estimateGas(payload);
@@ -172,21 +174,21 @@ const ModalBid: React.FC<IProps> = ({
       return '0';
     }
   },
-    [setEstTCFee, estimateGas, data, show],
+    [setEstTCFee, estimateGas, tokenId, show],
   );
 
   useAsyncEffect(async () => {
-    if (!show || !auction || !data) return;
+    if (!show || !auction || !tokenId) return;
     try {
       const balance = await getUserBid({
-        tokenId: data.tokenId,
+        tokenId: tokenId,
         auctionId: auction.chainAuctionId,
       });
       setUserBid(balance.toString());
     } catch (err: unknown) {
       logger.error(err);
     }
-  }, [auction, show, data]);
+  }, [auction, show, tokenId]);
 
   if (!auction) return <></>;
 
@@ -212,13 +214,13 @@ const ModalBid: React.FC<IProps> = ({
             </p>
             <div className={s.bidModal_body_address}>
               <div className={s.bidModal_body_addressContent}>
-                <img className={s.bidModal_body_addressContent_imageCapture} src={data.imageCapture} alt="art_img" />
+                <ImageWrapper className={s.bidModal_body_addressContent_imageCapture} src={imageCapture} alt="art_img" />
                 <p
                   className={
                     s.bidModal_body_addressContent_infoId
                   }
                 >
-                  {`Soul ${data.tokenId}`}
+                  {`Soul ${tokenId}`}
                 </p>
               </div>
               {auctionEndTime && (

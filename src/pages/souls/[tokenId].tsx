@@ -19,7 +19,6 @@ const SoulDetailPage: NextPage<IProps> = ({
 }: IProps): React.ReactElement => {
   return (
     <Layout>
-      {/*<Banner type={'normal'} />*/}
       <SoulItem data={item} />
     </Layout>
   );
