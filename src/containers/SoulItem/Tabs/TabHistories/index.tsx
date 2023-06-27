@@ -16,6 +16,7 @@ import { Feature } from '@/constants/feature';
 import { useSelector } from 'react-redux';
 import { getUserSelector } from '@/state/user/selector';
 import { formatEthPrice } from '@/utils/format';
+import ImageWrapper from '@/components/ImageWrapper';
 
 const LIMIT_PAGE = 20;
 
@@ -23,7 +24,7 @@ interface IProps {
   data: ITokenDetail;
 }
 
-const TabHistory: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
+const TabHistories: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
   const [histories, setHistories] = useState<Array<ISoulHistoryItem>>([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +43,7 @@ const TabHistory: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
       if (page === 1) {
         setHistories(res || []);
       } else {
-        setHistories((prev) => uniqBy([...prev, ...res], 'id'));
+        setHistories((prev) => uniqBy([...prev, ...res], 'txHash'));
       }
 
       if (res.length === LIMIT_PAGE) {
@@ -59,12 +60,13 @@ const TabHistory: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
 
   const tableData = useMemo(() => {
     return histories.map((item, index) => {
+      const featureName = Feature[item.featureName as keyof typeof Feature];
       return {
         id: index.toString(),
         render: {
           thumbnail: (
             <div className={s.thumbnailWrapper}>
-              <img className={s.thumbnailImg} src={item.imageCapture} alt="thumbnail image" />
+              <ImageWrapper className={s.thumbnailImg} src={item.imageCapture} alt="thumbnail image" />
             </div>
           ),
           timeCapture: (
@@ -98,7 +100,7 @@ const TabHistory: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
           event: (
             <div className={s.holdTimeWrapper}>
               <p className={s.dataSubText}>Unlock</p>
-              <p className={s.dataText}>{Feature[item.featureName as keyof typeof Feature]}</p>
+              <p className={s.dataText}>{featureName || '-'}</p>
             </div>
           ),
         },
@@ -135,4 +137,4 @@ const TabHistory: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
   );
 }
 
-export default TabHistory;
+export default TabHistories;

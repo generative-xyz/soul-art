@@ -7,8 +7,8 @@ import { Tab, Tabs } from 'react-bootstrap';
 import TabBidders from './TabBidders';
 import TabDescription from './TabDescription';
 import TabFeatures from './TabFeatures';
-import TabHistory from './TabHistory';
 import TabInteraction from './TabInteraction';
+import TabHistories from './TabHistories';
 import s from './style.module.scss';
 import { useRouter } from 'next/router';
 import { useWeb3React } from '@web3-react/core';
@@ -63,6 +63,7 @@ const TabsComponent = ({
       {tabList.map((tab, index) => {
         return (
           <Tab
+            mountOnEnter
             eventKey={index}
             key={index}
             title={
@@ -91,7 +92,7 @@ const TabsComponent = ({
                   mintedBlock={data.blockNumber}
                 />
               )}
-              {tab.type === 'history' && <TabHistory data={data} />}
+              {tab.type === 'history' && <TabHistories data={data} />}
             </div>
           </Tab>
         );
