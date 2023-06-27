@@ -1,18 +1,20 @@
 import { StyledEmpty } from './Empty.styled';
 import { CDN_URL } from '@/configs';
 
-export type TEmpty = {
+export interface IProps {
   infoText?: string;
-  theme?: 'dark' | 'light',
+  theme?: 'dark' | 'light';
+  imgHeight?: number;
+  className?: string;
 };
 
-const Empty = ({ infoText = 'No data found', }: TEmpty) => {
+const Empty: React.FC<IProps> = ({ infoText = 'No data yet', imgHeight = 120, className = '' }: IProps): React.ReactElement => {
   return (
-    <StyledEmpty>
+    <StyledEmpty className={className}>
       <img
-        width={95}
-        height={95}
-        src={`${CDN_URL}/empty-icon.svg`}
+        width={'auto'}
+        height={imgHeight}
+        src={`${CDN_URL}/empty-box.svg`}
         alt="Empty icon"
         className={'image'}
       />

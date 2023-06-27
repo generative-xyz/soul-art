@@ -4,10 +4,11 @@ import IconSVG from "@/components/IconSVG";
 import { CDN_URL } from "@/configs";
 import { ROUTE_PATH } from "@/constants/route-path";
 import Link from "next/link";
+import cs from 'classnames';
 
 const TabDescription: React.FC = (): React.ReactElement => {
   return (
-    <div className={s.tabDesc}>
+    <div className={cs(s.tabDesc, 'small-scrollbar')}>
       <div className={s.tabDescHead}>
         <div>
           <IconSVG

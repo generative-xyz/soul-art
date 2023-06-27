@@ -31,7 +31,14 @@ export interface IGetSoulHistoryParams extends IPagingParams {
   tokenId: string;
 }
 
-export interface IGetSoulHistoryResponse extends IPagingParams {
-  items: Array<unknown>;
-  total: number;
+export interface ISoulHistoryItem {
+  type: number;
+  imageCapture: string;
+  userAAddress: string;
+  balance: string;
+  blockNumber: number;
+  time: string;
+  featureName: string;
+  holdTime: number;
+  owner: string;
 }

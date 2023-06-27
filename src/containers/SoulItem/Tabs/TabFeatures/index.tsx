@@ -65,7 +65,7 @@ const TabFeatures = ({
     } catch (err: unknown) {
       logger.debug('failed to get status');
     }
-  }, [settingFeatures, router.asPath]);
+  }, [settingFeatures, router.asPath, owner, tokenId]);
 
   return (
     <div className={`${s.wrapper} small-scrollbar`}>
@@ -78,7 +78,6 @@ const TabFeatures = ({
             key={`${feat}-${index}-${tokenId}`}
           >
             <div className={s.feature_list}>
-              {/* <p>{Feature[feat as keyof typeof Feature]}</p> */}
               <FeatureInfo
                 feat={feat}
                 tokenBlocksExist={tokenBlocksExist}

@@ -1,0 +1,12 @@
+.countDownWrapper {
+  display: flex;
+  align-items: center;
+  gap: rem(8px);
+
+  .countDownText {
+    font-size: rem(16px);
+    line-height: 1.4;
+    color: #000;
+    min-width: rem(106px);
+  }
+}
