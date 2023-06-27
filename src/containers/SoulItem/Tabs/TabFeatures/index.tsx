@@ -1,10 +1,6 @@
 import web3Instance from '@/connections/custom-web3-provider';
-import useCheckFeatureStatus from '@/hooks/contract-operations/soul/useCheckFeatureStatus';
-import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import logger from '@/services/logger';
-import {
-  getUserSelector,
-} from '@/state/user/selector';
+import { getUserSelector } from '@/state/user/selector';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -22,13 +18,10 @@ const TabFeatures = ({
 }) => {
   const router = useRouter();
   const user = useSelector(getUserSelector);
+
   const [tokenBlocksExist, setTokenBlocksExist] = useState(0);
 
   const { tokenId } = router.query as { tokenId: string };
-  const { run: checkFeaturesStatus } = useContractOperation({
-    operation: useCheckFeatureStatus,
-    inscribable: false,
-  });
 
   const [settingFeatures, setSettingFeatures] = useState<string[] | null>(null);
   const [featuresStatus, setFeaturesStatus] = useState<number[] | null>(null);
@@ -62,16 +55,17 @@ const TabFeatures = ({
   useAsyncEffect(async () => {
     try {
       if (!settingFeatures) return;
-      const res = await checkFeaturesStatus({
+      const res = await web3Instance.getFeaturesStatus({
         tokenId,
         owner,
         featureList: settingFeatures,
       });
+
       setFeaturesStatus(res);
     } catch (err: unknown) {
       logger.debug('failed to get status');
     }
-  }, [settingFeatures, owner, tokenId]);
+  }, [settingFeatures, router.asPath, owner, tokenId]);
 
   return (
     <div className={`${s.wrapper} small-scrollbar`}>
@@ -79,7 +73,10 @@ const TabFeatures = ({
         settingFeatures &&
         settingFeatures.length > 0 &&
         settingFeatures.map((feat, index) => (
-          <div className={s.feature_wrapper} key={`${feat}-${index}`}>
+          <div
+            className={s.feature_wrapper}
+            key={`${feat}-${index}-${tokenId}`}
+          >
             <div className={s.feature_list}>
               <FeatureInfo
                 feat={feat}

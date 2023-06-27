@@ -4,6 +4,7 @@ import Header from './Header';
 import layoutStyles from './layout.module.scss';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/constants/route-path';
+import FeatureAlert from './FeatureAlert';
 
 export const HEADER_HEIGHT = 80;
 export const FO0TER_HEIGHT = 80;
@@ -27,6 +28,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       <div className={layoutStyles.container}>
         <Header height={HEADER_HEIGHT} />
         <div className={layoutStyles.content_wrapper}>{children}</div>
+        <FeatureAlert />
         <GridDebug />
       </div>
     </>

@@ -143,7 +143,7 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
                 maxWidth={'16'}
                 maxHeight={'16'}
               />
-              {processing ? 'Processing...' : 'Unlock'}
+              {processing || inscribing ? 'Processing...' : 'Unlock'}
             </Button>
           ) : (
             <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>

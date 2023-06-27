@@ -1,3 +1,25 @@
+import { GM_ADDRESS, SOUL_CONTRACT } from '@/configs';
+import web3Instance from '@/connections/custom-web3-provider';
+import { FeatureStatus } from '@/constants/feature';
+import useTokenBalance from '@/hooks/contract-operations/erc20/useTokenBalance';
+import useCheckFeatureStatus from '@/hooks/contract-operations/soul/useCheckFeatureStatus';
+import useGetDepositBalance from '@/hooks/contract-operations/soul/useGetDepositBalance';
+import useContractOperation from '@/hooks/contract-operations/useContractOperation';
+import { ICollectedUTXOResp, IFeeRate } from '@/interfaces/api/bitcoin';
+import {
+  getCollectedUTXO,
+  getFeeRate,
+  getPendingUTXOs,
+} from '@/services/bitcoin';
+import logger from '@/services/logger';
+import { getCollectionNFTList } from '@/services/marketplace';
+import { useAppSelector } from '@/state/hooks';
+import {
+  getIsAuthenticatedSelector,
+  getUserSelector,
+} from '@/state/user/selector';
+import { currentAssetsBuilder } from '@/utils/utxo';
+import { useWeb3React } from '@web3-react/core';
 import React, {
   PropsWithChildren,
   useCallback,
@@ -5,22 +27,9 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { ICollectedUTXOResp, IFeeRate } from '@/interfaces/api/bitcoin';
-import { useAppSelector } from '@/state/hooks';
-import { getUserSelector } from '@/state/user/selector';
-import {
-  getCollectedUTXO,
-  getFeeRate,
-  getPendingUTXOs,
-} from '@/services/bitcoin';
-import { currentAssetsBuilder } from '@/utils/utxo';
-import { useWeb3React } from '@web3-react/core';
+import { useSelector } from 'react-redux';
 import * as TC_SDK from 'trustless-computer-sdk';
-import logger from '@/services/logger';
-import useTokenBalance from '@/hooks/contract-operations/erc20/useTokenBalance';
-import useContractOperation from '@/hooks/contract-operations/useContractOperation';
-import useGetDepositBalance from '@/hooks/contract-operations/soul/useGetDepositBalance';
-import { GM_ADDRESS } from '@/configs';
+import useAsyncEffect from 'use-async-effect';
 
 export interface IAssetsContext {
   btcBalance: string;
@@ -28,6 +37,9 @@ export interface IAssetsContext {
   gmBalance: string;
   gmDepositBalance: string;
   feeRate: IFeeRate;
+  availableFeatures: number[] | null;
+  ownerTokenId?: string;
+  setAvailableFeatures: React.Dispatch<React.SetStateAction<number[] | null>>;
 }
 
 const initialValue: IAssetsContext = {
@@ -40,6 +52,11 @@ const initialValue: IAssetsContext = {
     halfHourFee: 20,
     hourFee: 15,
   },
+  availableFeatures: null,
+  ownerTokenId: '',
+  setAvailableFeatures: () => {
+    return;
+  },
 };
 
 export const AssetsContext = React.createContext<IAssetsContext>(initialValue);
@@ -48,8 +65,10 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   children,
 }: PropsWithChildren): React.ReactElement => {
   const user = useAppSelector(getUserSelector);
+  const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const btcAddress = user?.btcAddress || '';
   const { provider, account: tcAddress } = useWeb3React();
+
   const [currentAssets, setCurrentAssets] = useState<
     ICollectedUTXOResp | undefined
   >();
@@ -57,6 +76,16 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   const [gmBalance, setGmBalance] = useState('0');
   const [gmDepositBalance, setGmDepositBalance] = useState('0');
   const [feeRate, setFeeRate] = useState<IFeeRate>(initialValue.feeRate);
+  const [ownerTokenId, setOwnerTokenId] = useState('');
+  const [availableFeatures, setAvailableFeatures] = useState<number[] | null>(
+    null
+  );
+
+  const { run: checkFeaturesStatus } = useContractOperation({
+    operation: useCheckFeatureStatus,
+    inscribable: false,
+  });
+
   const { run: getTokenBalance } = useContractOperation({
     operation: useTokenBalance,
     inscribable: false,
@@ -106,6 +135,21 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       setFeeRate(initialValue.feeRate);
     }
   }, []);
+
+  const fetchSoulToken = useCallback(async () => {
+    if (!tcAddress) return;
+    try {
+      const ownerToken = await getCollectionNFTList({
+        contract_address: SOUL_CONTRACT.toLowerCase(),
+        owner: tcAddress,
+      });
+      if (ownerToken.items && ownerToken.items.length > 0) {
+        setOwnerTokenId(ownerToken.items[0].tokenId);
+      }
+    } catch (error) {
+      logger.error(error);
+    }
+  }, [tcAddress]);
 
   const getAvailableAssetsCreateTx = useCallback(async () => {
     if (!btcAddress) return;
@@ -216,6 +260,46 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     };
   }, [fetchAssetsData]);
 
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    fetchSoulToken();
+  }, [fetchSoulToken, isAuthenticated]);
+
+  useAsyncEffect(async () => {
+    if (!isAuthenticated || !user?.walletAddress || !ownerTokenId) {
+      setAvailableFeatures(null);
+      sessionStorage.removeItem('availableFeatures');
+      return;
+    }
+
+    const settingFeatures = await web3Instance.getSettingFeatures();
+    if (settingFeatures && settingFeatures.features.length > 0) {
+      const featuresStatus = await checkFeaturesStatus({
+        tokenId: ownerTokenId,
+        owner: user.walletAddress,
+        featureList: settingFeatures.features,
+      });
+
+      if (!featuresStatus) return;
+
+      const featureAvailableIndex = featuresStatus.reduce(
+        (acc, status, index) => {
+          if (status === FeatureStatus['Available']) {
+            acc.push(index);
+          }
+          return acc;
+        },
+        [] as number[]
+      );
+
+      setAvailableFeatures(featureAvailableIndex);
+      sessionStorage.setItem(
+        'availableFeatures',
+        JSON.stringify(featureAvailableIndex)
+      );
+    }
+  }, [isAuthenticated, ownerTokenId, user?.walletAddress]);
+
   const contextValues = useMemo((): IAssetsContext => {
     return {
       btcBalance,
@@ -223,8 +307,20 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       tcBalance,
       gmBalance,
       gmDepositBalance,
+      availableFeatures,
+      ownerTokenId,
+      setAvailableFeatures,
     };
-  }, [btcBalance, feeRate, tcBalance, gmBalance, gmDepositBalance]);
+  }, [
+    btcBalance,
+    feeRate,
+    tcBalance,
+    gmBalance,
+    gmDepositBalance,
+    availableFeatures,
+    ownerTokenId,
+    setAvailableFeatures,
+  ]);
 
   return (
     <AssetsContext.Provider value={contextValues}>
