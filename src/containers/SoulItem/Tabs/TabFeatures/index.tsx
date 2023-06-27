@@ -1,11 +1,6 @@
 import web3Instance from '@/connections/custom-web3-provider';
-import useCheckFeatureStatus from '@/hooks/contract-operations/soul/useCheckFeatureStatus';
-import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import logger from '@/services/logger';
-import {
-  getIsAuthenticatedSelector,
-  getUserSelector,
-} from '@/state/user/selector';
+import { getUserSelector } from '@/state/user/selector';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -22,15 +17,11 @@ const TabFeatures = ({
   mintedBlock?: string | number;
 }) => {
   const router = useRouter();
-  const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const user = useSelector(getUserSelector);
+
   const [tokenBlocksExist, setTokenBlocksExist] = useState(0);
 
   const { tokenId } = router.query as { tokenId: string };
-  const { run: checkFeaturesStatus } = useContractOperation({
-    operation: useCheckFeatureStatus,
-    inscribable: false,
-  });
 
   const [settingFeatures, setSettingFeatures] = useState<string[] | null>(null);
   const [featuresStatus, setFeaturesStatus] = useState<number[] | null>(null);
@@ -63,17 +54,18 @@ const TabFeatures = ({
   // Get available for unlock features
   useAsyncEffect(async () => {
     try {
-      if (!isAuthenticated || !user?.walletAddress || !settingFeatures) return;
-      const res = await checkFeaturesStatus({
+      if (!settingFeatures) return;
+      const res = await web3Instance.getFeaturesStatus({
         tokenId,
         owner,
         featureList: settingFeatures,
       });
+
       setFeaturesStatus(res);
     } catch (err: unknown) {
       logger.debug('failed to get status');
     }
-  }, [settingFeatures, isAuthenticated, user?.walletAddress]);
+  }, [settingFeatures, router.asPath]);
 
   return (
     <div className={`${s.wrapper} small-scrollbar`}>
@@ -81,7 +73,10 @@ const TabFeatures = ({
         settingFeatures &&
         settingFeatures.length > 0 &&
         settingFeatures.map((feat, index) => (
-          <div className={s.feature_wrapper} key={`${feat}-${index}`}>
+          <div
+            className={s.feature_wrapper}
+            key={`${feat}-${index}-${tokenId}`}
+          >
             <div className={s.feature_list}>
               {/* <p>{Feature[feat as keyof typeof Feature]}</p> */}
               <FeatureInfo

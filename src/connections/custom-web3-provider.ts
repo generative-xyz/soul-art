@@ -6,6 +6,7 @@ import { AbiItem } from 'web3-utils';
 import ERC20AbiJson from '@/abis/erc20.json';
 import BigNumber from 'bignumber.js';
 import logger from '@/services/logger';
+import { FeatureStatus } from '@/constants/feature';
 
 class CustomWeb3Provider {
   private web3: Web3;
@@ -97,6 +98,47 @@ class CustomWeb3Provider {
       );
       const res = await contract.methods.getSettingFeatures().call();
       return res;
+    } catch (err: unknown) {
+      logger.error(err);
+      return null;
+    }
+  }
+
+  async getFeaturesStatus({
+    tokenId,
+    owner,
+    featureList,
+  }: {
+    tokenId: string;
+    owner: string;
+    featureList: string[];
+  }): Promise<FeatureStatus[] | null> {
+    try {
+      const contract = new this.web3.eth.Contract(
+        SoulAbiJson.abi as Array<AbiItem>,
+        SOUL_CONTRACT
+      );
+      // const res = await contract.methods.getSettingFeatures().call();
+
+      const featureStatus = await Promise.all(
+        featureList.map(async feature => {
+          logger.debug(feature);
+          const checkCanUnlock = await contract.methods
+            .canUnlockFeature(tokenId, owner, feature)
+            .call();
+          const checkIsUnlocked = await contract.methods
+            ._features(tokenId, owner, feature)
+            .call();
+
+          if (!checkCanUnlock && checkIsUnlocked)
+            return FeatureStatus['Unlocked'];
+          if (checkCanUnlock && !checkIsUnlocked)
+            return FeatureStatus['Available'];
+          return FeatureStatus['Locked'];
+        })
+      );
+
+      return featureStatus;
     } catch (err: unknown) {
       logger.error(err);
       return null;
