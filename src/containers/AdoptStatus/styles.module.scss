@@ -101,6 +101,8 @@
         td {
           border-top: 1px solid #ececec;
           border-bottom: 1px solid #ececec;
+          cursor: pointer;
+          transition: 0.2s all ease;
 
           &:first-child {
             border-left: 1px solid #ececec;
@@ -108,6 +110,21 @@
 
           &:last-child {
             border-right: 1px solid #ececec;
+          }
+        }
+
+        &:hover {
+          td {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+
+            &:first-child {
+              border-left: 1px solid #000;
+            }
+
+            &:last-child {
+              border-right: 1px solid #000;
+            }
           }
         }
       }

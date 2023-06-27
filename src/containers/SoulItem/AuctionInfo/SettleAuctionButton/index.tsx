@@ -116,7 +116,10 @@ const SettleAuctionButton: React.FC<IProps> = ({ tokenId, title = 'Settle auctio
     <Button
       disabled={processing}
       className={cs(s.startAuctionButton, className)}
-      onClick={handleSettleAuction}
+      onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        handleSettleAuction();
+      }}
     >
       {(processing || inscribing) ? 'Processing...' : title}
     </Button>

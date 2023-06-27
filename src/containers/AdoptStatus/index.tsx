@@ -22,10 +22,13 @@ import useContractOperation from "@/hooks/contract-operations/useContractOperati
 import ModalBid from "../SoulItem/AuctionInfo/ModalBid";
 import ModalError from "../SoulItem/AuctionInfo/ModalError";
 import SettleAuctionButton from "../SoulItem/AuctionInfo/SettleAuctionButton";
+import { useRouter } from "next/router";
+import { ROUTE_PATH } from "@/constants/route-path";
 
 const LIMIT_PAGE = 20;
 
 const AdoptStatus: React.FC = (): React.ReactElement => {
+  const router = useRouter();
   const user = useSelector(getUserSelector);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
@@ -64,7 +67,7 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
   }
 
   const checkIsWinner = (bid: IAuctionBid): boolean => {
-    return bid.auction?.winner?.toLowerCase() === user?.walletAddress?.toLowerCase()
+    return bid.ranking === 1;
   }
 
   const fetchBidders = async (p?: number) => {
@@ -165,7 +168,10 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
     if (bid?.auction?.status === AuctionStatus.INPROGRESS) {
       return (
         <Button
-          onClick={() => handleShowBidModal(bid)}
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            e.stopPropagation();
+            handleShowBidModal(bid)
+          }}
           className={s.actionBtn}
           title='Bid more'
         />
@@ -197,6 +203,11 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
     return bidders.map((bid, index) => {
       return {
         id: index.toString(),
+        config: {
+          onClick: () => {
+            router.push(`${ROUTE_PATH.HOME}/${bid.tokenId}`);
+          }
+        },
         render: {
           item: (
             <div className={s.itemWrapper}>
@@ -241,8 +252,6 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
   useEffect(() => {
     fetchBidders(1);
   }, [user?.walletAddress])
-
-  console
 
   return (
     <>

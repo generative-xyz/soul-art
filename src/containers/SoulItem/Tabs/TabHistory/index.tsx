@@ -7,10 +7,15 @@ import logger from '@/services/logger';
 import Empty from '@/components/Empty';
 import InfiniteLoading from '@/components/InfiniteLoading';
 import Table from '@/components/Table';
-import { CDN_URL } from '@/configs';
 import { jsNumberForAddress } from 'react-jazzicon';
 import Jazzicon from 'react-jazzicon/dist/Jazzicon';
 import { shortenAddress } from '@/utils';
+import { ISoulHistoryItem } from '@/interfaces/api/soul';
+import { formatDateTime } from '@/utils/time';
+import { Feature } from '@/constants/feature';
+import { useSelector } from 'react-redux';
+import { getUserSelector } from '@/state/user/selector';
+import { formatEthPrice } from '@/utils/format';
 
 const LIMIT_PAGE = 20;
 
@@ -19,26 +24,27 @@ interface IProps {
 }
 
 const TabHistory: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
-  const [histories, setHistories] = useState<Array<unknown>>([]);
+  const user = useSelector(getUserSelector);
+  const [histories, setHistories] = useState<Array<ISoulHistoryItem>>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
 
   const fetchData = async (p?: number) => {
     try {
       const page = p || Math.floor(histories.length / LIMIT_PAGE) + 1;
-      const { items, total } = await getSoulHistories({
+      const res = await getSoulHistories({
         page,
         limit: LIMIT_PAGE,
         tokenId: data.tokenId,
       });
 
       if (page === 1) {
-        setHistories(items || []);
+        setHistories(res || []);
       } else {
-        setHistories((prev) => uniqBy([...prev, ...items], 'id'));
+        setHistories((prev) => uniqBy([...prev, ...res], 'id'));
       }
 
-      if (histories.length < total) {
+      if (res.length === LIMIT_PAGE) {
         setHasMore(true);
       } else {
         setHasMore(false);
@@ -51,37 +57,47 @@ const TabHistory: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
   }
 
   const tableData = useMemo(() => {
-    return histories.map((_, index) => {
+    return histories.map((item, index) => {
       return {
         id: index.toString(),
         render: {
           thumbnail: (
             <div className={s.thumbnailWrapper}>
-              <img className={s.thumbnailImg} src={`${CDN_URL}/claimImg.jpg`} alt="thumbnail image" />
+              <img className={s.thumbnailImg} src={item.imageCapture} alt="thumbnail image" />
             </div>
           ),
           timeCapture: (
             <div className={s.timeCaptureWrapper}>
-              <p className={s.dataSubText}>2023-02-13</p>
-              <p className={s.dataText}>19:44:15 UTC</p>
+              <p className={s.dataSubText}>
+                {formatDateTime({
+                  dateTime: item.time,
+                  formatPattern: 'YYYY-MM-DD'
+                })}
+              </p>
+              <p className={s.dataText}>
+                {formatDateTime({
+                  dateTime: item.time,
+                  formatPattern: 'HH:mm:ss [UTC]'
+                })}
+              </p>
             </div>
           ),
           owner: (
             <div className={s.ownerWrapper}>
-              <Jazzicon diameter={24} seed={jsNumberForAddress('0xbfcACA954aF46f0CBf1c6743518ff33d0062f2C9')} />
-              <p className={s.ownerAddress}>{shortenAddress('0xbfcACA954aF46f0CBf1c6743518ff33d0062f2C9')}</p>
-            </div>
+              <Jazzicon diameter={24} seed={jsNumberForAddress(item.owner)} />
+              <p className={s.ownerAddress}>{user?.walletAddress?.toLowerCase() === item?.owner?.toLowerCase() ? 'You' : shortenAddress(item.owner)}</p>
+            </div >
           ),
           info: (
             <div className={s.balanceWrapper}>
-              <p className={s.dataSubText}>123 blocks</p>
-              <p className={s.dataText}>201 GM</p>
+              <p className={s.dataSubText}>{`${item.holdTime.toLocaleString('us-EN')} blocks`}</p>
+              <p className={s.dataText}>{`${formatEthPrice(item.balance)} GM`}</p>
             </div>
           ),
           event: (
             <div className={s.holdTimeWrapper}>
               <p className={s.dataSubText}>Unlock</p>
-              <p className={s.dataText}>8 Cloud layers</p>
+              <p className={s.dataText}>{Feature[item.featureName as keyof typeof Feature]}</p>
             </div>
           ),
         },

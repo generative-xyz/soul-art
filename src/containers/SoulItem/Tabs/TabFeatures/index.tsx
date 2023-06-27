@@ -3,7 +3,6 @@ import useCheckFeatureStatus from '@/hooks/contract-operations/soul/useCheckFeat
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import logger from '@/services/logger';
 import {
-  getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
 import { useRouter } from 'next/router';
@@ -22,7 +21,6 @@ const TabFeatures = ({
   mintedBlock?: string | number;
 }) => {
   const router = useRouter();
-  const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const user = useSelector(getUserSelector);
   const [tokenBlocksExist, setTokenBlocksExist] = useState(0);
 
@@ -63,7 +61,7 @@ const TabFeatures = ({
   // Get available for unlock features
   useAsyncEffect(async () => {
     try {
-      if (!isAuthenticated || !user?.walletAddress || !settingFeatures) return;
+      if (!settingFeatures) return;
       const res = await checkFeaturesStatus({
         tokenId,
         owner,
@@ -73,7 +71,7 @@ const TabFeatures = ({
     } catch (err: unknown) {
       logger.debug('failed to get status');
     }
-  }, [settingFeatures, isAuthenticated, user?.walletAddress]);
+  }, [settingFeatures, owner, tokenId]);
 
   return (
     <div className={`${s.wrapper} small-scrollbar`}>
@@ -83,7 +81,6 @@ const TabFeatures = ({
         settingFeatures.map((feat, index) => (
           <div className={s.feature_wrapper} key={`${feat}-${index}`}>
             <div className={s.feature_list}>
-              {/* <p>{Feature[feat as keyof typeof Feature]}</p> */}
               <FeatureInfo
                 feat={feat}
                 tokenBlocksExist={tokenBlocksExist}
