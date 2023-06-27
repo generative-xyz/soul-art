@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import s from './FeatureInfo.module.scss';
 import { Feature, FeatureStatus } from '@/constants/feature';
 import { AssetsContext } from '@/contexts/assets-context';
 import { formatEthPrice } from '@/utils/format';
+import BigNumber from 'bignumber.js';
+import { useContext, useMemo } from 'react';
+import s from './FeatureInfo.module.scss';
 
 type Props = {
   feat: string;
@@ -22,20 +23,34 @@ const FeatureInfo = ({
   levelUnlock,
   isOwner = false,
 }: Props) => {
-  const { gmBalance } = useContext(AssetsContext);
+  const { gmBalance, gmDepositBalance } = useContext(AssetsContext);
+
+  const totalGMBalance = new BigNumber(gmDepositBalance).plus(
+    new BigNumber(gmBalance)
+  );
+
+  const showBalance: number = useMemo(
+    () =>
+      (levelUnlock?.balance && status === FeatureStatus['Unlocked']) ||
+      (levelUnlock?.balance &&
+        Number(formatEthPrice(totalGMBalance.toString())) >
+          levelUnlock?.balance)
+        ? levelUnlock.balance
+        : Number(formatEthPrice(totalGMBalance.toString())),
+    [levelUnlock?.balance, status, totalGMBalance]
+  );
+
+  const showBlocks: number = useMemo(
+    () =>
+      (levelUnlock?.holdTime && status === FeatureStatus['Unlocked']) ||
+      (levelUnlock?.holdTime &&
+        tokenBlocksExist > Number(levelUnlock?.holdTime))
+        ? Number(levelUnlock.holdTime)
+        : tokenBlocksExist,
+    [levelUnlock?.holdTime, status, tokenBlocksExist]
+  );
 
   if (!levelUnlock) return null;
-
-  const showBalance: number =
-    levelUnlock?.balance &&
-    Number(formatEthPrice(gmBalance)) > levelUnlock?.balance
-      ? levelUnlock.balance
-      : Number(formatEthPrice(gmBalance));
-
-  const showBlocks =
-    levelUnlock?.holdTime && tokenBlocksExist > Number(levelUnlock?.holdTime)
-      ? Number(levelUnlock?.holdTime)
-      : tokenBlocksExist;
 
   return (
     <div className={s.wrapper}>

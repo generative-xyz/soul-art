@@ -173,7 +173,7 @@ const Header = ({
   };
 
   useEffect(() => {
-    setEligibleOwner(Number(formatEthPrice(gmBalance)) > 1);
+    setEligibleOwner(Number(formatEthPrice(gmBalance)) >= 1);
   }, [gmBalance]);
 
   const ContentHeader = (): JSX.Element => {
