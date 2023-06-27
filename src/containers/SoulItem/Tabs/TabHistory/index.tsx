@@ -26,11 +26,12 @@ interface IProps {
 const TabHistory: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
   const [histories, setHistories] = useState<Array<ISoulHistoryItem>>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
 
   const fetchData = async (p?: number) => {
     try {
+      setLoading(true);
       const page = p || Math.floor(histories.length / LIMIT_PAGE) + 1;
       const res = await getSoulHistories({
         page,
