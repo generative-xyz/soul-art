@@ -1,4 +1,4 @@
-import { Feature, FeatureStatus } from '@/constants/feature';
+import { Feature, FeatureStatus, FeatureThumbnail } from '@/constants/feature';
 import { AssetsContext } from '@/contexts/assets-context';
 import { formatEthPrice } from '@/utils/format';
 import BigNumber from 'bignumber.js';
@@ -14,6 +14,7 @@ type Props = {
     holdTime?: number;
   };
   isOwner?: boolean;
+  index: number;
 };
 
 const FeatureInfo = ({
@@ -22,6 +23,7 @@ const FeatureInfo = ({
   status,
   levelUnlock,
   isOwner = false,
+  index,
 }: Props) => {
   const { gmBalance, gmDepositBalance } = useContext(AssetsContext);
 
@@ -55,10 +57,7 @@ const FeatureInfo = ({
   return (
     <div className={s.wrapper}>
       <div className={s.feature_thumbnail_wrapper}>
-        <img
-          src="https://cdn.dev.generative.xyz/capture/dapp-1687761463373198532-1687761486.png"
-          alt={`Thumbnail of ${feat}`}
-        />
+        <img src={FeatureThumbnail[index]} alt={`Thumbnail of ${feat}`} />
       </div>
       <div className={s.feature_info}>
         <p>{Feature[feat as keyof typeof Feature]}</p>

@@ -6,7 +6,7 @@ import { CDN_URL } from '@/configs';
 import { AssetsContext } from '@/contexts/assets-context';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/constants/route-path';
-import { Feature } from '@/constants/feature';
+import { Feature, FeatureThumbnail } from '@/constants/feature';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { getIsAuthenticatedSelector } from '@/state/user/selector';
@@ -68,7 +68,7 @@ const FeatureAlert = () => {
                   <div className={s.content_wrapper}>
                     <div className={s.thumbnail_wrapper}>
                       <img
-                        src="https://cdn.dev.generative.xyz/capture/dapp-1687761463373198532-1687761486.png"
+                        src={FeatureThumbnail[featIndex]}
                         alt={`Thumbnail of feature`}
                       />
                     </div>

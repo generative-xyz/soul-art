@@ -82,6 +82,7 @@ const TabFeatures = ({
                 feat={feat}
                 tokenBlocksExist={tokenBlocksExist}
                 status={featuresStatus[index]}
+                index={index}
                 levelUnlock={{
                   balance: unlockConditions?.balances[index],
                   holdTime: unlockConditions?.holdTimes[index],
