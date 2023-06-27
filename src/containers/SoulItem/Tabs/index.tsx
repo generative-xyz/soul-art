@@ -9,7 +9,6 @@ import s from './style.module.scss';
 import { AuctionContext } from '@/contexts/auction-context';
 import { AuctionStatus } from '@/enums/soul';
 import TabHistory from './TabHistory';
-// import TabHistory from './TabHistory';
 
 const TabsComponent = ({
   data,
