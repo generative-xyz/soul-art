@@ -1,68 +1,61 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import s from './FeatureAlert.module.scss';
-import Button from '@/components/Button';
-import IconSVG from '@/components/IconSVG';
-import { CDN_URL } from '@/configs';
-import { AssetsContext } from '@/contexts/assets-context';
-import { useRouter } from 'next/router';
-import { ROUTE_PATH } from '@/constants/route-path';
-import { Feature, FeatureThumbnail } from '@/constants/feature';
+import { getIsAuthenticatedSelector } from '@/state/user/selector';
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { getIsAuthenticatedSelector } from '@/state/user/selector';
+import s from './FeatureAlert.module.scss';
 
 const FeatureAlert = () => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
-  const [featureList, setFeatureList] = useState<number[]>([
-    0, 1, 2, 3, 4, 5, 6, 7,
-  ]);
+  // const [featureList, setFeatureList] = useState<number[]>([
+  //   0, 1, 2, 3, 4, 5, 6, 7,
+  // ]);
 
-  const { availableFeatures, ownerTokenId } = useContext(AssetsContext);
+  // const { availableFeatures, ownerTokenId } = useContext(AssetsContext);
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  const goToTokenPage = useCallback(() => {
-    router.push(`${ROUTE_PATH.HOME}/${ownerTokenId}?tab=feat`);
-  }, [ownerTokenId, router]);
+  // const goToTokenPage = useCallback(() => {
+  //   router.push(`${ROUTE_PATH.HOME}/${ownerTokenId}?tab=feat`);
+  // }, [ownerTokenId, router]);
 
-  const getFeatureByIndex = (index: number): Feature | undefined => {
-    const featureValues = Object.values(Feature);
-    const feature = featureValues[index];
-    return feature as Feature | undefined;
-  };
+  // const getFeatureByIndex = (index: number): Feature | undefined => {
+  //   const featureValues = Object.values(Feature);
+  //   const feature = featureValues[index];
+  //   return feature as Feature | undefined;
+  // };
 
-  const handleCloseAlert = useCallback(
-    (t: { id: string | undefined }, id: number) => {
-      if (!availableFeatures) return;
+  // const handleCloseAlert = useCallback(
+  //   (t: { id: string | undefined }, id: number) => {
+  //     if (!availableFeatures) return;
 
-      toast.remove(t.id);
-      const closedAlert = JSON.parse(
-        localStorage.getItem('closed_alert') || '[]'
-      );
+  //     toast.remove(t.id);
+  //     const closedAlert = JSON.parse(
+  //       localStorage.getItem('closed_alert') || '[]'
+  //     );
 
-      const updatedClosedAlert = [...closedAlert, id];
+  //     const updatedClosedAlert = [...closedAlert, id];
 
-      localStorage.setItem('closed_alert', JSON.stringify(updatedClosedAlert));
+  //     localStorage.setItem('closed_alert', JSON.stringify(updatedClosedAlert));
 
-      // filter availableFeatures by closedAlert
-    },
-    [availableFeatures]
-  );
+  //     // filter availableFeatures by closedAlert
+  //   },
+  //   [availableFeatures]
+  // );
 
-  useEffect(() => {
-    // if (availableFeatures && availableFeatures.length > 0) {
-    //   const closedAlert = JSON.parse(
-    //     localStorage.getItem('closed_alert') || '[]'
-    //   );
-    //   const updatedAvailableFeatures = availableFeatures.filter(
-    //     (feat: number) => {
-    //       return !closedAlert.includes(feat);
-    //     }
-    //   );
-    //   setFeatureList(updatedAvailableFeatures);
-    // }
-    setFeatureList([0, 1, 2, 3, 4, 5, 6, 7]);
-  }, [availableFeatures]);
+  // useEffect(() => {
+  //   if (availableFeatures && availableFeatures.length > 0) {
+  //     const closedAlert = JSON.parse(
+  //       localStorage.getItem('closed_alert') || '[]'
+  //     );
+  //     const updatedAvailableFeatures = availableFeatures.filter(
+  //       (feat: number) => {
+  //         return !closedAlert.includes(feat);
+  //       }
+  //     );
+  //     setFeatureList(updatedAvailableFeatures);
+  //   }
+  //   // setFeatureList([0, 1, 2, 3, 4, 5, 6, 7]);
+  // }, [availableFeatures]);
 
   useEffect(() => {
     if (!isAuthenticated) toast.dismiss();
@@ -70,7 +63,7 @@ const FeatureAlert = () => {
 
   return (
     <div className={s.wrapper}>
-      {isAuthenticated &&
+      {/* {isAuthenticated &&
         featureList &&
         featureList.length > 0 &&
         featureList.map(
@@ -160,7 +153,7 @@ const FeatureAlert = () => {
           //     </Button>
           //   </div>
           // )
-        )}
+        )} */}
     </div>
   );
 };
