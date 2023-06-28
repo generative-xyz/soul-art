@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import s from './FeatureAlert.module.scss';
 import Button from '@/components/Button';
 import IconSVG from '@/components/IconSVG';
@@ -13,14 +13,13 @@ import { getIsAuthenticatedSelector } from '@/state/user/selector';
 
 const FeatureAlert = () => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
+  const [featureList, setFeatureList] = useState<number[]>([
+    0, 1, 2, 3, 4, 5, 6, 7,
+  ]);
 
-  const { ownerTokenId } = useContext(AssetsContext);
+  const { availableFeatures, ownerTokenId } = useContext(AssetsContext);
 
   const router = useRouter();
-
-  const availableFeatures = JSON.parse(
-    sessionStorage.getItem('availableFeatures') || '[]'
-  );
 
   const goToTokenPage = useCallback(() => {
     router.push(`${ROUTE_PATH.HOME}/${ownerTokenId}?tab=feat`);
@@ -32,6 +31,39 @@ const FeatureAlert = () => {
     return feature as Feature | undefined;
   };
 
+  const handleCloseAlert = useCallback(
+    (t: { id: string | undefined }, id: number) => {
+      if (!availableFeatures) return;
+
+      toast.remove(t.id);
+      const closedAlert = JSON.parse(
+        localStorage.getItem('closed_alert') || '[]'
+      );
+
+      const updatedClosedAlert = [...closedAlert, id];
+
+      localStorage.setItem('closed_alert', JSON.stringify(updatedClosedAlert));
+
+      // filter availableFeatures by closedAlert
+    },
+    [availableFeatures]
+  );
+
+  useEffect(() => {
+    // if (availableFeatures && availableFeatures.length > 0) {
+    //   const closedAlert = JSON.parse(
+    //     localStorage.getItem('closed_alert') || '[]'
+    //   );
+    //   const updatedAvailableFeatures = availableFeatures.filter(
+    //     (feat: number) => {
+    //       return !closedAlert.includes(feat);
+    //     }
+    //   );
+    //   setFeatureList(updatedAvailableFeatures);
+    // }
+    setFeatureList([0, 1, 2, 3, 4, 5, 6, 7]);
+  }, [availableFeatures]);
+
   useEffect(() => {
     if (!isAuthenticated) toast.dismiss();
   }, [isAuthenticated]);
@@ -39,9 +71,9 @@ const FeatureAlert = () => {
   return (
     <div className={s.wrapper}>
       {isAuthenticated &&
-        availableFeatures &&
-        availableFeatures.length > 0 &&
-        availableFeatures.map(
+        featureList &&
+        featureList.length > 0 &&
+        featureList.map(
           (featIndex: number) => {
             toast(
               t => (
@@ -51,19 +83,7 @@ const FeatureAlert = () => {
                     maxWidth={'13'}
                     maxHeight={'13'}
                     className={s.close_btn}
-                    onClick={() => {
-                      toast.remove(t.id);
-                      const updatedFeatures = availableFeatures.filter(
-                        (f: number) => {
-                          if (f !== featIndex) return f;
-                          else return null;
-                        }
-                      );
-                      sessionStorage.setItem(
-                        'availableFeatures',
-                        JSON.stringify(updatedFeatures)
-                      );
-                    }}
+                    onClick={() => handleCloseAlert(t, featIndex)}
                   />
                   <div className={s.content_wrapper}>
                     <div className={s.thumbnail_wrapper}>
@@ -94,12 +114,14 @@ const FeatureAlert = () => {
                 id: `unlock-alert-${featIndex}`,
                 position: 'bottom-right',
                 duration: Infinity,
+
                 style: {
                   background: '#fff',
                   boxShadow: '0px 0px 24px -6px rgba(0, 0, 0, 0.16)',
                   borderRadius: '8px',
                   padding: '20px',
                   minWidth: '400px',
+                  transform: 'translateY(0px)',
                 },
               }
             );

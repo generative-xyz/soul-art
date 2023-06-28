@@ -63,6 +63,7 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
     }
     await connector.resetState();
     clearAuthStorage();
+    localStorage.removeItem('closed_alert');
     dispatch(resetUser());
   }, [connector, dispatch, user]);
 

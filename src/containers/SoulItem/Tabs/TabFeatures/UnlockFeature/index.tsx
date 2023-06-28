@@ -42,7 +42,7 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
     if (!transaction || !account) return;
     const txHash = transaction.hash;
     if (!txHash) return;
-    const storageKey = toStorageKey(operationName, `${tokenId}_${account}`);
+    const storageKey = toStorageKey(operationName, `${feat}_${account}`);
     localStorage.setItem(storageKey, txHash);
   };
 
@@ -77,9 +77,9 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
 
   useEffect(() => {
     if (!user?.walletAddress || !provider) return;
-    const key = toStorageKey(operationName, `${tokenId}_${user.walletAddress}`);
+    const key = toStorageKey(operationName, `${feat}_${user.walletAddress}`);
     const txHash = localStorage.getItem(key);
-    if (!txHash) return;
+    if (!txHash || !key.includes(feat)) return;
 
     setInscribing(true);
     let intervalId: NodeJS.Timer | null = null;

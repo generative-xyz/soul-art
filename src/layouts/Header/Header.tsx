@@ -24,6 +24,7 @@ import { useRouter } from 'next/router';
 import {
   HTMLAttributes,
   forwardRef,
+  memo,
   useContext,
   useEffect,
   useState,
@@ -179,8 +180,9 @@ const Header = ({
   const ContentHeader = (): JSX.Element => {
     return (
       <div
-        className={`content-header d-flex justify-content-between align-items-center w-100 ${homepage ? 'dark' : ''
-          }`}
+        className={`content-header d-flex justify-content-between align-items-center w-100 ${
+          homepage ? 'dark' : ''
+        }`}
       >
         <div className={headerStyles.nav_container}>
           {NAV_CONTENT.map(({ title, url }) => {
@@ -300,8 +302,9 @@ const Header = ({
                           id={'warning-gm'}
                           placement="left"
                           show={!eligibleOwner}
-                          className={`${headerStyles.tooltip_body} ${!eligibleOwner ? '' : 'd-none'
-                            }`}
+                          className={`${headerStyles.tooltip_body} ${
+                            !eligibleOwner ? '' : 'd-none'
+                          }`}
                         >
                           <div className={headerStyles.tooltip_content}>
                             <p>You are not owning over 1GM</p>
@@ -434,4 +437,4 @@ const Header = ({
   );
 };
 
-export default Header;
+export default memo(Header);

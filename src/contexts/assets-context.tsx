@@ -268,7 +268,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   useAsyncEffect(async () => {
     if (!isAuthenticated || !user?.walletAddress || !ownerTokenId) {
       setAvailableFeatures(null);
-      sessionStorage.removeItem('availableFeatures');
+      // localStorage.removeItem('feature_available');
       return;
     }
 
@@ -293,10 +293,10 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       );
 
       setAvailableFeatures(featureAvailableIndex);
-      sessionStorage.setItem(
-        'availableFeatures',
-        JSON.stringify(featureAvailableIndex)
-      );
+      // localStorage.setItem(
+      //   'feature_available',
+      //   JSON.stringify(featureAvailableIndex)
+      // );
     }
   }, [isAuthenticated, ownerTokenId, user?.walletAddress]);
 
