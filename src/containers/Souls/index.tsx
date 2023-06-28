@@ -9,7 +9,7 @@ import { IAttribute } from '@/interfaces/attributes';
 import logger from '@/services/logger';
 import { getCollectionNFTList } from '@/services/marketplace';
 import { getSoulAttributes } from '@/services/soul';
-import { debounce, pick } from 'lodash';
+import _, { debounce, pick } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -142,7 +142,7 @@ export const SoulsContainer: React.FC = () => {
     );
   }
 
-  if (souls && souls.length === 0 && !router.query) {
+  if (souls && souls.length === 0 && _.isEmpty(router.query)) {
     return (
       <div className={s.emptyWrapper}>
         <div className={s.empty}>
