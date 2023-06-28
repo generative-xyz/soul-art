@@ -4,7 +4,6 @@ export const ROUTE_PATH = {
   CONNECT_WALLET: '/souls/connect-wallet',
   CLAIM: '/souls/adopt',
   ART: '/souls/art',
-  DEMO: '/souls/demo',
   FAQS: '/souls/faqs',
   STATUS: '/souls/adopt-status',
 };
