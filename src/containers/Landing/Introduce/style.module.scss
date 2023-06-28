@@ -22,8 +22,12 @@
           color: #fff;
         }
 
+        .introduceBox-subTitle {
+          width: 110%;
+        }
+
         h1 {
-          margin-bottom: rem(12px) !important;
+          margin-bottom: rem(16px) !important;
         }
 
         .introduceBox-desc-wrapper {
@@ -42,8 +46,7 @@
             margin-bottom: rem(40px);
           }
 
-          .introduceBox-desc {
-          }
+          .introduceBox-desc {}
         }
 
         .introduceBox-buttons {
