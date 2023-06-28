@@ -1,4 +1,3 @@
-import { ITokenDetail } from "@/interfaces/api/marketplace";
 import React, { useContext, useEffect, useState } from "react";
 import s from './styles.module.scss';
 import Button from "@/components/Button";
@@ -12,12 +11,16 @@ import { sleep, toStorageKey } from "@/utils";
 import useContractOperation from "@/hooks/contract-operations/useContractOperation";
 import useSettleAuction from "@/hooks/contract-operations/soul/useSettleAuction";
 import { AuctionContext } from "@/contexts/auction-context";
+import { TC_URL } from "@/configs";
+import cs from 'classnames';
 
 interface IProps {
-  data: ITokenDetail;
+  tokenId: string;
+  title?: string;
+  className?: string;
 }
 
-const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
+const SettleAuctionButton: React.FC<IProps> = ({ tokenId, title = 'Settle auction', className }: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
   const [processing, setProcessing] = useState(false);
   const [inscribing, setInscribing] = useState(false);
@@ -33,19 +36,28 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
 
   const onTxSuccessCallback = async (tx: Transaction | null): Promise<void> => {
     if (!tx || !user?.walletAddress) return;
-    const key = toStorageKey(operationName, user.walletAddress);
+    const key = toStorageKey(operationName, `${tokenId}_${user.walletAddress}`);
     const txHash = tx.hash;
     if (!txHash) return;
     localStorage.setItem(key, txHash);
   }
 
-  const handleStartAuction = async () => {
+  const handleSettleAuction = async () => {
     if (processing) return;
+
+    if (inscribing) {
+      showToastError({
+        message: 'Please go to Wallet check your transaction status.',
+        url: TC_URL,
+        linkText: 'Go to wallet',
+      })
+      return;
+    }
 
     try {
       setProcessing(true);
       await createAuction({
-        tokenId: Number(data.tokenId),
+        tokenId: Number(tokenId),
         txSuccessCallback: onTxSuccessCallback
       });
     } catch (err: unknown) {
@@ -61,7 +73,7 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
   useEffect(() => {
     if (!user?.walletAddress || !provider) return;
 
-    const key = toStorageKey(operationName, user.walletAddress);
+    const key = toStorageKey(operationName, `${tokenId}_${user.walletAddress}`);
     const txHash = localStorage.getItem(key);
 
     if (!txHash) return;
@@ -76,8 +88,8 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
           txHash
         );
 
-        if (receipt.status === 1) {
-          logger.info('tx done');
+        if (receipt?.status === 1 || receipt?.status === 0) {
+          logger.info('tx done', key);
           localStorage.removeItem(key);
           intervalId && clearInterval(intervalId);
           await sleep(60000);
@@ -102,11 +114,14 @@ const SettleAuctionButton: React.FC<IProps> = ({ data }: IProps): React.ReactEle
 
   return (
     <Button
-      disabled={processing || inscribing}
-      className={s.startAuctionButton}
-      onClick={handleStartAuction}
+      disabled={processing}
+      className={cs(s.startAuctionButton, className)}
+      onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        handleSettleAuction();
+      }}
     >
-      {(processing || inscribing) ? 'Processing...' : 'Settle auction'}
+      {(processing || inscribing) ? 'Processing...' : title}
     </Button>
   )
 }

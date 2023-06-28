@@ -1,12 +1,13 @@
 import { shortenAddress } from '@/utils';
 import soulsCardStyles from './soulscard.module.scss';
-
 import Link from 'next/link';
 import Card from 'react-bootstrap/Card';
 import { jsNumberForAddress } from 'react-jazzicon';
 import Jazzicon from 'react-jazzicon/dist/Jazzicon';
+import { useSelector } from 'react-redux';
+import { getUserSelector } from '@/state/user/selector';
 
-export interface INFTCard {
+export interface IProps {
   href: string;
   image?: string;
   thumbnail?: string;
@@ -16,7 +17,9 @@ export interface INFTCard {
   ownerAddr?: string;
 }
 
-const NFTCard = ({ href, image, className, ownerAddr, title }: INFTCard) => {
+const NFTCard: React.FC<IProps> = ({ href, image, className, ownerAddr, title }: IProps): React.ReactElement => {
+  const user = useSelector(getUserSelector);
+
   return (
     <Card className={className}>
       <Card.Link href={href} as={Link} className={soulsCardStyles.card_link}>
@@ -53,7 +56,7 @@ const NFTCard = ({ href, image, className, ownerAddr, title }: INFTCard) => {
                     />
                   </div>
                   <div className={soulsCardStyles.address}>
-                    {shortenAddress(ownerAddr)}
+                    {user?.walletAddress?.toLowerCase() === ownerAddr.toLowerCase() ? 'You' : shortenAddress(ownerAddr)}
                   </div>
                 </>
               )}

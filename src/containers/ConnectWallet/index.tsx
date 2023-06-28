@@ -10,11 +10,7 @@ import { CDN_URL } from '@/configs';
 import logger from '@/services/logger';
 
 const ConnectWallet: React.FC = (): React.ReactElement => {
-  const {
-    onConnect,
-    requestBtcAddress,
-    onDisconnect
-  } =
+  const { onConnect, requestBtcAddress, onDisconnect } =
     useContext(WalletContext);
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const router = useRouter();
@@ -38,9 +34,10 @@ const ConnectWallet: React.FC = (): React.ReactElement => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push(ROUTE_PATH.HOME);
+      const lastRoute = localStorage.getItem('route');
+      router.push(lastRoute || ROUTE_PATH.HOME);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated]);
 
   return (
     <Wrapper>

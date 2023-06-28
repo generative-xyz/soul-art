@@ -54,6 +54,7 @@ const useCheckFeatureStatus: ContractOperationHook<
 
         return featureStatus;
       }
+
       return null;
     },
     [contract, provider]

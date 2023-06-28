@@ -14,8 +14,7 @@ export const getAuctionDetail = async (params: IGetAuctionDetailParams): Promise
 }
 
 export const getBidderList = async (params: IGetBidderListParams): Promise<IGetBidderListResponse> => {
-  const { dbAuctionId, ...rest } = params;
-  const qs = queryString.stringify(rest);
-  const res = await apiClient.get(`${API_PATH}/list-bid/${dbAuctionId}?${qs}`);
+  const qs = queryString.stringify(params);
+  const res = await apiClient.get(`${API_PATH}/list-bid?${qs}`);
   return Object(camelCaseKeys(res));
 }

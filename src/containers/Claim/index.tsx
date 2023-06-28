@@ -79,13 +79,13 @@ const ClaimPage: React.FC = (): React.ReactElement => {
       try {
         const receipt = await provider.getTransactionReceipt(transactionHash);
 
-        if (receipt.status === 1) {
+        if (receipt?.status === 1) {
           setIsClaimed(true);
           setClaimStatus('success');
-        } else if (receipt.status === 0) {
+        } else if (receipt?.status === 0) {
           setIsClaimed(false);
           setClaimStatus('idle');
-        } else if (receipt.status === null || receipt.status === undefined) {
+        } else if (receipt?.status === null || receipt?.status === undefined) {
           setIsClaimed(true);
           setClaimStatus('waiting');
         } else {

@@ -2,13 +2,14 @@
   max-height: rem(500px);
   overflow-y: auto;
   overflow-x: hidden;
+  margin-top: rem(20px);
 }
 
 .tabLiveItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: rem(20px);
+  margin-bottom: rem(20px);
 
   &:hover {
     text-decoration: none;
@@ -29,6 +30,16 @@
   font-size: rem(16px);
   line-height: 1.4;
   color: #000;
+}
+
+.currentUserTag {
+  padding: rem(2px) rem(8px);
+  border-radius: 100px;
+  background: rgba(10, 198, 129, 0.2);
+  color: #0ac681;
+  font-size: rem(14px);
+  font-weight: 500;
+  line-height: 140%;
 }
 
 .tabLiveRight {

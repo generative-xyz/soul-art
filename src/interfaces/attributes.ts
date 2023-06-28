@@ -6,4 +6,5 @@ interface ITraitValuesStat {
 export interface IAttribute {
   traitName: string;
   traitValuesStat: ITraitValuesStat[];
+  percent: number;
 }

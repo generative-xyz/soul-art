@@ -56,3 +56,17 @@
     }
   }
 }
+
+.alert_dots {
+  width: rem(8px);
+  height: rem(8px);
+  border-radius: 50%;
+  background-color: #ff4747;
+  display: inline-block;
+  margin-left: rem(2px);
+  transform: translateY(-0.5px);
+  // position: absolute;
+  // right: 0;
+  // top: 50%;
+  // transform: translate(calc(100% + rem(4px)), -50%);
+}

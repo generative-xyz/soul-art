@@ -1,5 +1,8 @@
 import dayjs from 'dayjs';
 import isNumber from 'lodash/isNumber';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 const FORMAT_PATTERN = 'DD MMM hh:mm A';
 
@@ -8,8 +11,9 @@ interface IFormatDate {
   formatPattern?: string;
 }
 
-export const formatDateTime = ({ dateTime, formatPattern = FORMAT_PATTERN }: IFormatDate) =>
-  dayjs(dateTime).format(formatPattern);
+export const formatDateTime = ({ dateTime, formatPattern = FORMAT_PATTERN }: IFormatDate) => {
+  return dayjs(dateTime).utc().format(formatPattern);
+}
 
 export const formatTimeStamp = (timestamp: number) => new Date(timestamp).toISOString().replace('T', ' ').replace('.000Z', '');
 

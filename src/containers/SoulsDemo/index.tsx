@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import soulsStyles from './souls.module.scss';
 
-const LIMIT_PAGE = 32;
+const LIMIT_PAGE = 20;
 
 export const SoulsContainer: React.FC = () => {
   const router = useRouter();

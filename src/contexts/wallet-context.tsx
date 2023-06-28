@@ -63,6 +63,7 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
     }
     await connector.resetState();
     clearAuthStorage();
+    localStorage.removeItem('closed_alert');
     dispatch(resetUser());
   }, [connector, dispatch, user]);
 
@@ -169,7 +170,8 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
     if (tpAddress) {
       dispatch(updateTaprootWallet(tpAddress));
       bitcoinStorage.setUserTaprootAddress(tcAddress, tpAddress);
-      router.push(ROUTE_PATH.CLAIM);
+      const lastRoute = localStorage.getItem('route');
+      router.push(lastRoute || ROUTE_PATH.HOME);
     }
   }, [router, dispatch]);
 

@@ -1,17 +1,17 @@
-import Head from 'next/head';
-import type { AppProps } from 'next/app';
-import { SEO_TITLE, SEO_DESCRIPTION, SEO_IMAGE } from '@/constants/seo';
-import Web3Provider from '@/components/Web3Provider';
-import { Provider } from 'react-redux';
-import { WalletProvider } from '@/contexts/wallet-context';
-import { AssetsProvider } from '@/contexts/assets-context';
-import ThemeProvider, { ThemedGlobalStyle } from '@/theme/theme';
-import store from '@/state';
-import { Toaster } from 'react-hot-toast';
 import ClientOnly from '@/components/Utils/ClientOnly';
+import Web3Provider from '@/components/Web3Provider';
 import { CDN_URL } from '@/configs';
-import NextNprogress from 'nextjs-progressbar';
+import { SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE } from '@/constants/seo';
+import { AssetsProvider } from '@/contexts/assets-context';
+import { WalletProvider } from '@/contexts/wallet-context';
+import store from '@/state';
 import '@/styles/index.scss';
+import ThemeProvider, { ThemedGlobalStyle } from '@/theme/theme';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import NextNprogress from 'nextjs-progressbar';
+import { Toaster } from 'react-hot-toast';
+import { Provider } from 'react-redux';
 
 export default function App({ Component, pageProps }: AppProps) {
   const { seoInfo = {} } = pageProps;

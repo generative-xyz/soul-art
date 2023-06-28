@@ -24,6 +24,7 @@ import { useRouter } from 'next/router';
 import {
   HTMLAttributes,
   forwardRef,
+  memo,
   useContext,
   useEffect,
   useState,
@@ -65,10 +66,14 @@ const NAV_CONTENT: NavContent[] = [
     title: 'Story',
     url: ROUTE_PATH.HOME,
   },
-  // {
-  //   title: 'Art',
-  //   url: ROUTE_PATH.ART,
-  // },
+  {
+    title: 'Art',
+    url: ROUTE_PATH.ART,
+  },
+  {
+    title: 'Adopt status',
+    url: ROUTE_PATH.STATUS,
+  },
   {
     title: 'FAQs',
     url: ROUTE_PATH.FAQS,
@@ -169,7 +174,7 @@ const Header = ({
   };
 
   useEffect(() => {
-    setEligibleOwner(parseFloat(gmBalance) > 1);
+    setEligibleOwner(Number(formatEthPrice(gmBalance)) >= 1);
   }, [gmBalance]);
 
   const ContentHeader = (): JSX.Element => {
@@ -363,15 +368,6 @@ const Header = ({
                       }
                       className={headerStyles.menu_box}
                     >
-                      <IconSVG src={`${CDN_URL}/profile.svg`} maxWidth="16" />
-                      <p>Profile</p>
-                    </div>
-                    <div
-                      onClick={() =>
-                        window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
-                      }
-                      className={headerStyles.menu_box}
-                    >
                       <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
                       <p>Wallet</p>
                     </div>
@@ -441,4 +437,4 @@ const Header = ({
   );
 };
 
-export default Header;
+export default memo(Header);

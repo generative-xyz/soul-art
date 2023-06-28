@@ -10,12 +10,31 @@ export interface IAuction {
   dbAuctionId: string;
 }
 
-export interface IAuctionBidder {
+export interface IAuctionBid {
   amount: string;
   sender: string;
-  avatar: string;
-  name: string;
+  bidderAvatar: string;
+  bidderName: string;
+  blockNumber: string;
   time: string;
+  imageCapture: string;
+  owner: string;
+  ranking: number;
+  tokenId: string;
+  attributes: Array<{
+    percent: number;
+    traitType: string;
+  }>;
+  auction: {
+    auctionId: string;
+    createdAt: string;
+    startTimeBlock: string;
+    endTimeBlock: string;
+    id: string;
+    status: AuctionStatus;
+    totalAmount: string;
+    winner: string;
+  };
 }
 
 export interface IGetAuctionDetailParams {
@@ -23,10 +42,11 @@ export interface IGetAuctionDetailParams {
 }
 
 export interface IGetBidderListParams extends IPagingParams {
-  dbAuctionId: string;
+  dbAuctionID?: string;
+  owner?: string;
 }
 
 export interface IGetBidderListResponse {
-  items: Array<IAuctionBidder>;
+  items: Array<IAuctionBid>;
   total: number;
 }

@@ -83,7 +83,7 @@ const useUnlockFeature: ContractOperationHook<
 
       return null;
     },
-    [account, provider, contract]
+    [account, provider, contract, btcBalance, feeRate, estimateGas]
   );
 
   return {

@@ -1,0 +1,97 @@
+.tabHistory {
+  margin: rem(20px) 0;
+  height: calc(80vh - 202px);
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .historyTableData {
+    table {
+      border-collapse: separate;
+      border-spacing: 0 rem(12px);
+
+      th,
+      td {
+        padding: rem(8px) rem(16px);
+      }
+
+      thead {
+        th {
+          color: #000 !important;
+          font-size: rem(12px) !important;
+          line-height: 140% !important;
+          opacity: 0.6;
+          font-weight: 400 !important;
+          white-space: nowrap;
+        }
+      }
+
+      tbody {
+        tr {
+          border: 1px solid #ececec;
+          background: #fff;
+          box-shadow: 0px 0px 16px -6px rgba(0, 0, 0, 0.08);
+
+          td {
+            border-top: 1px solid #ececec;
+            border-bottom: 1px solid #ececec;
+            cursor: pointer;
+            transition: 0.2s all ease;
+
+            &:first-child {
+              border-left: 1px solid #ececec;
+            }
+
+            &:last-child {
+              border-right: 1px solid #ececec;
+            }
+          }
+
+          &:hover {
+            td {
+              border-top: 1px solid #000;
+              border-bottom: 1px solid #000;
+
+              &:first-child {
+                border-left: 1px solid #000;
+              }
+
+              &:last-child {
+                border-right: 1px solid #000;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .thumbnailImg {
+      width: rem(40px);
+      height: rem(40px);
+      object-fit: contain;
+    }
+
+    .dataSubText {
+      font-size: rem(10px);
+      line-height: 140%;
+      color: #898989;
+    }
+
+    .dataText {
+      font-size: rem(12px);
+      line-height: 140%;
+      color: #000;
+    }
+
+    .ownerWrapper {
+      display: flex;
+      gap: rem(8px);
+      align-items: center;
+
+      &:hover {
+        .ownerAddress {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
