@@ -17,7 +17,13 @@ export interface IProps {
   ownerAddr?: string;
 }
 
-const NFTCard: React.FC<IProps> = ({ href, image, className, ownerAddr, title }: IProps): React.ReactElement => {
+const NFTCard: React.FC<IProps> = ({
+  href,
+  image,
+  className,
+  ownerAddr,
+  title,
+}: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
 
   return (
@@ -31,19 +37,6 @@ const NFTCard: React.FC<IProps> = ({ href, image, className, ownerAddr, title }:
           />
         </div>
         <Card.Body className={soulsCardStyles.card_body}>
-          {/* <Card.Text className={soulsCardStyles.card_label}>
-            Highest bid
-          </Card.Text> */}
-          {/* <div
-            className={cs(
-              'd-flex justify-content-between align-items-center',
-              soulsCardStyles.card_body__content
-            )}
-          >
-            <Card.Text>1.5 BTC</Card.Text>
-
-            <Card.Text>2d : 16h : 12m</Card.Text>
-          </div> */}
           <div className={soulsCardStyles.hoverInfo}>
             <p>{title}</p>
             <div className={soulsCardStyles.owner}>
@@ -56,7 +49,10 @@ const NFTCard: React.FC<IProps> = ({ href, image, className, ownerAddr, title }:
                     />
                   </div>
                   <div className={soulsCardStyles.address}>
-                    {user?.walletAddress?.toLowerCase() === ownerAddr.toLowerCase() ? 'You' : shortenAddress(ownerAddr)}
+                    {user?.walletAddress?.toLowerCase() ===
+                    ownerAddr.toLowerCase()
+                      ? 'You'
+                      : shortenAddress(ownerAddr)}
                   </div>
                 </>
               )}

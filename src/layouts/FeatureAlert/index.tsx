@@ -14,14 +14,16 @@ import { ROUTE_PATH } from '@/constants/route-path';
 const FeatureAlert = () => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const [featureList, setFeatureList] = useState<number[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const { availableFeatures, ownerTokenId } = useContext(AssetsContext);
 
   const router = useRouter();
 
   const goToTokenPage = useCallback(() => {
-    router.push({ pathname: `${ROUTE_PATH.HOME}/${ownerTokenId}` }, undefined, {shallow: false});
+    router.push({ pathname: `${ROUTE_PATH.HOME}/${ownerTokenId}` }, undefined, {
+      shallow: false,
+    });
   }, [ownerTokenId, router]);
 
   const getFeatureByIndex = (index: number): Feature | undefined => {
@@ -32,7 +34,7 @@ const FeatureAlert = () => {
 
   const handleCloseAlert = useCallback(
     (t: { id: string | undefined }, id: number) => {
-      if (!featureList || !currentIndex) return;
+      if (!featureList) return;
 
       toast.dismiss(t.id);
       const closedAlert = JSON.parse(
@@ -44,11 +46,10 @@ const FeatureAlert = () => {
       localStorage.setItem('closed_alert', JSON.stringify(updatedClosedAlert));
 
       setCurrentIndex(prev => {
-        if (!prev) return null;
         return prev + 1;
       });
     },
-    [featureList, currentIndex]
+    [featureList]
   );
 
   useEffect(() => {
