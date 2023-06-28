@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { getUserSelector } from '@/state/user/selector';
 import { formatEthPrice } from '@/utils/format';
 import ImageWrapper from '@/components/ImageWrapper';
+import { TC_EXPLORER_URL } from '@/configs';
 
 const LIMIT_PAGE = 20;
 
@@ -63,6 +64,11 @@ const TabHistories: React.FC<IProps> = ({ data }: IProps): React.ReactElement =>
       const featureName = Feature[item.featureName as keyof typeof Feature];
       return {
         id: index.toString(),
+        config: {
+          onClick: () => {
+            window.open(`${TC_EXPLORER_URL}/tx/${item.txHash}`, '_blank', 'noopener,noreferrer');
+          }
+        },
         render: {
           thumbnail: (
             <div className={s.thumbnailWrapper}>
@@ -86,7 +92,13 @@ const TabHistories: React.FC<IProps> = ({ data }: IProps): React.ReactElement =>
             </div>
           ),
           owner: (
-            <div className={s.ownerWrapper}>
+            <div
+              className={s.ownerWrapper}
+              onClick={(e) => {
+                e.stopPropagation()
+                window.open(`${TC_EXPLORER_URL}/address/${item.owner}`, '_blank', 'noopener,noreferrer');
+              }}
+            >
               <Jazzicon diameter={24} seed={jsNumberForAddress(item.owner)} />
               <p className={s.ownerAddress}>{user?.walletAddress?.toLowerCase() === item?.owner?.toLowerCase() ? 'You' : shortenAddress(item.owner)}</p>
             </div >

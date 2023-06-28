@@ -36,6 +36,7 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
   const [selectedBid, setSelectedBid] = useState<IAuctionBid | null>(null);
   const [showBidModal, setShowBidModal] = useState<boolean>(false);
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+  const [hasSoul, setHasSoul] = useState(false);
   const { run: getBalanceOf } = useContractOperation({
     operation: useGetBalanceOf,
     inscribable: false,
@@ -75,6 +76,14 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
 
     try {
       setLoading(true);
+
+      const tokenBalanceBN = await getBalanceOf();
+      if (tokenBalanceBN.isGreaterThan(0)) {
+        setHasSoul(true);
+      } else {
+        setHasSoul(false);
+      }
+
       const page = p || Math.floor(bidders.length / LIMIT_PAGE) + 1;
       const { items, total } = await getBidderList({
         page,
@@ -178,7 +187,7 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
       );
     }
     if (bid?.auction?.status === AuctionStatus.ENDED) {
-      const btnLabel = isWinner ? 'Claim soul' : 'Settle'
+      const btnLabel = (isWinner && !hasSoul) ? 'Claim soul' : 'Settle'
       return (
         <SettleAuctionButton
           className={s.actionBtn}
@@ -186,8 +195,9 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
           tokenId={bid.tokenId} />
       );
     }
+
     if (bid?.auction?.status === AuctionStatus.SETTLED) {
-      const btnLabel = isWinner ? 'Adopted soul' : 'Refunded'
+      const btnLabel = (isWinner && bid?.owner?.toLowerCase() === user?.walletAddress?.toLowerCase()) ? 'Adopted soul' : 'Refunded'
       return (
         <Button
           className={s.actionBtn}

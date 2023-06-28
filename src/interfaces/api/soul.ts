@@ -41,4 +41,5 @@ export interface ISoulHistoryItem {
   featureName: string;
   holdTime: number;
   owner: string;
+  txHash: string;
 }

@@ -45,6 +45,21 @@
               border-right: 1px solid #ececec;
             }
           }
+
+          &:hover {
+            td {
+              border-top: 1px solid #000;
+              border-bottom: 1px solid #000;
+
+              &:first-child {
+                border-left: 1px solid #000;
+              }
+
+              &:last-child {
+                border-right: 1px solid #000;
+              }
+            }
+          }
         }
       }
     }
@@ -71,6 +86,12 @@
       display: flex;
       gap: rem(8px);
       align-items: center;
+
+      &:hover {
+        .ownerAddress {
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

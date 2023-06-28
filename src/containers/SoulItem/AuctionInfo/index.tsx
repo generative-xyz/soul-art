@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import IconSVG from '@/components/IconSVG';
-import { CDN_URL, TC_EXPLORER_URL } from '@/configs';
+import { CDN_URL, SOUL_CONTRACT, TC_EXPLORER_URL } from '@/configs';
 import { ITokenDetail } from '@/interfaces/api/marketplace';
 import { shortenAddress } from '@/utils';
 import { useWeb3React } from '@web3-react/core';
@@ -32,6 +32,10 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
     }
   }, [auction, data]);
 
+  const isAvailable = useMemo(() => {
+    return (!!auction?.available && data.owner.toLowerCase() !== SOUL_CONTRACT.toLowerCase())
+  }, [auction, data]);
+
   return (
     <div className={s.auctionInfo}>
       <p className={s.content_title}>
@@ -51,7 +55,7 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
           <>
             <div className={s.content_warning_iconUser}>
               <Jazzicon diameter={28} seed={jsNumberForAddress(data.owner)} />
-              {!!auction?.available && (
+              {isAvailable && (
                 <div className={s.content_warning_iconWarning}>
                   <IconSVG
                     maxWidth="20"
@@ -60,7 +64,7 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
                 </div>
               )}
             </div>
-            {!!auction?.available ? (
+            {isAvailable ? (
               <div className={s.content_warning_showAddress}>
                 <Link target='_blank' href={`${TC_EXPLORER_URL}/address/${data.owner}`}>
                   {account?.toLowerCase() === data.owner.toLowerCase()
