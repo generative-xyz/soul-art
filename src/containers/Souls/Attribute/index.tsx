@@ -113,7 +113,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
 
   const isOwnerHasSoul = useMemo(() => {
     if (!isAuthenticated) return false;
-    return ownerHasSoul;
+    return !!ownerHasSoul;
   }, [ownerHasSoul, isAuthenticated]);
 
   const goToOwnerSoul = () => {
@@ -189,12 +189,6 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
             >
               Your Soul
             </Button>
-
-            {/* <Button className={attributeStyles.attribute_button}>Adopt</Button> */}
-            {/* <Button className={attributeStyles.attribute_button}>
-    Live auction
-  </Button>
-  <Button className={attributeStyles.attribute_button}>You own</Button> */}
           </div>
         )}
         <div className={attributeStyles.attribute_rightContainer}>

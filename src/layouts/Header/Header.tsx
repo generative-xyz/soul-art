@@ -106,7 +106,7 @@ const Header = ({
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const timeOutRef = useRef<NodeJS.Timer | null>(null)
+  const timeOutRef = useRef<NodeJS.Timer | null>(null);
 
   const handleConnectWallet = async () => {
     try {
@@ -135,7 +135,7 @@ const Header = ({
     if (showTooltip) {
       timeOutRef.current = setTimeout(() => {
         setShowTooltip(false);
-      }, 3000)
+      }, 3000);
     } else {
       if (timeOutRef.current) {
         clearTimeout(timeOutRef.current);
@@ -143,7 +143,7 @@ const Header = ({
       }
       setShowTooltip(true);
     }
-  }
+  };
 
   const renderTokenBlock = (
     title: string,
@@ -199,8 +199,9 @@ const Header = ({
   const ContentHeader = (): JSX.Element => {
     return (
       <div
-        className={`content-header d-flex justify-content-between align-items-center w-100 ${homepage ? 'dark' : ''
-          }`}
+        className={`content-header d-flex justify-content-between align-items-center w-100 ${
+          homepage ? 'dark' : ''
+        }`}
       >
         <div className={s.nav_container}>
           {NAV_CONTENT.map(({ title, url }) => {
@@ -269,10 +270,39 @@ const Header = ({
                       s.profile_auction_wallet_container
                     )}
                   >
-                    <p className={s.profile_auction_wallet}>
-                      Auction Wallet
-                    </p>
-                    <div className={cs(s.profile_amount)}>
+                    <OverlayTrigger
+                      overlay={
+                        <Tooltip
+                          id={'warning-gm'}
+                          className={cs(
+                            s.tooltip_body,
+                            s.auction_wallet_tooltip
+                          )}
+                        >
+                          <div className={s.auction_tooltip_content}>
+                            <p>This wallet is only for Soul adoption.</p>
+                            <p>
+                              Please deposit GM into your adoption wallet to
+                              place a bid.
+                            </p>
+                          </div>
+                        </Tooltip>
+                      }
+                      placement="bottom"
+                    >
+                      <div>
+                        <p className={s.profile_auction_wallet}>
+                          <IconSVG
+                            src={`${CDN_URL}/ic_round-info.svg`}
+                            maxWidth="16"
+                            maxHeight="16"
+                          ></IconSVG>
+                          Adoption Wallet
+                        </p>
+                      </div>
+                    </OverlayTrigger>
+
+                    <div className={cs(s.profile_amount, 'pr-4')}>
                       <span>{`${formatEthPrice(gmDepositBalance)} GM`}</span>
                       <IconSVG
                         src={`${CDN_URL}/ic-add-fill.svg`}
@@ -323,18 +353,23 @@ const Header = ({
                           id={'warning-gm'}
                           placement="left"
                           show={!eligibleOwner}
-                          className={`${s.tooltip_body} ${!eligibleOwner ? '' : 'd-none'
-                            }`}
+                          className={`${s.tooltip_body} ${
+                            !eligibleOwner ? '' : 'd-none'
+                          }`}
                         >
                           <div className={s.tooltip_content}>
                             <p>Your balance is less than 1GM</p>
-                            <p>
-                              Your Soul is looking for a better match...
-                            </p>
+                            <p>Your Soul is looking for a better match...</p>
                             <div className={s.tooltip_action}>
-                              <Link className={s.tooltip_buyMore} href={BUY_GM_URL}>
+                              <Link
+                                className={s.tooltip_buyMore}
+                                href={BUY_GM_URL}
+                              >
                                 <span>Buy GM</span>
-                                <img src={`${CDN_URL}/tooltip-arrow-icon.svg`} alt="arrow-icon" />
+                                <img
+                                  src={`${CDN_URL}/tooltip-arrow-icon.svg`}
+                                  alt="arrow-icon"
+                                />
                               </Link>
                             </div>
                           </div>
@@ -396,10 +431,7 @@ const Header = ({
                       <p>Wallet</p>
                     </div>
                     <div className={s.menu_divider} />
-                    <Button
-                      onClick={onDisconnect}
-                      className={s.menu_box}
-                    >
+                    <Button onClick={onDisconnect} className={s.menu_box}>
                       <IconSVG
                         src={`${CDN_URL}/disconnect.svg`}
                         maxWidth="16"
@@ -432,11 +464,7 @@ const Header = ({
   return (
     <>
       <Wrapper
-        className={classNames(
-          s.header,
-          theme ? s[theme] : '',
-          'dark'
-        )}
+        className={classNames(s.header, theme ? s[theme] : '', 'dark')}
         style={{ height }}
       >
         <div className="container">

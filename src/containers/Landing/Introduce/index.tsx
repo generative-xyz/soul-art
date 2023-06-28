@@ -5,7 +5,7 @@ import cs from 'classnames';
 import ImageFrame from '@/components/ImageFrame';
 import IconSVG from '@/components/IconSVG';
 import HeroModal from './Modal';
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { Col, Container } from 'react-bootstrap';
 import { AnimateContext } from '@/contexts/animate-context';
 import Link from 'next/link';
@@ -15,11 +15,15 @@ import classNames from 'classnames';
 import { modalPlay } from '@Constants/asset';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
+import useTimeComparison from '@/hooks/useTimeComparison';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const { setAudioPlaying, lenis, setIsShowProgress } =
     useContext(AnimateContext);
+  const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
+  const isEventStarted =
+    claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
 
   const handleOpenModal = () => {
     setIsShow(true);
@@ -33,6 +37,19 @@ const Introduce: React.FC = () => {
     setIsShowProgress(true);
     lenis?.start();
   };
+
+  const renderCountdown = useMemo(() => {
+    return (
+      <>
+        {!isEventStarted &&
+          <span className={s.countdown}>
+            <SonarWaveCircle />
+            <CountdownText countDownTo={CLAIM_START_TIME} />
+          </span>
+        }
+      </>
+    )
+  }, [isEventStarted])
 
   return (
     <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>
@@ -102,10 +119,7 @@ const Introduce: React.FC = () => {
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
               <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
                 Adopt a Soul
-                <span className={s.countdown}>
-                  <SonarWaveCircle />
-                  <CountdownText countDownTo={CLAIM_START_TIME} />
-                </span>
+                {renderCountdown}
               </Link>
               <Link
                 href={'https://newbitcoincity.com/gm '}

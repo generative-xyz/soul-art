@@ -1,6 +1,6 @@
 .adoptStatus {
   width: 100%;
-  padding-top: rem(184px);
+  padding-top: rem(20px);
   padding-bottom: rem(120px);
 
   :global(.tab-content) {
@@ -12,61 +12,12 @@
   max-width: rem(1514px);
 }
 
-.tabs {
-  width: 100%;
-
-  li {
-    padding-right: rem(24px);
-
-    @include pcSmall {
-      padding-right: rem(14px);
-    }
-
-    @include pcMid {
-      padding-right: rem(20px);
-    }
-
-    @include pcWide {
-      padding-right: rem(24px);
-    }
-  }
-
-  li > button {
-    position: relative;
-    line-height: 140%;
-    font-size: rem(18px);
-    font-style: medium;
-    color: #898989;
-    text-align: left;
-    padding-left: 0;
-    display: inline;
-    padding: rem(10px) rem(12px);
-  }
-
-  :global(.nav-link) {
-    display: block;
-    border: none;
-    max-width: 100%;
-    position: relative;
-
-    &:hover {
-      color: #1c1c1c;
-    }
-  }
-
-  :global(.nav-link.active) {
-    color: #1c1c1c;
-
-    &::before {
-      content: '';
-      position: absolute;
-      background: #1c1c1c;
-      height: 2px;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-    }
-  }
+.sectionTitle {
+  text-align: center;
+  margin-bottom: rem(32px);
+  font-size: rem(40px);
+  font-weight: 500;
+  line-height: 140%;
 }
 
 .tableData {
@@ -201,8 +152,8 @@
     width: auto;
 
     &:disabled {
-      color: #cecece;
-      background: #ececed;
+      color: #fff;
+      background: #b6b6b6;
     }
   }
 }

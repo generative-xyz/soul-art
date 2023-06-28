@@ -1,6 +1,5 @@
 .art {
   width: 100%;
-  padding-top: rem(120px);
   padding-bottom: rem(120px);
 
   .grid {
@@ -81,4 +80,11 @@
       text-decoration: none;
     }
   }
+}
+
+.loadingWrapper {
+  height: calc(100vh - rem(180px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -107,11 +107,11 @@ const FeatureInfo = ({
         ) : (
           <div className={s.feature_checkpoint}>
             <p>
-              <span>Balance: </span>
+              <span>Required balance: </span>
               {levelUnlock?.balance} GM
             </p>
             <p>
-              <span>Hold time: </span>
+              <span>Life time: </span>
               {levelUnlock?.holdTime} blocks
             </p>
           </div>

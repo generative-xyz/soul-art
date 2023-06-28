@@ -3,10 +3,10 @@ import px2rem from '@/utils/px2rem';
 
 export const Wrapper = styled.div`
   height: 100vh;
-  padding-top: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: ${px2rem(120)};
 
   .mainContent {
     .title {

@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import s from './styles.module.scss';
-import Button from "@/components/Button";
-import logger from "@/services/logger";
-import { showToastError } from "@/utils/toast";
-import { Transaction } from 'ethers';
-import { useSelector } from "react-redux";
-import { getUserSelector } from "@/state/user/selector";
-import { useWeb3React } from "@web3-react/core";
-import { sleep, toStorageKey } from "@/utils";
-import useContractOperation from "@/hooks/contract-operations/useContractOperation";
-import useSettleAuction from "@/hooks/contract-operations/soul/useSettleAuction";
-import { AuctionContext } from "@/contexts/auction-context";
-import { TC_URL } from "@/configs";
+import Button from '@/components/Button';
+import { TC_URL } from '@/configs';
+import { AuctionContext } from '@/contexts/auction-context';
+import useSettleAuction from '@/hooks/contract-operations/soul/useSettleAuction';
+import useContractOperation from '@/hooks/contract-operations/useContractOperation';
+import logger from '@/services/logger';
+import { getUserSelector } from '@/state/user/selector';
+import { sleep, toStorageKey } from '@/utils';
+import { showToastError } from '@/utils/toast';
+import { useWeb3React } from '@web3-react/core';
 import cs from 'classnames';
+import { Transaction } from 'ethers';
+import React, { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import s from './styles.module.scss';
 
 interface IProps {
   tokenId: string;
@@ -20,16 +20,18 @@ interface IProps {
   className?: string;
 }
 
-const SettleAuctionButton: React.FC<IProps> = ({ tokenId, title = 'Settle auction', className }: IProps): React.ReactElement => {
+const SettleAuctionButton: React.FC<IProps> = ({
+  tokenId,
+  title = 'Settle auction',
+  className,
+}: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
   const [processing, setProcessing] = useState(false);
   const [inscribing, setInscribing] = useState(false);
-  const {
-    operationName,
-  } = useSettleAuction();
+  const { operationName } = useSettleAuction();
   const { run: createAuction } = useContractOperation({
     operation: useSettleAuction,
-    inscribable: true
+    inscribable: true,
   });
   const { provider } = useWeb3React();
   const { fetchAuction } = useContext(AuctionContext);
@@ -40,17 +42,17 @@ const SettleAuctionButton: React.FC<IProps> = ({ tokenId, title = 'Settle auctio
     const txHash = tx.hash;
     if (!txHash) return;
     localStorage.setItem(key, txHash);
-  }
+  };
 
   const handleSettleAuction = async () => {
     if (processing) return;
 
     if (inscribing) {
       showToastError({
-        message: 'Please go to Wallet check your transaction status.',
+        message: `Please confirm the pending transaction in your wallet to adopt the Soul #${tokenId} you have won.`,
         url: TC_URL,
         linkText: 'Go to wallet',
-      })
+      });
       return;
     }
 
@@ -58,17 +60,17 @@ const SettleAuctionButton: React.FC<IProps> = ({ tokenId, title = 'Settle auctio
       setProcessing(true);
       await createAuction({
         tokenId: Number(tokenId),
-        txSuccessCallback: onTxSuccessCallback
+        txSuccessCallback: onTxSuccessCallback,
       });
     } catch (err: unknown) {
       logger.error(err);
       showToastError({
         message: (err as Error).message,
-      })
+      });
     } finally {
       setProcessing(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (!user?.walletAddress || !provider) return;
@@ -84,9 +86,7 @@ const SettleAuctionButton: React.FC<IProps> = ({ tokenId, title = 'Settle auctio
 
     const fetchTransactionStatus = async () => {
       try {
-        const receipt = await provider.getTransactionReceipt(
-          txHash
-        );
+        const receipt = await provider.getTransactionReceipt(txHash);
 
         if (receipt?.status === 1 || receipt?.status === 0) {
           logger.info('tx done', key);
@@ -121,9 +121,9 @@ const SettleAuctionButton: React.FC<IProps> = ({ tokenId, title = 'Settle auctio
         handleSettleAuction();
       }}
     >
-      {(processing || inscribing) ? 'Processing...' : title}
+      {processing || inscribing ? 'Processing...' : title}
     </Button>
-  )
-}
+  );
+};
 
 export default React.memo(SettleAuctionButton);

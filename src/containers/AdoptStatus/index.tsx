@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import withConnectedWallet from "@/hocs/withConnectedWallet";
 import s from './styles.module.scss';
-import { Tab, Tabs } from 'react-bootstrap';
 import Table from "@/components/Table";
 import { IAuctionBid } from "@/interfaces/api/auction";
 import { getBidderList } from "@/services/auction";
@@ -182,12 +181,12 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
             handleShowBidModal(bid)
           }}
           className={s.actionBtn}
-          title='Bid more'
+          title='Bid up'
         />
       );
     }
     if (bid?.auction?.status === AuctionStatus.ENDED) {
-      const btnLabel = (isWinner && !hasSoul) ? 'Claim soul' : 'Settle'
+      const btnLabel = (isWinner && !hasSoul) ? 'Adopt' : 'Settle'
       return (
         <SettleAuctionButton
           className={s.actionBtn}
@@ -267,28 +266,21 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
     <>
       <div className={s.adoptStatus}>
         <Container className={s.container}>
-          <Tabs defaultActiveKey="bidList" className={s.tabs}>
-            <Tab
-              eventKey={'bidList'}
-              title={'Bid made'}
-              className={s.tab}
-            >
-              <div className={`small-scrollbar`}>
-                <Table
-                  tableHead={['Item', 'Ranking', 'Status', 'Date', 'Amount bid', 'Action']}
-                  classWrapper={s.tableData}
-                  data={tableData}
-                />
-                {hasMore &&
-                  <InfiniteLoading
-                    fetchMoreData={fetchBidders}
-                    isLoading={loading}
-                    hasMoreData={hasMore}
-                  />
-                }
-              </div>
-            </Tab>
-          </Tabs>
+          <h1 className={s.sectionTitle}>Bidding History</h1>
+          <div className={`small-scrollbar`}>
+            <Table
+              tableHead={['Item', 'Ranking', 'Status', 'Date', 'Amount bid', 'Action']}
+              classWrapper={s.tableData}
+              data={tableData}
+            />
+            {hasMore &&
+              <InfiniteLoading
+                fetchMoreData={fetchBidders}
+                isLoading={loading}
+                hasMoreData={hasMore}
+              />
+            }
+          </div>
         </Container>
       </div>
       <ModalBid

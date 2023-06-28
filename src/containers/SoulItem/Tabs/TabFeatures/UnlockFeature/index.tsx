@@ -1,5 +1,5 @@
 import Button from '@/components/Button';
-import { FeatureStatus } from '@/constants/feature';
+import { Feature, FeatureStatus } from '@/constants/feature';
 import React, { useEffect, useState } from 'react';
 import s from './UnlockFeature.module.scss';
 import { Transaction } from 'ethers';
@@ -52,7 +52,9 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
 
       if (inscribing) {
         showToastError({
-          message: 'Please go to Wallet to check your transaction status.',
+          message: `Please confirm the pending transaction in your wallet  to unlock the ${
+            Feature[feat as keyof typeof Feature]
+          } effect.`,
           url: TC_URL,
           linkText: 'Go to wallet',
         });
