@@ -13,6 +13,7 @@ import { useWeb3React } from '@web3-react/core';
 import { sleep, toStorageKey } from '@/utils';
 import { AuctionContext } from '@/contexts/auction-context';
 import { TC_URL } from '@/configs';
+import { TransactionPendingMessage } from '@/constants/action-message';
 
 interface IProps {
   data: ITokenDetail;
@@ -34,7 +35,10 @@ const StartAuctionButton: React.FC<IProps> = ({
 
   const onTxSuccessCallback = async (tx: Transaction | null): Promise<void> => {
     if (!tx || !user?.walletAddress) return;
-    const key = toStorageKey(operationName, `${data.tokenId}_${user.walletAddress}`);
+    const key = toStorageKey(
+      operationName,
+      `${data.tokenId}_${user.walletAddress}`
+    );
     const txHash = tx.hash;
     if (!txHash) return;
     localStorage.setItem(key, txHash);
@@ -45,7 +49,7 @@ const StartAuctionButton: React.FC<IProps> = ({
 
     if (inscribing) {
       showToastError({
-        message: 'Please go to Wallet check your transaction status.',
+        message: `Please confirm the pending transaction in your wallet to ${TransactionPendingMessage['CREATE_AUCTION']}`,
         url: TC_URL,
         linkText: 'Go to wallet',
       });
@@ -71,7 +75,10 @@ const StartAuctionButton: React.FC<IProps> = ({
   useEffect(() => {
     if (!user?.walletAddress || !provider) return;
 
-    const key = toStorageKey(operationName, `${data.tokenId}_${user.walletAddress}`);
+    const key = toStorageKey(
+      operationName,
+      `${data.tokenId}_${user.walletAddress}`
+    );
     const txHash = localStorage.getItem(key);
 
     if (!txHash) return;
