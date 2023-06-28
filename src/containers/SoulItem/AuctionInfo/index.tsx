@@ -6,13 +6,16 @@ import { shortenAddress } from '@/utils';
 import { useWeb3React } from '@web3-react/core';
 import { jsNumberForAddress } from 'react-jazzicon';
 import Jazzicon from 'react-jazzicon/dist/Jazzicon';
-import StartAuctionButton from './StartAuctionButton';
-import CreateBidButton from './CreateBidButton';
 import s from './style.module.scss';
 import { AuctionContext } from '@/contexts/auction-context';
 import { AuctionStatus } from '@/enums/soul';
-import SettleAuctionButton from './SettleAuctionButton';
 import Link from 'next/link';
+import { AssetsContext } from '@/contexts/assets-context';
+import BigNumber from 'bignumber.js';
+import BuyGMButton from './BuyGMButton';
+import StartAuctionButton from './StartAuctionButton';
+import CreateBidButton from './CreateBidButton';
+import SettleAuctionButton from './SettleAuctionButton';
 
 type AuctionProps = {
   data: ITokenDetail;
@@ -20,6 +23,9 @@ type AuctionProps = {
 const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
   const { account } = useWeb3React();
   const { auction } = useContext(AuctionContext);
+  const { gmBalance } = useContext(AssetsContext);
+  const isAvailable = (!!auction?.available && data.owner?.toLowerCase() !== SOUL_CONTRACT.toLowerCase());
+  const isOwner = account?.toLowerCase() === data.owner?.toLowerCase();
 
   const auctionAction = useMemo(() => {
     if (!auction || !auction.available) return <></>;
@@ -28,13 +34,13 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
     } else if (auction.auctionStatus === AuctionStatus.ENDED) {
       return <SettleAuctionButton tokenId={data.tokenId} />;
     } else {
+      const gmBalanceBN = new BigNumber(gmBalance).dividedBy(1e18);
+      if (gmBalanceBN.isLessThan(1) && isOwner) {
+        return <BuyGMButton />
+      }
       return <StartAuctionButton data={data} />;
     }
-  }, [auction, data]);
-
-  const isAvailable = useMemo(() => {
-    return (!!auction?.available && data.owner.toLowerCase() !== SOUL_CONTRACT.toLowerCase())
-  }, [auction, data]);
+  }, [auction, data, isOwner, gmBalance]);
 
   return (
     <div className={s.auctionInfo}>
@@ -67,18 +73,18 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
             {isAvailable ? (
               <div className={s.content_warning_showAddress}>
                 <Link target='_blank' href={`${TC_EXPLORER_URL}/address/${data.owner}`}>
-                  {account?.toLowerCase() === data.owner.toLowerCase()
+                  {isOwner
                     ? 'You '
                     : `${shortenAddress(data.owner)} `}
                 </Link>
-                {account?.toLowerCase() === data.owner.toLowerCase()
+                {isOwner
                   ? 'are '
                   : `is `}
                 not eligible to own this Soul
               </div>
             ) : (
               <Link target='_blank' href={`${TC_EXPLORER_URL}/address/${data.owner}`} className={s.content_address}>
-                {account?.toLowerCase() === data.owner.toLowerCase() ? 'You' : `${shortenAddress(data.owner)}`}
+                {isOwner ? 'You' : `${shortenAddress(data.owner)}`}
               </Link>
             )}
           </>

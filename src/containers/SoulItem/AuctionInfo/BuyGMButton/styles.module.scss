@@ -1,0 +1,21 @@
+.buyGmBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: rem(50px);
+  background: #000000;
+  border-radius: 100px;
+  color: #fff !important;
+  gap: rem(10px);
+  padding: rem(16px) rem(40px);
+  font-weight: 500;
+  font-size: rem(16px);
+  line-height: rem(18px);
+  text-decoration: none !important;
+
+  &:hover {
+    background: #444;
+  }
+}
