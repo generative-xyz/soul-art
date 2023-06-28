@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import soulsStyles from './souls.module.scss';
+import s from './souls.module.scss';
 
 const LIMIT_PAGE = 20;
 
@@ -136,7 +136,7 @@ export const SoulsContainer: React.FC = () => {
 
   if (initialLoading) {
     return (
-      <div className="grid-center h-full-view">
+      <div className={s.loadingWrapper}>
         <Spinner width={200} height={200} />
       </div>
     );
@@ -144,18 +144,18 @@ export const SoulsContainer: React.FC = () => {
 
   if (souls && souls.length === 0 && !router.query) {
     return (
-      <div className={soulsStyles.emptyWrapper}>
-        <div className={soulsStyles.empty}>
-          <div className={soulsStyles.empty_thumbnailWrapper}>
+      <div className={s.emptyWrapper}>
+        <div className={s.empty}>
+          <div className={s.empty_thumbnailWrapper}>
             <img
               src={`${CDN_URL}/img-empty-thumbnail.png`}
               alt="empty thumbnail image"
             />
           </div>
-          <p className={soulsStyles.empty_content}>
+          <p className={s.empty_content}>
             Be the first one to adopt a Soul. Adopt a Soul here.
           </p>
-          <Link href={ROUTE_PATH.CLAIM} className={soulsStyles.empty_adopt}>
+          <Link href={ROUTE_PATH.CLAIM} className={s.empty_adopt}>
             Adopt a Soul
           </Link>
         </div>
@@ -165,9 +165,9 @@ export const SoulsContainer: React.FC = () => {
 
   return (
     <>
-      <div className={`${soulsStyles.list} small-scrollbar`}>
-        <div className={`${soulsStyles.art} small-scrollbar`} id="soul-list">
-          <Container className={soulsStyles.grid_container}>
+      <div className={`${s.list} small-scrollbar`}>
+        <div className={`${s.art} small-scrollbar`} id="soul-list">
+          <Container className={s.grid_container}>
             {souls &&
               souls.length > 0 &&
               souls.map(item => {
@@ -179,7 +179,7 @@ export const SoulsContainer: React.FC = () => {
                     tokenId={item.tokenId}
                     title={!!item.name ? item.name : `Souls #${item.tokenId}`}
                     ownerAddr={item.owner}
-                    className={soulsStyles.grid_item}
+                    className={s.grid_item}
                   />
                 );
               })}
