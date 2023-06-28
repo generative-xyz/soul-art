@@ -270,8 +270,39 @@ const Header = ({
                       s.profile_auction_wallet_container
                     )}
                   >
-                    <p className={s.profile_auction_wallet}>Adoption Wallet</p>
-                    <div className={cs(s.profile_amount)}>
+                    <OverlayTrigger
+                      overlay={
+                        <Tooltip
+                          id={'warning-gm'}
+                          className={cs(
+                            s.tooltip_body,
+                            s.auction_wallet_tooltip
+                          )}
+                        >
+                          <div className={s.auction_tooltip_content}>
+                            <p>This wallet is only for Soul adoption.</p>
+                            <p>
+                              Please deposit GM into your adoption wallet to
+                              place a bid.
+                            </p>
+                          </div>
+                        </Tooltip>
+                      }
+                      placement="bottom"
+                    >
+                      <div>
+                        <p className={s.profile_auction_wallet}>
+                          <IconSVG
+                            src={`${CDN_URL}/ic_round-info.svg`}
+                            maxWidth="16"
+                            maxHeight="16"
+                          ></IconSVG>
+                          Adoption Wallet
+                        </p>
+                      </div>
+                    </OverlayTrigger>
+
+                    <div className={cs(s.profile_amount, 'pr-4')}>
                       <span>{`${formatEthPrice(gmDepositBalance)} GM`}</span>
                       <IconSVG
                         src={`${CDN_URL}/ic-add-fill.svg`}
