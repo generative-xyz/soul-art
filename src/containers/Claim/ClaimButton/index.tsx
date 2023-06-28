@@ -9,7 +9,6 @@ import logger from '@/services/logger';
 import { showToastError } from '@/utils/toast';
 import BigNumber from 'bignumber.js';
 import { AssetsContext } from '@/contexts/assets-context';
-import { useWeb3React } from '@web3-react/core';
 import useMint, { IMintParams } from '@/hooks/contract-operations/soul/useMint';
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import { Transaction } from 'ethers';
@@ -17,7 +16,7 @@ import { generateSignature } from '@/services/signature';
 import useAsyncEffect from 'use-async-effect';
 import { toStorageKey } from '@/utils';
 
-type IClaimButtonProps = {
+interface IClaimButtonProps {
   isFetchingApi: boolean;
 };
 
@@ -25,15 +24,14 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   isFetchingApi,
 }): React.ReactElement => {
   const user = useSelector(getUserSelector);
-  const { account } = useWeb3React();
   const { btcBalance, tcBalance } = useContext(AssetsContext);
   const { onDisconnect, onConnect, requestBtcAddress } = useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [sufficientBal, setSufficientBal] = useState(false);
-  const [totalGM, setTotalGM] = useState(0);
+  const [sufficientBal, setSufficientBal] = useState(true);
+  const [totalGM, setTotalGM] = useState('0');
   const [signature, setSignature] = useState('');
   const [minting, setMinting] = useState(false);
-  const { run: call } = useContractOperation<IMintParams, Transaction | null>({
+  const { run: mint } = useContractOperation<IMintParams, Transaction | null>({
     operation: useMint,
     inscribable: true,
   });
@@ -43,10 +41,10 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   const isReceiveAble = useMemo(() => !!signature, [signature]);
 
   const txSuccessCallback = async (transaction: Transaction | null) => {
-    if (!transaction || !account) return;
+    if (!transaction || !user?.walletAddress) return;
     const txHash = transaction.hash;
     if (!txHash) return;
-    const storageKey = toStorageKey(operationName, account);
+    const storageKey = toStorageKey(operationName, user.walletAddress);
     localStorage.setItem(storageKey, txHash);
   };
 
@@ -67,10 +65,20 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   };
 
   const handleClaim = async () => {
+    if (!user?.walletAddress) {
+      showToastError({
+        message: 'Unauthorized'
+      })
+      return;
+    }
+    if (minting) {
+      return;
+    }
+
     try {
       setMinting(true);
-      await call({
-        address: account as string,
+      await mint({
+        address: user.walletAddress,
         totalGM: totalGM,
         signature: signature,
         txSuccessCallback: txSuccessCallback,
@@ -86,31 +94,32 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   };
 
   useEffect(() => {
-    if (!account) return;
+    if (!user?.walletAddress) return;
     const userTcBalance = new BigNumber(tcBalance);
     const userBtcBalance = new BigNumber(btcBalance);
     if (
-      userTcBalance.isGreaterThan(0) &&
-      userBtcBalance.isGreaterThan(0) &&
-      account
+      userTcBalance.isEqualTo(0) &&
+      userBtcBalance.isEqualTo(0)
     ) {
-      setSufficientBal(true);
+      setSufficientBal(false);
     }
-  }, [account, btcBalance, tcBalance]);
+  }, [user?.walletAddress, btcBalance, tcBalance]);
 
   useAsyncEffect(async () => {
-    if (!account) return;
+    if (!user?.walletAddress) return;
 
     try {
       const res = await generateSignature({
-        wallet_address: account,
+        wallet_address: user?.walletAddress,
       });
-      setTotalGM(Number(res?.gm));
-      setSignature(res?.signature);
+      if (res.gm && res.signature) {
+        setTotalGM(res?.gm);
+        setSignature(res?.signature);
+      }
     } catch (err) {
       logger.error(err);
     }
-  }, [account]);
+  }, [user?.walletAddress]);
 
   const NotificationConnectWallet: React.FC = () => {
     return (

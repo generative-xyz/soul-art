@@ -17,7 +17,7 @@ import * as TC_SDK from 'trustless-computer-sdk';
 export interface IMintParams {
   address: string;
   user?: string;
-  totalGM: number;
+  totalGM: string;
   signature: string;
   txSuccessCallback?: (_tx: Transaction | null) => Promise<void>;
 }

@@ -3,7 +3,7 @@ import SoulsCard from '@/components/SoulCards';
 import Spinner from '@/components/Spinner';
 import { CDN_URL, SOUL_CONTRACT } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
-import AttributeSort from '@/containers/Attribute';
+import AttributeSort from '@/containers/Souls/Attribute';
 import { IToken } from '@/interfaces/api/marketplace';
 import { IAttribute } from '@/interfaces/attributes';
 import logger from '@/services/logger';

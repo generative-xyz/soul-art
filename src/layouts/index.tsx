@@ -1,16 +1,22 @@
-import { GridDebug } from '@/animations/Grid/grid';
 import React, { PropsWithChildren } from 'react';
 import Header from './Header';
-import layoutStyles from './layout.module.scss';
+import s from './layout.module.scss';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/constants/route-path';
 import FeatureAlert from './FeatureAlert';
+import Banner from './Banner';
+import { CLAIM_START_TIME } from '@/configs';
+import useTimeComparison from '@/hooks/useTimeComparison';
+import cs from 'classnames';
 
 export const HEADER_HEIGHT = 80;
 export const FO0TER_HEIGHT = 80;
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
+  const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
+  const isEventStarted =
+    claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
 
   if (
     router.pathname &&
@@ -25,11 +31,16 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <>
-      <div className={layoutStyles.container}>
+      <div className={s.container}>
         <Header height={HEADER_HEIGHT} />
-        <div className={layoutStyles.content_wrapper}>{children}</div>
+        {isEventStarted && <Banner type='' />}
+        <main
+          className={cs(s.main, {
+            [`${s.eventStarted}`]: isEventStarted
+          })}>
+          {children}
+        </main>
         <FeatureAlert />
-        <GridDebug />
       </div>
     </>
   );

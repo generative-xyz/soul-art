@@ -25,11 +25,6 @@ const nextConfig = {
         source: '/',
         destination: '/souls',
         permanent: true,
-      },
-      {
-        source: '/404',
-        destination: '/souls/404',
-        permanent: true,
       }
     ];
   },

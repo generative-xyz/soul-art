@@ -1,5 +1,5 @@
-import Button from '../Button';
-import IconSVG from '../IconSVG';
+import Button from '@/components/Button';
+import IconSVG from '@/components/IconSVG';
 import s from './style.module.scss';
 import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';

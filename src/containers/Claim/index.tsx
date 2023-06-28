@@ -15,6 +15,7 @@ import useAsyncEffect from 'use-async-effect';
 import { getListTokensByWallet } from '@/services/soul';
 import dayjs from 'dayjs';
 import web3Instance from '@/connections/custom-web3-provider';
+import ClaimButton from './ClaimButton';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
@@ -24,7 +25,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   const { account, provider } = useWeb3React();
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
   const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
-  const [_isFetchingApi, setIsFetchingApi] = useState(false);
+  const [isFetchingApi, setIsFetchingApi] = useState(false);
   const [soulToken, setSoulToken] = useState<ISoul | null>(null);
   const {
     operationName
@@ -143,7 +144,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                   isClaimed={isClaimed}
                   claimStatus={claimStatus}
                 />
-                {/* {isEventStarted && <ClaimButton isFetchingApi={isFetchingApi} />} */}
+                {isEventStarted && <ClaimButton isFetchingApi={isFetchingApi} />}
               </div>
             </div>
             {!isEventStarted && <Discord />}
