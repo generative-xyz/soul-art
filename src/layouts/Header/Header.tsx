@@ -1,5 +1,5 @@
 import IconSVG from '@/components/IconSVG';
-import { CDN_URL, TC_URL } from '@/configs';
+import { BUY_GM_URL, CDN_URL, TC_URL } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { AssetsContext } from '@/contexts/assets-context';
 import { WalletContext } from '@/contexts/wallet-context';
@@ -27,6 +27,7 @@ import {
   memo,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { Button, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -35,8 +36,9 @@ import { useSelector } from 'react-redux';
 import { Wrapper } from './Header.styled';
 import MenuMobile from './MenuMobile';
 import ModalWithdraw from './Modal/ModalWithdraw';
-import headerStyles from './header.module.scss';
+import s from './header.module.scss';
 import { formatEthPrice } from '@/utils/format';
+import BigNumber from 'bignumber.js';
 
 type NavContent = {
   title: string;
@@ -103,6 +105,8 @@ const Header = ({
   const [eligibleOwner, setEligibleOwner] = useState(false);
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const timeOutRef = useRef<NodeJS.Timer | null>(null)
 
   const handleConnectWallet = async () => {
     try {
@@ -127,6 +131,20 @@ const Header = ({
     });
   };
 
+  const handleToggleTooltip = () => {
+    if (showTooltip) {
+      timeOutRef.current = setTimeout(() => {
+        setShowTooltip(false);
+      }, 3000)
+    } else {
+      if (timeOutRef.current) {
+        clearTimeout(timeOutRef.current);
+        timeOutRef.current = null;
+      }
+      setShowTooltip(true);
+    }
+  }
+
   const renderTokenBlock = (
     title: string,
     balance: string,
@@ -146,11 +164,11 @@ const Header = ({
     }
 
     return (
-      <div className={headerStyles.menu_content}>
-        <div className={headerStyles.menu_info}>
-          <div className={headerStyles.menu_title}>{title}</div>
-          <div className={headerStyles.menu_item}>
-            <div className={headerStyles.menu_item_address}>
+      <div className={s.menu_content}>
+        <div className={s.menu_info}>
+          <div className={s.menu_title}>{title}</div>
+          <div className={s.menu_item}>
+            <div className={s.menu_item_address}>
               <IconSVG src={icon} maxWidth="24" maxHeight="24" />
               <p>{formatLongAddress(address || '')}</p>
             </div>
@@ -159,12 +177,12 @@ const Header = ({
                 src={`${CDN_URL}/ic-copy.svg`}
                 color={'#fff'}
                 maxWidth="16"
-                className={headerStyles.copy_icon}
+                className={s.copy_icon}
               />
             </div>
           </div>
         </div>
-        <div className={headerStyles.menu_item_balance}>
+        <div className={s.menu_item_balance}>
           <p>
             {balance} {token}
           </p>
@@ -174,24 +192,24 @@ const Header = ({
   };
 
   useEffect(() => {
-    setEligibleOwner(Number(formatEthPrice(gmBalance)) >= 1);
+    const gmBalanceBN = new BigNumber(gmBalance).dividedBy(1e18);
+    setEligibleOwner(gmBalanceBN.isGreaterThanOrEqualTo(1));
   }, [gmBalance]);
 
   const ContentHeader = (): JSX.Element => {
     return (
       <div
-        className={`content-header d-flex justify-content-between align-items-center w-100 ${
-          homepage ? 'dark' : ''
-        }`}
+        className={`content-header d-flex justify-content-between align-items-center w-100 ${homepage ? 'dark' : ''
+          }`}
       >
-        <div className={headerStyles.nav_container}>
+        <div className={s.nav_container}>
           {NAV_CONTENT.map(({ title, url }) => {
             return (
               <Link
                 key={title}
                 href={url}
-                className={`${headerStyles.nav_item}
-                  ${router.pathname === url ? headerStyles.active : ''}`}
+                className={`${s.nav_item}
+                  ${router.pathname === url ? s.active : ''}`}
               >
                 {title}
               </Link>
@@ -210,14 +228,14 @@ const Header = ({
           <Link
             href={'https://newbitcoincity.com/'}
             target="_blank"
-            className={`${headerStyles.nbc_link}`}
+            className={`${s.nbc_link}`}
           >
             New Bitcoin City
           </Link>
           <Link
             href={'https://discord.com/invite/yNbatuGMDG'}
             target="_blank"
-            className={`${headerStyles.nbc_link}`}
+            className={`${s.nbc_link}`}
           >
             <IconSVG
               src={`${CDN_URL}/ic-discord.svg`}
@@ -229,7 +247,7 @@ const Header = ({
           <Link
             href={'https://twitter.com/NewBitcoinCity'}
             target="_blank"
-            className={`${headerStyles.nbc_link}`}
+            className={`${s.nbc_link}`}
           >
             <IconSVG
               src={`${CDN_URL}/ic_twitter.svg`}
@@ -239,22 +257,22 @@ const Header = ({
             ></IconSVG>
           </Link>
           {isAuthenticated ? (
-            <div className={headerStyles.wallets}>
-              <Dropdown className={headerStyles.auction_wallet}>
+            <div className={s.wallets}>
+              <Dropdown className={s.auction_wallet}>
                 <Dropdown.Toggle
                   as={WalletToggle}
                   id="dropdown-custom-components"
                 >
                   <div
                     className={cs(
-                      headerStyles.profile_container,
-                      headerStyles.profile_auction_wallet_container
+                      s.profile_container,
+                      s.profile_auction_wallet_container
                     )}
                   >
-                    <p className={headerStyles.profile_auction_wallet}>
+                    <p className={s.profile_auction_wallet}>
                       Auction Wallet
                     </p>
-                    <div className={cs(headerStyles.profile_amount)}>
+                    <div className={cs(s.profile_amount)}>
                       <span>{`${formatEthPrice(gmDepositBalance)} GM`}</span>
                       <IconSVG
                         src={`${CDN_URL}/ic-add-fill.svg`}
@@ -263,11 +281,11 @@ const Header = ({
                     </div>
                   </div>
                 </Dropdown.Toggle>
-                <Dropdown.Menu className={headerStyles.menu_wrapper}>
-                  <div className={headerStyles.menu_container}>
+                <Dropdown.Menu className={s.menu_wrapper}>
+                  <div className={s.menu_container}>
                     <div
                       onClick={() => setShowDepositModal(true)}
-                      className={headerStyles.menu_box}
+                      className={s.menu_box}
                     >
                       <IconSVG
                         src={`${CDN_URL}/ic-coin-hand.svg`}
@@ -279,7 +297,7 @@ const Header = ({
                       onClick={() => {
                         setShowWithdrawModal(true);
                       }}
-                      className={headerStyles.menu_box}
+                      className={s.menu_box}
                     >
                       <IconSVG
                         src={`${CDN_URL}/ic-coins-rotate.svg`}
@@ -295,32 +313,38 @@ const Header = ({
                   as={WalletToggle}
                   id="dropdown-custom-components"
                 >
-                  <div className={headerStyles.profile_container}>
+                  <div className={s.profile_container}>
                     <OverlayTrigger
+                      show={showTooltip}
+                      onToggle={handleToggleTooltip}
+                      placement="bottom"
                       overlay={
                         <Tooltip
                           id={'warning-gm'}
                           placement="left"
                           show={!eligibleOwner}
-                          className={`${headerStyles.tooltip_body} ${
-                            !eligibleOwner ? '' : 'd-none'
-                          }`}
+                          className={`${s.tooltip_body} ${!eligibleOwner ? '' : 'd-none'
+                            }`}
                         >
-                          <div className={headerStyles.tooltip_content}>
-                            <p>You are not owning over 1GM</p>
+                          <div className={s.tooltip_content}>
+                            <p>Your balance is less than 1GM</p>
                             <p>
-                              Your art will be adopted by someone else at any
-                              time.
+                              Your Soul is looking for a better match...
                             </p>
+                            <div className={s.tooltip_action}>
+                              <Link className={s.tooltip_buyMore} href={BUY_GM_URL}>
+                                <span>Buy GM</span>
+                                <img src={`${CDN_URL}/tooltip-arrow-icon.svg`} alt="arrow-icon" />
+                              </Link>
+                            </div>
                           </div>
                         </Tooltip>
                       }
-                      placement="bottom"
                     >
                       <div
                         className={cs(
-                          headerStyles.profile_amount,
-                          !eligibleOwner && headerStyles.warning
+                          s.profile_amount,
+                          !eligibleOwner && s.warning
                         )}
                       >
                         <IconSVG
@@ -333,7 +357,7 @@ const Header = ({
                       </div>
                     </OverlayTrigger>
 
-                    <div className={headerStyles.profile_avatar}>
+                    <div className={s.profile_avatar}>
                       {account ? (
                         <Jazzicon
                           diameter={32}
@@ -348,8 +372,8 @@ const Header = ({
                     </div>
                   </div>
                 </Dropdown.Toggle>
-                <Dropdown.Menu className={headerStyles.menu_wrapper}>
-                  <div className={headerStyles.menu_container}>
+                <Dropdown.Menu className={s.menu_wrapper}>
+                  <div className={s.menu_container}>
                     {renderTokenBlock(
                       'TC Address',
                       formatEthPrice(tcBalance),
@@ -366,15 +390,15 @@ const Header = ({
                       onClick={() =>
                         window.open(`${TC_URL}?tab=${DappsTabs.ARTIFACT}`)
                       }
-                      className={headerStyles.menu_box}
+                      className={s.menu_box}
                     >
                       <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
                       <p>Wallet</p>
                     </div>
-                    <div className={headerStyles.menu_divider} />
+                    <div className={s.menu_divider} />
                     <Button
                       onClick={onDisconnect}
-                      className={headerStyles.menu_box}
+                      className={s.menu_box}
                     >
                       <IconSVG
                         src={`${CDN_URL}/disconnect.svg`}
@@ -390,11 +414,11 @@ const Header = ({
             <Button
               disabled={isConnecting}
               onClick={handleConnectWallet}
-              className={headerStyles.connect_button}
+              className={s.connect_button}
             >
               <img
                 alt="wallet_icon"
-                className={headerStyles.wallet_icon}
+                className={s.wallet_icon}
                 src={`${CDN_URL}/heroicons_wallet-solid.svg`}
               />
               {isConnecting ? 'Connecting...' : 'Connect wallet'}
@@ -409,8 +433,8 @@ const Header = ({
     <>
       <Wrapper
         className={classNames(
-          headerStyles.header,
-          theme ? headerStyles[theme] : '',
+          s.header,
+          theme ? s[theme] : '',
           'dark'
         )}
         style={{ height }}

@@ -2,27 +2,30 @@ import { AssetsContext } from '@/contexts/assets-context';
 import { AuctionContext } from '@/contexts/auction-context';
 import { AuctionStatus } from '@/enums/soul';
 import { ITokenDetail } from '@/interfaces/api/marketplace';
-import React, { useContext, useMemo } from 'react';
+import { useWeb3React } from '@web3-react/core';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import TabBidders from './TabBidders';
 import TabDescription from './TabDescription';
 import TabFeatures from './TabFeatures';
-import TabInteraction from './TabInteraction';
 import TabHistories from './TabHistories';
+import TabInteraction from './TabInteraction';
 import s from './style.module.scss';
-import { useRouter } from 'next/router';
-import { useWeb3React } from '@web3-react/core';
 
 const TabsComponent = ({
   data,
 }: {
   data: ITokenDetail;
 }): React.ReactElement => {
-  const router = useRouter();
   const { account } = useWeb3React();
-  const { query } = router;
   const { auction } = useContext(AuctionContext);
   const { availableFeatures } = useContext(AssetsContext);
+
+  const isOwner = useMemo(() => {
+    return data.owner.toLowerCase() === account?.toLowerCase();
+  }, [data.owner, account]);
+
+  const [defaultTab, setDefaultTab] = useState<string>();
 
   const tabList = useMemo((): Array<{ title: string; type: string }> => {
     const header = [
@@ -31,13 +34,14 @@ const TabsComponent = ({
         type: 'desc',
       },
       {
+        title: 'Effects',
+        type: 'effect',
+      },
+      {
         title: 'Interactions',
         type: 'inter',
       },
-      {
-        title: 'Features',
-        type: 'feat',
-      },
+
       {
         title: 'History',
         type: 'history',
@@ -55,10 +59,20 @@ const TabsComponent = ({
     return header;
   }, [auction]);
 
+  useEffect(() => {
+    setDefaultTab(
+      isOwner && availableFeatures && availableFeatures.length > 0 ? '1' : '0'
+    );
+  }, [isOwner, availableFeatures]);
+
   return (
     <Tabs
-      defaultActiveKey={query.tab === 'feat' ? '2' : '0'}
+      activeKey={defaultTab}
       className={s.tabs}
+      onSelect={key => {
+        if (!key) return;
+        setDefaultTab(key);
+      }}
     >
       {tabList.map((tab, index) => {
         return (
@@ -67,12 +81,13 @@ const TabsComponent = ({
             eventKey={index}
             key={index}
             title={
-              tab.title !== 'Features' ? (
+              tab.title !== 'Effects' ? (
                 tab.title
               ) : (
                 <>
                   {tab.title}{' '}
-                  {availableFeatures &&
+                  {isOwner &&
+                    availableFeatures &&
                     availableFeatures.length > 0 &&
                     account?.toLowerCase() === data.owner && (
                       <span className={s.alert_dots}></span>
@@ -86,7 +101,7 @@ const TabsComponent = ({
               {tab.type === 'bidders' && <TabBidders />}
               {tab.type === 'desc' && <TabDescription />}
               {tab.type === 'inter' && <TabInteraction />}
-              {tab.type === 'feat' && (
+              {tab.type === 'effect' && (
                 <TabFeatures
                   owner={data.owner}
                   mintedBlock={data.blockNumber}

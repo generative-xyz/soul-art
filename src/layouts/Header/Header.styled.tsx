@@ -72,7 +72,7 @@ const Wrapper = styled.header`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: ${px2rem(32)};
+    gap: ${px2rem(24)};
     position: relative;
 
     .external-link {
