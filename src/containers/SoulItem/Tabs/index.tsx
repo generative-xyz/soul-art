@@ -31,13 +31,14 @@ const TabsComponent = ({
         type: 'desc',
       },
       {
+        title: 'Effects',
+        type: 'effect',
+      },
+      {
         title: 'Interactions',
         type: 'inter',
       },
-      {
-        title: 'Features',
-        type: 'feat',
-      },
+
       {
         title: 'History',
         type: 'history',
@@ -57,7 +58,7 @@ const TabsComponent = ({
 
   return (
     <Tabs
-      defaultActiveKey={query.tab === 'feat' ? '2' : '0'}
+      defaultActiveKey={query.tab === 'effect' ? '1' : '0'}
       className={s.tabs}
     >
       {tabList.map((tab, index) => {
@@ -67,7 +68,7 @@ const TabsComponent = ({
             eventKey={index}
             key={index}
             title={
-              tab.title !== 'Features' ? (
+              tab.title !== 'Effects' ? (
                 tab.title
               ) : (
                 <>
@@ -86,7 +87,7 @@ const TabsComponent = ({
               {tab.type === 'bidders' && <TabBidders />}
               {tab.type === 'desc' && <TabDescription />}
               {tab.type === 'inter' && <TabInteraction />}
-              {tab.type === 'feat' && (
+              {tab.type === 'effect' && (
                 <TabFeatures
                   owner={data.owner}
                   mintedBlock={data.blockNumber}

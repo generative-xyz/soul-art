@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import s from './styles.module.scss';
 
 const INTERACTION_DATA = [
@@ -7,12 +7,8 @@ const INTERACTION_DATA = [
     keyDesc: 'Show/hide technical information.',
   },
   {
-    keyText: 'u',
-    keyDesc: 'Update the AI mode',
-  },
-  {
-    keyText: 'b',
-    keyDesc: 'Hide/show borders',
+    keyText: 'e',
+    keyDesc: 'Switch sun shape',
   },
   {
     keyText: 'k',
@@ -29,12 +25,8 @@ const TabInteraction: React.FC = (): React.ReactElement => {
     <>
       {INTERACTION_DATA.map((interData, index) => (
         <div className={s.tabInter} key={index}>
-          <div className={s.tabInterKeyText}>
-            {interData.keyText}
-          </div>
-          <div className={s.tabInterKeyDesc}>
-            {interData.keyDesc}
-          </div>
+          <div className={s.tabInterKeyText}>{interData.keyText}</div>
+          <div className={s.tabInterKeyDesc}>{interData.keyDesc}</div>
         </div>
       ))}
     </>
