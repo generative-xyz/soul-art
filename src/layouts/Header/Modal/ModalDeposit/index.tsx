@@ -15,9 +15,15 @@ import web3Instance from '@/connections/custom-web3-provider';
 import BigNumber from 'bignumber.js';
 import cs from 'classnames';
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
-import useDeposit, { IDepositParams } from '@/hooks/contract-operations/soul/useDeposit';
-import useApproveTokenAmount, { IApproveTokenAmountParams } from '@/hooks/contract-operations/erc20/useApproveTokenAmount';
-import useGetAllowanceAmount, { IGetAllowanceAmountParams } from '@/hooks/contract-operations/erc20/useGetAllowanceAmount';
+import useDeposit, {
+  IDepositParams,
+} from '@/hooks/contract-operations/soul/useDeposit';
+import useApproveTokenAmount, {
+  IApproveTokenAmountParams,
+} from '@/hooks/contract-operations/erc20/useApproveTokenAmount';
+import useGetAllowanceAmount, {
+  IGetAllowanceAmountParams,
+} from '@/hooks/contract-operations/erc20/useGetAllowanceAmount';
 import { Transaction } from 'ethers';
 import { useSelector } from 'react-redux';
 import { getUserSelector } from '@/state/user/selector';
@@ -27,7 +33,7 @@ import Web3 from 'web3';
 interface IProps {
   show: boolean;
   handleClose: () => void;
-};
+}
 
 interface IFormValues {
   amount: string;
@@ -54,17 +60,13 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
     operation: useApproveTokenAmount,
     inscribable: false,
   });
-  const {
-    operationName: approveTokenOp
-  } = useApproveTokenAmount();
+  const { operationName: approveTokenOp } = useApproveTokenAmount();
   const { run: depositGmToSoul } = useContractOperation({
     operation: useDeposit,
-    inscribable: true
+    inscribable: true,
   });
 
-  const {
-    estimateGas
-  } = useDeposit();
+  const { estimateGas } = useDeposit();
   const formRef = React.useRef<FormikProps<IFormValues>>(null);
 
   const validateForm = (values: IFormValues): Record<string, string> => {
@@ -72,23 +74,27 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
     const balance = new BigNumber(gmBalance).dividedBy(1e18).toNumber();
 
     if (!values.amount) {
-      errors.amount = 'Amount is required.'
+      errors.amount = 'Amount is required.';
     } else if (!isValidNumber(values.amount)) {
-      errors.amount = 'Invalid number.'
+      errors.amount = 'Invalid number.';
     } else if (parseFloat(values.amount) < 0) {
-      errors.amount = 'Invalid number. Amount must be greater than 0.'
+      errors.amount = 'Invalid number. Amount must be greater than 0.';
     } else if (parseFloat(values.amount) > balance) {
-      errors.amount = 'Invalid number. Amount must be less than or equal your GM balance.'
+      errors.amount =
+        'Invalid number. Amount must be less than or equal your GM balance.';
     } else {
       calculateEstBtcFee();
       calculateEstTcFee(values.amount.toString());
     }
     return errors;
-  }
+  };
 
   const handleSubmit = async (values: IFormValues): Promise<void> => {
     if (processing) return;
-    const storageKey = toStorageKey(approveTokenOp, `${GM_ADDRESS}_${user?.walletAddress}`);
+    const storageKey = toStorageKey(
+      approveTokenOp,
+      `${GM_ADDRESS}_${user?.walletAddress}`
+    );
 
     try {
       setProcessing(true);
@@ -128,22 +134,22 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
       localStorage.removeItem(storageKey);
       showToastError({
         message: (err as Error).message,
-      })
+      });
     } finally {
       setProcessing(false);
     }
-  }
+  };
 
   const handleSetMaxAmount = () => {
     if (formRef.current) {
       const amountBN = new BigNumber(gmBalance);
-      const newAmount = (amountBN.dividedBy(1e18)).toString()
+      const newAmount = amountBN.dividedBy(1e18).toString();
       const currentAmount = Number(formRef.current.values.amount).toString();
       if (newAmount !== currentAmount) {
         formRef.current.setFieldValue('amount', newAmount);
       }
     }
-  }
+  };
 
   const calculateEstBtcFee = useCallback(() => {
     if (!show) return;
@@ -153,31 +159,30 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
       feeRatePerByte: feeRate.hourFee,
     });
     setEstBTCFee(estimatedEconomyFee.totalFee.toString());
-  },
-    [feeRate, show],
-  );
+  }, [feeRate, show]);
 
-  const calculateEstTcFee = useCallback(async (amount: string) => {
-    if (!estimateGas || !show) return '0';
-    setEstTCFee(null);
-    try {
-      const payload: IDepositParams = {
-        amount: amount,
-      };
-      const gasLimit = await estimateGas(payload);
-      const gasPrice = await web3Instance.getGasPrice();
-      const gasLimitBN = new BigNumber(gasLimit);
-      const gasPriceBN = new BigNumber(gasPrice);
-      const tcGas = gasLimitBN.times(gasPriceBN);
-      logger.debug('TC Gas', tcGas.toString());
-      setEstTCFee(tcGas.toString());
-      return tcGas.toString();
-    } catch (err: unknown) {
-      logger.error(err);
-      return '0';
-    }
-  },
-    [setEstTCFee, estimateGas, show],
+  const calculateEstTcFee = useCallback(
+    async (amount: string) => {
+      if (!estimateGas || !show) return '0';
+      setEstTCFee(null);
+      try {
+        const payload: IDepositParams = {
+          amount: amount,
+        };
+        const gasLimit = await estimateGas(payload);
+        const gasPrice = await web3Instance.getGasPrice();
+        const gasLimitBN = new BigNumber(gasLimit);
+        const gasPriceBN = new BigNumber(gasPrice);
+        const tcGas = gasLimitBN.times(gasPriceBN);
+        logger.debug('TC Gas', tcGas.toString());
+        setEstTCFee(tcGas.toString());
+        return tcGas.toString();
+      } catch (err: unknown) {
+        logger.error(err);
+        return '0';
+      }
+    },
+    [setEstTCFee, estimateGas, show]
   );
 
   return (
@@ -194,7 +199,7 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
         {({ values, errors, touched, handleChange, handleSubmit, isValid }) => (
           <form onSubmit={handleSubmit}>
             <p className={s.subTitle}>
-              Deposit $GM to your auction wallet to make a bid.
+              Deposit $GM to your adoption wallet to make a bid.
             </p>
             <div className={s.deposit_wrapper}>
               <p className={s.deposit_guide}>
@@ -203,25 +208,33 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
               <div className={s.balance}>
                 <div className={s.balance_item}>
                   <span>GM Balance</span>
-                  <span className={s.balance_amount}>{`${formatEthPrice(gmBalance)} GM`}</span>
+                  <span className={s.balance_amount}>{`${formatEthPrice(
+                    gmBalance
+                  )} GM`}</span>
                 </div>
                 <div className={s.balance_item}>
-                  <span>Auction Wallet</span>
-                  <span className={s.balance_amount}>{`${formatEthPrice(gmDepositBalance)} GM`}</span>
+                  <span>Adoption Wallet</span>
+                  <span className={s.balance_amount}>{`${formatEthPrice(
+                    gmDepositBalance
+                  )} GM`}</span>
                 </div>
               </div>
-              <div className={cs(s.modal_input, {
-                [s.error]: errors.amount && touched.amount
-              })}>
+              <div
+                className={cs(s.modal_input, {
+                  [s.error]: errors.amount && touched.amount,
+                })}
+              >
                 <input
-                  name='amount'
+                  name="amount"
                   type="number"
                   value={values.amount}
                   onChange={handleChange}
-                  placeholder='0.0'
+                  placeholder="0.0"
                 />
                 <div className={s.modal_input_right}>
-                  <Button type='button' onClick={handleSetMaxAmount}>Max</Button>
+                  <Button type="button" onClick={handleSetMaxAmount}>
+                    Max
+                  </Button>
                   <span>GM</span>
                 </div>
               </div>
@@ -230,13 +243,8 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
               )}
             </div>
             <div className={s.divider}></div>
-            <EstimatedFee
-              estimateBTCGas={estBTCFee}
-              estimateTCGas={estTCFee}
-            />
-            <Button
-              disabled={!isValid || processing}
-              className={s.cta_btn}>
+            <EstimatedFee estimateBTCGas={estBTCFee} estimateTCGas={estTCFee} />
+            <Button disabled={!isValid || processing} className={s.cta_btn}>
               Deposit
             </Button>
           </form>
