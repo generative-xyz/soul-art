@@ -3,6 +3,7 @@ import React, {
   forwardRef,
   memo,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -26,6 +27,8 @@ import attributeStyles from './attribute.module.scss';
 import cs from 'classnames';
 import logger from '@/services/logger';
 import { getCollectionNFTList } from '@/services/marketplace';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { AssetsContext } from '@/contexts/assets-context';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -54,7 +57,7 @@ export interface ISubmitValues {
 
 const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
-
+  const { ownerTokenId } = useContext(AssetsContext);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [filterYourSoul, setFilterYourSoul] = useState(false);
   const [ownerHasSoul, setOwnerHasSoul] = useState(false);
@@ -102,7 +105,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
         logger.error("failed to get owner's Soul");
       }
     }
-  }, []);
+  }, [user]);
 
   const syncAttributesState = useMemo<boolean>(() => {
     return attributes.some(attr => router.query[attr.traitName]);
@@ -113,16 +116,8 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
     return ownerHasSoul;
   }, [ownerHasSoul, isAuthenticated]);
 
-  const handleFilterMyToken = () => {
-    if (user && user.walletAddress) {
-      router.push(
-        {
-          query: { owner: user.walletAddress },
-        },
-        undefined,
-        { shallow: true }
-      );
-    }
+  const goToOwnerSoul = () => {
+    router.push(`${ROUTE_PATH.HOME}/${ownerTokenId}`);
   };
 
   const handleShowFilter = (show: boolean) => {
@@ -190,7 +185,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 attributeStyles.attribute_button,
                 filterYourSoul && attributeStyles.active
               )}
-              onClick={handleFilterMyToken}
+              onClick={goToOwnerSoul}
             >
               Your Soul
             </Button>
@@ -250,7 +245,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                   className={classNames(
                     attributeStyles.attribute_iconLive,
                     isEnabledAttributesFilter &&
-                    attributeStyles.attribute_iconLive_active
+                      attributeStyles.attribute_iconLive_active
                   )}
                 >
                   <div className={attributeStyles.dots_circle}></div>

@@ -21,7 +21,7 @@ const FeatureAlert = () => {
   const router = useRouter();
 
   const goToTokenPage = useCallback(() => {
-    router.push(`${ROUTE_PATH.HOME}/${ownerTokenId}?tab=effect`);
+    router.push({ pathname: `${ROUTE_PATH.HOME}/${ownerTokenId}` }, undefined, {shallow: false});
   }, [ownerTokenId, router]);
 
   const getFeatureByIndex = (index: number): Feature | undefined => {
