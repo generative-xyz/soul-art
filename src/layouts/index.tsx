@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
+import FeatureAlert from './FeatureAlert';
 import Header from './Header';
 import s from './layout.module.scss';
 import { useRouter } from 'next/router';
 import { ROUTE_PATH } from '@/constants/route-path';
-import FeatureAlert from './FeatureAlert';
 import Banner from './Banner';
 import { CLAIM_START_TIME } from '@/configs';
 import useTimeComparison from '@/hooks/useTimeComparison';
