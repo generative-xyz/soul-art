@@ -61,8 +61,8 @@ const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
   return (
     <div className={s.artDetail}>
       <Container>
-        <Row className={s.row}>
-          <Col lg={4}>
+        <Row className={s.row} id="soul-detail-main-section">
+          <Col lg={4} className={s.left_col}>
             <AuctionProvider>
               <AuctionInfo data={soulDetail} />
               <TabsComponent data={soulDetail} />

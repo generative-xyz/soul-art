@@ -1,3 +1,11 @@
 .artDetail {
   padding-top: 0;
+
+  .row {
+    overflow: hidden;
+  }
+
+  .left_col {
+    max-height: 500px;
+  }
 }

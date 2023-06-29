@@ -43,7 +43,7 @@ const ConnectWallet: React.FC = (): React.ReactElement => {
     <Wrapper>
       <div className="mainContent">
         <h1 className="title">Connect Wallet</h1>
-        <p className="desc">Connect your wallet to access on Souls.</p>
+        <p className="desc">Connect your wallet to adopt a Soul.</p>
         <ConnectWalletButton
           className={'connectWalletButtonWrapper'}
           disabled={isConnecting}

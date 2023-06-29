@@ -4,11 +4,11 @@ import { SoulsContainer } from '@/containers/Souls';
 import Layout from '@/layouts';
 import { NextPage } from 'next';
 
-const SoulsPage: NextPage = () => {
+const OrphanagePage: NextPage = () => {
   return (
     <Layout>
       {/*<Banner type={'normal'} />*/}
-      <SoulsContainer />
+      <SoulsContainer isOrphanagePage={true} />
     </Layout>
   );
 };
@@ -17,13 +17,13 @@ export async function getServerSideProps() {
   return {
     props: {
       seoInfo: {
-        title: 'The Souls | Art',
+        title: 'The Souls | Orphanage',
         description:
-          'Enjoy Souls - a living masterpiece that is dynamically evolving and reacting to various stimuli.',
+          'Browse available Souls, submit adoption proposals, and view adopted Souls.',
         image: `${CDN_URL}/soul-metadata.jpg`,
       },
     },
   };
 }
 
-export default SoulsPage;
+export default OrphanagePage;
