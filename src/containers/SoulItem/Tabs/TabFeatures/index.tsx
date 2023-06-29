@@ -11,10 +11,10 @@ import UnlockFeature from './UnlockFeature';
 
 const TabFeatures = ({
   owner,
-  mintedBlock,
-}: {
+}: // mintedBlock,
+{
   owner: string;
-  mintedBlock?: string | number;
+  // mintedBlock?: string | number;
 }) => {
   const router = useRouter();
   const user = useSelector(getUserSelector);
@@ -34,10 +34,17 @@ const TabFeatures = ({
 
   // Get token block hold time
   useAsyncEffect(async () => {
-    if (!mintedBlock) return;
     const currentBlock = await web3Instance.getCurrentBlockNumber();
-    setTokenBlocksExist(currentBlock - Number(mintedBlock));
-  }, [mintedBlock]);
+    const mintedBlock = await web3Instance.getMintedBlock(Number(tokenId));
+    const lastSettleBlock = await web3Instance.getLastSettleBlock(
+      Number(tokenId)
+    );
+    if (lastSettleBlock > 0) {
+      setTokenBlocksExist(currentBlock - lastSettleBlock);
+    } else {
+      setTokenBlocksExist(currentBlock - Number(mintedBlock));
+    }
+  }, []);
 
   // Get current setting features
   useAsyncEffect(async () => {
