@@ -11,6 +11,9 @@ import TabFeatures from './TabFeatures';
 import TabHistories from './TabHistories';
 import TabInteraction from './TabInteraction';
 import s from './style.module.scss';
+import Link from 'next/link';
+import { CDN_URL, SOUL_CONTRACT, TC_EXPLORER_URL } from '@/configs';
+import IconSVG from '@/components/IconSVG';
 
 const TabsComponent = ({
   data,
@@ -66,48 +69,62 @@ const TabsComponent = ({
   }, [isOwner, availableFeatures]);
 
   return (
-    <Tabs
-      activeKey={defaultTab}
-      className={s.tabs}
-      onSelect={key => {
-        if (!key) return;
-        setDefaultTab(key);
-      }}
-    >
-      {tabList.map((tab, index) => {
-        return (
-          <Tab
-            mountOnEnter
-            eventKey={index}
-            key={index}
-            title={
-              tab.title !== 'Effects' ? (
-                tab.title
-              ) : (
-                <>
-                  {tab.title}{' '}
-                  {isOwner &&
-                    availableFeatures &&
-                    availableFeatures.length > 0 &&
-                    account?.toLowerCase() === data.owner && (
-                      <span className={s.alert_dots}></span>
-                    )}
-                </>
-              )
-            }
-            className={`${s.content_auction_tab}`}
-          >
-            <div className={`${s.content_auction_tabBox} small-scrollbar`}>
-              {tab.type === 'bidders' && <TabBidders />}
-              {tab.type === 'desc' && <TabDescription />}
-              {tab.type === 'inter' && <TabInteraction />}
-              {tab.type === 'effect' && <TabFeatures owner={data.owner} />}
-              {tab.type === 'history' && <TabHistories data={data} />}
-            </div>
-          </Tab>
-        );
-      })}
-    </Tabs>
+    <div className={s.wrapper}>
+      <Tabs
+        activeKey={defaultTab}
+        className={s.tabs}
+        onSelect={key => {
+          if (!key) return;
+          setDefaultTab(key);
+        }}
+      >
+        {tabList.map((tab, index) => {
+          return (
+            <Tab
+              mountOnEnter
+              eventKey={index}
+              key={index}
+              title={
+                tab.title !== 'Effects' ? (
+                  tab.title
+                ) : (
+                  <>
+                    {tab.title}{' '}
+                    {isOwner &&
+                      availableFeatures &&
+                      availableFeatures.length > 0 &&
+                      account?.toLowerCase() === data.owner && (
+                        <span className={s.alert_dots}></span>
+                      )}
+                  </>
+                )
+              }
+              className={`${s.content_auction_tab}`}
+            >
+              <div className={`${s.content_auction_tabBox} small-scrollbar`}>
+                {tab.type === 'bidders' && <TabBidders />}
+                {tab.type === 'desc' && <TabDescription />}
+                {tab.type === 'inter' && <TabInteraction />}
+                {tab.type === 'effect' && <TabFeatures owner={data.owner} />}
+                {tab.type === 'history' && <TabHistories data={data} />}
+              </div>
+            </Tab>
+          );
+        })}
+      </Tabs>
+      <Link
+        href={`${TC_EXPLORER_URL}/address/${SOUL_CONTRACT}`}
+        className={s.explorer_link}
+        target="_blank"
+      >
+        Contract
+        <IconSVG
+          src={`${CDN_URL}/ic-arrow-up-right.svg`}
+          maxHeight="20"
+          maxWidth="20"
+        ></IconSVG>
+      </Link>
+    </div>
   );
 };
 
