@@ -1,7 +1,8 @@
 import { ROUTE_PATH } from '@/constants/route-path';
+import { LandingContainer } from '@/containers/Landing';
+import { AnimateProvider } from '@/contexts/animate-context';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import Homepage from '@/containers/Home';
 import React from 'react';
 
 const LandingPage: NextPage = (): React.ReactElement => {
@@ -14,7 +15,11 @@ const LandingPage: NextPage = (): React.ReactElement => {
     localStorage.setItem('route', router.pathname);
   }
 
-  return <Homepage />;
+  return (
+    <AnimateProvider>
+      <LandingContainer />
+    </AnimateProvider>
+  );
 };
 
 export default LandingPage;

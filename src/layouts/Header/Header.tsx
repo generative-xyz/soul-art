@@ -66,7 +66,7 @@ WalletToggle.displayName = 'WalletToggle';
 const NAV_CONTENT: NavContent[] = [
   {
     title: 'Story',
-    url: ROUTE_PATH.HOME,
+    url: ROUTE_PATH.STORY,
   },
   {
     title: 'Artworks',

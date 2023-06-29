@@ -5,6 +5,8 @@ import s from './style.module.scss';
 import { contentItem } from './TechItem';
 import { techOverlay } from '@/constants/asset';
 import { CDN_URL } from '@/configs';
+import Link from 'next/link';
+import IconSVG from '@/components/IconSVG';
 
 const Tech: React.FC = () => {
   const contentArray: contentItem[] = [
@@ -51,7 +53,7 @@ const Tech: React.FC = () => {
         </div>
         <Container className={s.container}>
           <Row>
-            <Col className={`${s.leftContainer}`} xs={12} md={5} lg={5}>
+            <Col className={`${s.leftContainer}`} xs={12} md={5} lg={4}>
               <div className={s.wrapLeftContainer}>
                 <Text
                   size={'d0'}
@@ -59,11 +61,45 @@ const Tech: React.FC = () => {
                   animOption={{ screen: 0, offset: 0, type: 'heading' }}
                   className={s['leftContainer-title']}
                 >
-                  The Art of Emotions
+                  $GM: Empowering Ownership and Influence
                 </Text>
+
+                <Text
+                  as={'p'}
+                  size={'24'}
+                  color={'primary-white'}
+                  animOption={{ screen: 0, offset: 0, type: 'paragraph' }}
+                  className={s['leftContainer-subTitle']}
+                >
+                  $GM serves as the native currency and a fundamental element
+                  within the Souls ecosystem. As the first smart contract on
+                  Bitcoin, these tokens not only represent ownership of a Soul
+                  but also grant holders a unique level of influence on the
+                  artwork. It empowers users to shape the artistic expression of
+                  the Souls and significantly influences the direction and
+                  evolution of the entire ecosystem.
+                </Text>
+
+                <Link
+                  href={`https://newbitcoincity.com/gm`}
+                  className={s.leftContainerButton}
+                >
+                  Learn more about GM
+                  <IconSVG
+                    src={`${CDN_URL}/bannerArrow.svg`}
+                    maxWidth="12"
+                    maxHeight="8"
+                    className={s.icon}
+                  />
+                </Link>
               </div>
             </Col>
-            <Col className={s['right-container']} xs={12} md={7} lg={7}>
+            <Col
+              className={s['right-container']}
+              xs={12}
+              md={7}
+              lg={{ span: 7, offset: 1 }}
+            >
               {contentArray.map(item => (
                 <TechItem key={item.id} item={item} />
               ))}
