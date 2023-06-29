@@ -182,12 +182,8 @@ export const SoulsContainer: React.FC<Props> = ({
             The Soul orphanage is where users can browse available Souls, submit
             adoption proposals, and view their adopted Souls.
           </p>
-          <Link
-            href={`https://newbitcoincity.com/souls/whitepaper.pdf`}
-            target="_blank"
-            className={s.empty_adopt}
-          >
-            Read the Whitepaper
+          <Link href={ROUTE_PATH.HOME} className={s.empty_adopt}>
+            View Story
             <IconSVG
               src={`${CDN_URL}/ic-arrow-right.svg`}
               maxHeight="14"
