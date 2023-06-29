@@ -165,7 +165,7 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
       <p className={s.dataText}>
         {formatDateTime({
           dateTime: bid.time,
-          formatPattern: 'MMM D, YYYY [at] h:mma'
+          formatPattern: 'MMM D, YYYY [at] h:mma [UTC]'
         })}
       </p>
     )
