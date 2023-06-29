@@ -40,7 +40,7 @@ export const LightboxProvider: React.FC<PropsWithChildren> = ({
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setZoomLevel((prevZoomLevel) => (prevZoomLevel > 0.2 ? prevZoomLevel - 0.1 : 0.1));
+    setZoomLevel((prevZoomLevel) => (prevZoomLevel > 0.5 ? prevZoomLevel - 0.1 : 0.5));
   }, []);
 
   useEffect(() => {
