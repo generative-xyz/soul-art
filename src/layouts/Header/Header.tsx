@@ -296,6 +296,8 @@ const Header = ({
                             src={`${CDN_URL}/ic_round-info.svg`}
                             maxWidth="16"
                             maxHeight="16"
+                            color={homepage ? 'white' : 'black'}
+                            type="fill"
                           ></IconSVG>
                           Adoption Wallet
                         </p>

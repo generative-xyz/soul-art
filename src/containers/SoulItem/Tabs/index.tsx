@@ -101,12 +101,7 @@ const TabsComponent = ({
               {tab.type === 'bidders' && <TabBidders />}
               {tab.type === 'desc' && <TabDescription />}
               {tab.type === 'inter' && <TabInteraction />}
-              {tab.type === 'effect' && (
-                <TabFeatures
-                  owner={data.owner}
-                  mintedBlock={data.blockNumber}
-                />
-              )}
+              {tab.type === 'effect' && <TabFeatures owner={data.owner} />}
               {tab.type === 'history' && <TabHistories data={data} />}
             </div>
           </Tab>
