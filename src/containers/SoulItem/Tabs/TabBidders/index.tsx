@@ -1,22 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
-import s from './styles.module.scss';
-import { formatLongAddress } from '@trustless-computer/dapp-core';
+import Empty from '@/components/Empty';
+import InfiniteLoading from '@/components/InfiniteLoading';
+import { TC_EXPLORER_URL } from '@/configs';
 import { AuctionContext } from '@/contexts/auction-context';
-import { getBidderList } from '@/services/auction';
 import { IAuctionBid } from '@/interfaces/api/auction';
-import uniqBy from 'lodash/uniqBy';
+import { getBidderList } from '@/services/auction';
+import logger from '@/services/logger';
+import { getUserSelector } from '@/state/user/selector';
 import { formatEthPrice } from '@/utils/format';
 import { formatDateTime } from '@/utils/time';
-import InfiniteLoading from '@/components/InfiniteLoading';
-import logger from '@/services/logger';
-import Jazzicon from 'react-jazzicon/dist/Jazzicon';
-import { jsNumberForAddress } from 'react-jazzicon';
+import { formatLongAddress } from '@trustless-computer/dapp-core';
+import uniqBy from 'lodash/uniqBy';
 import Link from 'next/link';
-import { TC_EXPLORER_URL } from '@/configs';
-import Empty from '@/components/Empty';
-import ImageWrapper from '@/components/ImageWrapper';
+import React, { useContext, useEffect, useState } from 'react';
+import { jsNumberForAddress } from 'react-jazzicon';
+import Jazzicon from 'react-jazzicon/dist/Jazzicon';
 import { useSelector } from 'react-redux';
-import { getUserSelector } from '@/state/user/selector';
+import s from './styles.module.scss';
 
 const LIMIT_PAGE = 20;
 
@@ -42,7 +41,7 @@ const TabBidders: React.FC = (): React.ReactElement => {
       if (page === 1) {
         setBidders(items || []);
       } else {
-        setBidders((prev) => uniqBy([...prev, ...items], 'sender'));
+        setBidders(prev => uniqBy([...prev, ...items], 'sender'));
       }
 
       if (bidders.length < total) {
@@ -55,64 +54,72 @@ const TabBidders: React.FC = (): React.ReactElement => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchBidders(1);
-  }, [auction])
+  }, [auction]);
 
   return (
     <div className={s.tabLive}>
       {bidders.length === 0 && (
         <div className={s.emptyWrapper}>
-          <Empty infoText='Waiting for the first bidder' />
+          <Empty infoText="Waiting for the first bidder" />
         </div>
       )}
-      {bidders.length > 0 && bidders.map((bidder, index) => (
-        <Link href={`${TC_EXPLORER_URL}/address/${bidder.sender}`} target='_blank' className={s.tabLiveItem} key={index}>
-          <div className={s.tabLiveLeft}>
-            {bidder.bidderAvatar ? (
+      {bidders.length > 0 &&
+        bidders.map((bidder, index) => (
+          <Link
+            href={`${TC_EXPLORER_URL}/address/${bidder.sender}`}
+            target="_blank"
+            className={s.tabLiveItem}
+            key={index}
+          >
+            <div className={s.tabLiveLeft}>
+              {/* {bidder.bidderAvatar ? (
               <ImageWrapper
                 src={bidder.bidderAvatar}
                 className={s.bidderAvatar}
                 width={40}
                 height={40}
               />
-            ) : (
+            ) : ( */}
               <Jazzicon
                 diameter={40}
                 seed={jsNumberForAddress(bidder.sender)}
               />
-            )}
-            <p className={s.tabLiveLeftAddress}>
-              {bidder.bidderName ? bidder.bidderName : formatLongAddress(`${bidder.sender}`)}
-            </p>
-            {bidder.sender.toLowerCase() === user?.walletAddress?.toLowerCase() && (
-              <div className={s.currentUserTag}>
-                You
-              </div>
-            )}
-          </div>
-          <div className={s.tabLiveRight}>
-            <p className={s.tabLiveRightPrice}>
-              {`${formatEthPrice(bidder.amount)} GM`}
-            </p>
-            <p className={s.tabLiveRightTime}>
-              {formatDateTime({
-                dateTime: bidder.time,
-                formatPattern: 'MMM D, YYYY [at] h:mma'
-              })}
-            </p>
-          </div>
-        </Link>
-      ))}
-      {hasMore &&
+              {/* )} */}
+              <p className={s.tabLiveLeftAddress}>
+                {/* {bidder.bidderName
+                  ? bidder.bidderName
+                  : formatLongAddress(`${bidder.sender}`)} */}
+                {formatLongAddress(`${bidder.sender}`)}
+              </p>
+              {bidder.sender.toLowerCase() ===
+                user?.walletAddress?.toLowerCase() && (
+                <div className={s.currentUserTag}>You</div>
+              )}
+            </div>
+            <div className={s.tabLiveRight}>
+              <p className={s.tabLiveRightPrice}>
+                {`${formatEthPrice(bidder.amount)} GM`}
+              </p>
+              <p className={s.tabLiveRightTime}>
+                {formatDateTime({
+                  dateTime: bidder.time,
+                  formatPattern: 'MMM D, YYYY [at] h:mma',
+                })}
+              </p>
+            </div>
+          </Link>
+        ))}
+      {hasMore && (
         <InfiniteLoading
           fetchMoreData={fetchBidders}
           isLoading={loading}
           hasMoreData={hasMore}
         />
-      }
+      )}
     </div>
   );
 };

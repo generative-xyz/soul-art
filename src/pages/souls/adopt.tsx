@@ -21,7 +21,7 @@ export async function getServerSideProps() {
         title: 'The Souls | Adopt Souls',
         description:
           'Adopt Souls - the first-ever soulbound art that are non-transferable and intimately linked to you.',
-        image: `${CDN_URL}/images/1.jpg`,
+        image: `${CDN_URL}/soul-metadata.jpg`,
       },
     },
   };

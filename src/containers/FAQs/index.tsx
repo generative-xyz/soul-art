@@ -31,6 +31,20 @@ const FAQ_CONTENT = [
     title: 'How long does the adoption process take?',
     desc: '7 days.',
   },
+  {
+    title:
+      'Do we have to claim it or will it be airdropped to eligible wallets?',
+    desc: 'You have to adopt your Soul on site.',
+  },
+  {
+    title: 'Do I need TC and BTC to adopt a Soul?',
+    desc: 'Yes. You need some TC and BTC to cover network fees.',
+  },
+  {
+    title:
+      'Could I adopt another Soul if I already have one by winning the bid for an orphan Soul?',
+    desc: 'One wallet will have only one Soul. You can use a different wallet if you want to adopt another one.',
+  },
 ];
 
 const FAQs = () => {

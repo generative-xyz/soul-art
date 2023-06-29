@@ -8,11 +8,12 @@ import Banner from './Banner';
 import { CLAIM_START_TIME } from '@/configs';
 import useTimeComparison from '@/hooks/useTimeComparison';
 import cs from 'classnames';
+import { LightboxProvider } from '@/contexts/Lightbox/lighbox-context';
 
 export const HEADER_HEIGHT = 80;
 export const FO0TER_HEIGHT = 80;
 
-const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+const Layout: React.FC<PropsWithChildren> = ({ children }): React.ReactElement => {
   const router = useRouter();
   const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
   const isEventStarted =
@@ -30,20 +31,28 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <>
-      <div className={s.container}>
-        <Header height={HEADER_HEIGHT} />
-        {isEventStarted && <Banner type='' />}
-        <main
-          className={cs(s.main, {
-            [`${s.eventStarted}`]: isEventStarted
-          })}>
-          {children}
-        </main>
-        <FeatureAlert />
-      </div>
-    </>
+    <div className={s.container}>
+      <Header height={HEADER_HEIGHT} />
+      {isEventStarted && <Banner type='' />}
+      <main
+        className={cs(s.main, {
+          [`${s.eventStarted}`]: isEventStarted
+        })}>
+        {children}
+      </main>
+      <FeatureAlert />
+    </div>
   );
 };
 
-export default Layout;
+const WrappedLayout: React.FC<PropsWithChildren> = ({ children }): React.ReactElement => {
+  return (
+    <LightboxProvider>
+      <Layout >
+        {children}
+      </Layout>
+    </LightboxProvider>
+  )
+}
+
+export default WrappedLayout;

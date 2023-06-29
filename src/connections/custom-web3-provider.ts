@@ -30,6 +30,24 @@ class CustomWeb3Provider {
     return blockNumber;
   }
 
+  async getMintedBlock(tokenId: number): Promise<number> {
+    const contract = new this.web3.eth.Contract(
+      SoulAbiJson.abi as Array<AbiItem>,
+      SOUL_CONTRACT
+    );
+    const blockNumber = await contract.methods._mintAt(tokenId).call();
+    return blockNumber;
+  }
+
+  async getLastSettleBlock(tokenId: number): Promise<number> {
+    const contract = new this.web3.eth.Contract(
+      SoulAbiJson.abi as Array<AbiItem>,
+      SOUL_CONTRACT
+    );
+    const blockNumber = await contract.methods._lastSettle(tokenId).call();
+    return blockNumber;
+  }
+
   async calculateAverageBlockTime(): Promise<number> {
     const latestBlockNumber = await this.web3.eth.getBlockNumber();
     const numBlocksToAverage = 50;
