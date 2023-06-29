@@ -199,7 +199,7 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
         {({ values, errors, touched, handleChange, handleSubmit, isValid }) => (
           <form onSubmit={handleSubmit}>
             <p className={s.subTitle}>
-              Deposit $GM to your adoption wallet to make a bid.
+              Deposit $GM to your bidding wallet to make a bid.
             </p>
             <div className={s.deposit_wrapper}>
               <p className={s.deposit_guide}>
@@ -213,7 +213,7 @@ const ModalDeposit: React.FC<IProps> = ({ show, handleClose }: IProps) => {
                   )} GM`}</span>
                 </div>
                 <div className={s.balance_item}>
-                  <span>Adoption Wallet</span>
+                  <span>Bidding Wallet</span>
                   <span className={s.balance_amount}>{`${formatEthPrice(
                     gmDepositBalance
                   )} GM`}</span>

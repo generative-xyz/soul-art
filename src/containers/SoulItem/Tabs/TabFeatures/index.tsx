@@ -2,12 +2,13 @@ import web3Instance from '@/connections/custom-web3-provider';
 import logger from '@/services/logger';
 import { getUserSelector } from '@/state/user/selector';
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useAsyncEffect from 'use-async-effect';
 import FeatureInfo from './FeatureInfo';
 import s from './TabFeatures.module.scss';
 import UnlockFeature from './UnlockFeature';
+import px2rem from '@/utils/px2rem';
 
 const TabFeatures = ({
   owner,
@@ -20,6 +21,7 @@ const TabFeatures = ({
   const user = useSelector(getUserSelector);
 
   const [tokenBlocksExist, setTokenBlocksExist] = useState(0);
+  const [blockHeight, setBlockHeight] = useState(0);
 
   const { tokenId } = router.query as { tokenId: string };
 
@@ -74,8 +76,21 @@ const TabFeatures = ({
     }
   }, [settingFeatures, router.asPath, owner, tokenId]);
 
+  useEffect(() => {
+    const mainSection = document.getElementById('soul-detail-main-section');
+    // get height of main section
+    if (mainSection) {
+      setBlockHeight(mainSection.offsetHeight - 202);
+    }
+  }, []);
+
   return (
-    <div className={`${s.wrapper} small-scrollbar`}>
+    <div
+      className={`${s.wrapper} small-scrollbar`}
+      style={{
+        height: `${px2rem(blockHeight)}`,
+      }}
+    >
       {!!featuresStatus &&
         settingFeatures &&
         settingFeatures.length > 0 &&

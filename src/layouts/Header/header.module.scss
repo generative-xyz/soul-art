@@ -442,6 +442,7 @@
 
   .menu_container {
     background-color: rgba($color: #fff, $alpha: 0.1);
+    backdrop-filter: blur(200px);
   }
 
   .menu_divider {

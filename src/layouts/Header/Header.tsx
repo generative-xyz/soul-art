@@ -69,11 +69,15 @@ const NAV_CONTENT: NavContent[] = [
     url: ROUTE_PATH.HOME,
   },
   {
-    title: 'Art',
+    title: 'Artworks',
     url: ROUTE_PATH.ART,
   },
   {
-    title: 'Adopt status',
+    title: 'Orphanage',
+    url: ROUTE_PATH.ORPHANAGE,
+  },
+  {
+    title: 'Bidding',
     url: ROUTE_PATH.STATUS,
   },
   {
@@ -282,7 +286,7 @@ const Header = ({
                           <div className={s.auction_tooltip_content}>
                             <p>This wallet is only for Soul adoption.</p>
                             <p>
-                              Please deposit GM into your adoption wallet to
+                              Please deposit GM into your bidding wallet to
                               place a bid.
                             </p>
                           </div>
@@ -299,7 +303,7 @@ const Header = ({
                             color={homepage ? 'white' : 'black'}
                             type="fill"
                           ></IconSVG>
-                          Adoption Wallet
+                          Bidding Wallet
                         </p>
                       </div>
                     </OverlayTrigger>

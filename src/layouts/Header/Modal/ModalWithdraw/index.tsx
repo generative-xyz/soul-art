@@ -55,7 +55,7 @@ const ModalWithdraw: React.FC<IProps> = ({
     >
       <div className={s.modalContent}>
         <p className={s.reminderText}>
-          You will withdraw your entire $GM balance from the adoption wallet.
+          You will withdraw your entire $GM balance from the bidding wallet.
         </p>
         <div className={s.actionWrapper}>
           <Button
