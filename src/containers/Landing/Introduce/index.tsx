@@ -121,8 +121,12 @@ const Introduce: React.FC = () => {
                 Adopt a Soul
                 {renderCountdown}
               </Link>
-              <Link href={ROUTE_PATH.ART} className={cs(s.button, s.trans)}>
-                View Gallery
+              <Link
+                href={'https://newbitcoincity.com/gm '}
+                className={cs(s.button, s.trans)}
+                target="_blank"
+              >
+                Get GM
               </Link>
             </AnimFade>
 
