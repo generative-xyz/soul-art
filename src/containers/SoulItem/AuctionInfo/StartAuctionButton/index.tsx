@@ -92,11 +92,11 @@ const StartAuctionButton: React.FC<IProps> = ({
 
         if (receipt?.status === 1 || receipt?.status === 0) {
           logger.info('tx done', key);
-          localStorage.removeItem(key);
           intervalId && clearInterval(intervalId);
           await sleep(60000);
           setInscribing(false);
           fetchAuction();
+          localStorage.removeItem(key);
         }
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);

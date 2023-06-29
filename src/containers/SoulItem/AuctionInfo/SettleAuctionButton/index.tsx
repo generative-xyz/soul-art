@@ -90,9 +90,9 @@ const SettleAuctionButton: React.FC<IProps> = ({
 
         if (receipt?.status === 1 || receipt?.status === 0) {
           logger.info('tx done', key);
-          localStorage.removeItem(key);
           intervalId && clearInterval(intervalId);
           await sleep(60000);
+          localStorage.removeItem(key);
           setInscribing(false);
           fetchAuction();
         }

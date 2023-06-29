@@ -182,7 +182,9 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
           }}
           className={s.actionBtn}
           title='Bid up'
-        />
+        >
+          Bid up
+        </Button>
       );
     }
     if (bid?.auction?.status === AuctionStatus.ENDED) {

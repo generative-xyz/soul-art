@@ -188,9 +188,10 @@ const ModalBid: React.FC<IProps> = ({
         tokenId: tokenId,
         auctionId: auction.chainAuctionId,
       });
+      logger.info('user bid balance', balance);
       setUserBid(balance.toString());
     } catch (err: unknown) {
-      logger.error(err);
+      logger.error('can not get user bid info', err);
     }
   }, [auction, show, tokenId]);
 
