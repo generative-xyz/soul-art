@@ -41,15 +41,15 @@ const Introduce: React.FC = () => {
   const renderCountdown = useMemo(() => {
     return (
       <>
-        {!isEventStarted &&
+        {!isEventStarted && (
           <span className={s.countdown}>
             <SonarWaveCircle />
             <CountdownText countDownTo={CLAIM_START_TIME} />
           </span>
-        }
+        )}
       </>
-    )
-  }, [isEventStarted])
+    );
+  }, [isEventStarted]);
 
   return (
     <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>
@@ -122,7 +122,7 @@ const Introduce: React.FC = () => {
                 {renderCountdown}
               </Link>
               <Link
-                href={'https://newbitcoincity.com/gm '}
+                href={'https://newbitcoincity.com/gm'}
                 className={cs(s.button, s.trans)}
                 target="_blank"
               >

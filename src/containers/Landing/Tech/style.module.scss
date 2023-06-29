@@ -36,15 +36,16 @@
 
     .leftContainer {
       .wrapLeftContainer {
-        position: sticky;
-        top: var(--padding-top);
+        position: unset;
+        margin-bottom: rem(30px);
+        top: rem(100px);
 
         .leftContainer-title {
           font-size: rem(68px);
           font-weight: 400;
           font-style: normal;
           line-height: 100%;
-          margin-bottom: rem(60px);
+          margin-bottom: rem(24px);
           font-family: var(--righteous-font);
           width: 102%;
 
@@ -57,23 +58,63 @@
           }
         }
 
-        @include mobile {
-          position: unset;
+        .leftContainer-subTitle {
+          margin-bottom: rem(30px);
+          color: #fff;
+
+          @include min-tablet {
+            margin-bottom: rem(40px);
+          }
+        }
+
+        .leftContainerButton {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: rem(8px);
+          padding: rem(8px) rem(12px);
+          border: 1px solid rgba(#fff, 0.2);
+          background: rgba(#fff, 0.05);
+          width: 100%;
+          border-radius: rem(100px);
+          transition: all 0.5s ease-in-out;
+          font-size: rem(14px);
+          line-height: 140%;
+
+          .icon {
+            svg {
+              width: rem(14px);
+              height: rem(14px);
+
+              path {
+                fill: #fff
+              }
+            }
+          }
+
+          &:hover {
+            text-decoration: none;
+            border: 1px solid #fff;
+            background: #fff;
+            color: #000;
+          }
+
+          @include min-tablet {
+            font-size: rem(16px);
+            padding: rem(16px) rem(24px);
+            width: fit-content;
+          }
+
         }
 
         @include min-tablet {
           position: sticky;
         }
       }
-
-      &.fixed {
-        position: sticky;
-        top: rem(168px);
-      }
     }
 
     .right-container {
-      > div {
+      >div {
         margin-bottom: rem(60px);
 
         &:last-child {
