@@ -122,7 +122,7 @@ const Introduce: React.FC = () => {
                 {renderCountdown}
               </Link>
               <Link
-                href={'https://newbitcoincity.com/gm '}
+                href={'https://newbitcoincity.com/gm'}
                 className={cs(s.button, s.trans)}
                 target="_blank"
               >
