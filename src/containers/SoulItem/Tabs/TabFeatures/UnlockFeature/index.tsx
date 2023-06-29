@@ -121,7 +121,7 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
             maxWidth={'16'}
             maxHeight={'16'}
           />
-          Unlock
+          {isOwner ? 'Unlock' : 'Locked'}
         </Button>
       );
     case FeatureStatus['Unlocked']:

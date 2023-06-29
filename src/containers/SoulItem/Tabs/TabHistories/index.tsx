@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import s from './styles.module.scss';
 import { getSoulHistories } from '@/services/soul';
 import { ITokenDetail } from '@/interfaces/api/marketplace';
@@ -18,6 +18,7 @@ import { getUserSelector } from '@/state/user/selector';
 import { formatEthPrice } from '@/utils/format';
 import ImageWrapper from '@/components/ImageWrapper';
 import { TC_EXPLORER_URL } from '@/configs';
+import { LightboxContext } from '@/contexts/Lightbox/lighbox-context';
 
 const LIMIT_PAGE = 20;
 
@@ -27,6 +28,7 @@ interface IProps {
 
 const TabHistories: React.FC<IProps> = ({ data }: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
+  const { handleShow } = useContext(LightboxContext);
   const [histories, setHistories] = useState<Array<ISoulHistoryItem>>([]);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
@@ -59,6 +61,11 @@ const TabHistories: React.FC<IProps> = ({ data }: IProps): React.ReactElement =>
     }
   }
 
+  const handleOpenLightbox = (e: React.MouseEvent<HTMLImageElement>, history: ISoulHistoryItem) => {
+    e.stopPropagation();
+    handleShow(history.imageCapture);
+  }
+
   const tableData = useMemo(() => {
     return histories.map((item, index) => {
       const featureName = Feature[item.featureName as keyof typeof Feature];
@@ -72,7 +79,11 @@ const TabHistories: React.FC<IProps> = ({ data }: IProps): React.ReactElement =>
         render: {
           thumbnail: (
             <div className={s.thumbnailWrapper}>
-              <ImageWrapper className={s.thumbnailImg} src={item.imageCapture} alt="thumbnail image" />
+              <ImageWrapper
+                onClick={(e) => handleOpenLightbox(e, item)}
+                className={s.thumbnailImg}
+                src={item.imageCapture}
+                alt="thumbnail image" />
             </div>
           ),
           timeCapture: (
@@ -125,27 +136,29 @@ const TabHistories: React.FC<IProps> = ({ data }: IProps): React.ReactElement =>
   }, [data])
 
   return (
-    <div className={s.tabHistory}>
-      {histories.length === 0 && (
-        <div className={s.emptyWrapper}>
-          <Empty />
-        </div>
-      )}
-      {histories.length > 0 && (
-        <Table
-          tableHead={['Image', 'Time capture', 'Owner', 'Info', 'Event']}
-          classWrapper={s.historyTableData}
-          data={tableData}
-        />
-      )}
-      {hasMore &&
-        <InfiniteLoading
-          fetchMoreData={fetchData}
-          isLoading={loading}
-          hasMoreData={hasMore}
-        />
-      }
-    </div>
+    <>
+      <div className={s.tabHistory}>
+        {histories.length === 0 && (
+          <div className={s.emptyWrapper}>
+            <Empty />
+          </div>
+        )}
+        {histories.length > 0 && (
+          <Table
+            tableHead={['Image', 'Time capture', 'Owner', 'Info', 'Event']}
+            classWrapper={s.historyTableData}
+            data={tableData}
+          />
+        )}
+        {hasMore &&
+          <InfiniteLoading
+            fetchMoreData={fetchData}
+            isLoading={loading}
+            hasMoreData={hasMore}
+          />
+        }
+      </div>
+    </>
   );
 }
 

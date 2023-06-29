@@ -3,7 +3,9 @@
   flex-direction: column;
   gap: rem(12px);
   margin-top: rem(24px);
-  height: calc(80vh - 202px);
+  // height: calc(80vh - 202px);
+  // height: 200px;
+  height: auto;
   overflow: scroll;
 }
 

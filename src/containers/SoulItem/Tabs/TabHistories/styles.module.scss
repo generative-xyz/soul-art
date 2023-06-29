@@ -16,12 +16,12 @@
 
       thead {
         th {
-          color: #000 !important;
+          color: #898989 !important;
           font-size: rem(12px) !important;
           line-height: 140% !important;
-          opacity: 0.6;
           font-weight: 400 !important;
           white-space: nowrap;
+          background: #fff;
         }
       }
 
@@ -68,6 +68,7 @@
       width: rem(40px);
       height: rem(40px);
       object-fit: contain;
+      cursor: zoom-in;
     }
 
     .dataSubText {

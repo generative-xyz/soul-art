@@ -57,6 +57,10 @@
   }
 }
 
+.wrapper {
+  position: relative;
+}
+
 .alert_dots {
   width: rem(8px);
   height: rem(8px);
@@ -65,8 +69,20 @@
   display: inline-block;
   margin-left: rem(2px);
   transform: translateY(-0.5px);
-  // position: absolute;
-  // right: 0;
-  // top: 50%;
-  // transform: translate(calc(100% + rem(4px)), -50%);
+}
+
+.explorer_link {
+  position: absolute;
+  top: rem(5px);
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: rem(4px);
+  font-size: rem(16px);
+  line-height: 140%;
+
+  &:hover {
+    text-decoration: none;
+    opacity: 0.6;
+  }
 }

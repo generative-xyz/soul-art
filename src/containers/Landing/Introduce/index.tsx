@@ -41,15 +41,15 @@ const Introduce: React.FC = () => {
   const renderCountdown = useMemo(() => {
     return (
       <>
-        {!isEventStarted &&
+        {!isEventStarted && (
           <span className={s.countdown}>
             <SonarWaveCircle />
             <CountdownText countDownTo={CLAIM_START_TIME} />
           </span>
-        }
+        )}
       </>
-    )
-  }, [isEventStarted])
+    );
+  }, [isEventStarted]);
 
   return (
     <div className={`${s.introduce} ${isShow ? s.popupOpen : ''}`}>

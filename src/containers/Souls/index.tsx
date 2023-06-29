@@ -15,10 +15,18 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import s from './souls.module.scss';
+import cs from 'classnames';
+import IconSVG from '@/components/IconSVG';
 
 const LIMIT_PAGE = 20;
 
-export const SoulsContainer: React.FC = () => {
+export interface Props {
+  isOrphanagePage?: boolean;
+}
+
+export const SoulsContainer: React.FC<Props> = ({
+  isOrphanagePage = false,
+}: Props) => {
   const router = useRouter();
   const [initialLoading, setInitialLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
@@ -68,16 +76,13 @@ export const SoulsContainer: React.FC = () => {
           page: number;
           limit: number;
           owner?: string;
-          isShowAll?: boolean;
-          isBigFile?: boolean;
           sortBy?: string;
           sort?: number;
         } = {
           page,
           limit: LIMIT_PAGE,
-          isShowAll: undefined,
-          isBigFile: undefined,
-          owner: owner || undefined,
+          // TODO: Update query when API filter orphan ready
+          owner: isOrphanagePage ? '0x00' : owner || undefined,
           sortBy: sortBy || undefined,
           sort: sort || undefined,
         };
@@ -143,20 +148,47 @@ export const SoulsContainer: React.FC = () => {
   }
 
   if (souls && souls.length === 0 && _.isEmpty(router.query)) {
+    if (!isOrphanagePage) {
+      return (
+        <div className={s.emptyWrapper}>
+          <div className={s.empty}>
+            <div className={s.empty_thumbnailWrapper}>
+              <img
+                src={`${CDN_URL}/img-empty-thumbnail.png`}
+                alt="empty thumbnail image"
+              />
+            </div>
+            <p className={s.empty_content}>
+              Be the first one to adopt a Soul. Adopt a Soul here.
+            </p>
+            <Link href={ROUTE_PATH.CLAIM} className={s.empty_adopt}>
+              Adopt a Soul
+            </Link>
+          </div>
+        </div>
+      );
+    }
     return (
-      <div className={s.emptyWrapper}>
+      <div className={cs(s.emptyWrapper, s.orphanageEmpty)}>
         <div className={s.empty}>
+          <h5>Souls Orphanage</h5>
           <div className={s.empty_thumbnailWrapper}>
             <img
-              src={`${CDN_URL}/img-empty-thumbnail.png`}
+              src={`${CDN_URL}/orphan-empty-thumbnail%20(1).png`}
               alt="empty thumbnail image"
             />
           </div>
           <p className={s.empty_content}>
-            Be the first one to adopt a Soul. Adopt a Soul here.
+            The Soul orphanage is where users can browse available Souls, submit
+            adoption proposals, and view their adopted Souls.
           </p>
-          <Link href={ROUTE_PATH.CLAIM} className={s.empty_adopt}>
-            Adopt a Soul
+          <Link href={ROUTE_PATH.HOME} className={s.empty_adopt}>
+            View Story
+            <IconSVG
+              src={`${CDN_URL}/ic-arrow-right.svg`}
+              maxHeight="14"
+              maxWidth="14"
+            />
           </Link>
         </div>
       </div>

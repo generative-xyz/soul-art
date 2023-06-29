@@ -573,6 +573,43 @@
         {
           "indexed": false,
           "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "featureName",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "balanceGM",
+          "type": "uint256"
+        }
+      ],
+      "name": "UnlockFeature",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "account",
           "type": "address"
         }
@@ -846,6 +883,45 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "_dao",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_daoBlockReserve",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "_daoGMThreshold",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -882,6 +958,25 @@
           "internalType": "address",
           "name": "",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "_lastSettle",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -1160,6 +1255,45 @@
           "type": "address"
         }
       ],
+      "name": "changeDao",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newBlockReserve",
+          "type": "uint256"
+        }
+      ],
+      "name": "changeDaoBlockReserve",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "newThreshold",
+          "type": "uint256"
+        }
+      ],
+      "name": "changeDaoGmThreshold",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newAddr",
+          "type": "address"
+        }
+      ],
       "name": "changeParamAddr",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -1301,14 +1435,14 @@
           "type": "string[11]"
         },
         {
-          "internalType": "uint16[11]",
+          "internalType": "uint256[11]",
           "name": "balances",
-          "type": "uint16[11]"
+          "type": "uint256[11]"
         },
         {
-          "internalType": "uint16[11]",
+          "internalType": "uint256[11]",
           "name": "holdTimes",
-          "type": "uint16[11]"
+          "type": "uint256[11]"
         }
       ],
       "stateMutability": "view",
