@@ -66,13 +66,13 @@ WalletToggle.displayName = 'WalletToggle';
 
 const NAV_CONTENT: NavContent[] = [
   {
-    title: 'Story',
+    title: 'Souls',
     url: ROUTE_PATH.STORY,
   },
-  {
-    title: 'Artworks',
-    url: ROUTE_PATH.ART,
-  },
+  // {
+  //   title: 'Artworks',
+  //   url: ROUTE_PATH.ART,
+  // },
   {
     title: 'GM',
     url: 'https://newbitcoincity.com/gm',
