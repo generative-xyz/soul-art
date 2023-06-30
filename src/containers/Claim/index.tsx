@@ -13,8 +13,6 @@ import useMint from '@/hooks/contract-operations/soul/useMint';
 import { toStorageKey } from '@/utils';
 import useAsyncEffect from 'use-async-effect';
 import { getListTokensByWallet } from '@/services/soul';
-import dayjs from 'dayjs';
-import web3Instance from '@/connections/custom-web3-provider';
 import ClaimButton from './ClaimButton';
 import { useSelector } from 'react-redux';
 import { getUserSelector } from '@/state/user/selector';
@@ -26,7 +24,6 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   >('idle');
   const user = useSelector(getUserSelector);
   const { provider } = useWeb3React();
-  const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
   const [isFetchingApi, setIsFetchingApi] = useState(false);
   const [soulToken, setSoulToken] = useState<ISoul | null>(null);
   const {
@@ -47,13 +44,6 @@ const ClaimPage: React.FC = (): React.ReactElement => {
         setSoulToken(soulItem);
         setIsClaimed(true);
         setClaimStatus('success');
-
-        if (soulItem.mintedAt) {
-          const block = await web3Instance.getBlock(soulItem.mintedAt);
-          logger.info('block info', block);
-          const date = dayjs.unix(block.timestamp as number);
-          setMintedTimestamp(date.format('ddd, D MMM YYYY HH:mm:ss'));
-        }
       }
     } catch (err: unknown) {
       logger.error('Error get tokens:', err);
@@ -108,15 +98,6 @@ const ClaimPage: React.FC = (): React.ReactElement => {
           >
             <div className={`${s.wrapBox}`}>
               <h3 className={s.blockTitle}>The OG adopters</h3>
-              {isClaimed && (
-                <div className={s.successNoti}>
-                  <p className={s.status}>Claim success</p>
-                  <span className={s.dot}></span>
-                  {mintedTimestamp && (
-                    <p className={s.date}>{mintedTimestamp}</p>
-                  )}
-                </div>
-              )}
               <div
                 className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''
                   }`}
@@ -134,7 +115,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                 {(isEventStarted && claimStatus === 'idle') && <ClaimButton isFetchingApi={isFetchingApi} />}
               </div>
             </div>
-            {!isEventStarted && <Discord />}
+            <Discord />
           </Col>
         </Row>
       </Container>
