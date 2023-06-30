@@ -1,5 +1,6 @@
 .text {
   &.size {
+
     &-d1,
     &-d2,
     &-32,
@@ -38,6 +39,10 @@
       @include min-tablet {
         font-size: rem(36px);
       }
+    }
+
+    &-48 {
+      font-size: rem(48px);
     }
 
     &-32 {

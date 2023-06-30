@@ -13,6 +13,7 @@ type TText = {
   fontWeight?: 'bold' | 'semibold' | 'medium' | 'regular' | 'light';
   style?: CSSProperties;
   size?:
+    | '16'
     | '18'
     | '20'
     | '24'
@@ -21,6 +22,7 @@ type TText = {
     | '30'
     | '32'
     | '40'
+    | '48'
     | 'd0'
     | 'd1'
     | 'd2'

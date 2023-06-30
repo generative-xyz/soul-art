@@ -122,11 +122,11 @@ const Introduce: React.FC = () => {
                 {renderCountdown}
               </Link>
               <Link
-                href={'https://newbitcoincity.com/gm'}
+                href={ROUTE_PATH.GALLERY}
                 className={cs(s.button, s.trans)}
                 target="_blank"
               >
-                Get GM
+                View Gallery
               </Link>
             </AnimFade>
 
