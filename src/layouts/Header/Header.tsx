@@ -71,7 +71,7 @@ const NAV_CONTENT: NavContent[] = [
   },
   // {
   //   title: 'Artworks',
-  //   url: ROUTE_PATH.ART,
+  //   url: ROUTE_PATH.GALLERY,
   // },
   {
     title: 'GM',
@@ -240,6 +240,18 @@ const Header = ({
           onCloseMenu={() => setIsOpenMenu(false)}
         />
         <div className={`rightContainer`}>
+          <Link
+            href={ROUTE_PATH.TECH}
+            className={`${s.nbc_link}`}
+          >
+            Tech
+          </Link>
+          <Link
+            href={ROUTE_PATH.ART}
+            className={`${s.nbc_link}`}
+          >
+            Art
+          </Link>
           <Link
             href={'https://newbitcoincity.com/'}
             target="_blank"

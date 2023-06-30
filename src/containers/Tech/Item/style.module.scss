@@ -1,0 +1,103 @@
+.techItem {
+    .wrapContent {
+        border-radius: rem(20px);
+        border: 1px solid #ECECEC;
+        background: #F6F6F6;
+        overflow: hidden;
+        margin-bottom: rem(48px);
+
+        .title {
+            text-align: center;
+            width: 100%;
+            background: #fff;
+            color: #0F1B01;
+            font-size: rem(32px);
+            line-height: 140%;
+            padding: rem(24px)0;
+        }
+
+        .techItem_box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: rem(68px) rem(65px);
+
+            .middleBox {
+                display: flex;
+                gap: rem(40px);
+
+                &_content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: rem(25px);
+                    align-items: center;
+                }
+
+                &_arrow {
+                    margin-top: rem(23px);
+
+                    &.left {
+                        svg {
+                            transform: rotate(180deg);
+                        }
+                    }
+                }
+            }
+
+            .leftBox {
+                width: rem(304px);
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    margin-bottom: rem(16px);
+                }
+
+                &_title {
+                    text-align: center;
+                }
+            }
+
+            .rightBox {
+                width: rem(270px);
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    margin-bottom: rem(16px);
+                }
+
+                &_title {
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    .itemType {
+        padding: 0 rem(65px);
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: rem(48px);
+
+        .boxContent {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: rem(24px);
+
+            .arrow {
+                width: fit-content;
+                height: fit-content;
+            }
+
+            &.revert {
+                flex-direction: column-reverse;
+            }
+        }
+    }
+
+    .paragraph {
+        text-align: center;
+    }
+}

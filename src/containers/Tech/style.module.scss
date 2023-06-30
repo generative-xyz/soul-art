@@ -1,0 +1,89 @@
+.techLandingPage {
+    background: #F6F6F6;
+    padding-top: rem(170px);
+    padding-bottom: rem(169px);
+
+    .wrapContent {
+        background: #fff;
+        border-radius: rem(40px);
+        box-shadow: 0px 0px 40px 4px rgba(0, 0, 0, 0.06);
+        padding: rem(80px) rem(150px) rem(156px) rem(150px);
+        margin-bottom: rem(60px);
+
+        &_headline {
+            .headline_icon {
+                padding: rem(5px);
+                width: fit-content;
+                margin: 0 auto;
+                margin-bottom: rem(24px);
+            }
+
+            .headline_title {
+                text-align: center;
+                margin-bottom: rem(60px);
+            }
+        }
+
+        &_content {
+            margin-bottom: rem(120px);
+
+            .content_desc {
+                text-align: center;
+                margin-bottom: rem(60px);
+
+                &:last-child {
+                    margin-bottom: unset;
+                }
+            }
+        }
+
+        &_bottom {
+            margin-top: rem(120px);
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+
+            .bottomText {
+                text-align: center;
+                margin-top: rem(40px);
+            }
+        }
+    }
+
+    .wrapContentBottom {
+        .imgMedium {
+            width: 100%;
+            padding: 0 rem(87px);
+            margin-bottom: rem(120px);
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .imgFull {
+            width: 100%;
+            margin-bottom: rem(120px);
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        .text {
+            text-align: center;
+
+            &.mb_60 {
+                margin-bottom: rem(60px);
+            }
+
+            &.mb_32 {
+                margin-bottom: rem(32px);
+            }
+        }
+    }
+}
