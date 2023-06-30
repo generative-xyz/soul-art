@@ -19,7 +19,7 @@ const TabDescription: React.FC = (): React.ReactElement => {
         </div>
         <p>Learn more about Soul</p>
         <Link
-          href={ROUTE_PATH.ART}
+          href={ROUTE_PATH.GALLERY}
           className={s.tabDescHeadButton}
         >
           Explore

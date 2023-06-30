@@ -30,27 +30,27 @@ const ArtLandingPage = () => {
 
   const itemArts = [
     {
-      url: `${CDN_URL}/art/art-img1.jpg`,
+      url: `${CDN_URL}/art/soul-cloud-final.gif`,
       title: 'Cloud',
       desc: 'The cloud layer adds a sense of atmosphere to the artwork. The shape, density, and arrangement of the clouds are carefully designed to evoke a specific mood or aesthetic.',
     },
     {
-      url: `${CDN_URL}/art/art-img1.jpg`,
+      url: `${CDN_URL}/solagif/sunbig.gif`,
       title: 'The Sun',
       desc: 'The sun layer serves as the focal point of the artwork, radiating warmth and light. Its position, size, and color are thoughtfully determined to create a visually appealing and harmonious balance.',
     },
     {
-      url: `${CDN_URL}/art/art-img1.jpg`,
+      url: `${CDN_URL}/solagif/event.gif`,
       title: 'Weather and Sun Effects',
       desc: 'Additional layers are introduced to weather conditions and sun-related effects. These layers may include stormy clouds, raindrops, rainbows, sun flares, and sun pillars, etc.',
     },
     {
-      url: `${CDN_URL}/art/art-img1.jpg`,
+      url: `${CDN_URL}/art/soul-neighborhood.gif`,
       title: 'Neighborhood',
       desc: 'The neighborhood layer showcases a specific landscape from the new Bitcoin city, providing a sense of place and identity to the artwork. This layer may feature buildings, streets, trees, or other architectural and natural elements, adding depth and context to the composition.',
     },
     {
-      url: `${CDN_URL}/art/art-img1.jpg`,
+      url: `${CDN_URL}/art/soul-decor-final.gif`,
       title: 'Decoration and Special Objects',
       desc: 'This layer serves as an opportunity to add an extra touch of enchantment and surprise to the composition. It introduces various elements such as birds, airplanes, and other delightful objects that bring life and character to the artwork.',
     },
