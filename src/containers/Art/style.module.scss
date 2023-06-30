@@ -1,0 +1,112 @@
+.artLandingPage {
+    background: #F6F6F6;
+    padding-top: rem(170px);
+    padding-bottom: rem(184px);
+
+    .wrapContent {
+        background: #fff;
+        border-radius: rem(40px);
+        box-shadow: 0px 0px 40px 4px rgba(0, 0, 0, 0.06);
+        padding: rem(80px) rem(155px) rem(155px) rem(156px);
+        margin-bottom: rem(60px);
+
+        .mb_120 {
+            margin-bottom: rem(120px);
+        }
+
+        .textHeadline {
+            text-align: center;
+            margin-bottom: rem(32px);
+        }
+
+        &_headline {
+            .headline_icon {
+                width: fit-content;
+                margin: 0 auto;
+                margin-bottom: rem(24px);
+            }
+
+            .headline_title {
+                text-align: center;
+                margin-bottom: rem(60px);
+            }
+        }
+
+        &_p1 {
+            display: flex;
+            align-items: center;
+            gap: rem(40px);
+
+            .left {
+                width: 581px;
+
+                .text {
+                    margin-bottom: rem(60px);
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            .right {
+                flex: 1;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+
+        &_p2 {
+            .flexDiv {
+                display: flex;
+                gap: rem(24px);
+            }
+        }
+
+        &_p3 {
+            .p3_img {
+                padding: 0 rem(156px);
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+
+        &_p4 {
+            width: 100%;
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        &_p5 {
+            .textHeadline {
+                margin-bottom: rem(48px);
+            }
+
+            .flexDiv {
+                display: flex;
+                flex-direction: column;
+                gap: rem(24px);
+            }
+        }
+
+        &_p6 {
+            .text {
+                margin-bottom: rem(60px);
+                text-align: center;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

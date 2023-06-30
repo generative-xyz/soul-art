@@ -68,10 +68,10 @@ const NAV_CONTENT: NavContent[] = [
     title: 'Story',
     url: ROUTE_PATH.STORY,
   },
-  {
-    title: 'Artworks',
-    url: ROUTE_PATH.ART,
-  },
+  // {
+  //   title: 'Artworks',
+  //   url: ROUTE_PATH.GALLERY,
+  // },
   {
     title: 'Orphanage',
     url: ROUTE_PATH.ORPHANAGE,
@@ -231,6 +231,20 @@ const Header = ({
           onCloseMenu={() => setIsOpenMenu(false)}
         />
         <div className={`rightContainer`}>
+          <Link
+            href={ROUTE_PATH.TECH}
+            target="_blank"
+            className={`${s.nbc_link}`}
+          >
+            Tech
+          </Link>
+          <Link
+            href={ROUTE_PATH.ART}
+            target="_blank"
+            className={`${s.nbc_link}`}
+          >
+            Art
+          </Link>
           <Link
             href={'https://newbitcoincity.com/'}
             target="_blank"

@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 import React from 'react';
+import TechLandingPage from '@/containers/Tech';
 import { GridDebug } from '@/animations/Grid/grid';
-import ArtLandingPage from '@/containers/Art';
 
 const LandingPage: NextPage = (): React.ReactElement => {
   return (
     <>
-      <ArtLandingPage />
+      <TechLandingPage />
       <GridDebug />
     </>
   );

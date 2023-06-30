@@ -4,8 +4,10 @@ export const ROUTE_PATH = {
   STORY: '/souls/story',
   CONNECT_WALLET: '/souls/connect-wallet',
   CLAIM: '/souls/adopt',
-  ART: '/souls/art',
+  GALLERY: '/souls/gallery',
   FAQS: '/souls/faqs',
   STATUS: '/souls/adopt-status',
   ORPHANAGE: '/souls/orphanage',
+  TECH: '/souls/tech',
+  ART: '/souls/art',
 };

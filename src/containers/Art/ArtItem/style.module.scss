@@ -1,0 +1,28 @@
+.artItem {
+    display: flex;
+    gap: rem(20px);
+    padding: rem(20px);
+    background: #F6F6F6;
+    align-items: center;
+    border-radius: rem(20px);
+
+    .left {
+        width: rem(160px);
+        height: rem(160px);
+        box-shadow: 0px 11.928147315979004px 29.82036590576172px 0px rgba(0, 0, 0, 0.08);
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .right {
+        flex: 1;
+
+        .title {
+            margin-bottom: rem(12px);
+            font-weight: 500;
+        }
+    }
+}
