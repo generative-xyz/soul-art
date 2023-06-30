@@ -16,6 +16,7 @@ import s from './styles.module.scss';
 import { formatEthPrice } from '@/utils/format';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import Link from 'next/link';
+import { ROOT_ADDRESS } from '@/constants/common';
 
 interface IProps {
   tokenId: string;
@@ -131,13 +132,19 @@ const SettleAuctionButton: React.FC<IProps> = ({
               Month warrior
             </p>
             <p className={s.winnerInfo}>
-              <Jazzicon
-                diameter={28}
-                seed={jsNumberForAddress(auction.highestBidder)}
-              />
-              <Link href={`${TC_EXPLORER_URL}/address/${auction.highestBidder}`} className={s.highestBidPrice}>
-                {formatLongAddress(`${auction.highestBidder}`)}
-              </Link>
+              {(auction.highestBidder && auction.highestBidder !== ROOT_ADDRESS) ? (
+                <>
+                  <Jazzicon
+                    diameter={28}
+                    seed={jsNumberForAddress(auction.highestBidder)}
+                  />
+                  <Link href={`${TC_EXPLORER_URL}/address/${auction.highestBidder}`} className={s.highestBidPrice}>
+                    {formatLongAddress(`${auction.highestBidder}`)}
+                  </Link>
+                </>
+              ) : (
+                <p className={s.highestBidPrice}>-</p>
+              )}
             </p>
           </div>
         </div>
