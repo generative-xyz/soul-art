@@ -1,11 +1,11 @@
 import Button from '@/components/Button';
-import { TC_URL } from '@/configs';
+import { TC_EXPLORER_URL, TC_URL } from '@/configs';
 import { AuctionContext } from '@/contexts/auction-context';
 import useSettleAuction from '@/hooks/contract-operations/soul/useSettleAuction';
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import logger from '@/services/logger';
 import { getUserSelector } from '@/state/user/selector';
-import { sleep, toStorageKey } from '@/utils';
+import { formatLongAddress, sleep, toStorageKey } from '@/utils';
 import { showToastError } from '@/utils/toast';
 import { useWeb3React } from '@web3-react/core';
 import cs from 'classnames';
@@ -13,6 +13,10 @@ import { Transaction } from 'ethers';
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import s from './styles.module.scss';
+import { formatEthPrice } from '@/utils/format';
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import Link from 'next/link';
+import { ROOT_ADDRESS } from '@/constants/common';
 
 interface IProps {
   tokenId: string;
@@ -34,8 +38,7 @@ const SettleAuctionButton: React.FC<IProps> = ({
     inscribable: true,
   });
   const { provider } = useWeb3React();
-  const { fetchAuction } = useContext(AuctionContext);
-
+  const { fetchAuction, auction } = useContext(AuctionContext);
   const onTxSuccessCallback = async (tx: Transaction | null): Promise<void> => {
     if (!tx || !user?.walletAddress) return;
     const key = toStorageKey(operationName, `${tokenId}_${user.walletAddress}`);
@@ -113,16 +116,50 @@ const SettleAuctionButton: React.FC<IProps> = ({
   }, [user, provider]);
 
   return (
-    <Button
-      disabled={processing}
-      className={cs(s.startAuctionButton, className)}
-      onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.stopPropagation();
-        handleSettleAuction();
-      }}
-    >
-      {processing || inscribing ? 'Processing...' : title}
-    </Button>
+    <div>
+      {auction && (
+        <div className={s.auctionInfo}>
+          <div className={s.highestBidWrapper}>
+            <p className={s.highestBidTitle}>
+              Highest bid
+            </p>
+            <p className={s.highestBidPrice}>
+              {`${formatEthPrice(auction.highestBid)} GM`}
+            </p>
+          </div>
+          <div className={s.content_auctionRight}>
+            <p className={s.highestBidTitle}>
+              Month warrior
+            </p>
+            <p className={s.winnerInfo}>
+              {(auction.highestBidder && auction.highestBidder !== ROOT_ADDRESS) ? (
+                <>
+                  <Jazzicon
+                    diameter={28}
+                    seed={jsNumberForAddress(auction.highestBidder)}
+                  />
+                  <Link href={`${TC_EXPLORER_URL}/address/${auction.highestBidder}`} className={s.highestBidPrice}>
+                    {formatLongAddress(`${auction.highestBidder}`)}
+                  </Link>
+                </>
+              ) : (
+                <p className={s.highestBidPrice}>-</p>
+              )}
+            </p>
+          </div>
+        </div>
+      )}
+      <Button
+        disabled={processing}
+        className={cs(s.startAuctionButton, className)}
+        onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+          e.stopPropagation();
+          handleSettleAuction();
+        }}
+      >
+        {processing || inscribing ? 'Processing...' : title}
+      </Button>
+    </div>
   );
 };
 

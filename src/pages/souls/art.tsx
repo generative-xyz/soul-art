@@ -7,7 +7,6 @@ import { NextPage } from 'next';
 const SoulsPage: NextPage = () => {
   return (
     <Layout>
-      {/*<Banner type={'normal'} />*/}
       <SoulsContainer />
     </Layout>
   );

@@ -68,7 +68,6 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const btcAddress = user?.btcAddress || '';
   const { provider, account: tcAddress } = useWeb3React();
-
   const [currentAssets, setCurrentAssets] = useState<
     ICollectedUTXOResp | undefined
   >();
@@ -80,12 +79,10 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   const [availableFeatures, setAvailableFeatures] = useState<number[] | null>(
     null
   );
-
   const { run: checkFeaturesStatus } = useContractOperation({
     operation: useCheckFeatureStatus,
     inscribable: false,
   });
-
   const { run: getTokenBalance } = useContractOperation({
     operation: useTokenBalance,
     inscribable: false,

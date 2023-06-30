@@ -32,7 +32,7 @@ const Homepage = () => {
     <div className={s.homeSection}>
       <Header height={HEADER_HEIGHT} isAnimation={false} theme={'dark'} />
       <div className={s.homeSection_background}>
-        <img src={`${CDN_URL}/homebg.jpg`} alt="background" />
+        <img src={`${CDN_URL}/homebg-1.png`} alt="background" />
       </div>
 
       <Container className={s.container}>

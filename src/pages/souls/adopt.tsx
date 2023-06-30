@@ -8,7 +8,6 @@ import React from 'react';
 const AdoptPage: NextPage = (): React.ReactElement => {
   return (
     <Layout>
-      {/*<Banner type={'claim'} />*/}
       <ClaimPage />
     </Layout>
   );

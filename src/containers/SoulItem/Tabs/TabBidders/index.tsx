@@ -76,29 +76,17 @@ const TabBidders: React.FC = (): React.ReactElement => {
             key={index}
           >
             <div className={s.tabLiveLeft}>
-              {/* {bidder.bidderAvatar ? (
-              <ImageWrapper
-                src={bidder.bidderAvatar}
-                className={s.bidderAvatar}
-                width={40}
-                height={40}
-              />
-            ) : ( */}
               <Jazzicon
                 diameter={40}
                 seed={jsNumberForAddress(bidder.sender)}
               />
-              {/* )} */}
               <p className={s.tabLiveLeftAddress}>
-                {/* {bidder.bidderName
-                  ? bidder.bidderName
-                  : formatLongAddress(`${bidder.sender}`)} */}
                 {formatLongAddress(`${bidder.sender}`)}
               </p>
               {bidder.sender.toLowerCase() ===
                 user?.walletAddress?.toLowerCase() && (
-                <div className={s.currentUserTag}>You</div>
-              )}
+                  <div className={s.currentUserTag}>You</div>
+                )}
             </div>
             <div className={s.tabLiveRight}>
               <p className={s.tabLiveRightPrice}>

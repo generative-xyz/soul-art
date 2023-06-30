@@ -23,3 +23,31 @@
     color: #898989;
   }
 }
+
+.auctionInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: rem(12px);
+  gap: rem(24px);
+}
+
+.highestBidTitle {
+  font-size: rem(12px);
+  font-weight: 400;
+  color: #000;
+  opacity: 0.6;
+  line-height: 140%;
+}
+
+.highestBidPrice {
+  font-size: rem(20px);
+  line-height: 140%;
+  color: #000;
+  font-weight: 500;
+}
+
+.winnerInfo {
+  display: flex;
+  gap: rem(4px);
+  align-items: center;
+}

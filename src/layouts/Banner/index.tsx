@@ -5,22 +5,13 @@ import Link from 'next/link';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { CDN_URL } from '@/configs';
 
-type IBannerProps = {
-  type: string;
-};
 
-const Banner: React.FC<IBannerProps> = ({ type }) => {
+const Banner: React.FC = (): React.ReactElement => {
   return (
     <div className={s.banner}>
-      {type === 'claim' ? (
-        <p className={s.bannerText}>
-          Experience the first ever art protocol powered by smart contracts and $GM
-        </p>
-      ) : (
-        <p className={s.bannerText}>
-          Experience the first ever art protocol powered by smart contracts and $GM
-        </p>
-      )}
+      <p className={s.bannerText}>
+        The first-ever cryptoart protocol & a new kind of art.
+      </p>
       <Button borderRadius="100px" className={s.bannerButton}>
         <Link href={`${ROUTE_PATH.CLAIM}`} className={s.banner_link}>
           Adopt Souls

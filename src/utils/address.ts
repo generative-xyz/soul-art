@@ -8,8 +8,8 @@ export const formatAddress = (address?: string, length = 10): string => {
 
 export const formatLongAddress = (address?: string): string => {
   if (!address) return '';
-  if (address.length < 14) return address;
-  return `${address.substring(0, 6)}...${address.substring(address.length - 4, address.length)}`;
+  if (address.length < 14) return address.toLowerCase();
+  return `${address.substring(0, 6)}...${address.substring(address.length - 4, address.length)}`.toLowerCase();
 };
 
 export function shortenAddress(address: string, charsStart = 4, charsEnd?: number): string {

@@ -8,6 +8,9 @@ export interface IAuction {
   endTime: string;
   chainAuctionId: string;
   dbAuctionId: string;
+  highestBidder: string;
+  highestBidderAvatar?: string;
+  highestBidderName?: string
 }
 
 export interface IAuctionBid {

@@ -278,7 +278,7 @@
     border: none;
     box-shadow: none;
     background: none;
-    z-index: 10;
+    z-index: 999;
     position: absolute;
   }
 
@@ -288,7 +288,6 @@
     box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.12);
     border-radius: 20px;
     padding: rem(20px) rem(16px);
-    z-index: 6;
     background-color: white;
     position: relative;
     display: flex;

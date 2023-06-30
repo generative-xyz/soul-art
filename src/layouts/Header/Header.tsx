@@ -43,6 +43,7 @@ import BigNumber from 'bignumber.js';
 type NavContent = {
   title: string;
   url: string;
+  target?: string;
 };
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -65,12 +66,17 @@ WalletToggle.displayName = 'WalletToggle';
 
 const NAV_CONTENT: NavContent[] = [
   {
-    title: 'Story',
+    title: 'Souls',
     url: ROUTE_PATH.STORY,
   },
+  // {
+  //   title: 'Artworks',
+  //   url: ROUTE_PATH.ART,
+  // },
   {
-    title: 'Artworks',
-    url: ROUTE_PATH.ART,
+    title: 'GM',
+    url: 'https://newbitcoincity.com/gm',
+    target: '_blank',
   },
   {
     title: 'Orphanage',
@@ -80,10 +86,6 @@ const NAV_CONTENT: NavContent[] = [
   //   title: 'Bidding',
   //   url: ROUTE_PATH.STATUS,
   // },
-  {
-    title: 'FAQs',
-    url: ROUTE_PATH.FAQS,
-  },
 ];
 
 const Header = ({
@@ -209,22 +211,29 @@ const Header = ({
         }`}
       >
         <div className={s.nav_container}>
-          {NAV_CONTENT.map(({ title, url }) => {
+          {NAV_CONTENT.map(({ title, url, target }) => {
             return (
               <Link
                 key={title}
                 href={url}
                 className={`${s.nav_item}
                   ${router.pathname === url ? s.active : ''}`}
+                target={target || '_self'}
               >
                 {title}
               </Link>
             );
           })}
         </div>
-
         <Link className={s.logo} href={ROUTE_PATH.HOME}>
-          Souls
+          <IconSVG
+            src={
+              theme === 'dark'
+                ? `${CDN_URL}/logo-soul-white.svg`
+                : `${CDN_URL}/logo-soul-black.svg`
+            }
+            maxHeight="28"
+          ></IconSVG>
         </Link>
         <MenuMobile
           isOpen={isOpenMenu}
