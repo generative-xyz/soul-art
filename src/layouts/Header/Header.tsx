@@ -76,10 +76,10 @@ const NAV_CONTENT: NavContent[] = [
     title: 'Orphanage',
     url: ROUTE_PATH.ORPHANAGE,
   },
-  {
-    title: 'Bidding',
-    url: ROUTE_PATH.STATUS,
-  },
+  // {
+  //   title: 'Bidding',
+  //   url: ROUTE_PATH.STATUS,
+  // },
   {
     title: 'FAQs',
     url: ROUTE_PATH.FAQS,
@@ -97,6 +97,7 @@ const Header = ({
 }) => {
   const router = useRouter();
   const homepage = router.pathname === ROUTE_PATH.HOME;
+  const story = router.pathname === ROUTE_PATH.STORY;
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const { gmBalance, btcBalance, tcBalance, gmDepositBalance } =
     useContext(AssetsContext);
@@ -204,7 +205,7 @@ const Header = ({
     return (
       <div
         className={`content-header d-flex justify-content-between align-items-center w-100 ${
-          homepage ? 'dark' : ''
+          homepage || story ? 'dark' : ''
         }`}
       >
         <div className={s.nav_container}>
@@ -222,7 +223,7 @@ const Header = ({
           })}
         </div>
 
-        <Link className="logo" href={ROUTE_PATH.HOME}>
+        <Link className={s.logo} href={ROUTE_PATH.HOME}>
           Souls
         </Link>
         <MenuMobile
@@ -246,7 +247,7 @@ const Header = ({
               src={`${CDN_URL}/ic-discord.svg`}
               maxWidth="20"
               type="fill"
-              color={homepage ? 'white' : 'black'}
+              color={homepage || story ? 'white' : 'black'}
             ></IconSVG>
           </Link>
           <Link
@@ -258,7 +259,7 @@ const Header = ({
               src={`${CDN_URL}/ic_twitter.svg`}
               maxWidth="20"
               type="fill"
-              color={homepage ? 'white' : 'black'}
+              color={homepage || story ? 'white' : 'black'}
             ></IconSVG>
           </Link>
           {isAuthenticated ? (
@@ -300,7 +301,7 @@ const Header = ({
                             src={`${CDN_URL}/ic_round-info.svg`}
                             maxWidth="16"
                             maxHeight="16"
-                            color={homepage ? 'white' : 'black'}
+                            color={homepage || story ? 'white' : 'black'}
                             type="fill"
                           ></IconSVG>
                           Bidding Wallet
