@@ -34,9 +34,10 @@
 
 .emptyWrapper {
   width: 100vw;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 200px);
   display: grid;
   place-items: center;
+  padding-bottom: rem(40px);
 
   .empty {
     max-width: rem(518px);
@@ -61,26 +62,38 @@
     text-align: center;
   }
 
+  .cta_btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(12px);
+  }
+
   .empty_adopt {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #000;
     color: white;
-    width: fit-content;
+    min-width: rem(160px);
     padding: rem(16px) rem(32px);
     border-radius: rem(100px);
-    margin-left: auto;
-    margin-right: auto;
     font-weight: 500;
     font-size: rem(16px);
     line-height: 18/16;
     gap: rem(9px);
+    white-space: nowrap;
 
     &:hover {
-      opacity: 0.8;
+      opacity: 0.6;
       text-decoration: none;
     }
+  }
+
+  .empty_gallery {
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #000;
   }
 
   &.orphanageEmpty {

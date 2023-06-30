@@ -9,14 +9,13 @@ import { IAttribute } from '@/interfaces/attributes';
 import logger from '@/services/logger';
 import { getCollectionNFTList } from '@/services/marketplace';
 import { getSoulAttributes } from '@/services/soul';
+import cs from 'classnames';
 import _, { debounce, pick } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import s from './souls.module.scss';
-import cs from 'classnames';
-import IconSVG from '@/components/IconSVG';
 
 const LIMIT_PAGE = 20;
 
@@ -81,8 +80,7 @@ export const SoulsContainer: React.FC<Props> = ({
         } = {
           page,
           limit: LIMIT_PAGE,
-          // TODO: Update query when API filter orphan ready
-          owner: isOrphanagePage ? '0x00' : owner || undefined,
+          owner: owner || undefined,
           sortBy: sortBy || undefined,
           sort: sort || undefined,
         };
@@ -109,6 +107,7 @@ export const SoulsContainer: React.FC<Props> = ({
         const data = await getCollectionNFTList({
           contract_address: SOUL_CONTRACT,
           attributes: attributesFilter.toString(),
+          is_orphan: isOrphanagePage ? 1 : undefined,
           ...query,
         });
 
@@ -182,14 +181,17 @@ export const SoulsContainer: React.FC<Props> = ({
             The Soul orphanage is where users can browse available Souls, submit
             adoption proposals, and view their adopted Souls.
           </p>
-          <Link href={ROUTE_PATH.HOME} className={s.empty_adopt}>
-            View Story
-            <IconSVG
-              src={`${CDN_URL}/ic-arrow-right.svg`}
-              maxHeight="14"
-              maxWidth="14"
-            />
-          </Link>
+          <div className={s.cta_btns}>
+            <Link href={ROUTE_PATH.STORY} className={s.empty_adopt}>
+              View Story
+            </Link>
+            <Link
+              href={ROUTE_PATH.ART}
+              className={cs(s.empty_adopt, s.empty_gallery)}
+            >
+              View Gallery
+            </Link>
+          </div>
         </div>
       </div>
     );
