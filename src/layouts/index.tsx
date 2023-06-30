@@ -33,7 +33,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }): React.ReactElement =
   return (
     <div className={s.container}>
       <Header height={HEADER_HEIGHT} />
-      {isEventStarted && <Banner type='' />}
+      {isEventStarted && <Banner />}
       <main
         className={cs(s.main, {
           [`${s.eventStarted}`]: isEventStarted

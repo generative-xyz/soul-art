@@ -16,14 +16,16 @@ import { getListTokensByWallet } from '@/services/soul';
 import dayjs from 'dayjs';
 import web3Instance from '@/connections/custom-web3-provider';
 import ClaimButton from './ClaimButton';
+import { useSelector } from 'react-redux';
+import { getUserSelector } from '@/state/user/selector';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
   const [claimStatus, setClaimStatus] = useState<
     'idle' | 'waiting' | 'success'
   >('idle');
-  const { account, provider } = useWeb3React();
-  const [transactionHash, setTransactionHash] = useState<string | null>(null);
+  const user = useSelector(getUserSelector);
+  const { provider } = useWeb3React();
   const [mintedTimestamp, setMintedTimestamp] = useState<null | string>(null);
   const [isFetchingApi, setIsFetchingApi] = useState(false);
   const [soulToken, setSoulToken] = useState<ISoul | null>(null);
@@ -35,11 +37,11 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
 
   useAsyncEffect(async () => {
-    if (!account) return;
+    if (!user?.walletAddress) return;
 
     try {
       setIsFetchingApi(true);
-      const { items } = await getListTokensByWallet(account);
+      const { items } = await getListTokensByWallet(user.walletAddress);
       if (items.length > 0 && items[0]) {
         const soulItem = items[0];
         setSoulToken(soulItem);
@@ -58,35 +60,20 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     } finally {
       setIsFetchingApi(false);
     }
-  }, [account]);
+  }, [user?.walletAddress]);
 
   useEffect(() => {
-    if (!account || isClaimed) return;
+    if (!user?.walletAddress || !provider || isClaimed) return;
 
-    const key = toStorageKey(operationName, account);
-    const txHash = localStorage.getItem(key);
-    if (!txHash) return;
-
-    setTransactionHash(txHash.toString());
-  }, [account, isClaimed, operationName]);
-
-  useEffect(() => {
-    logger.log('account', account);
-    logger.log('transactionHash', transactionHash);
-
-    if (!account || !provider || !transactionHash) return;
+    const key = toStorageKey(operationName, user?.walletAddress);
+    const transactionHash = localStorage.getItem(key);
+    if (!transactionHash) return;
 
     const fetchTransactionStatus = async () => {
       try {
         const receipt = await provider.getTransactionReceipt(transactionHash);
 
-        if (receipt?.status === 1) {
-          setIsClaimed(true);
-          setClaimStatus('success');
-        } else if (receipt?.status === 0) {
-          setIsClaimed(false);
-          setClaimStatus('idle');
-        } else if (receipt?.status === null || receipt?.status === undefined) {
+        if (receipt?.status === null || receipt?.status === undefined || receipt?.status === 1) {
           setIsClaimed(true);
           setClaimStatus('waiting');
         } else {
@@ -107,7 +94,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     return () => {
       intervalId && clearInterval(intervalId);
     };
-  }, [provider, transactionHash, account, operationName]);
+  }, [provider, user?.walletAddress, operationName, isClaimed]);
 
   return (
     <div className={s.claimPage}>
@@ -144,7 +131,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                   isClaimed={isClaimed}
                   claimStatus={claimStatus}
                 />
-                {isEventStarted && <ClaimButton isFetchingApi={isFetchingApi} />}
+                {(isEventStarted && claimStatus === 'idle') && <ClaimButton isFetchingApi={isFetchingApi} />}
               </div>
             </div>
             {!isEventStarted && <Discord />}

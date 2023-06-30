@@ -136,11 +136,9 @@ class CustomWeb3Provider {
         SoulAbiJson.abi as Array<AbiItem>,
         SOUL_CONTRACT
       );
-      // const res = await contract.methods.getSettingFeatures().call();
 
       const featureStatus = await Promise.all(
         featureList.map(async feature => {
-          logger.debug(feature);
           const checkCanUnlock = await contract.methods
             .canUnlockFeature(tokenId, owner, feature)
             .call();

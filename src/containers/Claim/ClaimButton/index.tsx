@@ -102,6 +102,8 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
       userBtcBalance.isEqualTo(0)
     ) {
       setSufficientBal(false);
+    } else {
+      setSufficientBal(true);
     }
   }, [user?.walletAddress, btcBalance, tcBalance]);
 
@@ -125,11 +127,16 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
     return (
       <div className={s.noti}>
         <IconSVG src={notiReceive} maxHeight={'44'} maxWidth={'44'} />
-        {sufficientBal ? (
-          <span>Your wallet is not on the list to receive Soul.</span>
-        ) : (
-          <span>Your wallet does not have enough balance.</span>
+        <p>{!isReceiveAble && (
+          <>
+            Your wallet is not on the list to receive Soul.&nbsp;
+          </>
         )}
+          {!sufficientBal && (
+            <>Your wallet does not have enough balance.</>
+          )}
+        </p>
+
       </div>
     );
   };
