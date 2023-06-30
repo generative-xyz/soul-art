@@ -54,6 +54,22 @@
 }
 
 .logo {
+  text-decoration: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 28px;
+  line-height: 28px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  color: var(--text-color);
+  font-family: var(--righteous-font);
+
+  &:hover {
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
   &_svg {
     svg {
       path {
@@ -371,6 +387,7 @@
     &:last-child {
       margin-bottom: 0;
     }
+
     &:hover {
       opacity: 0.6;
     }
@@ -378,6 +395,7 @@
 }
 
 .copy_icon {
+
   svg,
   path {
     stroke: #000;
@@ -409,6 +427,7 @@
 .auction_wallet {
   display: flex;
   align-items: center;
+  display: none; //turn off auction wallet
 
   .profile_container {
     gap: 4px;
@@ -427,6 +446,7 @@
     background-color: rgba($color: #fff, $alpha: 0.1);
     border-color: rgba($color: #fff, $alpha: 0.1);
   }
+
   .profile_amount {
     background-color: rgba($color: #fff, $alpha: 0.2);
     color: white;
@@ -436,6 +456,7 @@
       color: $red-primary;
     }
   }
+
   .profile_auction_wallet {
     color: white;
   }
@@ -467,6 +488,7 @@
     * {
       color: white;
     }
+
     svg,
     path {
       stroke: #fff;
@@ -474,6 +496,7 @@
   }
 
   .copy_icon {
+
     svg,
     path {
       stroke: #fff;

@@ -45,8 +45,6 @@
           @include min-tablet {
             margin-bottom: rem(40px);
           }
-
-          .introduceBox-desc {}
         }
 
         .introduceBox-buttons {
@@ -88,7 +86,8 @@
                   width: 100%;
 
                   @include min-tablet {
-                    width: rem(112px);
+                    // width: rem(112px);
+                    width: fit-content;
                   }
                 }
               }

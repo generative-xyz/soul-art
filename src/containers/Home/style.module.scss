@@ -33,9 +33,9 @@
     &_content {
         color: #fff;
         font-size: rem(16px);
-        line-height: 140%;
+        line-height: 120%;
         text-align: center;
-        margin-bottom: rem(24px);
+        margin-bottom: rem(32px);
         width: 100%;
 
         @include min-tablet {
@@ -62,7 +62,7 @@
             transition: 0.5s $easeOutQuart;
             text-decoration: none;
             flex: 0 0 100%;
-            width: rem(290px);
+            width: fit-content;
 
             @include min-tablet {
                 flex: 0 0 auto;
@@ -87,7 +87,8 @@
                         width: 100%;
 
                         @include min-tablet {
-                            width: rem(112px);
+                            // width: rem(112px);
+                            width: fit-content;
                         }
                     }
                 }
@@ -111,6 +112,7 @@
                 align-items: center;
                 gap: rem(8px);
                 justify-content: center;
+                width: rem(290px);
 
                 &:hover {
                     border: 1px solid #fff;
