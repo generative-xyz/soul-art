@@ -1,16 +1,10 @@
 import { NextPage } from 'next';
 import React from 'react';
-import { GridDebug } from '@/animations/Grid/grid';
 import ArtLandingPage from '@/containers/Art';
 import {CDN_URL} from "@/configs";
 
 const LandingPage: NextPage = (): React.ReactElement => {
-  return (
-    <>
-      <ArtLandingPage />
-      <GridDebug />
-    </>
-  );
+  return <ArtLandingPage />;
 };
 
 export async function getServerSideProps() {

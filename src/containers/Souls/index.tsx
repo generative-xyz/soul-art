@@ -186,7 +186,7 @@ export const SoulsContainer: React.FC<Props> = ({
               View Story
             </Link>
             <Link
-              href={ROUTE_PATH.ART}
+              href={ROUTE_PATH.GALLERY}
               className={cs(s.empty_adopt, s.empty_gallery)}
             >
               View Gallery
