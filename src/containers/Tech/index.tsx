@@ -6,6 +6,8 @@ import { CDN_URL } from '@/configs';
 import Text from '@/animations/Text';
 import Item from './Item';
 import Headline from './Headline';
+import Link from 'next/link';
+import IconSVG from '@/components/IconSVG';
 
 const TechLandingPage = () => {
   const itemArray = [
@@ -162,6 +164,19 @@ const TechLandingPage = () => {
               possibilities for future gen-art collections.`}
             </Text>
           </div>
+
+          <Link
+            href={'https://newbitcoincity.com/souls/whitepaper.pdf'}
+            target="_blank"
+            className={s.bottomButton}
+          >
+            Read the Whitepaper
+            <IconSVG
+              src={`${CDN_URL}/bannerArrow.svg`}
+              maxWidth={'10.67'}
+              maxHeight={'8'}
+            ></IconSVG>
+          </Link>
         </Col>
       </Container>
     </div>
