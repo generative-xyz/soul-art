@@ -13,7 +13,7 @@ const Tech: React.FC = () => {
     {
       id: 2,
       title: 'Sun Size',
-      img: `${CDN_URL}/solagif/sunbig.gif`,
+      img: `${CDN_URL}/art/soul-sunSize-final.gif`,
       content:
         'The size of the sun in the artwork is directly influenced by the GM balance. As the GM balance increases, the sun expands, symbolizing the growing strength and significance of the Souls within the New Bitcoin City',
     },
@@ -26,14 +26,14 @@ const Tech: React.FC = () => {
     {
       id: 1,
       title: 'Sun Height',
-      img: `${CDN_URL}/solagif/sunrise.gif`,
+      img: `${CDN_URL}/art/soul-sunHeight-final.gif`,
       content:
         'When the GM token price rises, the Souls soar higher in the sky, symbolizing the collective optimism and excitement within the community.',
     },
     {
       id: 3,
       title: 'Weather',
-      img: `${CDN_URL}/solagif/event.gif`,
+      img: `${CDN_URL}/art/soul-weather-final.gif`,
       content: `The artwork's weather reflects the community's emotions. Fear (FUD) brings stormy clouds, caution, and uncertainty. Belief (HOLD) creates a clear and sunny sky, representing optimism. In moments of greed (FOMO), enchanting effects like rainbows, sun flares, and sun pillars appear, adding excitement to the scene.
 `,
     },

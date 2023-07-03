@@ -32,7 +32,7 @@
                 margin-bottom: rem(60px);
 
                 &:last-child {
-                    margin-bottom: unset;
+                    margin-bottom: 0;
                 }
             }
         }
@@ -84,6 +84,33 @@
             &.mb_32 {
                 margin-bottom: rem(32px);
             }
+        }
+    }
+
+    .bottomButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: rem(14px);
+        font-weight: 500;
+        line-height: rem(18px);
+        gap: rem(8px);
+        padding: rem(8px) rem(12px);
+        background: #000;
+        color: #fff;
+        offset: 0px, 0px rgba(0, 0, 0, 0.12);
+        box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
+        border-radius: rem(24px);
+        width: fit-content;
+        margin: 0 auto;
+        transition: .3s all ease-in-out;
+        margin-top: rem(-12px);
+
+        &:hover {
+            background: #fff;
+            color: #000;
+            text-decoration: none;
         }
     }
 }
