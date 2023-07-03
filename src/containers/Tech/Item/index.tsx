@@ -38,18 +38,18 @@ const Item: React.FC<ItemProps> = ({
             maxWidth={'10px'}
             className={s.arrow}
           />
-          <Text size={'16'} className={s.content}>
+          <Text as={'p'} size={'16'} className={s.content}>
             A collector adopts and nurtures a Soul
           </Text>
         </div>
-        <div className={s.boxContent}>
+        <div className={`${s.boxContent} ${s.revert}`}>
           <IconSVG
             src={`${CDN_URL}/tech/downArrow.svg`}
             maxHeight={'66px'}
             maxWidth={'10px'}
             className={`${s.arrow} }`}
           />
-          <Text size={'16'} className={s.content}>
+          <Text as={'p'} size={'16'} className={s.content}>
             A Soul leaves it’s collection
           </Text>
         </div>
@@ -59,14 +59,16 @@ const Item: React.FC<ItemProps> = ({
   const ItemType2 = () => {
     return (
       <div className={s.itemType}>
-        <div className={s.boxContent}>
+        <div className={`${s.boxContent} ${s.revert}`}>
           <IconSVG
             src={`${CDN_URL}/tech/downArrow.svg`}
             maxHeight={'66px'}
             maxWidth={'10px'}
             className={`${s.arrow} }`}
           />
-          <p className={s.content}>A collector pays the adoption fees in $GM</p>
+          <Text as={'p'} size={'16'} className={s.content}>
+            A collector pays the adoption fees in $GM
+          </Text>
         </div>
       </div>
     );
@@ -90,9 +92,9 @@ const Item: React.FC<ItemProps> = ({
       <div className={s.wrapContent}>
         <h3 className={s.title}>{title}</h3>
         <div className={s.techItem_box}>
-          <div className={s.leftBox}>
+          <div className={`${s.leftBox} ${type === 'p' ? s.custom : ''}`}>
             <img src={leftImg} alt="image" />
-            <Text size={'16'} className={s.leftBox_title}>
+            <Text as={'p'} size={'16'} className={s.leftBox_title}>
               {leftContent}
             </Text>
           </div>
@@ -105,8 +107,14 @@ const Item: React.FC<ItemProps> = ({
               className={cs(s.middleBox_arrow, arrowRevert ? s.left : '')}
             />
             <div className={s.middleBox_content}>
-              <IconSVG src={middleIcon} maxHeight={'56px'} maxWidth={'56px'} />
-              <Text size={'16'} className={s.content}>
+              <div className={s.icon}>
+                <IconSVG
+                  src={middleIcon}
+                  maxHeight={'56px'}
+                  maxWidth={'56px'}
+                />
+              </div>
+              <Text as={'p'} size={'16'} className={s.content}>
                 {middleContent}
               </Text>
             </div>
@@ -118,9 +126,9 @@ const Item: React.FC<ItemProps> = ({
             />
           </div>
 
-          <div className={s.rightBox}>
+          <div className={`${s.rightBox} ${type === 'p' ? s.custom : ''}`}>
             <img src={rightImg} alt="image" />
-            <Text size={'16'} className={s.rightBox_title}>
+            <Text as={'p'} size={'16'} className={s.rightBox_title}>
               {rightContent}
             </Text>
           </div>
