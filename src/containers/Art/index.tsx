@@ -51,9 +51,14 @@ const ArtLandingPage = () => {
       desc: 'The neighborhood layer showcases a specific landscape from the new Bitcoin city, providing a sense of place and identity to the artwork. This layer may feature buildings, streets, trees, or other architectural and natural elements, adding depth and context to the composition.',
     },
     {
-      url: `${CDN_URL}/art/soul-decor-final.gif`,
-      title: 'Decoration and Special Objects',
-      desc: 'This layer serves as an opportunity to add an extra touch of enchantment and surprise to the composition. It introduces various elements such as birds, airplanes, and other delightful objects that bring life and character to the artwork.',
+      url: `${CDN_URL}/art/decor-final.gif`,
+      title: 'Decoration',
+      desc: 'This layer adds delightful details to the sky, including birds, planes, helicopters, balloons, etc. These elements enhance the sense of movement and wonder.',
+    },
+    {
+      url: `${CDN_URL}/art/special-final.gif`,
+      title: 'Special Objects',
+      desc: 'Each neighborhood boasts its own unique elements, such as whales beneath the Nakamoto Bridge or barges in the industry zone, adding character and depth to the artwork.',
     },
   ];
 
@@ -123,7 +128,7 @@ const ArtLandingPage = () => {
             </div>
 
             <div className={s.wrapContent_p4}>
-              <img src={`${CDN_URL}/art/art2.jpg`} alt="image" />
+              <img src={`${CDN_URL}/art/art2(1).png`} alt="image" />
             </div>
 
             <div className={cs(s.wrapContent_p5, s.mb_120)}>
