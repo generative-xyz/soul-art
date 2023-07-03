@@ -121,11 +121,7 @@ const Introduce: React.FC = () => {
                 Adopt a Soul
                 {renderCountdown}
               </Link>
-              <Link
-                href={ROUTE_PATH.GALLERY}
-                className={cs(s.button, s.trans)}
-                target="_blank"
-              >
+              <Link href={ROUTE_PATH.GALLERY} className={cs(s.button, s.trans)}>
                 View Gallery
               </Link>
             </AnimFade>

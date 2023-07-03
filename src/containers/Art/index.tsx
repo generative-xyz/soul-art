@@ -8,6 +8,7 @@ import Header from '@/layouts/Header';
 import { HEADER_HEIGHT } from '@/layouts';
 import TechniqueItem from './Item';
 import ArtItem from './ArtItem';
+import Link from 'next/link';
 
 const ArtLandingPage = () => {
   const itemTechniques = [
@@ -35,12 +36,12 @@ const ArtLandingPage = () => {
       desc: 'The cloud layer adds a sense of atmosphere to the artwork. The shape, density, and arrangement of the clouds are carefully designed to evoke a specific mood or aesthetic.',
     },
     {
-      url: `${CDN_URL}/solagif/sunbig.gif`,
+      url: `${CDN_URL}/art/soul-sunSize-final.gif`,
       title: 'The Sun',
       desc: 'The sun layer serves as the focal point of the artwork, radiating warmth and light. Its position, size, and color are thoughtfully determined to create a visually appealing and harmonious balance.',
     },
     {
-      url: `${CDN_URL}/solagif/event.gif`,
+      url: `${CDN_URL}/art/soul-weather-final.gif`,
       title: 'Weather and Sun Effects',
       desc: 'Additional layers are introduced to weather conditions and sun-related effects. These layers may include stormy clouds, raindrops, rainbows, sun flares, and sun pillars, etc.',
     },
@@ -137,7 +138,7 @@ const ArtLandingPage = () => {
               </div>
             </div>
 
-            <div className={s.wrapContent_p6}>
+            <div className={cs(s.wrapContent_p6, s.mb_120)}>
               <Text as={'p'} size={'24'} className={s.text}>
                 All of these layers are programmatically generated using p5.js
                 code, every layer within the artwork is inherently distinct,
@@ -152,7 +153,35 @@ const ArtLandingPage = () => {
                 aesthetic appeal of the artwork.
               </Text>
             </div>
+
+            <div className={cs(s.wrapContent_p7)}>
+              <div className={s.p7_img}>
+                <img src={`${CDN_URL}/art/art3.png`} alt="image" />
+              </div>
+
+              <Text as={'p'} size={'24'} className={s.text}>
+                The Souls artworks offer a unique and immersive experience that
+                can be enjoyed in various aspect ratios, allowing viewers to
+                explore and perceive the artwork in different ways. By
+                experimenting with different screen dimensions and aspect
+                ratios, viewers can unlock new perspectives and uncover hidden
+                details within the composition.
+              </Text>
+            </div>
           </div>
+
+          <Link
+            href={'https://newbitcoincity.com/souls/whitepaper.pdf'}
+            target="_blank"
+            className={s.bottomButton}
+          >
+            Read the Whitepaper
+            <IconSVG
+              src={`${CDN_URL}/bannerArrow.svg`}
+              maxWidth={'10.67'}
+              maxHeight={'8'}
+            ></IconSVG>
+          </Link>
         </Col>
       </Container>
     </div>
