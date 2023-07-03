@@ -31,6 +31,19 @@
                     flex-direction: column;
                     gap: rem(25px);
                     align-items: center;
+
+                    .content {
+                        width: max-content;
+                    }
+
+                    .icon {
+                        width: 50%;
+
+                        svg {
+                            width: 100%;
+
+                        }
+                    }
                 }
 
                 &_arrow {
@@ -45,7 +58,7 @@
             }
 
             .leftBox {
-                width: rem(304px);
+                width: 25%;
 
                 img {
                     width: 100%;
@@ -55,11 +68,16 @@
 
                 &_title {
                     text-align: center;
+                    width: 100%;
+                }
+
+                &.custom {
+                    width: 29%;
                 }
             }
 
             .rightBox {
-                width: rem(270px);
+                width: 22.5%;
 
                 img {
                     width: 100%;
@@ -69,6 +87,11 @@
 
                 &_title {
                     text-align: center;
+                    width: 100%;
+                }
+
+                &.custom {
+                    width: 31%;
                 }
             }
         }
@@ -85,10 +108,15 @@
             align-items: center;
             flex-direction: column;
             gap: rem(24px);
+            width: 25%;
 
             .arrow {
                 width: fit-content;
                 height: fit-content;
+            }
+
+            .content {
+                width: max-content;
             }
 
             &.revert {
