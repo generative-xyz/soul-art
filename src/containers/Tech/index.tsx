@@ -36,7 +36,7 @@ const TechLandingPage = () => {
       title: 'Souls DAO',
       leftImg: `${CDN_URL}/tech/techImg5.svg`,
       middleIcon: `${CDN_URL}/tech/hand-holding-dollar.svg`,
-      middleContent: 'Adoption interest',
+      middleContent: 'Funds',
       rightImg: `${CDN_URL}/tech/techImg6.svg`,
       arrowRevert: false,
       type: 'p',
