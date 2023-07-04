@@ -93,7 +93,13 @@ const HistoryAlert = () => {
               <p>{features} effects were unlocked successfully.</p>
             </div>
           </div>
-          <Button className={s.unlock_btn} onClick={goToTokenPage}>
+          <Button
+            className={s.unlock_btn}
+            onClick={() => {
+              handleCloseAlert(t);
+              goToTokenPage();
+            }}
+          >
             Check your Soul here
             <IconSVG
               src={`${CDN_URL}/ic-arrow-right.svg`}
