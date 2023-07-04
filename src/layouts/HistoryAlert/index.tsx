@@ -1,19 +1,20 @@
-import Button from '@/components/Button';
-import IconSVG from '@/components/IconSVG';
-import { CDN_URL } from '@/configs';
-import { FeatureThumbnail } from '@/constants/feature';
-import { ROUTE_PATH } from '@/constants/route-path';
-import { AssetsContext } from '@/contexts/assets-context';
 import { getIsAuthenticatedSelector } from '@/state/user/selector';
-import { useRouter } from 'next/router';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import s from './FeatureAlert.module.scss';
+import s from './HistoryAlert.module.scss';
+import IconSVG from '@/components/IconSVG';
+import { CDN_URL } from '@/configs';
+import Button from '@/components/Button';
+import { Feature, FeatureThumbnail } from '@/constants/feature';
+import { useRouter } from 'next/router';
+import { AssetsContext } from '@/contexts/assets-context';
+import { ROUTE_PATH } from '@/constants/route-path';
 
-const FeatureAlert = () => {
+const HistoryAlert = () => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const [featureList, setFeatureList] = useState<number[]>([]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const { availableFeatures, ownerTokenId } = useContext(AssetsContext);
 
@@ -27,8 +28,14 @@ const FeatureAlert = () => {
     });
   }, [ownerTokenId, router]);
 
+  const getFeatureByIndex = (index: number): Feature | undefined => {
+    const featureValues = Object.values(Feature);
+    const feature = featureValues[index];
+    return feature as Feature | undefined;
+  };
+
   const handleCloseAlert = useCallback(
-    (t: { id: string | undefined }) => {
+    (t: { id: string | undefined }, id: number) => {
       if (!featureList) return;
 
       toast.dismiss(t.id);
@@ -36,9 +43,13 @@ const FeatureAlert = () => {
         localStorage.getItem('closed_alert') || '[]'
       );
 
-      const updatedClosedAlert = [...closedAlert, ...featureList];
+      const updatedClosedAlert = [...closedAlert, id];
 
       localStorage.setItem('closed_alert', JSON.stringify(updatedClosedAlert));
+
+      setCurrentIndex(prev => {
+        return prev + 1;
+      });
     },
     [featureList]
   );
@@ -65,8 +76,9 @@ const FeatureAlert = () => {
   }, [isAuthenticated, featureList, goToTokenPage, handleCloseAlert, tokenId]);
 
   useEffect(() => {
-    if (tokenId || !featureList || featureList.length === 0) return;
-    const featIndex = featureList[1];
+    if (currentIndex === null || currentIndex === featureList.length || tokenId)
+      return;
+    const featIndex = featureList[currentIndex];
     toast(
       t => (
         <div className={s.alert_wrapper} key={t.id}>
@@ -75,22 +87,19 @@ const FeatureAlert = () => {
             maxWidth={'13'}
             maxHeight={'13'}
             className={s.close_btn}
-            onClick={() => handleCloseAlert(t)}
+            onClick={() => handleCloseAlert(t, featIndex)}
           />
           <div className={s.content_wrapper}>
             <div className={s.thumbnail_wrapper}>
-              <img
-                src={FeatureThumbnail[featIndex]}
-                alt={`Thumbnail of feature`}
-              />
+              <img src={FeatureThumbnail[0]} alt={`Thumbnail of feature`} />
             </div>
             <div className={s.content}>
-              <h6>Unlock Feature</h6>
-              <p>You have feature available to unlock.</p>
+              <h6>Feature Unlocked</h6>
+              <p>You have unlock {getFeatureByIndex(featIndex)}.</p>
             </div>
           </div>
           <Button className={s.unlock_btn} onClick={goToTokenPage}>
-            Unlock now
+            Check now
             <IconSVG
               src={`${CDN_URL}/ic-arrow-right.svg`}
               maxWidth={'14'}
@@ -114,9 +123,13 @@ const FeatureAlert = () => {
         },
       }
     );
-  }, [featureList, goToTokenPage, handleCloseAlert, tokenId]);
+  }, [currentIndex, featureList, goToTokenPage, handleCloseAlert, tokenId]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [availableFeatures]);
 
   return <div className={s.wrapper}></div>;
 };
 
-export default FeatureAlert;
+export default HistoryAlert;
