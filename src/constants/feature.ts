@@ -21,15 +21,15 @@ export enum FeatureStatus {
 }
 
 export const FeatureThumbnail = [
-  `${CDN_URL}/feature-thumbnail/1_sunEffect.png`,
-  `${CDN_URL}/feature-thumbnail/2_cloudLayer.png`,
-  `${CDN_URL}/feature-thumbnail/3_foreground.png`,
-  `${CDN_URL}/feature-thumbnail/4_decoration.png`,
-  `${CDN_URL}/feature-thumbnail/5_specialObj.png`,
-  `${CDN_URL}/feature-thumbnail/6_sunShape.png`,
-  `${CDN_URL}/feature-thumbnail/7_rainbow.png`,
-  `${CDN_URL}/feature-thumbnail/8_thunder.png`,
-  `${CDN_URL}/feature-thumbnail/9_rain.png`,
-  `${CDN_URL}/feature-thumbnail/10_sunAura.png`,
-  `${CDN_URL}/feature-thumbnail/11_sunPillar.png`,
+  `${CDN_URL}/feature-thumbnail/1_sunEffect.jpg`,
+  `${CDN_URL}/feature-thumbnail/2_cloudLayer.jpg`,
+  `${CDN_URL}/feature-thumbnail/3_foreground.jpg`,
+  `${CDN_URL}/feature-thumbnail/4_decoration.jpg`,
+  `${CDN_URL}/feature-thumbnail/5_specialObj.jpg`,
+  `${CDN_URL}/feature-thumbnail/6_sunShape.jpg`,
+  `${CDN_URL}/feature-thumbnail/7_rainbow.jpg`,
+  `${CDN_URL}/feature-thumbnail/8_thunder.jpg`,
+  `${CDN_URL}/feature-thumbnail/9_rain.jpg`,
+  `${CDN_URL}/feature-thumbnail/10_sunAura.jpg`,
+  `${CDN_URL}/feature-thumbnail/11_sunPillar.jpg`,
 ];
