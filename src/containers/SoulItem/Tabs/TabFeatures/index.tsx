@@ -110,6 +110,7 @@ const TabFeatures = ({
                   holdTime: unlockConditions?.holdTimes[index],
                 }}
                 isOwner={isOwner}
+                owner={owner}
               />
               <UnlockFeature
                 status={featuresStatus[index]}

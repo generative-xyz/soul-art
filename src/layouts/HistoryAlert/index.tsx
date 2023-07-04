@@ -75,6 +75,14 @@ const HistoryAlert = () => {
       t => (
         <div className={s.alert_wrapper} key={t.id}>
           <div className={s.content_wrapper}>
+            <div className={s.alert_heading}>
+              <IconSVG
+                maxHeight="20"
+                maxWidth="20"
+                src={`${CDN_URL}/ic-verify-check.svg`}
+              />
+              <h5>New Effects Added</h5>
+            </div>
             <div className={s.thumbnail_wrapper}>
               <img
                 src={historyAlerts[0].imageCapture}
@@ -82,7 +90,6 @@ const HistoryAlert = () => {
               />
             </div>
             <div className={s.content}>
-              <h6>Effects Unlocked</h6>
               <p>{features} effects were unlocked successfully.</p>
             </div>
           </div>
@@ -107,7 +114,7 @@ const HistoryAlert = () => {
         style: {
           background: '#fff',
           boxShadow: '0px 0px 24px -6px rgba(0, 0, 0, 0.16)',
-          borderRadius: '8px',
+          borderRadius: '12px',
           padding: '20px',
           width: '248px',
           margin: '0px',
