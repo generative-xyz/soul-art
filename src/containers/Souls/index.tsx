@@ -6,7 +6,6 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import AttributeSort from '@/containers/Souls/Attribute';
 import { IToken } from '@/interfaces/api/marketplace';
 import { IAttribute } from '@/interfaces/attributes';
-import logger from '@/services/logger';
 import { getCollectionNFTList } from '@/services/marketplace';
 import { getSoulAttributes } from '@/services/soul';
 import cs from 'classnames';
@@ -134,7 +133,6 @@ export const SoulsContainer: React.FC<Props> = ({
   useEffect(() => {
     if (isFetchSuccessAttributes && attributes) {
       fetchSouls();
-      logger.info('fetchSouls');
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
