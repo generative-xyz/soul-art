@@ -1,7 +1,6 @@
 import Button from '@/components/Button';
 import IconSVG from '@/components/IconSVG';
 import { CDN_URL } from '@/configs';
-import { FeatureThumbnail } from '@/constants/feature';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { AssetsContext } from '@/contexts/assets-context';
 import { getIsAuthenticatedSelector } from '@/state/user/selector';
@@ -58,63 +57,66 @@ const FeatureAlert = () => {
   }, [availableFeatures]);
 
   useEffect(() => {
-    if (!isAuthenticated || !featureList || tokenId) {
-      toast.dismiss();
+    if (!isAuthenticated || tokenId === ownerTokenId) {
+      toast.dismiss('unlock-alert');
       return;
     }
-  }, [isAuthenticated, featureList, goToTokenPage, handleCloseAlert, tokenId]);
+  }, [ownerTokenId, isAuthenticated, tokenId]);
 
   useEffect(() => {
-    if (tokenId || !featureList || featureList.length === 0) return;
-    const featIndex = featureList[1];
+    if (tokenId === ownerTokenId || !featureList || featureList.length === 0)
+      return;
+
     toast(
       t => (
         <div className={s.alert_wrapper} key={t.id}>
-          <IconSVG
-            src={`${CDN_URL}/ic-vector.svg`}
-            maxWidth={'13'}
-            maxHeight={'13'}
-            className={s.close_btn}
-            onClick={() => handleCloseAlert(t)}
-          />
           <div className={s.content_wrapper}>
             <div className={s.thumbnail_wrapper}>
               <img
-                src={FeatureThumbnail[featIndex]}
+                src={`${CDN_URL}/shining.png`}
                 alt={`Thumbnail of feature`}
               />
             </div>
             <div className={s.content}>
-              <h6>Unlock Feature</h6>
-              <p>You have feature available to unlock.</p>
+              <p>A new effect is available to unlock.</p>
             </div>
           </div>
           <Button className={s.unlock_btn} onClick={goToTokenPage}>
-            Unlock now
+            Unlock it now
             <IconSVG
               src={`${CDN_URL}/ic-arrow-right.svg`}
               maxWidth={'14'}
               maxHeight={'14'}
             />
           </Button>
+          <Button className={s.close_btn} onClick={() => handleCloseAlert(t)}>
+            Close
+          </Button>
         </div>
       ),
       {
-        id: `unlock-alert-${featIndex}`,
+        id: `unlock-alert`,
         position: 'bottom-right',
         duration: Infinity,
+        className: s.alert,
 
         style: {
           background: '#fff',
           boxShadow: '0px 0px 24px -6px rgba(0, 0, 0, 0.16)',
           borderRadius: '8px',
           padding: '20px',
-          minWidth: '400px',
-          transform: 'translateY(0px)',
+          width: '248px',
         },
       }
     );
-  }, [featureList, goToTokenPage, handleCloseAlert, tokenId]);
+  }, [
+    ownerTokenId,
+    featureList,
+    goToTokenPage,
+    handleCloseAlert,
+    tokenId,
+    router,
+  ]);
 
   return <div className={s.wrapper}></div>;
 };

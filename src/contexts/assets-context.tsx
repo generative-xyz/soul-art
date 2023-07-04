@@ -6,6 +6,7 @@ import useCheckFeatureStatus from '@/hooks/contract-operations/soul/useCheckFeat
 import useGetDepositBalance from '@/hooks/contract-operations/soul/useGetDepositBalance';
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import { ICollectedUTXOResp, IFeeRate } from '@/interfaces/api/bitcoin';
+import { ISoulHistoryItem } from '@/interfaces/api/soul';
 import {
   getCollectedUTXO,
   getFeeRate,
@@ -13,6 +14,7 @@ import {
 } from '@/services/bitcoin';
 import logger from '@/services/logger';
 import { getCollectionNFTList } from '@/services/marketplace';
+import { getSoulHistories } from '@/services/soul';
 import { useAppSelector } from '@/state/hooks';
 import {
   getIsAuthenticatedSelector,
@@ -40,6 +42,7 @@ export interface IAssetsContext {
   availableFeatures: number[] | null;
   ownerTokenId?: string;
   setAvailableFeatures: React.Dispatch<React.SetStateAction<number[] | null>>;
+  historyAlerts: ISoulHistoryItem[] | null;
 }
 
 const initialValue: IAssetsContext = {
@@ -57,6 +60,7 @@ const initialValue: IAssetsContext = {
   setAvailableFeatures: () => {
     return;
   },
+  historyAlerts: null,
 };
 
 export const AssetsContext = React.createContext<IAssetsContext>(initialValue);
@@ -79,6 +83,8 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   const [availableFeatures, setAvailableFeatures] = useState<number[] | null>(
     null
   );
+  const [histories, setHistories] = useState<ISoulHistoryItem[] | null>(null);
+
   const { run: checkFeaturesStatus } = useContractOperation({
     operation: useCheckFeatureStatus,
     inscribable: false,
@@ -241,6 +247,26 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchFeeRate, fetchTCBalance, getAvailableAssetsCreateTx]);
 
+  const fetchOwnerHistory = useCallback(async () => {
+    if (!ownerTokenId) return;
+    try {
+      const res = await getSoulHistories({
+        page: 1,
+        limit: 11,
+        tokenId: ownerTokenId,
+      });
+      const histories = res.filter(item => {
+        if (!item.featureName) return;
+        return item.owner === tcAddress?.toLowerCase();
+      });
+      if (histories && histories.length > 0) {
+        setHistories(histories);
+      }
+    } catch (err: unknown) {
+      logger.debug('failed to fetch user history');
+    }
+  }, [ownerTokenId, tcAddress]);
+
   useEffect(() => {
     fetchBtcAssets();
   }, [fetchBtcAssets]);
@@ -262,10 +288,15 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     fetchSoulToken();
   }, [fetchSoulToken, isAuthenticated]);
 
+  useEffect(() => {
+    if (!isAuthenticated || !ownerTokenId) return;
+    fetchOwnerHistory();
+  }, [fetchOwnerHistory, isAuthenticated, ownerTokenId]);
+
   useAsyncEffect(async () => {
     if (!isAuthenticated || !user?.walletAddress || !ownerTokenId) {
       setAvailableFeatures(null);
-      // localStorage.removeItem('feature_available');
+      setHistories(null);
       return;
     }
 
@@ -307,6 +338,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       availableFeatures,
       ownerTokenId,
       setAvailableFeatures,
+      historyAlerts: histories,
     };
   }, [
     btcBalance,
@@ -317,6 +349,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     availableFeatures,
     ownerTokenId,
     setAvailableFeatures,
+    histories,
   ]);
 
   return (

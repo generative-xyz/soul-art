@@ -63,7 +63,11 @@ export default function App({ Component, pageProps }: AppProps) {
                 <AssetsProvider>
                   <Component {...pageProps} />
                 </AssetsProvider>
-                <Toaster position="top-center" reverseOrder={false} />
+                <Toaster
+                  position="top-center"
+                  reverseOrder={false}
+                  containerClassName={'custom-toast'}
+                />
               </WalletProvider>
             </Web3Provider>
           </ThemeProvider>

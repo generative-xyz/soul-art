@@ -1,133 +1,121 @@
+import Button from '@/components/Button';
+import IconSVG from '@/components/IconSVG';
+import { CDN_URL } from '@/configs';
+import { Feature } from '@/constants/feature';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { AssetsContext } from '@/contexts/assets-context';
 import { getIsAuthenticatedSelector } from '@/state/user/selector';
+import { useRouter } from 'next/router';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import s from './HistoryAlert.module.scss';
-import IconSVG from '@/components/IconSVG';
-import { CDN_URL } from '@/configs';
-import Button from '@/components/Button';
-import { Feature, FeatureThumbnail } from '@/constants/feature';
-import { useRouter } from 'next/router';
-import { AssetsContext } from '@/contexts/assets-context';
-import { ROUTE_PATH } from '@/constants/route-path';
 
 const HistoryAlert = () => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
-  const [featureList, setFeatureList] = useState<number[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [alertList, setAlertList] = useState<string[]>([]);
 
-  const { availableFeatures, ownerTokenId } = useContext(AssetsContext);
+  const { historyAlerts, ownerTokenId } = useContext(AssetsContext);
 
   const router = useRouter();
-
-  const { tokenId } = router.query as { tokenId: string };
 
   const goToTokenPage = useCallback(() => {
     router.push({ pathname: `${ROUTE_PATH.HOME}/${ownerTokenId}` }, undefined, {
       shallow: false,
     });
-  }, [ownerTokenId, router]);
-
-  const getFeatureByIndex = (index: number): Feature | undefined => {
-    const featureValues = Object.values(Feature);
-    const feature = featureValues[index];
-    return feature as Feature | undefined;
-  };
+  }, [ownerTokenId]);
 
   const handleCloseAlert = useCallback(
-    (t: { id: string | undefined }, id: number) => {
-      if (!featureList) return;
+    (t: { id: string | undefined }) => {
+      if (!alertList) return;
 
       toast.dismiss(t.id);
       const closedAlert = JSON.parse(
-        localStorage.getItem('closed_alert') || '[]'
+        localStorage.getItem('closed_history_alert') || '[]'
       );
 
-      const updatedClosedAlert = [...closedAlert, id];
+      const updatedClosedAlert = [...closedAlert, ...alertList];
 
-      localStorage.setItem('closed_alert', JSON.stringify(updatedClosedAlert));
-
-      setCurrentIndex(prev => {
-        return prev + 1;
-      });
+      localStorage.setItem(
+        'closed_history_alert',
+        JSON.stringify(updatedClosedAlert)
+      );
     },
-    [featureList]
+    [alertList]
   );
 
   useEffect(() => {
-    if (availableFeatures && availableFeatures.length > 0) {
+    if (historyAlerts && historyAlerts.length > 0) {
       const closedAlert = JSON.parse(
-        localStorage.getItem('closed_alert') || '[]'
+        localStorage.getItem('closed_history_alert') || '[]'
       );
-      const updatedAvailableFeatures = availableFeatures.filter(
-        (feat: number) => {
-          return !closedAlert.includes(feat);
-        }
-      );
-      setFeatureList(updatedAvailableFeatures);
+      const updatedHistoryAlerts = historyAlerts.filter(feat => {
+        if (!feat.featureName) return;
+        return !closedAlert.includes(feat.featureName);
+      });
+      setAlertList(updatedHistoryAlerts.map(feat => feat.featureName));
     }
-  }, [availableFeatures]);
+  }, [historyAlerts]);
 
   useEffect(() => {
-    if (!isAuthenticated || !featureList || tokenId) {
-      toast.dismiss();
+    if (!isAuthenticated) {
+      toast.dismiss('history-alert');
       return;
     }
-  }, [isAuthenticated, featureList, goToTokenPage, handleCloseAlert, tokenId]);
+  }, [isAuthenticated]);
 
   useEffect(() => {
-    if (currentIndex === null || currentIndex === featureList.length || tokenId)
-      return;
-    const featIndex = featureList[currentIndex];
+    if (!historyAlerts || !alertList || alertList.length === 0) return;
+
+    const features = alertList
+      .map((feat: string) => Feature[feat as keyof typeof Feature])
+      .join(', ');
+
     toast(
       t => (
         <div className={s.alert_wrapper} key={t.id}>
-          <IconSVG
-            src={`${CDN_URL}/ic-vector.svg`}
-            maxWidth={'13'}
-            maxHeight={'13'}
-            className={s.close_btn}
-            onClick={() => handleCloseAlert(t, featIndex)}
-          />
           <div className={s.content_wrapper}>
             <div className={s.thumbnail_wrapper}>
-              <img src={FeatureThumbnail[0]} alt={`Thumbnail of feature`} />
+              <img
+                src={historyAlerts[0].imageCapture}
+                alt={`Thumbnail of feature`}
+              />
             </div>
             <div className={s.content}>
-              <h6>Feature Unlocked</h6>
-              <p>You have unlock {getFeatureByIndex(featIndex)}.</p>
+              <h6>Effects Unlocked</h6>
+              <p>{features} effects were unlocked successfully.</p>
             </div>
           </div>
           <Button className={s.unlock_btn} onClick={goToTokenPage}>
-            Check now
+            Check your Soul here
             <IconSVG
               src={`${CDN_URL}/ic-arrow-right.svg`}
               maxWidth={'14'}
               maxHeight={'14'}
             />
           </Button>
+          <Button className={s.close_btn} onClick={() => handleCloseAlert(t)}>
+            Close
+          </Button>
         </div>
       ),
       {
-        id: `unlock-alert-${featIndex}`,
+        id: `history-alert`,
         position: 'bottom-right',
         duration: Infinity,
-
+        className: s.alert,
         style: {
           background: '#fff',
           boxShadow: '0px 0px 24px -6px rgba(0, 0, 0, 0.16)',
           borderRadius: '8px',
           padding: '20px',
-          minWidth: '400px',
+          width: '248px',
+          margin: '0px',
           transform: 'translateY(0px)',
         },
       }
     );
-  }, [currentIndex, featureList, goToTokenPage, handleCloseAlert, tokenId]);
-
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [availableFeatures]);
+  }, [historyAlerts, alertList]);
 
   return <div className={s.wrapper}></div>;
 };
