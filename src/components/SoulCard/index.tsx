@@ -15,6 +15,7 @@ import { AuctionStatus } from '@/enums/soul';
 import cs from 'classnames';
 import SonarWaveCircle from '../SonarWaveCircle';
 import CountdownText from '../CountdownText';
+import { CDN_URL, SOUL_CONTRACT } from '@/configs';
 
 export interface IProps {
   href: string;
@@ -66,40 +67,40 @@ const SoulCard: React.FC<IProps> = ({
     <Card className={cs(s.card, className)}>
       {auctionEndTime && (
         <div className={s.card_bidding}>
-          <span>
-            Bidding
-          </span>
+          <span>Bidding</span>
           <SonarWaveCircle className={s.card_sonarCircle} />
           <CountdownText countDownTo={auctionEndTime} />
         </div>
       )}
       <Card.Link href={href} as={Link} className={s.card_link}>
         <div className={s.card_image__container}>
-          <Card.Img
-            variant="top"
-            src={image}
-            className={s.card_image}
-          />
+          <Card.Img variant="top" src={image} className={s.card_image} />
         </div>
         <Card.Body className={s.card_body}>
           <div className={s.hoverInfo}>
             <p>{title}</p>
             <div className={s.owner}>
               {!!ownerAddr && (
-                <>
+                <div className={s.owner}>
                   <div className={s.avatarWrapper}>
-                    <Jazzicon
-                      diameter={24}
-                      seed={jsNumberForAddress(ownerAddr)}
-                    />
+                    {ownerAddr.toLowerCase() === SOUL_CONTRACT.toLowerCase() ? (
+                      <img src={`${CDN_URL}/ic-question-owner.svg`} />
+                    ) : (
+                      <Jazzicon
+                        diameter={24}
+                        seed={jsNumberForAddress(ownerAddr)}
+                      />
+                    )}
                   </div>
                   <div className={s.address}>
                     {user?.walletAddress?.toLowerCase() ===
-                      ownerAddr.toLowerCase()
+                    ownerAddr.toLowerCase()
                       ? 'You'
+                      : ownerAddr.toLowerCase() === SOUL_CONTRACT.toLowerCase()
+                      ? 'Awaiting a better match...'
                       : shortenAddress(ownerAddr)}
                   </div>
-                </>
+                </div>
               )}
             </div>
           </div>
