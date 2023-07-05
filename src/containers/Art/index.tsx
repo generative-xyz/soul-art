@@ -20,12 +20,12 @@ const ArtLandingPage = () => {
     {
       url: `${CDN_URL}/art/art-img2.jpg`,
       title:
-        'The process begins by sampling the colors of specific pixels from the base drawing. These colors are then used to create a series of curve lines that are placed within the artwork.',
+        'The colors of these curved lines shift ever so slightly, adding a rich texture to the overall composition.',
     },
     {
       url: `${CDN_URL}/art/art-img3.jpg`,
       title:
-        'The colors of these curve lines are subtly shifted, adding a touch of dynamism and richness to the overall composition.',
+        'The length and width of these curved lines are adjusted—giving the brush strokes a unique look. This careful movement of curves brings forth the textured and layered appearance of traditional oil paintings.',
     },
   ];
 
