@@ -1,0 +1,8 @@
+.custom-toast {
+  > div {
+    transform: translateY(0px) !important;
+  }
+  [role='status'] {
+    margin: 0;
+  }
+}

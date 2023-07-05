@@ -60,17 +60,16 @@ export interface IToken {
   size: number;
   imageCapture?: string;
   bnsData?: IOwnedBNS[];
-  deleted_at: string | null;
-  created_at: string | null;
-  updated_at: string | null;
+  deletedAt: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
   attributes: IAttribute[];
   metadata: string;
-  metadata_type: string;
-  animation_file_url: string;
-  image_capture: string;
-  collection_address: string;
+  metadataType: string;
   tokenIdInt: number;
-  is_auction: true;
+  isAuction: true;
+  auctionStatus: number;
+  endBlock: string;
 }
 
 export interface IInscriptionActivity {

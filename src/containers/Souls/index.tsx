@@ -1,12 +1,11 @@
 import InfiniteLoading from '@/components/InfiniteLoading';
-import SoulsCard from '@/components/SoulCards';
+import SoulCard from '@/components/SoulCard';
 import Spinner from '@/components/Spinner';
 import { CDN_URL, SOUL_CONTRACT } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
 import AttributeSort from '@/containers/Souls/Attribute';
 import { IToken } from '@/interfaces/api/marketplace';
 import { IAttribute } from '@/interfaces/attributes';
-import logger from '@/services/logger';
 import { getCollectionNFTList } from '@/services/marketplace';
 import { getSoulAttributes } from '@/services/soul';
 import cs from 'classnames';
@@ -134,7 +133,6 @@ export const SoulsContainer: React.FC<Props> = ({
   useEffect(() => {
     if (isFetchSuccessAttributes && attributes) {
       fetchSouls();
-      logger.info('fetchSouls');
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
 
@@ -206,7 +204,7 @@ export const SoulsContainer: React.FC<Props> = ({
               souls.length > 0 &&
               souls.map(item => {
                 return (
-                  <SoulsCard
+                  <SoulCard
                     key={`token-${item.tokenId}`}
                     href={`${ROUTE_PATH.HOME}/${item.tokenId}`}
                     image={!!item.imageCapture ? item.imageCapture : item.image}
@@ -214,6 +212,8 @@ export const SoulsContainer: React.FC<Props> = ({
                     title={!!item.name ? item.name : `Souls #${item.tokenId}`}
                     ownerAddr={item.owner}
                     className={s.grid_item}
+                    auctionStatus={item.auctionStatus}
+                    endBlock={item.endBlock}
                   />
                 );
               })}

@@ -19,7 +19,7 @@ const ToastConfirm: React.FC<IProps> = ({
 }: IProps): React.ReactElement => {
   return (
     <StyledToastConfirm>
-      <div>
+      <div className='content'>
         {message}
         {url && (
           <>

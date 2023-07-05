@@ -2,8 +2,12 @@ import { Feature, FeatureStatus, FeatureThumbnail } from '@/constants/feature';
 import { AssetsContext } from '@/contexts/assets-context';
 import { formatEthPrice } from '@/utils/format';
 import BigNumber from 'bignumber.js';
-import { useContext, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import s from './FeatureInfo.module.scss';
+import { getSoulHistories } from '@/services/soul';
+import { useRouter } from 'next/router';
+import logger from '@/services/logger';
+import { ISoulHistoryItem } from '@/interfaces/api/soul';
 
 type Props = {
   feat: string;
@@ -15,6 +19,7 @@ type Props = {
   };
   isOwner?: boolean;
   index: number;
+  owner?: string;
 };
 
 const FeatureInfo = ({
@@ -24,12 +29,40 @@ const FeatureInfo = ({
   levelUnlock,
   isOwner = false,
   index,
+  owner,
 }: Props) => {
+  const router = useRouter();
+  const { tokenId } = router.query as { tokenId: string };
+
   const { gmBalance, gmDepositBalance } = useContext(AssetsContext);
+
+  const [featureThumbnailUnlocked, setFeatureThumbnailUnlocked] = useState<
+    ISoulHistoryItem[] | null
+  >(null);
 
   const totalGMBalance = new BigNumber(gmDepositBalance).plus(
     new BigNumber(gmBalance)
   );
+
+  const fetchOwnerHistory = useCallback(async () => {
+    if (!owner) return;
+    try {
+      const res = await getSoulHistories({
+        page: 1,
+        limit: 11,
+        tokenId: tokenId,
+      });
+      const histories = res.filter(item => {
+        if (!item.featureName) return;
+        return item.owner === owner;
+      });
+      if (histories && histories.length > 0) {
+        setFeatureThumbnailUnlocked(histories);
+      }
+    } catch (err: unknown) {
+      logger.debug('failed to fetch user history');
+    }
+  }, [owner]);
 
   const showBalance: number = useMemo(
     () =>
@@ -52,12 +85,30 @@ const FeatureInfo = ({
     [levelUnlock?.holdTime, status, tokenBlocksExist]
   );
 
+  useEffect(() => {
+    fetchOwnerHistory();
+  }, []);
+
   if (!levelUnlock) return null;
+
+  const foundImageCapture =
+    featureThumbnailUnlocked &&
+    featureThumbnailUnlocked.length > 0 &&
+    featureThumbnailUnlocked.find(feature => feature.featureName === feat);
 
   return (
     <div className={s.wrapper}>
       <div className={s.feature_thumbnail_wrapper}>
-        <img src={FeatureThumbnail[index]} alt={`Thumbnail of ${feat}`} />
+        <img
+          src={
+            foundImageCapture
+              ? featureThumbnailUnlocked.find(
+                  feature => feature.featureName === feat
+                )?.imageCapture
+              : FeatureThumbnail[index]
+          }
+          alt={`Thumbnail of ${feat}`}
+        />
       </div>
       <div className={s.feature_info}>
         <p>{Feature[feat as keyof typeof Feature]}</p>

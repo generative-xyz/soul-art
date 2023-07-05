@@ -5,7 +5,7 @@ import useSettleAuction from '@/hooks/contract-operations/soul/useSettleAuction'
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
 import logger from '@/services/logger';
 import { getUserSelector } from '@/state/user/selector';
-import { formatLongAddress, sleep, toStorageKey } from '@/utils';
+import { formatLongAddress, toStorageKey } from '@/utils';
 import { showToastError } from '@/utils/toast';
 import { useWeb3React } from '@web3-react/core';
 import cs from 'classnames';
@@ -17,6 +17,7 @@ import { formatEthPrice } from '@/utils/format';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import Link from 'next/link';
 import { ROOT_ADDRESS } from '@/constants/common';
+import { AuctionStatus } from '@/enums/soul';
 
 interface IProps {
   tokenId: string;
@@ -93,11 +94,13 @@ const SettleAuctionButton: React.FC<IProps> = ({
 
         if (receipt?.status === 1 || receipt?.status === 0) {
           logger.info('tx done', key);
-          intervalId && clearInterval(intervalId);
-          await sleep(60000);
-          localStorage.removeItem(key);
-          setInscribing(false);
           fetchAuction();
+
+          if (auction?.auctionStatus !== AuctionStatus.ENDED) {
+            intervalId && clearInterval(intervalId);
+            localStorage.removeItem(key);
+            setInscribing(false);
+          }
         }
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);
@@ -113,32 +116,32 @@ const SettleAuctionButton: React.FC<IProps> = ({
     return () => {
       intervalId && clearInterval(intervalId);
     };
-  }, [user, provider]);
+  }, [user, provider, auction]);
 
   return (
     <div>
       {auction && (
         <div className={s.auctionInfo}>
           <div className={s.highestBidWrapper}>
-            <p className={s.highestBidTitle}>
-              Highest bid
-            </p>
+            <p className={s.highestBidTitle}>Highest bid</p>
             <p className={s.highestBidPrice}>
               {`${formatEthPrice(auction.highestBid)} GM`}
             </p>
           </div>
           <div className={s.content_auctionRight}>
-            <p className={s.highestBidTitle}>
-              Month warrior
-            </p>
+            <p className={s.highestBidTitle}>Adopter</p>
             <p className={s.winnerInfo}>
-              {(auction.highestBidder && auction.highestBidder !== ROOT_ADDRESS) ? (
+              {auction.highestBidder &&
+              auction.highestBidder !== ROOT_ADDRESS ? (
                 <>
                   <Jazzicon
                     diameter={28}
                     seed={jsNumberForAddress(auction.highestBidder)}
                   />
-                  <Link href={`${TC_EXPLORER_URL}/address/${auction.highestBidder}`} className={s.highestBidPrice}>
+                  <Link
+                    href={`${TC_EXPLORER_URL}/address/${auction.highestBidder}`}
+                    className={s.highestBidPrice}
+                  >
                     {formatLongAddress(`${auction.highestBidder}`)}
                   </Link>
                 </>

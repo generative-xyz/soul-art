@@ -11,6 +11,28 @@
   margin-left: auto;
   margin-right: auto;
 
+  .alert_heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    padding-right: 8px;
+    gap: 6px;
+    color: #00aa6c;
+    background: #00aa6c26;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 100px;
+    margin-bottom: 16px;
+
+    h5 {
+      font-size: 12px;
+      line-height: calc(16 / 12);
+      text-transform: uppercase;
+    }
+  }
+
   .content_wrapper {
     margin-bottom: (20px);
 
@@ -24,7 +46,6 @@
     p {
       font-size: 16px;
       line-height: 140%;
-      color: #5b5b5b;
     }
   }
 
@@ -74,4 +95,7 @@
     gap: (8px);
     margin-bottom: (12px);
   }
+}
+
+.alert {
 }

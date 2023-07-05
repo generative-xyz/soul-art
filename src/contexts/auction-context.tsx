@@ -1,6 +1,7 @@
 import React, {
   PropsWithChildren,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -14,6 +15,7 @@ import dayjs from 'dayjs';
 import useAsyncEffect from 'use-async-effect';
 import { AuctionStatus } from '@/enums/soul';
 import { sleep } from '@/utils';
+import { AssetsContext } from './assets-context';
 
 export interface IAuctionContext {
   auction: IAuction | null;
@@ -40,6 +42,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
   const [auction, setAuction] = useState<IAuction | null>(null);
   const [biddable, setBiddable] = useState(true);
   const [auctionEndTime, setAuctionEndTime] = useState<string | null>(null);
+  const { avgBlockTime } = useContext(AssetsContext);
 
   const getAuctionEndTime = useCallback(async () => {
     if (!auction || auction.auctionStatus !== AuctionStatus.INPROGRESS) {
@@ -49,7 +52,6 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
     }
     const endBlock = auction.endTime as unknown as number;
     const currentBlock = await web3Instance.getCurrentBlockNumber();
-    const avgBlockTime = await web3Instance.calculateAverageBlockTime();
     logger.debug('avgBlockTime', avgBlockTime);
     const now = dayjs().unix();
     const endTimestamp = now + (endBlock - currentBlock) * avgBlockTime;
@@ -62,7 +64,7 @@ export const AuctionProvider: React.FC<PropsWithChildren> = ({
       .utc(endTimestamp * 1000)
       .format('YYYY-MM-DD HH:mm:ss');
     setAuctionEndTime(endTime);
-  }, [auction]);
+  }, [auction, avgBlockTime]);
 
   const fetchAuction = useCallback(async (): Promise<void> => {
     try {

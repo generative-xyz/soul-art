@@ -10,6 +10,7 @@ import useTimeComparison from '@/hooks/useTimeComparison';
 import cs from 'classnames';
 import { LightboxProvider } from '@/contexts/Lightbox/lighbox-context';
 import { AssetsContext } from '@/contexts/assets-context';
+import HistoryAlert from './HistoryAlert';
 
 export const HEADER_HEIGHT = 80;
 export const FO0TER_HEIGHT = 80;
@@ -46,6 +47,7 @@ const Layout: React.FC<PropsWithChildren> = ({
         {children}
       </main>
       <FeatureAlert />
+      <HistoryAlert />
     </div>
   );
 };
