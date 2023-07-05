@@ -10,6 +10,10 @@ export const StyledToastConfirm = styled.div`
   justify-content: space-between;
   gap: ${px2rem(22)};
 
+  .content {
+    margin-left: ${px2rem(8)};
+  }
+
   .wallet-link {
     display: flex;
     align-items: center;

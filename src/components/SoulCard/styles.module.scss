@@ -1,5 +1,30 @@
 .card {
   border: none;
+  position: relative;
+
+  &_bidding {
+    position: absolute;
+    top: rem(12px);
+    left: rem(12px);
+    background-color: #fff;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    padding: rem(6px) rem(8px);
+    border-radius: 4px;
+    gap: rem(6px);
+
+    span {
+      font-size: rem(14px);
+      font-weight: 500;
+      line-height: 140%;
+    }
+
+    :global(.sonarEmitter) {
+      width: rem(8px);
+      height: rem(8px);
+    }
+  }
 
   &_image {
     position: absolute;

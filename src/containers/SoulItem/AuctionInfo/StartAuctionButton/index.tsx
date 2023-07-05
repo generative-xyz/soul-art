@@ -10,10 +10,11 @@ import { Transaction } from 'ethers';
 import { useSelector } from 'react-redux';
 import { getUserSelector } from '@/state/user/selector';
 import { useWeb3React } from '@web3-react/core';
-import { sleep, toStorageKey } from '@/utils';
+import { toStorageKey } from '@/utils';
 import { AuctionContext } from '@/contexts/auction-context';
 import { TC_URL } from '@/configs';
 import { TransactionPendingMessage } from '@/constants/action-message';
+import { AuctionStatus } from '@/enums/soul';
 
 interface IProps {
   data: ITokenDetail;
@@ -31,7 +32,7 @@ const StartAuctionButton: React.FC<IProps> = ({
     inscribable: true,
   });
   const { provider } = useWeb3React();
-  const { fetchAuction } = useContext(AuctionContext);
+  const { fetchAuction, auction } = useContext(AuctionContext);
 
   const onTxSuccessCallback = async (tx: Transaction | null): Promise<void> => {
     if (!tx || !user?.walletAddress) return;
@@ -92,11 +93,13 @@ const StartAuctionButton: React.FC<IProps> = ({
 
         if (receipt?.status === 1 || receipt?.status === 0) {
           logger.info('tx done', key);
-          intervalId && clearInterval(intervalId);
-          await sleep(60000);
-          setInscribing(false);
           fetchAuction();
-          localStorage.removeItem(key);
+
+          if (auction?.auctionStatus === AuctionStatus.INPROGRESS || auction?.auctionStatus === AuctionStatus.ENDED) {
+            intervalId && clearInterval(intervalId);
+            setInscribing(false);
+            localStorage.removeItem(key);
+          }
         }
       } catch (error) {
         logger.error('Error retrieving transaction receipt:', error);
@@ -112,7 +115,7 @@ const StartAuctionButton: React.FC<IProps> = ({
     return () => {
       intervalId && clearInterval(intervalId);
     };
-  }, [user, provider, operationName]);
+  }, [user, provider, operationName, auction]);
 
   return (
     <Button

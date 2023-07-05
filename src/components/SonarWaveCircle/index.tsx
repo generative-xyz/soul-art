@@ -9,7 +9,7 @@ interface IProps {
 const SonarWaveCircle: React.FC<IProps> = ({ className }: IProps): React.ReactElement => {
   return (
     <div className={cs(s.sonarWrapper, className)}>
-      <div className={s.sonarEmitter}>
+      <div className={cs(s.sonarEmitter, 'sonarEmitter')}>
         <div className={s.sonarWave}></div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import Button from '@/components/Button';
 import IconSVG from '@/components/IconSVG';
-import SoulsCard from '@/components/SoulCards';
+import SoulCard from '@/components/SoulCard';
 import { CDN_URL } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { IToken } from '@/interfaces/api/marketplace';
@@ -31,7 +31,7 @@ const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
       </h4>
       <div className={moreSectionStyles.grid}>
         {soulItems?.map(({ tokenId, image, imageCapture, owner, name }) => (
-          <SoulsCard
+          <SoulCard
             key={`token-${tokenId}`}
             href={`/souls/${tokenId}`}
             image={imageCapture ?? image}

@@ -43,6 +43,7 @@ export interface IAssetsContext {
   ownerTokenId?: string;
   setAvailableFeatures: React.Dispatch<React.SetStateAction<number[] | null>>;
   historyAlerts: ISoulHistoryItem[] | null;
+  avgBlockTime: number;
 }
 
 const initialValue: IAssetsContext = {
@@ -61,6 +62,7 @@ const initialValue: IAssetsContext = {
     return;
   },
   historyAlerts: null,
+  avgBlockTime: 0,
 };
 
 export const AssetsContext = React.createContext<IAssetsContext>(initialValue);
@@ -84,6 +86,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     null
   );
   const [histories, setHistories] = useState<ISoulHistoryItem[] | null>(null);
+  const [avgBlockTime, setAvgBlockTime] = useState(0);
 
   const { run: checkFeaturesStatus } = useContractOperation({
     operation: useCheckFeatureStatus,
@@ -156,23 +159,27 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
 
   const getAvailableAssetsCreateTx = useCallback(async () => {
     if (!btcAddress) return;
+    try {
+      const [assets, pendingUTXOs] = await Promise.all([
+        await fetchAssets(),
+        await getPendingUTXOs(btcAddress),
+      ]);
 
-    const [assets, pendingUTXOs] = await Promise.all([
-      await fetchAssets(),
-      await getPendingUTXOs(btcAddress),
-    ]);
+      if (assets) {
+        const currentAssets = currentAssetsBuilder({
+          current: assets,
+          pending: pendingUTXOs,
+        });
+        setCurrentAssets(currentAssets);
+        return;
+      }
 
-    if (assets) {
-      const currentAssets = currentAssetsBuilder({
-        current: assets,
-        pending: pendingUTXOs,
-      });
-      setCurrentAssets(currentAssets);
-      return;
+      setCurrentAssets(undefined);
+      return undefined;
+    } catch (err: unknown) {
+      logger.error(err);
+      return undefined;
     }
-
-    setCurrentAssets(undefined);
-    return undefined;
   }, [btcAddress, fetchAssets]);
 
   const btcBalance = React.useMemo(() => {
@@ -214,40 +221,23 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     }
   }, [getDepositBalance]);
 
+  const fetchAvgBlockTime = useCallback(async (): Promise<void> => {
+    const blockTime = await web3Instance.calculateAverageBlockTime();
+    setAvgBlockTime(blockTime);
+  }, []);
+
   const fetchAssetsData = useCallback(() => {
-    try {
-      fetchFeeRate();
-    } catch (err: unknown) {
-      logger.error(err);
-    }
-
-    try {
-      fetchTCBalance();
-    } catch (err: unknown) {
-      logger.error(err);
-    }
-
-    try {
-      getAvailableAssetsCreateTx();
-    } catch (err: unknown) {
-      logger.error(err);
-    }
-
-    try {
-      fetchGMBalance();
-    } catch (err: unknown) {
-      logger.error(err);
-    }
-
-    try {
-      fetchGMDepositBalance();
-    } catch (err: unknown) {
-      logger.error(err);
-    }
+    fetchFeeRate();
+    fetchAvgBlockTime();
+    fetchTCBalance();
+    fetchGMBalance();
+    fetchGMDepositBalance();
+    fetchBtcAssets();
+    getAvailableAssetsCreateTx();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchFeeRate, fetchTCBalance, getAvailableAssetsCreateTx]);
+  }, [fetchFeeRate, fetchAvgBlockTime, fetchTCBalance, fetchBtcAssets, getAvailableAssetsCreateTx]);
 
-  const fetchOwnerHistory = useCallback(async () => {
+  const fetchSoulHistory = useCallback(async () => {
     if (!ownerTokenId) return;
     try {
       const res = await getSoulHistories({
@@ -268,10 +258,6 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   }, [ownerTokenId, tcAddress]);
 
   useEffect(() => {
-    fetchBtcAssets();
-  }, [fetchBtcAssets]);
-
-  useEffect(() => {
     fetchAssetsData();
 
     const intervalId = setInterval(() => {
@@ -290,8 +276,8 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
 
   useEffect(() => {
     if (!isAuthenticated || !ownerTokenId) return;
-    fetchOwnerHistory();
-  }, [fetchOwnerHistory, isAuthenticated, ownerTokenId]);
+    fetchSoulHistory();
+  }, [fetchSoulHistory, isAuthenticated, ownerTokenId]);
 
   useAsyncEffect(async () => {
     if (!isAuthenticated || !user?.walletAddress || !ownerTokenId) {
@@ -321,10 +307,6 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       );
 
       setAvailableFeatures(featureAvailableIndex);
-      // localStorage.setItem(
-      //   'feature_available',
-      //   JSON.stringify(featureAvailableIndex)
-      // );
     }
   }, [isAuthenticated, ownerTokenId, user?.walletAddress]);
 
@@ -337,6 +319,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       gmDepositBalance,
       availableFeatures,
       ownerTokenId,
+      avgBlockTime,
       setAvailableFeatures,
       historyAlerts: histories,
     };
@@ -348,6 +331,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     gmDepositBalance,
     availableFeatures,
     ownerTokenId,
+    avgBlockTime,
     setAvailableFeatures,
     histories,
   ]);

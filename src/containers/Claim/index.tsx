@@ -91,9 +91,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
       <Container className={s.container}>
         <Row className={s.row}>
           <Col
-            lg={
-              isEventStarted ? { span: 4, offset: 4 } : { span: 8, offset: 2 }
-            }
+            lg={{ span: 8, offset: 2 }}
             className={s.column}
           >
             <div className={`${s.wrapBox}`}>

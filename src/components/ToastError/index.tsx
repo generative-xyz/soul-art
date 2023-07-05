@@ -19,7 +19,7 @@ const ToastError: React.FC<IProps> = ({
 }: IProps): React.ReactElement => {
   return (
     <ToastPending>
-      <div>
+      <div className="content">
         {message}
         {url && (
           <>
