@@ -394,7 +394,6 @@
 }
 
 .copy_icon {
-
   svg,
   path {
     stroke: #000;
@@ -426,7 +425,6 @@
 .auction_wallet {
   display: flex;
   align-items: center;
-  display: none; //turn off auction wallet
 
   .profile_container {
     gap: 4px;
@@ -495,7 +493,6 @@
   }
 
   .copy_icon {
-
     svg,
     path {
       stroke: #fff;
