@@ -120,25 +120,25 @@ const SettleAuctionButton: React.FC<IProps> = ({
       {auction && (
         <div className={s.auctionInfo}>
           <div className={s.highestBidWrapper}>
-            <p className={s.highestBidTitle}>
-              Highest bid
-            </p>
+            <p className={s.highestBidTitle}>Highest bid</p>
             <p className={s.highestBidPrice}>
               {`${formatEthPrice(auction.highestBid)} GM`}
             </p>
           </div>
           <div className={s.content_auctionRight}>
-            <p className={s.highestBidTitle}>
-              Month warrior
-            </p>
+            <p className={s.highestBidTitle}>Adopter</p>
             <p className={s.winnerInfo}>
-              {(auction.highestBidder && auction.highestBidder !== ROOT_ADDRESS) ? (
+              {auction.highestBidder &&
+              auction.highestBidder !== ROOT_ADDRESS ? (
                 <>
                   <Jazzicon
                     diameter={28}
                     seed={jsNumberForAddress(auction.highestBidder)}
                   />
-                  <Link href={`${TC_EXPLORER_URL}/address/${auction.highestBidder}`} className={s.highestBidPrice}>
+                  <Link
+                    href={`${TC_EXPLORER_URL}/address/${auction.highestBidder}`}
+                    className={s.highestBidPrice}
+                  >
                     {formatLongAddress(`${auction.highestBidder}`)}
                   </Link>
                 </>
