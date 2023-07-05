@@ -60,12 +60,14 @@ export const SoulsContainer: React.FC<Props> = ({
       try {
         setIsFetching(true);
 
-        const { sortBy, sort, owner } = pick(router.query, [
+        const { sortBy, is_orphan, sort, owner } = pick(router.query, [
           'sortBy',
+          'is_orphan',
           'sort',
           'owner',
         ]) as {
           sortBy?: string;
+          is_orphan?: number;
           sort?: number;
           owner?: string;
         };
@@ -80,8 +82,8 @@ export const SoulsContainer: React.FC<Props> = ({
           page,
           limit: LIMIT_PAGE,
           owner: owner || undefined,
-          sortBy: sortBy || undefined,
-          sort: sort || undefined,
+          sortBy: sortBy || 'orphanage',
+          sort: sort || -1,
         };
         let attributesQuery;
 
@@ -106,7 +108,7 @@ export const SoulsContainer: React.FC<Props> = ({
         const data = await getCollectionNFTList({
           contract_address: SOUL_CONTRACT,
           attributes: attributesFilter.toString(),
-          is_orphan: isOrphanagePage ? 1 : undefined,
+          is_orphan,
           ...query,
         });
 
