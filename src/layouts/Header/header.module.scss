@@ -423,7 +423,7 @@
 }
 
 .auction_wallet {
-  display: flex;
+  display: none; // TODO Bidding wallet
   align-items: center;
 
   .profile_container {
