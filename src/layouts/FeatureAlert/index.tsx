@@ -78,7 +78,7 @@ const FeatureAlert = () => {
               />
             </div>
             <div className={s.content}>
-              <p>A new effect is available to unlock.</p>
+              <p>Your Soul has earned a new effect.</p>
             </div>
           </div>
           <Button className={s.unlock_btn} onClick={goToTokenPage}>
