@@ -6,6 +6,7 @@ import { jsNumberForAddress } from 'react-jazzicon';
 import Jazzicon from 'react-jazzicon/dist/Jazzicon';
 import { useSelector } from 'react-redux';
 import { getUserSelector } from '@/state/user/selector';
+import { CDN_URL, SOUL_CONTRACT } from '@/configs';
 
 export interface IProps {
   href: string;
@@ -39,24 +40,28 @@ const NFTCard: React.FC<IProps> = ({
         <Card.Body className={soulsCardStyles.card_body}>
           <div className={soulsCardStyles.hoverInfo}>
             <p>{title}</p>
-            <div className={soulsCardStyles.owner}>
-              {!!ownerAddr && (
-                <>
-                  <div className={soulsCardStyles.avatarWrapper}>
+            {!!ownerAddr && (
+              <div className={soulsCardStyles.owner}>
+                <div className={soulsCardStyles.avatarWrapper}>
+                  {ownerAddr.toLowerCase() === SOUL_CONTRACT.toLowerCase() ? (
+                    <img src={`${CDN_URL}/ic-question-owner.svg`} />
+                  ) : (
                     <Jazzicon
                       diameter={24}
                       seed={jsNumberForAddress(ownerAddr)}
                     />
-                  </div>
-                  <div className={soulsCardStyles.address}>
-                    {user?.walletAddress?.toLowerCase() ===
-                    ownerAddr.toLowerCase()
-                      ? 'You'
-                      : shortenAddress(ownerAddr)}
-                  </div>
-                </>
-              )}
-            </div>
+                  )}
+                </div>
+                <div className={soulsCardStyles.address}>
+                  {user?.walletAddress?.toLowerCase() ===
+                  ownerAddr.toLowerCase()
+                    ? 'You'
+                    : ownerAddr.toLowerCase() === SOUL_CONTRACT.toLowerCase()
+                    ? 'Awaiting a better match...'
+                    : shortenAddress(ownerAddr)}
+                </div>
+              </div>
+            )}
           </div>
         </Card.Body>
       </Card.Link>
