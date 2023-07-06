@@ -1,19 +1,27 @@
-@use "sass:math" as math;
+@use 'sass:math' as math;
 
 @function rem($px, $base: 10px) {
-  @return math.div($px, $base) * 1rem;
+  @if unitless($px) {
+    $px: $px * 1px;
+  }
+
+  @if unitless($base) {
+    $base: $base * 1px;
+  }
+
+  @return ($px / $base) * 1rem;
 }
 
 @function em($px, $base: 10px) {
-  @return math.div($px, $base)  * 1em;
+  @return math.div($px, $base) * 1em;
 }
 
 @function vh($px, $base: 1080px) {
-  @return math.div($px, $base)  * 100vh;
+  @return math.div($px, $base) * 100vh;
 }
 
 @function vw($px, $base: 1920px) {
-  @return math.div($px, $base)  * 100vw;
+  @return math.div($px, $base) * 100vw;
 }
 
 @function px($val) {
@@ -38,7 +46,6 @@
     }
   }
 }
-
 
 @mixin pcWide {
   @include media-breakpoint-up(xxl) {
@@ -94,8 +101,14 @@
   }
 }
 
+@mixin max-tablet {
+  @include media-breakpoint-up(sm) {
+    @content;
+  }
+}
+
 @mixin mobile {
-  @include media-breakpoint-down(xs) {
+  @media (max-width: 1279px) {
     @content;
   }
 }
@@ -126,7 +139,12 @@
 
 @mixin calcPcSmall($properties, $min, $max) {
   @include pcSmall {
-    #{$properties}: calcAuto(map-get($grid-breakpoints, lg), map-get($grid-breakpoints, xxxl), $min, $max);
+    #{$properties}: calcAuto(
+      map-get($grid-breakpoints, lg),
+      map-get($grid-breakpoints, xxxl),
+      $min,
+      $max
+    );
   }
 }
 
@@ -136,32 +154,40 @@
 
 @mixin fontSizePcSmall($min, $max) {
   @include pcSmall {
-    font-size: calcAuto(map-get($grid-breakpoints, lg), map-get($grid-breakpoints, xxxl), $min, $max);
+    font-size: calcAuto(
+      map-get($grid-breakpoints, lg),
+      map-get($grid-breakpoints, xxxl),
+      $min,
+      $max
+    );
   }
 
   @include pcWide {
-    font-size: rem($max)
+    font-size: rem($max);
   }
 }
 
 @mixin remPcSmall($properties, $min, $max) {
   @include pcSmall {
-    #{$properties}: calcAuto(map-get($grid-breakpoints, lg), map-get($grid-breakpoints, xxxl), $min, $max);
+    #{$properties}: calcAuto(
+      map-get($grid-breakpoints, lg),
+      map-get($grid-breakpoints, xxxl),
+      $min,
+      $max
+    );
   }
 
   @include pcWide {
-    #{$properties}: rem($max)
+    #{$properties}: rem($max);
   }
 }
 
 @mixin fontSizeMobile($min, $max) {
-
   font-size: calcAuto(375px, map-get($grid-breakpoints, sm), $min, $max);
 
   @include min-tablet {
-    font-size: rem($max)
+    font-size: rem($max);
   }
-
 }
 
 @mixin reset_ul {
@@ -172,15 +198,15 @@
 
 @mixin fixLayoutShift($width, $height) {
   &:before {
-    content: "";
+    content: '';
     width: 1px;
     margin-left: -1px;
     float: left;
     height: 0;
-    padding-top: math.div($height,$width) * 100%;
+    padding-top: math.div($height, $width) * 100%;
   }
   &:after {
-    content: "";
+    content: '';
     display: block;
     clear: both;
   }
@@ -208,7 +234,6 @@
 @function vhMathDiv($px, $base) {
   @return math.div($px, $base) * 100;
 }
-
 
 @function fixXvhMobile($vhInput) {
   @return calc(var(--vh) * #{$vhInput});
@@ -261,7 +286,6 @@
   }
 }
 
-
 @mixin overrideAutocomplete($bgColor: white, $color: black) {
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
@@ -281,8 +305,8 @@
 
 @function calcAuto($min-vw, $max-vw, $min-font-size, $max-font-size) {
   @return calc(
-          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
-          ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+    #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+      ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
   );
 }
 
@@ -305,8 +329,8 @@
       font-size: $min-font-size;
       @media screen and (min-width: $min-vw) {
         font-size: calc(
-                #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
-                ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+            ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
         );
       }
       @media screen and (min-width: $max-vw) {

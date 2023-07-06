@@ -1,16 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import Spinner from '@/components/Spinner';
 import { SOUL_CONTRACT } from '@/configs';
+import { AuctionProvider } from '@/contexts/auction-context';
 import { IToken, ITokenDetail } from '@/interfaces/api/marketplace';
 import { getCollectionNFTList } from '@/services/marketplace';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import AuctionInfo from './AuctionInfo';
-import Info from './Info';
 import DetailImg from './DetailImg';
 import MoreSection from './MoreSection';
-import s from './style.module.scss';
 import TabsComponent from './Tabs';
-import { AuctionProvider } from '@/contexts/auction-context';
+import s from './style.module.scss';
 
 const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
   const [_isFetchingMoreItems, setIsFetchingMoreItems] = useState(false);
@@ -68,14 +67,11 @@ const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
               <TabsComponent data={soulDetail} />
             </AuctionProvider>
           </Col>
-          <Col lg={5}>
+          <Col lg={8} className={s.right_col}>
             <DetailImg
               animationUrl={soulDetail.animationFileUrl}
               imgCapture={soulDetail?.imageCapture}
             />
-          </Col>
-          <Col lg={3}>
-            <Info data={soulDetail} />
           </Col>
         </Row>
       </Container>

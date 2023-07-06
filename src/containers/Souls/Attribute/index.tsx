@@ -3,7 +3,6 @@ import React, {
   forwardRef,
   memo,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
@@ -12,23 +11,18 @@ import { Dropdown } from 'react-bootstrap';
 
 import Button from '@/components/Button';
 import IconSVG from '@/components/IconSVG';
-import { CDN_URL, SOUL_CONTRACT } from '@/configs';
+import { CDN_URL } from '@/configs';
 import { IAttribute } from '@/interfaces/attributes';
 import {
   getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
-import classNames from 'classnames';
+import { default as classNames, default as cs } from 'classnames';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import AccordionComponent from './Accordion';
 import attributeStyles from './attribute.module.scss';
-import cs from 'classnames';
-import logger from '@/services/logger';
-import { getCollectionNFTList } from '@/services/marketplace';
-import { ROUTE_PATH } from '@/constants/route-path';
-import { AssetsContext } from '@/contexts/assets-context';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -57,10 +51,8 @@ export interface ISubmitValues {
 
 const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
-  const { ownerTokenId } = useContext(AssetsContext);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [filterYourSoul, setFilterYourSoul] = useState(false);
-  const [ownerHasSoul, setOwnerHasSoul] = useState(false);
   const user = useSelector(getUserSelector);
 
   const router = useRouter();
@@ -93,31 +85,18 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
     );
   };
 
-  const getOwnerToken = useCallback(async () => {
-    if (user && user.walletAddress) {
-      try {
-        const res = await getCollectionNFTList({
-          contract_address: SOUL_CONTRACT,
-          owner: user.walletAddress,
-        });
-        setOwnerHasSoul(res.totalItem > 0);
-      } catch (err: unknown) {
-        logger.error("failed to get owner's Soul");
-      }
-    }
-  }, [user]);
-
   const syncAttributesState = useMemo<boolean>(() => {
     return attributes.some(attr => router.query[attr.traitName]);
   }, [attributes]);
 
-  const isOwnerHasSoul = useMemo(() => {
-    if (!isAuthenticated) return false;
-    return !!ownerHasSoul;
-  }, [ownerHasSoul, isAuthenticated]);
-
-  const goToOwnerSoul = () => {
-    router.push(`${ROUTE_PATH.HOME}/${ownerTokenId}`);
+  const handleFilterOrphan = () => {
+    router.push(
+      {
+        query: { is_orphan: 1 },
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   const handleShowFilter = (show: boolean) => {
@@ -131,11 +110,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   };
 
   useEffect(() => {
-    getOwnerToken();
-  }, []);
-
-  useEffect(() => {
-    if (router.query.owner) {
+    if (router.query.is_orphan) {
       setFilterYourSoul(true);
     } else {
       setFilterYourSoul(false);
@@ -169,28 +144,26 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   return (
     <div className={attributeStyles.attribute_box}>
       <div className={attributeStyles.attribute_container}>
-        {isOwnerHasSoul && (
-          <div className={attributeStyles.attribute_leftContainer}>
-            <Button
-              className={cs(
-                attributeStyles.attribute_button,
-                !filterYourSoul && attributeStyles.active
-              )}
-              onClick={handleGetAllTokens}
-            >
-              All
-            </Button>
-            <Button
-              className={cs(
-                attributeStyles.attribute_button,
-                filterYourSoul && attributeStyles.active
-              )}
-              onClick={goToOwnerSoul}
-            >
-              Your Soul
-            </Button>
-          </div>
-        )}
+        <div className={attributeStyles.attribute_leftContainer}>
+          <Button
+            className={cs(
+              attributeStyles.attribute_button,
+              !filterYourSoul && attributeStyles.active
+            )}
+            onClick={handleGetAllTokens}
+          >
+            All
+          </Button>
+          <Button
+            className={cs(
+              attributeStyles.attribute_button,
+              filterYourSoul && attributeStyles.active
+            )}
+            onClick={handleFilterOrphan}
+          >
+            Orphanage
+          </Button>
+        </div>
         <div className={attributeStyles.attribute_rightContainer}>
           <Dropdown onSelect={handleSelect}>
             <Dropdown.Toggle

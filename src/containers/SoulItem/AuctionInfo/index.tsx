@@ -52,15 +52,29 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
 
   return (
     <div className={s.auctionInfo}>
-      <p className={s.content_title}>
-        {!!data.name ? (
-          data.name
-        ) : (
-          <>
-            <Link href={ROUTE_PATH.GALLERY}>Soul</Link> #{data.tokenId}
-          </>
-        )}
-      </p>
+      <div className={s.content_title_wrapper}>
+        <p className={s.content_title}>
+          {!!data.name ? (
+            data.name
+          ) : (
+            <>
+              <Link href={ROUTE_PATH.GALLERY}>Soul</Link> #{data.tokenId}
+            </>
+          )}
+        </p>
+        <Link
+          href={`${TC_EXPLORER_URL}/address/${SOUL_CONTRACT}`}
+          className={s.explorer_link}
+          target="_blank"
+        >
+          Contract
+          <IconSVG
+            src={`${CDN_URL}/ic-arrow-up-right.svg`}
+            maxHeight="16"
+            maxWidth="16"
+          ></IconSVG>
+        </Link>
+      </div>
       <div className={s.content_warning}>
         {auction?.auctionStatus === AuctionStatus.INPROGRESS ||
         auction?.auctionStatus === AuctionStatus.ENDED ? (
