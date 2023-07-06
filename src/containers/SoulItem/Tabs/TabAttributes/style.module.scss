@@ -4,6 +4,9 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
+    padding-bottom: rem(16px);
+    border-bottom: 1px solid #ececec;
+    margin-bottom: rem(16px);
   }
 
   &_tabAttrType {
@@ -33,4 +36,9 @@
     line-height: 140%;
     box-shadow: 0px 0px 12px -6px rgba(0, 0, 0, 0.8);
   }
+}
+
+.wrapper {
+  overflow: scroll;
+  padding-bottom: rem(60px);
 }

@@ -5,15 +5,13 @@ import { ITokenDetail } from '@/interfaces/api/marketplace';
 import { useWeb3React } from '@web3-react/core';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
+import TabAttributes from './TabAttributes';
 import TabBidders from './TabBidders';
 import TabDescription from './TabDescription';
 import TabFeatures from './TabFeatures';
 import TabHistories from './TabHistories';
 import TabInteraction from './TabInteraction';
 import s from './style.module.scss';
-import Link from 'next/link';
-import { CDN_URL, SOUL_CONTRACT, TC_EXPLORER_URL } from '@/configs';
-import IconSVG from '@/components/IconSVG';
 
 const TabsComponent = ({
   data,
@@ -37,8 +35,12 @@ const TabsComponent = ({
         type: 'desc',
       },
       {
+        title: 'Attributes',
+        type: 'attr',
+      },
+      {
         title: 'Evolution',
-        type: 'evolution',
+        type: 'effect',
       },
       {
         title: 'Interactions',
@@ -47,7 +49,7 @@ const TabsComponent = ({
 
       {
         title: 'Events',
-        type: 'events',
+        type: 'history',
       },
     ];
     if (
@@ -63,9 +65,7 @@ const TabsComponent = ({
   }, [auction]);
 
   useEffect(() => {
-    setDefaultTab(
-      isOwner && availableFeatures && availableFeatures.length > 0 ? '1' : '0'
-    );
+    setDefaultTab('effect');
   }, [isOwner, availableFeatures]);
 
   return (
@@ -82,7 +82,7 @@ const TabsComponent = ({
           return (
             <Tab
               mountOnEnter
-              eventKey={index}
+              eventKey={tab.type}
               key={index}
               title={
                 tab.title !== 'Evolution' ? (
@@ -104,26 +104,17 @@ const TabsComponent = ({
               <div className={`${s.content_auction_tabBox} small-scrollbar`}>
                 {tab.type === 'adopters' && <TabBidders />}
                 {tab.type === 'desc' && <TabDescription />}
-                {tab.type === 'inter' && <TabInteraction />}
-                {tab.type === 'evolution' && <TabFeatures owner={data.owner} />}
-                {tab.type === 'events' && <TabHistories data={data} />}
+                {tab.type === 'inter' && <TabInteraction />}``
+                {tab.type === 'effect' && <TabFeatures owner={data.owner} />}
+                {tab.type === 'history' && <TabHistories data={data} />}
+                {tab.type === 'attr' && (
+                  <TabAttributes attributes={data.attributes} />
+                )}
               </div>
             </Tab>
           );
         })}
       </Tabs>
-      <Link
-        href={`${TC_EXPLORER_URL}/address/${SOUL_CONTRACT}`}
-        className={s.explorer_link}
-        target="_blank"
-      >
-        Contract
-        <IconSVG
-          src={`${CDN_URL}/ic-arrow-up-right.svg`}
-          maxHeight="20"
-          maxWidth="20"
-        ></IconSVG>
-      </Link>
     </div>
   );
 };

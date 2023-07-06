@@ -36,6 +36,10 @@
             border-radius: rem(20px);
             padding: rem(32px);
             box-sizing: border-box;
+
+            &.success {
+              cursor: pointer;
+            }
           }
 
           .successNoti {

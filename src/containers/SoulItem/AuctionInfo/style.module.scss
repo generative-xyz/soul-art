@@ -29,6 +29,25 @@
       color: #5b5b5b;
     }
 
+    &_title_wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .explorer_link {
+        display: flex;
+        align-items: center;
+        gap: rem(4px);
+        font-size: rem(14px);
+        line-height: 140%;
+
+        &:hover {
+          text-decoration: none;
+          opacity: 0.6;
+        }
+      }
+    }
+
     &_title {
       font-size: rem(32px);
       line-height: rem(44px);
