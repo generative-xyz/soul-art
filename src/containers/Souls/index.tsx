@@ -22,9 +22,7 @@ export interface Props {
   isOrphanagePage?: boolean;
 }
 
-export const SoulsContainer: React.FC<Props> = ({
-  isOrphanagePage = false,
-}: Props) => {
+export const SoulsContainer: React.FC<Props> = ({}: Props) => {
   const router = useRouter();
   const [initialLoading, setInitialLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
@@ -146,8 +144,8 @@ export const SoulsContainer: React.FC<Props> = ({
     );
   }
 
-  if (souls && souls.length === 0 && _.isEmpty(router.query)) {
-    if (!isOrphanagePage) {
+  if (souls && souls.length === 0) {
+    if (!router.query.is_orphan) {
       return (
         <div className={s.emptyWrapper}>
           <div className={s.empty}>
