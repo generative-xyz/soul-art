@@ -5,7 +5,12 @@ import {
   ThemeProvider as StyledComponentsThemeProvider,
 } from 'styled-components';
 import { getTheme } from '@/theme/index';
-import { Righteous } from 'next/font/google';
+import {
+  Righteous,
+  Sora,
+  Montserrat_Alternates,
+  Montserrat,
+} from 'next/font/google';
 import localFont from 'next/font/local';
 
 const bandeinsSansVariable = localFont({
@@ -39,6 +44,16 @@ const bandeinsSansVariable = localFont({
 });
 
 const righteous = Righteous({ weight: ['400'], subsets: ['latin'] });
+const sora = Sora({ weight: ['400', '600', '700'], subsets: ['latin'] });
+const montserratAlternates = Montserrat_Alternates({
+  weight: ['400', '500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+});
+const montserrat = Montserrat({
+  weight: ['400', '500', '600', '700', '800', '900'],
+  subsets: ['latin'],
+});
 
 export default function ThemeProvider({
   children,
@@ -63,6 +78,9 @@ export const ThemedGlobalStyle = createGlobalStyle`
     body {
       --bs-body-font-family: ${bandeinsSansVariable.style.fontFamily};
       --righteous-font: ${righteous.style.fontFamily};
+      --sora-font: ${sora.style.fontFamily};
+      --montserrat-alternates: ${montserratAlternates.style.fontFamily};
+      --montserrat: ${montserrat.style.fontFamily};
       overflow-y: scroll;
     }
 

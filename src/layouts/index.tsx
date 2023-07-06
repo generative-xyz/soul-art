@@ -1,18 +1,18 @@
+import { ROUTE_PATH } from '@/constants/route-path';
+import { useRouter } from 'next/router';
 import React, { PropsWithChildren, useContext } from 'react';
 import FeatureAlert from './FeatureAlert';
-import Header from './Header';
 import s from './layout.module.scss';
-import { useRouter } from 'next/router';
-import { ROUTE_PATH } from '@/constants/route-path';
-import Banner from './Banner';
+// import Banner from './Banner';
 import { CLAIM_START_TIME } from '@/configs';
-import useTimeComparison from '@/hooks/useTimeComparison';
-import cs from 'classnames';
 import { LightboxProvider } from '@/contexts/Lightbox/lighbox-context';
 import { AssetsContext } from '@/contexts/assets-context';
+import useTimeComparison from '@/hooks/useTimeComparison';
+import cs from 'classnames';
 import HistoryAlert from './HistoryAlert';
+import NbcHeader from './NbcHeader';
 
-export const HEADER_HEIGHT = 80;
+export const HEADER_HEIGHT = 142;
 export const FO0TER_HEIGHT = 80;
 
 const Layout: React.FC<PropsWithChildren> = ({
@@ -37,8 +37,8 @@ const Layout: React.FC<PropsWithChildren> = ({
 
   return (
     <div className={s.container}>
-      <Header height={HEADER_HEIGHT} />
-      {isEventStarted && !Number(ownerTokenId) && <Banner />}
+      <NbcHeader />
+
       <main
         className={cs(s.main, {
           [`${s.eventStarted}`]: isEventStarted && !Number(ownerTokenId),

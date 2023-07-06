@@ -1,19 +1,17 @@
-import Header from '@/layouts/Header';
-import s from './style.module.scss';
-import { HEADER_HEIGHT } from '@/layouts';
-import { Col, Container } from 'react-bootstrap';
-import { CDN_URL } from '@/configs';
 import Text from '@/animations/Text';
-import Headline from './Headline';
-import Link from 'next/link';
 import IconSVG from '@/components/IconSVG';
+import { CDN_URL } from '@/configs';
+import NbcHeader from '@/layouts/NbcHeader';
+import Link from 'next/link';
+import { Col, Container } from 'react-bootstrap';
+import Headline from './Headline';
+import s from './style.module.scss';
 import { WHITEPAPER } from '@Constants/url';
 
 const TechLandingPage = () => {
   return (
     <div className={s.techLandingPage}>
-      <Header height={HEADER_HEIGHT} isAnimation={false} theme={''} />
-
+      <NbcHeader />
       <Container className={s.container}>
         <Col className={s.column} lg={{ span: 10, offset: 1 }}>
           <div className={s.wrapContent}>

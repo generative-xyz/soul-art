@@ -1,6 +1,7 @@
 .unlock_btn {
   padding: rem(11px) rem(26px);
-  background-color: #000;
+  background-color: #ff7e21;
+
   color: white;
   display: flex;
   align-items: center;
@@ -9,6 +10,7 @@
   font-size: rem(14px);
   line-height: calc(18 / 14);
   width: rem(120px);
+  white-space: nowrap;
 
   &:hover {
     opacity: 0.7;
@@ -17,6 +19,10 @@
   &.locked {
     background: #b6b6b6;
     backdrop-filter: blur(2px);
+  }
+
+  a:hover {
+    text-decoration: none;
   }
 }
 
@@ -36,4 +42,8 @@
   backdrop-filter: blur(2px);
   border-radius: 100px;
   width: rem(120px);
+}
+
+.buy_btn {
+  background-color: #000;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
@@ -16,9 +16,15 @@ import { getListTokensByWallet } from '@/services/soul';
 import ClaimButton from './ClaimButton';
 import { useSelector } from 'react-redux';
 import { getUserSelector } from '@/state/user/selector';
+import { AssetsContext } from '@/contexts/assets-context';
+import { useRouter } from 'next/router';
+import { ROUTE_PATH } from '@/constants/route-path';
 
 const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
+  const router = useRouter();
+  const { ownerTokenId } = useContext(AssetsContext);
+
   const [claimStatus, setClaimStatus] = useState<
     'idle' | 'waiting' | 'success'
   >('idle');
@@ -26,9 +32,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   const { provider } = useWeb3React();
   const [isFetchingApi, setIsFetchingApi] = useState(false);
   const [soulToken, setSoulToken] = useState<ISoul | null>(null);
-  const {
-    operationName
-  } = useMint()
+  const { operationName } = useMint();
   const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
   const isEventStarted =
     claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
@@ -63,7 +67,11 @@ const ClaimPage: React.FC = (): React.ReactElement => {
       try {
         const receipt = await provider.getTransactionReceipt(transactionHash);
 
-        if (receipt?.status === null || receipt?.status === undefined || receipt?.status === 1) {
+        if (
+          receipt?.status === null ||
+          receipt?.status === undefined ||
+          receipt?.status === 1
+        ) {
           setIsClaimed(true);
           setClaimStatus('waiting');
         } else {
@@ -90,15 +98,18 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     <div className={s.claimPage}>
       <Container className={s.container}>
         <Row className={s.row}>
-          <Col
-            lg={{ span: 8, offset: 2 }}
-            className={s.column}
-          >
+          <Col lg={{ span: 8, offset: 2 }} className={s.column}>
             <div className={`${s.wrapBox}`}>
               <h3 className={s.blockTitle}>GM Contributors</h3>
               <div
-                className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''
-                  }`}
+                className={`${s.claimBox} ${
+                  claimStatus === 'success' ? s.success : ''
+                }`}
+                onClick={() => {
+                  if (!!ownerTokenId) {
+                    router.push(`${ROUTE_PATH.HOME}/${ownerTokenId}`);
+                  }
+                }}
               >
                 <ClaimImg
                   isClaimed={isClaimed}
@@ -110,7 +121,9 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                   isClaimed={isClaimed}
                   claimStatus={claimStatus}
                 />
-                {(isEventStarted && claimStatus === 'idle') && <ClaimButton isFetchingApi={isFetchingApi} />}
+                {isEventStarted && claimStatus === 'idle' && (
+                  <ClaimButton isFetchingApi={isFetchingApi} />
+                )}
               </div>
             </div>
             <Discord />
