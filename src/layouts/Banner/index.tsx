@@ -30,7 +30,7 @@ const Banner: React.FC = (): React.ReactElement => {
           className={s.banner_link}
           target={ownerTokenId ? '_blank' : '_self'}
         >
-          {ownerTokenId ? 'Buy GM' : 'Adopt Souls'}
+          {ownerTokenId ? 'Buy GM' : 'Adopt a Soul'}
         </Link>
       </Button>
     </div>
