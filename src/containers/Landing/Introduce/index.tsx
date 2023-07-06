@@ -64,66 +64,29 @@ const Introduce: React.FC = () => {
         >
           <div className={s['introduceBox']}>
             <Text
-              as={'h1'}
-              size={'d1'}
-              color={'white-primary'}
-              animOption={{ screen: 0, offset: 0, type: 'heading' }}
-              className={`${s['introduceBox-title']} text-uppercase`}
-            >
-              Souls
-            </Text>
-            <Text
               as={'p'}
               size={'28'}
               color={'white-primary'}
-              fontWeight="regular"
-              animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
-              className={s['introduceBox-subTitle']}
+              className={`${s['introduceBox-title']}`}
             >
-              The first-ever cryptoart protocol powering a new kind of art.
+              GM and Souls are two halves of a single artwork that is the historical symbol of New Bitcoin City.
+              <br/>
+              <br/>
+              Souls is a revolutionary cryptoart protocol for experiencing art in an entirely new way. GM is the native cryptocurrency powering the protocol.
+              <br/>
+              <br/>
+              The final artworks are soulbound. Souls are interconnected and perform their ever-changing artworks not as one but collectively.
+              <br/>
+              <br/>
             </Text>
-            <div className={s['introduceBox-desc-wrapper']}>
-              <Text
-                as={'p'}
-                size={'20'}
-                color={'white-primary'}
-                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
-                className={s['introduceBox-desc']}
-              >
-                Managed by the community-run DAO and powered by the
-                cryptocurrency GM, Souls is a revolutionary cryptoart protocol
-                for experiencing art on Bitcoin.
-              </Text>
-              <Text
-                as={'p'}
-                size={'20'}
-                color={'white-primary'}
-                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
-                className={s['introduceBox-desc']}
-              >
-                Souls are soulbound artworks that can’t be bought or sold. As
-                on-chain living art, a nurtured Soul will stay with you forever,
-                but a neglected Soul might leave you and find a new home.
-              </Text>
-              <Text
-                as={'p'}
-                size={'20'}
-                color={'white-primary'}
-                animOption={{ screen: 0.3, offset: 0, type: 'paragraph' }}
-                className={s['introduceBox-desc']}
-              >
-                But above all, Souls are interconnected and perform their
-                ever-changing artworks not as one but collectively.
-              </Text>
-            </div>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
               <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
                 Adopt a Soul
                 {renderCountdown}
               </Link>
-              <Link href={ROUTE_PATH.GALLERY} className={cs(s.button, s.trans)}>
-                View Gallery
+              <Link href={'https://newbitcoincity.com/gm'} target="_blank" className={cs(s.button, s.trans)}>
+                Get GM
               </Link>
             </AnimFade>
 
@@ -162,7 +125,6 @@ const Introduce: React.FC = () => {
                     onClick={() => {
                       window.open(
                           WHITEPAPER
-                        // `https://newbitcoincity.com/souls/whitepaper.pdf`
                       );
                     }}
                   >
