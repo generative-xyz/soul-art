@@ -6,10 +6,16 @@ import { AssetsContext } from '@/contexts/assets-context';
 import Link from 'next/link';
 import { useContext } from 'react';
 import s from './style.module.scss';
+import { useRouter } from 'next/router';
 
 const Banner: React.FC = (): React.ReactElement => {
   const { ownerTokenId, gmToUnlockNextFeature, nextUnlockFeatureId } =
     useContext(AssetsContext);
+  const router = useRouter();
+
+  if (!ownerTokenId && router.pathname === ROUTE_PATH.CLAIM) {
+    return <></>;
+  }
 
   return (
     <div className={s.banner}>

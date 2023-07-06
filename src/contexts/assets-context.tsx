@@ -335,7 +335,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
           settingFeatures.balances[nextUnlockFeatureIndex] -
           Number(formatEthPrice(totalGMBalance.toString()));
         setNextUnlockFeatureIndex(nextUnlockFeatureIndex);
-        setGmToUnlockNextFeature(nextGmUnlock.toFixed(4));
+        setGmToUnlockNextFeature(nextGmUnlock.toFixed(2));
       }
 
       setAvailableFeatures(featureAvailableIndex);
