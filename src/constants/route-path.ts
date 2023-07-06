@@ -6,7 +6,7 @@ export const ROUTE_PATH = {
   CLAIM: '/souls/adopt',
   GALLERY: '/souls/gallery',
   FAQS: '/souls/faqs',
-  STATUS: '/souls/adopt-status',
+  STATUS: '/souls/adopt-records',
   ORPHANAGE: '/souls/orphanage',
   TECH: '/souls/tech',
   ART: '/souls/art',
