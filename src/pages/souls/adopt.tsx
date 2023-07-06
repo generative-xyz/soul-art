@@ -17,9 +17,9 @@ export async function getServerSideProps() {
   return {
     props: {
       seoInfo: {
-        title: 'The Souls | Adopt Souls',
+        title: 'The Souls | Adopt a Soul',
         description:
-          'Adopt Souls - the first-ever soulbound art that are non-transferable and intimately linked to you.',
+          'Adopt a Soul - the first-ever soulbound art that are non-transferable and intimately linked to you.',
         image: `${CDN_URL}/soul-metadata.jpg`,
       },
     },

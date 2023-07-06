@@ -18,14 +18,15 @@ import { toStorageKey } from '@/utils';
 
 interface IClaimButtonProps {
   isFetchingApi: boolean;
-};
+}
 
 const ClaimButton: React.FC<IClaimButtonProps> = ({
   isFetchingApi,
 }): React.ReactElement => {
   const user = useSelector(getUserSelector);
   const { btcBalance, tcBalance } = useContext(AssetsContext);
-  const { onDisconnect, onConnect, requestBtcAddress } = useContext(WalletContext);
+  const { onDisconnect, onConnect, requestBtcAddress } =
+    useContext(WalletContext);
   const [isConnecting, setIsConnecting] = useState(false);
   const [sufficientBal, setSufficientBal] = useState(true);
   const [totalGM, setTotalGM] = useState('0');
@@ -35,9 +36,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
     operation: useMint,
     inscribable: true,
   });
-  const {
-    operationName
-  } = useMint()
+  const { operationName } = useMint();
   const isReceiveAble = useMemo(() => !!signature, [signature]);
 
   const txSuccessCallback = async (transaction: Transaction | null) => {
@@ -67,8 +66,8 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   const handleClaim = async () => {
     if (!user?.walletAddress) {
       showToastError({
-        message: 'Unauthorized'
-      })
+        message: 'Unauthorized',
+      });
       return;
     }
     if (minting) {
@@ -97,10 +96,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
     if (!user?.walletAddress) return;
     const userTcBalance = new BigNumber(tcBalance);
     const userBtcBalance = new BigNumber(btcBalance);
-    if (
-      userTcBalance.isEqualTo(0) &&
-      userBtcBalance.isEqualTo(0)
-    ) {
+    if (userTcBalance.isEqualTo(0) && userBtcBalance.isEqualTo(0)) {
       setSufficientBal(false);
     } else {
       setSufficientBal(true);
@@ -127,16 +123,12 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
     return (
       <div className={s.noti}>
         <IconSVG src={notiReceive} maxHeight={'44'} maxWidth={'44'} />
-        <p>{!isReceiveAble && (
-          <>
-            Your wallet is not on the list to receive Soul.&nbsp;
-          </>
-        )}
-          {!sufficientBal && (
-            <>Your wallet does not have enough balance.</>
+        <p>
+          {!isReceiveAble && (
+            <>Your wallet is not on the list to receive Soul.&nbsp;</>
           )}
+          {!sufficientBal && <>Your wallet does not have enough balance.</>}
         </p>
-
       </div>
     );
   };
@@ -148,7 +140,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
         className={s.textButton}
         onClick={handleClaim}
       >
-        <span>{minting ? 'Processing...' : 'Adopt Soul'}</span>
+        <span>{minting ? 'Processing...' : 'Adopt a Soul'}</span>
       </button>
     );
   };
@@ -158,7 +150,8 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
       <button
         disabled={isConnecting}
         className={s.textButton}
-        onClick={handleConnectWallet}>
+        onClick={handleConnectWallet}
+      >
         {isConnecting ? 'Connecting...' : 'Connect wallet to adopt Souls'}
       </button>
     );
@@ -167,9 +160,9 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   return (
     <div className={s.claimButton}>
       {user?.walletAddress ? <ContentConnected /> : <ContentNotConnected />}
-      {(!isReceiveAble || !sufficientBal) && user?.walletAddress && !isConnecting && (
-        <NotificationConnectWallet />
-      )}
+      {(!isReceiveAble || !sufficientBal) &&
+        user?.walletAddress &&
+        !isConnecting && <NotificationConnectWallet />}
     </div>
   );
 };
