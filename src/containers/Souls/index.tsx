@@ -22,9 +22,7 @@ export interface Props {
   isOrphanagePage?: boolean;
 }
 
-export const SoulsContainer: React.FC<Props> = ({
-  isOrphanagePage = false,
-}: Props) => {
+export const SoulsContainer: React.FC<Props> = ({}: Props) => {
   const router = useRouter();
   const [initialLoading, setInitialLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
@@ -146,8 +144,8 @@ export const SoulsContainer: React.FC<Props> = ({
     );
   }
 
-  if (souls && souls.length === 0 && _.isEmpty(router.query)) {
-    if (!isOrphanagePage) {
+  if (souls && souls.length === 0) {
+    if (!router.query.is_orphan) {
       return (
         <div className={s.emptyWrapper}>
           <div className={s.empty}>
@@ -209,7 +207,7 @@ export const SoulsContainer: React.FC<Props> = ({
                     href={`${ROUTE_PATH.HOME}/${item.tokenId}`}
                     image={!!item.imageCapture ? item.imageCapture : item.image}
                     tokenId={item.tokenId}
-                    title={!!item.name ? item.name : `Souls #${item.tokenId}`}
+                    title={!!item.name ? item.name : `Soul #${item.tokenId}`}
                     ownerAddr={item.owner}
                     className={s.grid_item}
                     auctionStatus={item.auctionStatus}

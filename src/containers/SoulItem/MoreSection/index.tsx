@@ -19,7 +19,10 @@ const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
       <h4 className={moreSectionStyles.heading}>
         More from this collection
         <Button className={moreSectionStyles.button}>
-          <Link href={`${ROUTE_PATH.GALLERY}`} className={moreSectionStyles.link}>
+          <Link
+            href={`${ROUTE_PATH.GALLERY}`}
+            className={moreSectionStyles.link}
+          >
             View all art
             <IconSVG
               src={`${CDN_URL}/bannerArrow.svg`}
@@ -36,7 +39,7 @@ const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
             href={`/souls/${tokenId}`}
             image={imageCapture ?? image}
             tokenId={tokenId}
-            title={!!name ? name : `Souls #${tokenId}`}
+            title={!!name ? name : `Soul #${tokenId}`}
             ownerAddr={owner}
           />
         ))}
