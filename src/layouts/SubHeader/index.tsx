@@ -11,7 +11,7 @@ const SubHeader = ({ theme = 'light' }: { theme?: string }) => {
 
   const SUBHEADER_LINKS = [
     {
-      title: 'Story',
+      title: 'Souls',
       link: ROUTE_PATH.STORY,
     },
     {
