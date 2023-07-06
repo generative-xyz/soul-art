@@ -41,7 +41,7 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
             <div className={s.claimContent_countdownWrapper}>
               <p>Adopt your Soul in</p>
               <SonarWaveCircle />
-              <CountdownText className={s.claimContent_countdownText} countDownTo={CLAIM_START_TIME} showDay />
+              <CountdownText className={s.claimContent_countdownText} countDownTo={CLAIM_START_TIME} />
             </div>
           )}
         </div>
