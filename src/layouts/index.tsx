@@ -11,6 +11,7 @@ import cs from 'classnames';
 import { LightboxProvider } from '@/contexts/Lightbox/lighbox-context';
 import { AssetsContext } from '@/contexts/assets-context';
 import HistoryAlert from './HistoryAlert';
+import NbcHeader from './NbcHeader';
 
 export const HEADER_HEIGHT = 80;
 export const FO0TER_HEIGHT = 80;
@@ -37,6 +38,7 @@ const Layout: React.FC<PropsWithChildren> = ({
 
   return (
     <div className={s.container}>
+      <NbcHeader />
       <Header height={HEADER_HEIGHT} />
       {isEventStarted && !Number(ownerTokenId) && <Banner />}
       <main

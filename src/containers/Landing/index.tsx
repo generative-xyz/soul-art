@@ -10,12 +10,14 @@ import ProgressBarCs from '@/containers/Landing/ProgressBarCs';
 import { Loading } from '@/containers/Landing/Loading';
 import SectionFlys from '@/containers/Landing/SectionFlys';
 import FAQs from '../FAQs';
+import NbcHeader from '@/layouts/NbcHeader';
 
 export const LandingContainer: React.FC = (): React.ReactElement => {
   useSmoothScroll();
 
   return (
     <div className={s.landingPage}>
+      <NbcHeader theme={'dark'} />
       <Header height={HEADER_HEIGHT} isAnimation={true} theme={'dark'} />
       <Loading />
       <FrameTop />
