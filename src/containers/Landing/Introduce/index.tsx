@@ -63,6 +63,7 @@ const Introduce: React.FC = () => {
           className={s.column}
         >
           <div className={s['introduceBox']}>
+            <AnimFade className={s['introduceVideo']} screen={.1}>
             <Text
               as={'p'}
               size={'28'}
@@ -79,7 +80,7 @@ const Introduce: React.FC = () => {
               <br/>
               <br/>
             </Text>
-
+            </AnimFade>
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
               <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
                 Adopt a Soul
@@ -90,9 +91,9 @@ const Introduce: React.FC = () => {
               </Link>
             </AnimFade>
 
-            <div className={s.introduce_actions}>
+            <AnimFade className={s.introduce_actions} screen={1}>
               <div className={s.introduce_actions_item}>
-                <AnimFade className={s['introduceVideo']} screen={1}>
+                <div className={s['introduceVideo']}>
                   <h5 className={s['introduceVideo-title']}>Watch the film</h5>
                   <div className={s['wrap-video']} onClick={handleOpenModal}>
                     <ImageFrame type={'small'}>
@@ -108,7 +109,7 @@ const Introduce: React.FC = () => {
                       />
                     </ImageFrame>
                   </div>
-                </AnimFade>
+                </div>
               </div>
               <div
                 className={classNames(
@@ -116,7 +117,7 @@ const Introduce: React.FC = () => {
                   s.introduce_actions_item__pdf
                 )}
               >
-                <AnimFade className={s['introduceVideo']} screen={1}>
+                <div className={s['introduceVideo']}>
                   <h5 className={s['introduceVideo-title']}>
                     Read the Whitepaper
                   </h5>
@@ -139,9 +140,9 @@ const Introduce: React.FC = () => {
                       </div>
                     </ImageFrame>
                   </div>
-                </AnimFade>
+                </div>
               </div>
-            </div>
+            </AnimFade>
           </div>
         </Col>
       </Container>
