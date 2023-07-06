@@ -9,7 +9,7 @@ import { HEADER_HEIGHT } from '@/layouts';
 import TechniqueItem from './Item';
 import ArtItem from './ArtItem';
 import Link from 'next/link';
-import {WHITEPAPER} from "@Constants/url";
+import { WHITEPAPER } from '@Constants/url';
 
 const ArtLandingPage = () => {
   const itemTechniques = [
@@ -124,7 +124,7 @@ const ArtLandingPage = () => {
               </Text>
 
               <div className={s.p3_img}>
-                <img src={`${CDN_URL}/art/codeBlock.jpg`} alt="image" />
+                <img src={`${CDN_URL}/art/codeBlock1.jpg`} alt="image" />
               </div>
             </div>
 
@@ -224,11 +224,7 @@ const ArtLandingPage = () => {
             </div>
           </div>
 
-          <Link
-            href={WHITEPAPER}
-            target="_blank"
-            className={s.bottomButton}
-          >
+          <Link href={WHITEPAPER} target="_blank" className={s.bottomButton}>
             Read the Whitepaper
             <IconSVG
               src={`${CDN_URL}/bannerArrow.svg`}

@@ -7,7 +7,7 @@ import Text from '@/animations/Text';
 import Headline from './Headline';
 import Link from 'next/link';
 import IconSVG from '@/components/IconSVG';
-import {WHITEPAPER} from "@Constants/url";
+import { WHITEPAPER } from '@Constants/url';
 
 const TechLandingPage = () => {
   return (
@@ -49,7 +49,7 @@ const TechLandingPage = () => {
               </div>
 
               <div className={s.rightContent}>
-                <img src={`${CDN_URL}/tech/tech1.png`} alt="image" />
+                <img src={`${CDN_URL}/tech/tech1(1).png`} alt="image" />
               </div>
             </div>
 
@@ -81,7 +81,7 @@ const TechLandingPage = () => {
             </Text>
 
             <div className={s.imgMedium}>
-              <img src={`${CDN_URL}/tech/tech3.png`} alt="image" />
+              <img src={`${CDN_URL}/tech/tech3(1).png`} alt="image" />
             </div>
             <Text size={'24'} className={`${s.text} ${s.mb_32}`}>
               The Souls collection embraces the concept of being fully on-chain,
@@ -91,7 +91,7 @@ const TechLandingPage = () => {
             </Text>
 
             <div className={s.imgFull}>
-              <img src={`${CDN_URL}/tech/code_01.jpg`} alt="image" />
+              <img src={`${CDN_URL}/tech/code_01(1).jpg`} alt="image" />
             </div>
             <Text size={'24'} className={`${s.text} ${s.mb_32}`}>
               p5.js—a powerful JavaScript library for creative coding—enables
@@ -104,7 +104,7 @@ const TechLandingPage = () => {
             </Text>
 
             <div className={s.imgFull}>
-              <img src={`${CDN_URL}/tech/code_02.jpg`} alt="image" />
+              <img src={`${CDN_URL}/tech/code_02(1).jpg`} alt="image" />
             </div>
 
             <Text size={'24'} className={`${s.text}`}>
@@ -118,11 +118,7 @@ const TechLandingPage = () => {
             </Text>
           </div>
 
-          <Link
-            href={WHITEPAPER}
-            target="_blank"
-            className={s.bottomButton}
-          >
+          <Link href={WHITEPAPER} target="_blank" className={s.bottomButton}>
             Read the Whitepaper
             <IconSVG
               src={`${CDN_URL}/bannerArrow.svg`}
