@@ -76,13 +76,13 @@ export const SoulsContainer: React.FC<Props> = ({
           page: number;
           limit: number;
           owner?: string;
-          sortBy?: string;
+          sort_by?: string;
           sort?: number;
         } = {
           page,
           limit: LIMIT_PAGE,
           owner: owner || undefined,
-          sortBy: sortBy || 'orphanage',
+          sort_by: sortBy || 'orphanage',
           sort: sort || -1,
         };
         let attributesQuery;
@@ -157,9 +157,7 @@ export const SoulsContainer: React.FC<Props> = ({
                 alt="empty thumbnail image"
               />
             </div>
-            <p className={s.empty_content}>
-              Be the first one to adopt a Soul. Adopt a Soul here.
-            </p>
+            <p className={s.empty_content}>Be the first one to adopt a Soul.</p>
             <Link href={ROUTE_PATH.CLAIM} className={s.empty_adopt}>
               Adopt a Soul
             </Link>
