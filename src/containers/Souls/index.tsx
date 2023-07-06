@@ -80,8 +80,8 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
           page,
           limit: LIMIT_PAGE,
           owner: owner || undefined,
-          sort_by: sortBy || 'orphanage',
-          sort: sort || -1,
+          sort_by: sortBy || undefined,
+          sort: sort || undefined,
         };
         let attributesQuery;
 
