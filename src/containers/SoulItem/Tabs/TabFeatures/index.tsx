@@ -116,6 +116,9 @@ const TabFeatures = ({
                 status={featuresStatus[index]}
                 feat={feat}
                 isOwner={isOwner}
+                unlockConditions={unlockConditions}
+                tokenBlocksExist={tokenBlocksExist}
+                index={index}
               />
             </div>
           </div>

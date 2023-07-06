@@ -314,6 +314,10 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
 
       if (!featuresStatus) return;
 
+      const totalGMBalance = new BigNumber(gmDepositBalance).plus(
+        new BigNumber(gmBalance)
+      );
+
       const featureAvailableIndex = featuresStatus.reduce(
         (acc, status, index) => {
           if (status === FeatureStatus['Available']) {
@@ -324,13 +328,16 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
         [] as number[]
       );
 
-      const nextUnlockFeatureIndex = featuresStatus.findIndex(
-        status => status === FeatureStatus['Locked']
-      );
-      if (nextUnlockFeatureIndex) {
-        const totalGMBalance = new BigNumber(gmDepositBalance).plus(
-          new BigNumber(gmBalance)
+      // check in featureLockedIndexes if item balance is greater than total GM balance
+      const nextUnlockFeatureIndex = featuresStatus.findIndex((_, id) => {
+        return (
+          settingFeatures.balances[id] -
+            Number(formatEthPrice(totalGMBalance.toString())) >
+          0
         );
+      });
+
+      if (nextUnlockFeatureIndex) {
         const nextGmUnlock =
           settingFeatures.balances[nextUnlockFeatureIndex] -
           Number(formatEthPrice(totalGMBalance.toString()));

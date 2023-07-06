@@ -1,36 +1,54 @@
 import Button from '@/components/Button';
-import { Feature, FeatureStatus } from '@/constants/feature';
-import React, { useEffect, useState } from 'react';
-import s from './UnlockFeature.module.scss';
-import { Transaction } from 'ethers';
-import { useWeb3React } from '@web3-react/core';
-import useContractOperation from '@/hooks/contract-operations/useContractOperation';
-import useUnlockFeature from '@/hooks/contract-operations/soul/useUnlockFeature';
-import { toStorageKey } from '@/utils';
-import logger from '@/services/logger';
-import { showToastError } from '@/utils/toast';
-import { useSelector } from 'react-redux';
-import { getUserSelector } from '@/state/user/selector';
-import { useRouter } from 'next/router';
 import IconSVG from '@/components/IconSVG';
 import { CDN_URL, TC_URL } from '@/configs';
-import cs from 'classnames';
+import { Feature, FeatureStatus } from '@/constants/feature';
 import { GM_TOKEN_PAGE } from '@/constants/url';
+import { AssetsContext } from '@/contexts/assets-context';
+import useUnlockFeature from '@/hooks/contract-operations/soul/useUnlockFeature';
+import useContractOperation from '@/hooks/contract-operations/useContractOperation';
+import logger from '@/services/logger';
+import { getUserSelector } from '@/state/user/selector';
+import { toStorageKey } from '@/utils';
+import { formatEthPrice } from '@/utils/format';
+import { showToastError } from '@/utils/toast';
+import { useWeb3React } from '@web3-react/core';
+import BigNumber from 'bignumber.js';
+import cs from 'classnames';
+import { Transaction } from 'ethers';
+import { useRouter } from 'next/router';
+import { useContext, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import s from './UnlockFeature.module.scss';
 
 interface Props {
   status: number;
   feat: string;
   isOwner?: boolean;
+  unlockConditions: {
+    balances: number[];
+    holdTimes: number[];
+  } | null;
+  index: number;
+  tokenBlocksExist: number;
 }
 
-const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
+const UnlockFeature = ({
+  status,
+  feat,
+  isOwner = false,
+  unlockConditions,
+  index,
+  tokenBlocksExist,
+}: Props) => {
   const { account, provider } = useWeb3React();
   const router = useRouter();
   const { tokenId } = router.query as { tokenId: string };
   const user = useSelector(getUserSelector);
+  const { gmBalance, gmDepositBalance } = useContext(AssetsContext);
 
   const [processing, setProcessing] = useState(false);
   const [inscribing, setInscribing] = useState(false);
+  const [isEnoughGM, setIsEnoughGM] = useState(false);
 
   const { run: unlockFeature } = useContractOperation({
     operation: useUnlockFeature,
@@ -111,16 +129,35 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
     return () => {
       intervalId && clearInterval(intervalId);
     };
-  }, [user, provider, operationName]);
+  }, [user, provider, operationName, feat]);
+
+  useEffect(() => {
+    // check index in unlockConditions if totalGMBalance > balances[index] && currentBlock < holdTimes[index], set true
+    if (!unlockConditions) return;
+
+    const { balances, holdTimes } = unlockConditions;
+    const totalGMBalance = new BigNumber(gmDepositBalance).plus(
+      new BigNumber(gmBalance)
+    );
+    if (balances[index] && holdTimes[index]) {
+      const enoughGmToUnlock =
+        Number(formatEthPrice(totalGMBalance.toString())) > balances[index] &&
+        tokenBlocksExist < holdTimes[index];
+      setIsEnoughGM(enoughGmToUnlock);
+    }
+  }, [unlockConditions, gmBalance, gmDepositBalance, tokenBlocksExist, index]);
 
   switch (status) {
     case FeatureStatus['Locked']:
       return (
         <>
           {isOwner ? (
-            <Button className={cs(s.unlock_btn, s.buy_btn)}>
+            <Button
+              className={cs(s.unlock_btn, s.buy_btn)}
+              disabled={isEnoughGM}
+            >
               <a href={GM_TOKEN_PAGE} target="_blank">
-                Buy GM
+                {isEnoughGM ? 'Locked' : ' Buy GM'}
               </a>
             </Button>
           ) : (
