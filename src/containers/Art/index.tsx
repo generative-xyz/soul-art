@@ -160,6 +160,9 @@ const ArtLandingPage = () => {
             </div>
 
             <div className={cs(s.wrapContent_p7)}>
+              <Text as={'p'} size={'24'} className={s.textHead}>
+                Soul is responsive
+              </Text>
               <div className={s.p7_img}>
                 <img src={`${CDN_URL}/art/art3.png`} alt="image" />
               </div>
