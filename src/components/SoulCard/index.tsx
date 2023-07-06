@@ -97,7 +97,7 @@ const SoulCard: React.FC<IProps> = ({
                     ownerAddr.toLowerCase()
                       ? 'You'
                       : ownerAddr.toLowerCase() === SOUL_CONTRACT.toLowerCase()
-                      ? 'Awaiting a better match...'
+                      ? 'Waiting for adoption…'
                       : shortenAddress(ownerAddr)}
                   </div>
                 </div>

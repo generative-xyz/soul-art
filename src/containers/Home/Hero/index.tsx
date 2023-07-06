@@ -15,6 +15,7 @@ import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
 import useTimeComparison from '@/hooks/useTimeComparison';
 import HeroModal from "@/containers/Landing/Introduce/Modal";
+import {WHITEPAPER} from "@Constants/url";
 
 const HomeHero: React.FC = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -120,7 +121,7 @@ const HomeHero: React.FC = () => {
                                         className={classNames(s['wrap-video'], s['wrap-pdf'])}
                                         onClick={() => {
                                             window.open(
-                                                `https://newbitcoincity.com/souls/whitepaper.pdf`
+                                                WHITEPAPER
                                             );
                                         }}
                                     >

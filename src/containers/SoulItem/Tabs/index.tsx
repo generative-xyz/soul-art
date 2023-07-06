@@ -37,8 +37,8 @@ const TabsComponent = ({
         type: 'desc',
       },
       {
-        title: 'Effects',
-        type: 'effect',
+        title: 'Evolution',
+        type: 'evolution',
       },
       {
         title: 'Interactions',
@@ -46,8 +46,8 @@ const TabsComponent = ({
       },
 
       {
-        title: 'History',
-        type: 'history',
+        title: 'Events',
+        type: 'events',
       },
     ];
     if (
@@ -55,8 +55,8 @@ const TabsComponent = ({
       (auction && auction.auctionStatus === AuctionStatus.ENDED)
     ) {
       header.unshift({
-        title: 'Bidders',
-        type: 'bidders',
+        title: 'Adopters',
+        type: 'adopters',
       });
     }
     return header;
@@ -85,7 +85,7 @@ const TabsComponent = ({
               eventKey={index}
               key={index}
               title={
-                tab.title !== 'Effects' ? (
+                tab.title !== 'Evolution' ? (
                   tab.title
                 ) : (
                   <>
@@ -102,11 +102,11 @@ const TabsComponent = ({
               className={`${s.content_auction_tab}`}
             >
               <div className={`${s.content_auction_tabBox} small-scrollbar`}>
-                {tab.type === 'bidders' && <TabBidders />}
+                {tab.type === 'adopters' && <TabBidders />}
                 {tab.type === 'desc' && <TabDescription />}
                 {tab.type === 'inter' && <TabInteraction />}
-                {tab.type === 'effect' && <TabFeatures owner={data.owner} />}
-                {tab.type === 'history' && <TabHistories data={data} />}
+                {tab.type === 'evolution' && <TabFeatures owner={data.owner} />}
+                {tab.type === 'events' && <TabHistories data={data} />}
               </div>
             </Tab>
           );

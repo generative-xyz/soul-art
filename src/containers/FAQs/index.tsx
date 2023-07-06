@@ -25,7 +25,7 @@ const FAQ_CONTENT = [
   },
   {
     title: 'What is the procedure for adoption?',
-    desc: 'To adopt a Soul, you can participate in a bidding adoption process.  Bidders place their adoption bids, competing with others who also seek to provide a loving home for the same Soul.  The bidding process ensures a fair and transparent allocation of Souls, with the highest bidder adopting the Soul.  90% of the proceeds from the winning bids go to the Souls DAO, reinforcing the financial sustainability and growth of the ecosystem.  The remaining 10% of the winning bids go to the Souls core team as artist royalties.',
+    desc: 'To adopt a Soul, you can participate in a bidding adoption process. Adopters place their adoption bids, competing with others who also seek to provide a loving home for the same Soul.  The bidding process ensures a fair and transparent allocation of Souls, with the highest bidder adopting the Soul.  90% of the proceeds from the winning bids go to the Souls DAO, reinforcing the financial sustainability and growth of the ecosystem.  The remaining 10% of the winning bids go to the Souls core team as artist royalties.',
   },
   {
     title: 'How long does the adoption process take?',
@@ -42,7 +42,7 @@ const FAQ_CONTENT = [
   },
   {
     title:
-      'Could I adopt another Soul if I already have one by winning the bid for an orphan Soul?',
+      'Could I adopt another Soul if I already have one by winning the adopt for an orphan Soul?',
     desc: 'One wallet will have only one Soul. You can use a different wallet if you want to adopt another one.',
   },
 ];

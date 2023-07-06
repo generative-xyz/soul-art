@@ -98,7 +98,7 @@ const ModalBid: React.FC<IProps> = ({
     }
 
     if (amountBN.isGreaterThan(gmDepositBalanceBN)) {
-      errors.amount = `Amount must be less than or equal bidding wallet balance ${formatEthPrice(
+      errors.amount = `Amount must be less than or equal adoption wallet balance ${formatEthPrice(
         gmDepositBalanceBN.toString()
       )} GM.`;
       return errors;
@@ -245,7 +245,7 @@ const ModalBid: React.FC<IProps> = ({
               <div className={s.bidModal_body_highest_wrapper}>
                 <div className={s.bidModal_body_highestPrice}>
                   <p className={s.bidModal_body_highestPrice_label}>
-                    Highest bid
+                    Highest amount
                   </p>
                   <p
                     className={s.bidModal_body_highestPrice_value}
@@ -259,7 +259,7 @@ const ModalBid: React.FC<IProps> = ({
                 </div>
                 <div className={s.bidModal_body_highestPrice}>
                   <p className={s.bidModal_body_highestPrice_label}>
-                    Bidding Wallet
+                    Adoption wallet
                   </p>
                   <p
                     className={s.bidModal_body_highestPrice_value}
@@ -297,7 +297,7 @@ const ModalBid: React.FC<IProps> = ({
                 </li>
                 <li>
                   Your GM <strong>will be returned</strong> if there is a higher
-                  bidder.
+                  adopter.
                 </li>
               </ul>
             </div>

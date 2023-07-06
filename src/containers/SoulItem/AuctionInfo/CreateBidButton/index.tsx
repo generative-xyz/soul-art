@@ -52,7 +52,7 @@ const CreateBidButton: React.FC<IProps> = ({ tokenId, imageCapture }: IProps): R
         <div className={s.content_auction}>
           <div className={s.content_auctionLeft}>
             <p className={s.content_auctionLeft_title}>
-              Highest bid
+              Highest amount
             </p>
             <p className={s.content_auctionLeft_price}>
               {`${formatEthPrice(auction.highestBid)} GM`}
@@ -72,7 +72,7 @@ const CreateBidButton: React.FC<IProps> = ({ tokenId, imageCapture }: IProps): R
           className={s.content_auction_adoptButton}
           onClick={handleShowBidModal}
         >
-          {biddable ? 'Bid' : 'Bidding period ended'}
+          {biddable ? 'Adopt' : 'Bidding period ended'}
         </Button>
       </div>
       <ModalBid

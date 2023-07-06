@@ -64,7 +64,7 @@ const TabBidders: React.FC = (): React.ReactElement => {
     <div className={s.tabLive}>
       {bidders.length === 0 && (
         <div className={s.emptyWrapper}>
-          <Empty infoText="Waiting for the first bidder" />
+          <Empty infoText="Waiting for the first adopter" />
         </div>
       )}
       {bidders.length > 0 &&

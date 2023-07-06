@@ -16,6 +16,7 @@ import { modalPlay } from '@Constants/asset';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
 import useTimeComparison from '@/hooks/useTimeComparison';
+import {WHITEPAPER} from "@Constants/url";
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -160,7 +161,8 @@ const Introduce: React.FC = () => {
                     className={classNames(s['wrap-video'], s['wrap-pdf'])}
                     onClick={() => {
                       window.open(
-                        `https://newbitcoincity.com/souls/whitepaper.pdf`
+                          WHITEPAPER
+                        // `https://newbitcoincity.com/souls/whitepaper.pdf`
                       );
                     }}
                   >
