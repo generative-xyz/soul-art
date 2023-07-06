@@ -1,0 +1,63 @@
+.rowContent {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: rem(60);
+
+  @include tablet {
+    gap: rem(30);
+    grid-template-columns: 1fr !important;
+    flex-direction: column;
+  }
+
+  &_left {
+    margin-bottom: rem(16px);
+
+    @include min-tablet {
+      margin-bottom: rem(32);
+    }
+
+    &_inner {
+      position: relative;
+      padding-bottom: 100%;
+    }
+
+    iframe,
+    img {
+      width: 100% !important;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &.isContain {
+      iframe,
+      img {
+        object-fit: contain !important;
+      }
+    }
+  }
+
+  .heading {
+    font-size: rem(56);
+    line-height: rem(66);
+    margin-bottom: rem(32);
+    font-weight: 700;
+  }
+
+  &.isRight {
+    .rowContent_left {
+      order: 1;
+    }
+
+    .rowContent_right {
+      order: 0;
+    }
+
+    .rowContent_content {
+      padding-left: 0;
+    }
+  }
+}
