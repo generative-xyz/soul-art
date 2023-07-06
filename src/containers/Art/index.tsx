@@ -175,6 +175,51 @@ const ArtLandingPage = () => {
             </div>
           </div>
 
+          <div className={s.wrapContent}>
+            <div className={s.wrapContent_headline}>
+              <IconSVG
+                src={`${CDN_URL}/art/sparkle.svg`}
+                className={s.headline_icon}
+                maxWidth={'50px'}
+                maxHeight={'50px'}
+              />
+              <Text as={'h2'} size={'48'} className={s.headline_title}>
+                Additional features unlock for top holders
+              </Text>
+            </div>
+            <div className={cs(s.wrapContent_p8, s.mb_120)}>
+              <Text as={'p'} size={'24'} className={s.text}>
+                As a thank you for the support and dedication from our top
+                holders, the Souls collection introduces a series of exclusive
+                features that enhance the artistic journey. As top holders
+                accumulate and hold large amounts of GM tokens, new dimensions
+                of innovation and personalization are unlocked.
+              </Text>
+              <Text as={'p'} size={'24'} className={s.text}>
+                {`With these additional features, top holders have the ability to
+                shape their soul's expression in new ways. For instance, top
+                holders unlock a more diverse palette that changes the color of
+                the sun, creating a new visual spectrum. Also, the layers of
+                clouds will evolve — expanding the artistic depth of the
+                artwork. And the foreground reveals glimpses of the landscapes
+                found within the New Bitcoin City, giving the artwork a sense of
+                time and place.`}
+              </Text>
+              <Text as={'p'} size={'24'} className={s.text}>
+                {`Plus, even more rewards are in store for top holders as they continue to reach Bitcoin block milestones. Decorative elements such as birds, airplanes, and other eye-catching objects animate the artwork, adding a touch of whimsy to each piece. Every milestone brings creative potential, empowering top holders to shape the sun into different forms, and in turn, intensifying its aura. The artistic canvas shines with colorful rainbows, thunder, rain, and a vibrant sun pillar effect—orchestrating a symphony of colors, sounds, and textures that stir the senses.`}
+              </Text>
+              <Text as={'p'} size={'24'} className={s.text}>
+                {`It's important to note that the unlocking of these features is tied to the block time of the soul and owners must acquire a certain amount of GM tokens to make these features visible. With each new milestone reached and feature unlocked, the Souls collection underscores the dedication and creativity of its owners.`}
+              </Text>
+            </div>
+            <div className={cs(s.wrapContent_p9)}>
+              <Text as={'p'} size={'24'} className={s.textHeadline}>
+                {`Sample journey for achieving milestones`}
+              </Text>
+              <img src={`${CDN_URL}/art/art4.jpg`} alt="image" />
+            </div>
+          </div>
+
           <Link
             href={'https://newbitcoincity.com/souls/whitepaper.pdf'}
             target="_blank"
