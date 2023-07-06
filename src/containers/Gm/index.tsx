@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import IconSVG from '@/components/IconSVG';
 import RowContent from '@/components/RowContent';
 import Button from '@/components/Button';
+import { GM_TOKEN_PAGE } from '@/constants/url';
 
 const Gm: React.FC = (): React.ReactElement => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -79,9 +80,7 @@ const Gm: React.FC = (): React.ReactElement => {
         <div className={s.actionWrapper}>
           <Button
             onClick={() =>
-              window.open(
-                'https://newbitcoindex.com/swap/tc?from_token=0x74B033e56434845E02c9bc4F0caC75438033b00D&to_token=0x2fe8d5A64afFc1d703aECa8a566f5e9FaeE0C003'
-              )
+              window.open(GM_TOKEN_PAGE)
             }
             className={s.submitBtn}
           >
