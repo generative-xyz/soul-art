@@ -112,14 +112,14 @@ html {
   --bs-gutter-x: #{rem(40px)};
 }
 
-// .disable-scrollbar {
-//   -ms-overflow-style: none;
-//   scrollbar-width: 0.5em;
-//   &::-webkit-scrollbar {
-//     // display: none;
-//     width: 0.5em; /* Adjust the width according to your preference */
-//   }
-// }
+.disable-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: 0.5em;
+  &::-webkit-scrollbar {
+    // display: none;
+    width: 0.5em; /* Adjust the width according to your preference */
+  }
+}
 
 .small-scrollbar {
   scrollbar-width: none; /* Firefox */
@@ -149,4 +149,8 @@ html {
 
 .w-fit {
   width: fit-content !important;
+}
+
+.pointer-none {
+  pointer-events: none !important;
 }

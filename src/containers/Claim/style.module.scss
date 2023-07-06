@@ -1,5 +1,6 @@
 .claimPage {
   min-height: 100vh;
+  padding-top: rem(24);
 
   .container {
     height: 100%;
@@ -36,6 +37,10 @@
             border-radius: rem(20px);
             padding: rem(32px);
             box-sizing: border-box;
+
+            &.success {
+              cursor: pointer;
+            }
           }
 
           .successNoti {

@@ -135,7 +135,7 @@ const SettleAuctionButton: React.FC<IProps> = ({
               auction.highestBidder !== ROOT_ADDRESS ? (
                 <>
                   <Jazzicon
-                    diameter={28}
+                    diameter={24}
                     seed={jsNumberForAddress(auction.highestBidder)}
                   />
                   <Link
