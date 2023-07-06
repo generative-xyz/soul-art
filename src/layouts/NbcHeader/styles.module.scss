@@ -280,7 +280,6 @@
   }
 
   .profile_container {
-    // background-color: rgba($color: #fff, $alpha: 0.1);
     border-color: rgba($color: #fff, $alpha: 0.1);
   }
 
@@ -409,6 +408,7 @@
   overflow: hidden;
   display: grid;
   place-items: center;
+  cursor: pointer;
 
   > div {
     border: 1px solid white;

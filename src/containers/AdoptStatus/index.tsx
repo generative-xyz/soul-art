@@ -134,12 +134,12 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
     }
 
     if (bid.auction?.status === AuctionStatus.INPROGRESS) {
-      return <span className={cs(s.status, s.bidding)}>Bidding</span>;
+      return <span className={cs(s.status, s.bidding)}>In progress</span>;
     }
     if (checkIsWinner(bid)) {
-      return <span className={cs(s.status, s.win)}>Win</span>;
+      return <span className={cs(s.status, s.win)}>Success</span>;
     } else {
-      return <span className={cs(s.status, s.lose)}>Lose</span>;
+      return <span className={cs(s.status, s.lose)}>Fail</span>;
     }
   };
 
@@ -186,9 +186,9 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
                 handleShowBidModal(bid);
               }}
               className={cs(s.actionBtn, hasSoul && s.disabled)}
-              title={hasSoul ? 'Waiting...' : 'Bid up'}
+              title={hasSoul ? 'Waiting...' : 'Raise'}
             >
-              {hasSoul ? 'Waiting...' : 'Bid up'}
+              {hasSoul ? 'Waiting...' : 'Raise'}
             </Button>
           </div>
         </OverlayTrigger>
@@ -229,8 +229,8 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
     if (bid?.auction?.status === AuctionStatus.SETTLED) {
       const btnLabel =
         isWinner &&
-        bid?.owner?.toLowerCase() === user?.walletAddress?.toLowerCase()
-          ? 'Adopted soul'
+          bid?.owner?.toLowerCase() === user?.walletAddress?.toLowerCase()
+          ? 'Adopted'
           : 'Refunded';
       return (
         <Button className={s.actionBtn} disabled>
@@ -291,15 +291,15 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
     <>
       <div className={s.adoptStatus}>
         <Container className={s.container}>
-          <h1 className={s.sectionTitle}>Bidding History</h1>
+          <h1 className={s.sectionTitle}>Adoption Records</h1>
           <div className={`small-scrollbar`}>
             <Table
               tableHead={[
                 'Item',
-                'Ranking',
+                'Rank',
                 'Status',
                 'Date',
-                'Amount bid',
+                'Financial capability',
                 'Action',
               ]}
               classWrapper={s.tableData}
