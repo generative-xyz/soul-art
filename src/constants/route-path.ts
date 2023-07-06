@@ -10,9 +10,9 @@ export const ROUTE_PATH = {
   ORPHANAGE: '/souls/orphanage',
   TECH: '/souls/tech',
   ART: '/souls/art',
-  NBC_HOME: 'https://newbitcoincity.com/',
+  NBC_HOME: 'https://newbitcoincity.com',
   NBC_GAMEFI: 'https://newbitcoincity.com/gamefi',
   NBC_DEFI: 'https://newbitcoincity.com/defi',
-  NBC_NFT: 'https://newbitcoincity.com/nft',
-  NBC_BUIDER: 'https://newbitcoincity.com/buider'
+  NBC_NFT: 'https://newbitcoincity.com/nfts',
+  NBC_BUILDER: 'https://trustless.computer'
 };

@@ -146,7 +146,7 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                 Gm & Souls
               </li>
               <li className={cs(s.menuItem, s.gradientText)}>
-                <a className={s.menuItem} href={ROUTE_PATH.NBC_BUIDER}>
+                <a className={s.menuItem} href={ROUTE_PATH.NBC_BUILDER}>
                   Builder
                 </a>
               </li>
