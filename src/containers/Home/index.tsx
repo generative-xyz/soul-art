@@ -3,10 +3,12 @@ import s from './style.module.scss';
 import { HEADER_HEIGHT } from '@/layouts';
 import { CDN_URL } from '@/configs';
 import HomeHero from "@/containers/Home/Hero";
+import NbcHeader from '@/layouts/NbcHeader';
 
 const Homepage = () => {
   return (
     <div className={s.homeSection}>
+      <NbcHeader theme={'dark'} />
       <Header height={HEADER_HEIGHT} isAnimation={false} theme={'dark'} />
       <HomeHero />
       <div className={s.homeSection_background}>
