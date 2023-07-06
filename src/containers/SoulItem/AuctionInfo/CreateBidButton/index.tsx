@@ -72,7 +72,7 @@ const CreateBidButton: React.FC<IProps> = ({ tokenId, imageCapture }: IProps): R
           className={s.content_auction_adoptButton}
           onClick={handleShowBidModal}
         >
-          {biddable ? 'Adopt' : 'Bidding period ended'}
+          {biddable ? 'Adopt' : 'Adoption process ended'}
         </Button>
       </div>
       <ModalBid

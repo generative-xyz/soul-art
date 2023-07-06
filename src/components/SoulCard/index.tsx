@@ -67,7 +67,7 @@ const SoulCard: React.FC<IProps> = ({
     <Card className={cs(s.card, className)}>
       {auctionEndTime && (
         <div className={s.card_bidding}>
-          <span>Bidding</span>
+          <span>Adoption in progress</span>
           <SonarWaveCircle className={s.card_sonarCircle} />
           <CountdownText countDownTo={auctionEndTime} />
         </div>

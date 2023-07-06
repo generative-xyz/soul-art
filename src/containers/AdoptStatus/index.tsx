@@ -134,7 +134,7 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
     }
 
     if (bid.auction?.status === AuctionStatus.INPROGRESS) {
-      return <span className={cs(s.status, s.bidding)}>Bidding</span>;
+      return <span className={cs(s.status, s.bidding)}>In progress</span>;
     }
     if (checkIsWinner(bid)) {
       return <span className={cs(s.status, s.win)}>Win</span>;
@@ -291,7 +291,7 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
     <>
       <div className={s.adoptStatus}>
         <Container className={s.container}>
-          <h1 className={s.sectionTitle}>Bidding History</h1>
+          <h1 className={s.sectionTitle}>Adoption Records</h1>
           <div className={`small-scrollbar`}>
             <Table
               tableHead={[

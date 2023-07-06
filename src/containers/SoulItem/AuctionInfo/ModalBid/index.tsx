@@ -112,7 +112,7 @@ const ModalBid: React.FC<IProps> = ({
 
     if (!userBid) {
       showToastError({
-        message: `User's bidding information not found.`,
+        message: `Adopter is not found. Please try again.`,
       });
       return;
     }
