@@ -80,6 +80,11 @@
     @include max-tablet {
       width: calc(100% - rem(32));
     }
+
+    &:hover {
+      background-color: #1588ff;
+      color: #fff;
+    }
   }
 
   .heading {

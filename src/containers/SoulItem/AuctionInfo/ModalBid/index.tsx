@@ -98,9 +98,7 @@ const ModalBid: React.FC<IProps> = ({
     }
 
     if (amountBN.isGreaterThan(gmDepositBalanceBN)) {
-      errors.amount = `Amount must be less than or equal adoption wallet balance ${formatEthPrice(
-        gmDepositBalanceBN.toString()
-      )} GM.`;
+      errors.amount = `You do not have enough GM to make a higher offer.`;
       return errors;
     }
 
