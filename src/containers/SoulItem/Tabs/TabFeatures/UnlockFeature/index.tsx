@@ -118,7 +118,7 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
       return (
         <>
           {isOwner ? (
-            <Button className={cs(s.unlock_btn)}>
+            <Button className={cs(s.unlock_btn, s.buy_btn)}>
               <a href={GM_TOKEN_PAGE} target="_blank">
                 Buy GM
               </a>

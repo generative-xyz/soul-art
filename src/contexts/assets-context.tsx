@@ -340,7 +340,13 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
 
       setAvailableFeatures(featureAvailableIndex);
     }
-  }, [isAuthenticated, ownerTokenId, user?.walletAddress]);
+  }, [
+    isAuthenticated,
+    ownerTokenId,
+    user?.walletAddress,
+    gmDepositBalance,
+    gmBalance,
+  ]);
 
   const contextValues = useMemo((): IAssetsContext => {
     return {

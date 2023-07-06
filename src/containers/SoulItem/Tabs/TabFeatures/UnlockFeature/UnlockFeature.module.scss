@@ -1,6 +1,7 @@
 .unlock_btn {
   padding: rem(11px) rem(26px);
-  background-color: #000;
+  background-color: #ff7e21;
+
   color: white;
   display: flex;
   align-items: center;
@@ -41,4 +42,8 @@
   backdrop-filter: blur(2px);
   border-radius: 100px;
   width: rem(120px);
+}
+
+.buy_btn {
+  background-color: #000;
 }

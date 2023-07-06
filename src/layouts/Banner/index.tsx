@@ -1,17 +1,15 @@
 import Button from '@/components/Button';
-import IconSVG from '@/components/IconSVG';
-import s from './style.module.scss';
-import Link from 'next/link';
+import { Feature } from '@/constants/feature';
 import { ROUTE_PATH } from '@/constants/route-path';
-import { CDN_URL } from '@/configs';
-import { useContext } from 'react';
-import { AssetsContext } from '@/contexts/assets-context';
 import { GM_TOKEN_PAGE } from '@/constants/url';
+import { AssetsContext } from '@/contexts/assets-context';
+import Link from 'next/link';
+import { useContext } from 'react';
+import s from './style.module.scss';
 
 const Banner: React.FC = (): React.ReactElement => {
-  const { ownerTokenId, gmToUnlockNextFeature } = useContext(AssetsContext);
-
-  // const getFeatureNameByIndex = () => {}
+  const { ownerTokenId, gmToUnlockNextFeature, nextUnlockFeatureId } =
+    useContext(AssetsContext);
 
   return (
     <div className={s.banner}>
@@ -19,7 +17,8 @@ const Banner: React.FC = (): React.ReactElement => {
         {ownerTokenId ? (
           <>
             Top up <span id="gm-unlock">{gmToUnlockNextFeature} GM</span> to
-            unlock the effect
+            unlock the {Object.values(Feature)[nextUnlockFeatureId as number]}{' '}
+            effect
           </>
         ) : (
           'The first-ever cryptoart protocol & a new kind of art.'
@@ -32,11 +31,6 @@ const Banner: React.FC = (): React.ReactElement => {
           target={ownerTokenId ? '_blank' : '_self'}
         >
           {ownerTokenId ? 'Buy GM' : 'Adopt Souls'}
-          <IconSVG
-            src={`${CDN_URL}/bannerArrow.svg`}
-            maxWidth="11"
-            maxHeight="8"
-          />
         </Link>
       </Button>
     </div>
