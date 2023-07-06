@@ -16,7 +16,7 @@ import { modalPlay } from '@Constants/asset';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
 import useTimeComparison from '@/hooks/useTimeComparison';
-import { WHITEPAPER } from "@Constants/url";
+import { WHITEPAPER } from '@Constants/url';
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -62,21 +62,26 @@ const Introduce: React.FC = () => {
           lg={{ span: 6, offset: 1 }}
           className={s.column}
         >
-          <div className={s['introduceBox']}>
-            <AnimFade className={s['introduceVideo']} screen={.1}>
+          <AnimFade className={s['introduceBox']} screen={0.1}>
+            <AnimFade className={s['introduceVideo']} screen={0.1}>
               <Text
                 as={'p'}
                 size={'24'}
                 color={'white-primary'}
                 className={`${s['introduceBox-title']}`}
               >
-                GM and Souls are two halves of a single artwork that is the historical symbol of New Bitcoin City.
+                GM and Souls are two halves of a single artwork that is the
+                historical symbol of New Bitcoin City.
                 <br />
                 <br />
-                Souls is a revolutionary cryptoart protocol for experiencing art in an entirely new way. GM is the native cryptocurrency powering the protocol.
+                Souls is a revolutionary cryptoart protocol for experiencing art
+                in an entirely new way. GM is the native cryptocurrency powering
+                the protocol.
                 <br />
                 <br />
-                The final artworks are soulbound. Souls are interconnected and perform their ever-changing artworks not as one but collectively.
+                The final artworks are soulbound. Souls are interconnected and
+                perform their ever-changing artworks not as one but
+                collectively.
                 <br />
               </Text>
             </AnimFade>
@@ -89,7 +94,6 @@ const Introduce: React.FC = () => {
                 Get GM
               </Link>
             </AnimFade>
-
             <AnimFade className={s.introduce_actions} screen={1}>
               <div className={s.introduce_actions_item}>
                 <div className={s['introduceVideo']}>
@@ -123,9 +127,7 @@ const Introduce: React.FC = () => {
                   <div
                     className={classNames(s['wrap-video'], s['wrap-pdf'])}
                     onClick={() => {
-                      window.open(
-                        WHITEPAPER
-                      );
+                      window.open(WHITEPAPER);
                     }}
                   >
                     <ImageFrame type={'small'}>
@@ -141,8 +143,32 @@ const Introduce: React.FC = () => {
                   </div>
                 </div>
               </div>
+              <div
+                className={classNames(
+                  s.introduce_actions_item,
+                  s.introduce_actions_item__pdf
+                )}
+              >
+                <div className={s['introduceVideo']}>
+                  <h5 className={s['introduceVideo-title']}>
+                    View Adopted Souls
+                  </h5>
+                  <div className={classNames(s['wrap-video'], s['wrap-pdf'])}>
+                    <ImageFrame type={'small'}>
+                      <Link href={ROUTE_PATH.GALLERY} className={s.content}>
+                        <IconSVG
+                          src={`${CDN_URL}/icon-gallery1.svg`}
+                          maxWidth={'115'}
+                          maxHeight={'86'}
+                          className={s.modalPlay}
+                        />
+                      </Link>
+                    </ImageFrame>
+                  </div>
+                </div>
+              </div>
             </AnimFade>
-          </div>
+          </AnimFade>
         </Col>
       </Container>
       <HeroModal showModal={isShow} closeModal={handleCloseModal} />
