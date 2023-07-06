@@ -1,12 +1,12 @@
 import Text from '@/animations/Text';
 import IconSVG from '@/components/IconSVG';
-import { WHITEPAPER } from '@Constants/url';
 import { CDN_URL } from '@/configs';
 import NbcHeader from '@/layouts/NbcHeader';
 import Link from 'next/link';
 import { Col, Container } from 'react-bootstrap';
 import Headline from './Headline';
 import s from './style.module.scss';
+import { WHITEPAPER } from '@Constants/url';
 
 const TechLandingPage = () => {
   return (
@@ -47,7 +47,7 @@ const TechLandingPage = () => {
               </div>
 
               <div className={s.rightContent}>
-                <img src={`${CDN_URL}/tech/tech1.png`} alt="image" />
+                <img src={`${CDN_URL}/tech/tech1(1).png`} alt="image" />
               </div>
             </div>
 
@@ -79,7 +79,7 @@ const TechLandingPage = () => {
             </Text>
 
             <div className={s.imgMedium}>
-              <img src={`${CDN_URL}/tech/tech3.png`} alt="image" />
+              <img src={`${CDN_URL}/tech/tech3(1).png`} alt="image" />
             </div>
             <Text size={'24'} className={`${s.text} ${s.mb_32}`}>
               The Souls collection embraces the concept of being fully on-chain,
@@ -89,7 +89,7 @@ const TechLandingPage = () => {
             </Text>
 
             <div className={s.imgFull}>
-              <img src={`${CDN_URL}/tech/code_01.jpg`} alt="image" />
+              <img src={`${CDN_URL}/tech/code_01(1).jpg`} alt="image" />
             </div>
             <Text size={'24'} className={`${s.text} ${s.mb_32}`}>
               p5.js—a powerful JavaScript library for creative coding—enables
@@ -102,7 +102,7 @@ const TechLandingPage = () => {
             </Text>
 
             <div className={s.imgFull}>
-              <img src={`${CDN_URL}/tech/code_02.jpg`} alt="image" />
+              <img src={`${CDN_URL}/tech/code_02(1).jpg`} alt="image" />
             </div>
 
             <Text size={'24'} className={`${s.text}`}>

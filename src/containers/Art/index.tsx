@@ -122,7 +122,7 @@ const ArtLandingPage = () => {
               </Text>
 
               <div className={s.p3_img}>
-                <img src={`${CDN_URL}/art/codeBlock.jpg`} alt="image" />
+                <img src={`${CDN_URL}/art/codeBlock1.jpg`} alt="image" />
               </div>
             </div>
 
