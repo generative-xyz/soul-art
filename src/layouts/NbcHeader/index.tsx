@@ -5,9 +5,15 @@ import { CDN_URL, TC_URL } from '@/configs';
 import IconSVG from '@/components/IconSVG';
 import { WalletContext } from '@/contexts/wallet-context';
 import { DappsTabs } from '@/enums/tabs';
-import { getIsAuthenticatedSelector, getUserSelector } from '@/state/user/selector';
+import {
+  getIsAuthenticatedSelector,
+  getUserSelector,
+} from '@/state/user/selector';
 import { formatEthPrice } from '@/utils/format';
-import { formatBTCPrice, formatLongAddress } from '@trustless-computer/dapp-core';
+import {
+  formatBTCPrice,
+  formatLongAddress,
+} from '@trustless-computer/dapp-core';
 import { useWeb3React } from '@web3-react/core';
 import { Dropdown, Button } from 'react-bootstrap';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
@@ -18,6 +24,7 @@ import { showToastError, showToastSuccess } from '@/utils/toast';
 import copy from 'copy-to-clipboard';
 import logger from '@/services/logger';
 import { DISCORD_URL } from '@/constants/common';
+import SubHeader from '../SubHeader';
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -46,8 +53,7 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
   const { onDisconnect, onConnect, requestBtcAddress } =
     useContext(WalletContext);
-  const { btcBalance, tcBalance } =
-    useContext(AssetsContext);
+  const { gmBalance, btcBalance, tcBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
   const [isConnecting, setIsConnecting] = useState(false);
 
@@ -125,7 +131,9 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
       <div className="container">
         <div className={s.wrapper}>
           <div className={s.leftContent}>
-            <a className={s.nbcLogo} href={ROUTE_PATH.NBC_HOME}>NBC</a>
+            <a className={s.nbcLogo} href={ROUTE_PATH.NBC_HOME}>
+              NBC
+            </a>
             <ul className={s.leftMenu}>
               <li>
                 <a className={s.menuItem} href={ROUTE_PATH.NBC_GAMEFI}>
@@ -142,9 +150,7 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                   NFTs
                 </a>
               </li>
-              <li className={s.menuItem}>
-                Gm & Souls
-              </li>
+              <li className={`${s.menuItem} ${s.textBlack}`}>Gm & Souls</li>
               <li className={cs(s.menuItem, s.gradientText)}>
                 <a className={s.menuItem} href={ROUTE_PATH.NBC_BUILDER}>
                   Builder
@@ -205,6 +211,10 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                       </Dropdown.Toggle>
                       <Dropdown.Menu className={s.menu_wrapper}>
                         <div className={s.menu_container}>
+                          <div className={s.gm_balance}>
+                            <p>GM balance</p>
+                            <h5>{`${formatEthPrice(gmBalance)} GM`}</h5>
+                          </div>
                           {renderTokenBlock(
                             'TC Address',
                             formatEthPrice(tcBalance),
@@ -223,7 +233,10 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                             }
                             className={s.menu_box}
                           >
-                            <IconSVG src={`${CDN_URL}/wallet.svg`} maxWidth="16" />
+                            <IconSVG
+                              src={`${CDN_URL}/wallet.svg`}
+                              maxWidth="16"
+                            />
                             <p>Wallet</p>
                           </div>
                           <div className={s.menu_divider} />
@@ -251,9 +264,11 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
             </ul>
           </div>
         </div>
+        <div className={s.divider}></div>
+        <SubHeader theme={theme} />
       </div>
     </header>
-  )
-}
+  );
+};
 
 export default React.memo(NbcHeader);

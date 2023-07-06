@@ -20,8 +20,10 @@ import {
   getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
+import { formatEthPrice } from '@/utils/format';
 import { currentAssetsBuilder } from '@/utils/utxo';
 import { useWeb3React } from '@web3-react/core';
+import BigNumber from 'bignumber.js';
 import React, {
   PropsWithChildren,
   useCallback,
@@ -44,6 +46,8 @@ export interface IAssetsContext {
   setAvailableFeatures: React.Dispatch<React.SetStateAction<number[] | null>>;
   historyAlerts: ISoulHistoryItem[] | null;
   avgBlockTime: number;
+  gmToUnlockNextFeature: string;
+  nextUnlockFeatureId: number | null;
 }
 
 const initialValue: IAssetsContext = {
@@ -63,6 +67,8 @@ const initialValue: IAssetsContext = {
   },
   historyAlerts: null,
   avgBlockTime: 0,
+  gmToUnlockNextFeature: '0',
+  nextUnlockFeatureId: null,
 };
 
 export const AssetsContext = React.createContext<IAssetsContext>(initialValue);
@@ -87,6 +93,10 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
   );
   const [histories, setHistories] = useState<ISoulHistoryItem[] | null>(null);
   const [avgBlockTime, setAvgBlockTime] = useState(0);
+  const [nextUnlockFeatureId, setNextUnlockFeatureIndex] = useState<
+    number | null
+  >(0);
+  const [gmToUnlockNextFeature, setGmToUnlockNextFeature] = useState('0');
 
   const { run: checkFeaturesStatus } = useContractOperation({
     operation: useCheckFeatureStatus,
@@ -235,7 +245,13 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     fetchBtcAssets();
     getAvailableAssetsCreateTx();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchFeeRate, fetchAvgBlockTime, fetchTCBalance, fetchBtcAssets, getAvailableAssetsCreateTx]);
+  }, [
+    fetchFeeRate,
+    fetchAvgBlockTime,
+    fetchTCBalance,
+    fetchBtcAssets,
+    getAvailableAssetsCreateTx,
+  ]);
 
   const fetchSoulHistory = useCallback(async () => {
     if (!ownerTokenId) return;
@@ -283,6 +299,8 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     if (!isAuthenticated || !user?.walletAddress || !ownerTokenId) {
       setAvailableFeatures(null);
       setHistories(null);
+      setGmToUnlockNextFeature('0');
+      setOwnerTokenId('');
       return;
     }
 
@@ -306,6 +324,20 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
         [] as number[]
       );
 
+      const nextUnlockFeatureIndex = featuresStatus.findIndex(
+        status => status === FeatureStatus['Locked']
+      );
+      if (nextUnlockFeatureIndex) {
+        const totalGMBalance = new BigNumber(gmDepositBalance).plus(
+          new BigNumber(gmBalance)
+        );
+        const nextGmUnlock =
+          settingFeatures.balances[nextUnlockFeatureIndex] -
+          Number(formatEthPrice(totalGMBalance.toString()));
+        setNextUnlockFeatureIndex(nextUnlockFeatureIndex);
+        setGmToUnlockNextFeature(nextGmUnlock.toString());
+      }
+
       setAvailableFeatures(featureAvailableIndex);
     }
   }, [isAuthenticated, ownerTokenId, user?.walletAddress]);
@@ -322,6 +354,8 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       avgBlockTime,
       setAvailableFeatures,
       historyAlerts: histories,
+      gmToUnlockNextFeature,
+      nextUnlockFeatureId,
     };
   }, [
     btcBalance,
@@ -334,6 +368,8 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     avgBlockTime,
     setAvailableFeatures,
     histories,
+    gmToUnlockNextFeature,
+    nextUnlockFeatureId,
   ]);
 
   return (

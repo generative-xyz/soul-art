@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import IconSVG from '@/components/IconSVG';
 import { CDN_URL, TC_URL } from '@/configs';
 import cs from 'classnames';
+import { GM_TOKEN_PAGE } from '@/constants/url';
 
 interface Props {
   status: number;
@@ -115,14 +116,24 @@ const UnlockFeature = ({ status, feat, isOwner = false }: Props) => {
   switch (status) {
     case FeatureStatus['Locked']:
       return (
-        <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>
-          <IconSVG
-            src={`${CDN_URL}/ic-key.svg`}
-            maxWidth={'16'}
-            maxHeight={'16'}
-          />
-          {isOwner ? 'Unlock' : 'Locked'}
-        </Button>
+        <>
+          {isOwner ? (
+            <Button className={cs(s.unlock_btn)}>
+              <a href={GM_TOKEN_PAGE} target="_blank">
+                Buy GM
+              </a>
+            </Button>
+          ) : (
+            <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>
+              <IconSVG
+                src={`${CDN_URL}/ic-key.svg`}
+                maxWidth={'16'}
+                maxHeight={'16'}
+              />
+              Locked
+            </Button>
+          )}
+        </>
       );
     case FeatureStatus['Unlocked']:
       return (

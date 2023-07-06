@@ -1,29 +1,18 @@
 .banner {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translate(-50%);
-  width: 100%;
-  padding: rem(12px) 0;
-  background: #f6f6f6;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
-  backdrop-filter: blur(2px);
-  gap: rem(8px);
-  flex-direction: column;
-
-  @include min-tablet {
-    flex-direction: row;
-  }
 
   .bannerText {
     margin-bottom: unset;
-    font-size: rem(16px);
+    font-size: rem(14px);
     line-height: 140%;
     font-weight: 400;
     color: #000;
+
+    span {
+      color: #ff7e21;
+    }
 
     @include mobile {
       text-align: center;
@@ -45,7 +34,7 @@
     display: flex;
     gap: 8px;
     align-items: center;
-    font-size: rem(14px);
+    font-size: rem(12px);
     line-height: 129%;
 
     &:hover {

@@ -1,15 +1,14 @@
-import { Col, Container } from 'react-bootstrap';
-import s from './style.module.scss';
-import cs from 'classnames';
-import IconSVG from '@/components/IconSVG';
 import Text from '@/animations/Text';
+import IconSVG from '@/components/IconSVG';
 import { CDN_URL } from '@/configs';
-import Header from '@/layouts/Header';
-import { HEADER_HEIGHT } from '@/layouts';
-import TechniqueItem from './Item';
-import ArtItem from './ArtItem';
+import NbcHeader from '@/layouts/NbcHeader';
+import cs from 'classnames';
 import Link from 'next/link';
-import {WHITEPAPER} from "@Constants/url";
+import { WHITEPAPER } from '@Constants/url';
+import { Col, Container } from 'react-bootstrap';
+import ArtItem from './ArtItem';
+import TechniqueItem from './Item';
+import s from './style.module.scss';
 
 const ArtLandingPage = () => {
   const itemTechniques = [
@@ -65,8 +64,7 @@ const ArtLandingPage = () => {
 
   return (
     <div className={s.artLandingPage}>
-      <Header height={HEADER_HEIGHT} isAnimation={false} theme={''} />
-
+      <NbcHeader />
       <Container className={s.container}>
         <Col className={s.column} lg={{ span: 10, offset: 1 }}>
           <div className={s.wrapContent}>
@@ -224,11 +222,7 @@ const ArtLandingPage = () => {
             </div>
           </div>
 
-          <Link
-            href={WHITEPAPER}
-            target="_blank"
-            className={s.bottomButton}
-          >
+          <Link href={WHITEPAPER} target="_blank" className={s.bottomButton}>
             Read the Whitepaper
             <IconSVG
               src={`${CDN_URL}/bannerArrow.svg`}

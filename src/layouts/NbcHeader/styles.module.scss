@@ -5,11 +5,11 @@
   z-index: 7;
   width: 100%;
   background: var(--background);
+  box-shadow: 0px 0px 24px -6px #0000000f;
+
   --text-color: #000;
   --filter: black;
   --background: #fff;
-  padding-top: rem(16px);
-  padding-bottom: rem(16px);
 
   &.dark {
     --text-color: #fff;
@@ -22,6 +22,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-top: rem(12px);
+  padding-bottom: rem(12px);
 }
 
 .leftContent {
@@ -48,7 +50,7 @@
 }
 
 .menuItem {
-  font-size: rem(16px);
+  font-size: rem(14px);
   line-height: 20px;
   font-family: var(--sora-font);
   font-weight: 400;
@@ -71,6 +73,10 @@
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  &.textBlack {
+    color: #000;
   }
 }
 
@@ -262,9 +268,19 @@
 
   .menuItem {
     color: #fff;
+    opacity: 0.7;
+
+    &.gradientText > a {
+      opacity: 1;
+    }
+
+    &.textBlack {
+      opacity: 1;
+    }
   }
 
   .profile_container {
+    // background-color: rgba($color: #fff, $alpha: 0.1);
     border-color: rgba($color: #fff, $alpha: 0.1);
   }
 
@@ -342,18 +358,79 @@
       )
       border-box;
   color: #313149;
-  padding: rem(14px) rem(24px);
+  padding: rem(10px) rem(20px);
   border: 2px solid transparent;
   border-radius: 100px;
   display: inline-block;
-  font-size: rem(12px);
+  font-size: rem(11px);
   line-height: rem(16px);
   font-family: var(--sora-font);
   text-transform: uppercase;
-  font-weight: 700;
-  min-width: rem(170px);
+  font-weight: 600;
 
   &:disabled {
     opacity: 0.6;
+  }
+}
+
+.divider {
+  background-color: #ececec;
+  height: 1px;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+}
+
+.dark {
+  .divider {
+    background-color: rgba($color: #fff, $alpha: 0.1);
+  }
+
+  .connectWalletBtn {
+    background: linear-gradient(#000, #000) padding-box,
+      conic-gradient(
+          from 168.15deg at 46.78% 60%,
+          #8f7dc2 0deg,
+          #00b2d9 135deg,
+          #9099fc 256.87deg,
+          #d87cee 360deg
+        )
+        border-box;
+    color: #fff;
+  }
+}
+
+.profile_avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  border: 1px solid #ececec;
+  background: #f6f6f6;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+
+  > div {
+    border: 1px solid white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+  }
+}
+
+.gm_balance {
+  margin-bottom: rem(20px);
+
+  p {
+    color: #5b5b5b;
+    font-size: rem(12px);
+    font-weight: 500;
+    line-height: 140%;
+    margin-bottom: rem(4px);
+  }
+
+  h5 {
+    color: #000;
+    font-size: rem(20px);
+    font-weight: 500;
+    line-height: 140%;
   }
 }

@@ -15,10 +15,13 @@ const ClaimImg: React.FC<IClaimImgProps> = ({
   soulToken,
   claimStatus,
 }) => {
-
   return (
     <div
-      className={`${s.claimImg} ${isClaimed ? s.isClaimed : ''} ${claimStatus === 'waiting' ? s.wait : ''}`}
+      className={`${s.claimImg} ${isClaimed ? s.isClaimed : ''} ${
+        claimStatus === 'waiting' ? s.wait : ''
+      }
+      ${soulToken ? 'pointer-none' : ''}
+      `}
     >
       {soulToken ? (
         <Explorer url={soulToken.animationFileUrl} />

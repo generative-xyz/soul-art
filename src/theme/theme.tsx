@@ -5,7 +5,12 @@ import {
   ThemeProvider as StyledComponentsThemeProvider,
 } from 'styled-components';
 import { getTheme } from '@/theme/index';
-import { Righteous, Sora, Montserrat_Alternates, Montserrat } from 'next/font/google';
+import {
+  Righteous,
+  Sora,
+  Montserrat_Alternates,
+  Montserrat,
+} from 'next/font/google';
 import localFont from 'next/font/local';
 
 const bandeinsSansVariable = localFont({
@@ -39,7 +44,7 @@ const bandeinsSansVariable = localFont({
 });
 
 const righteous = Righteous({ weight: ['400'], subsets: ['latin'] });
-const sora = Sora({ weight: ['400', '700'], subsets: ['latin'] });
+const sora = Sora({ weight: ['400', '600', '700'], subsets: ['latin'] });
 const montserratAlternates = Montserrat_Alternates({
   weight: ['400', '500', '600', '700', '800', '900'],
   style: ['normal', 'italic'],
@@ -90,17 +95,17 @@ export const ThemedGlobalStyle = createGlobalStyle`
     h3 {
       font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSizes.h3};
       line-height: ${({ theme }: { theme: DefaultTheme }) =>
-    theme.lineHeight.h3};
+        theme.lineHeight.h3};
     }
     h5 {
       font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSizes.h5};
       line-height: ${({ theme }: { theme: DefaultTheme }) =>
-    theme.lineHeight.h5};
+        theme.lineHeight.h5};
     }
     h6 {
       font-size: ${({ theme }: { theme: DefaultTheme }) => theme.fontSizes.h6};
       line-height: ${({ theme }: { theme: DefaultTheme }) =>
-    theme.lineHeight.h6};
+        theme.lineHeight.h6};
     }
     p {
       color: ${({ theme }: { theme: DefaultTheme }) => theme.text1};

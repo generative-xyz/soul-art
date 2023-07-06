@@ -1,9 +1,10 @@
 import CountdownText from '@/components/CountdownText';
-import Status from './Status';
-import s from './style.module.scss';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
 import { CLAIM_START_TIME } from '@/configs';
-import React from 'react';
+import { AssetsContext } from '@/contexts/assets-context';
+import React, { useContext } from 'react';
+import Status from './Status';
+import s from './style.module.scss';
 
 type IClaimContentProps = {
   isClaimed: boolean;
@@ -15,6 +16,8 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
   claimStatus,
   isEventStarted,
 }) => {
+  const { ownerTokenId } = useContext(AssetsContext);
+
   const ClaimDesc = () => {
     return (
       <div className={s.claimDesc}>
@@ -35,13 +38,16 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
       <div className={s.claimContent_top}>
         <div className={s.claimContent_header}>
           <p className={`${s.claimContent_title} ${isClaimed ? s.true : ''}`}>
-            Souls
+            Souls {!!ownerTokenId && `#${ownerTokenId}`}
           </p>
           {!isEventStarted && (
             <div className={s.claimContent_countdownWrapper}>
               <p>Adopt your Soul in</p>
               <SonarWaveCircle />
-              <CountdownText className={s.claimContent_countdownText} countDownTo={CLAIM_START_TIME} />
+              <CountdownText
+                className={s.claimContent_countdownText}
+                countDownTo={CLAIM_START_TIME}
+              />
             </div>
           )}
         </div>
