@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
   padding-bottom: ${px2rem(120)};
 
   .mainContent {
+    text-align: center;
+
     .title {
       max-width: 600px;
       font-weight: 500;
@@ -23,24 +25,36 @@ export const Wrapper = styled.div`
       font-size: ${px2rem(16)};
       line-height: 1.4;
       text-align: center;
-      margin-bottom: ${px2rem(28)};
+      margin-bottom: ${px2rem(24)};
     }
   }
 `;
 
 export const ConnectWalletButton = styled.button`
-  font-size: ${px2rem(14)};
+  background: linear-gradient(#fff, #fff) padding-box,
+    conic-gradient(
+        from 168.15deg at 46.78% 60%,
+        #8f7dc2 0deg,
+        #00b2d9 135deg,
+        #9099fc 256.87deg,
+        #d87cee 360deg
+      )
+      border-box;
+  color: #313149;
+  padding: ${px2rem(10)} ${px2rem(20)};
+  border: 2px solid transparent;
+  border-radius: 100px;
+  display: inline-block;
+  font-size: ${px2rem(12)};
   line-height: 1.4;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  border: 1px solid #ECECEC;
-  backdrop-filter: blur(2px);
-  border-radius: 100px !important;
-  padding: ${px2rem(12)} ${px2rem(20)} !important;
-  display: flex;
-  gap: ${px2rem(12)};
-  margin: 0 auto;
+  font-family: var(--sora-font);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-inline: auto;
+
+  &:disabled {
+    opacity: 0.6;
+  }
 
   :disabled {
     opacity: 0.8;
