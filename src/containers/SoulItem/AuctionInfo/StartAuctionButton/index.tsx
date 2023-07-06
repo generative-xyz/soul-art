@@ -95,7 +95,10 @@ const StartAuctionButton: React.FC<IProps> = ({
           logger.info('tx done', key);
           fetchAuction();
 
-          if (auction?.auctionStatus === AuctionStatus.INPROGRESS || auction?.auctionStatus === AuctionStatus.ENDED) {
+          if (
+            auction?.auctionStatus === AuctionStatus.INPROGRESS ||
+            auction?.auctionStatus === AuctionStatus.ENDED
+          ) {
             intervalId && clearInterval(intervalId);
             setInscribing(false);
             localStorage.removeItem(key);
@@ -123,7 +126,7 @@ const StartAuctionButton: React.FC<IProps> = ({
       className={s.startAuctionButton}
       onClick={handleStartAuction}
     >
-      {processing || inscribing ? 'Processing...' : 'Start auction'}
+      {processing || inscribing ? 'Processing...' : 'Apply to adopt'}
     </Button>
   );
 };
