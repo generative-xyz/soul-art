@@ -201,6 +201,7 @@
 
   &_actions {
     display: flex;
+    flex-wrap: wrap;
     gap: rem(20px);
     margin-top: rem(43px);
     padding-top: rem(43px);
@@ -218,6 +219,7 @@
           padding: rem(6px);
 
           .content {
+            display: block;
             padding-bottom: (83/147) * 100%;
             background: rgba(255, 255, 255, 0.1);
           }
