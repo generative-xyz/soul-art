@@ -160,11 +160,11 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
           </div>
           <div className={s.rightContent}>
             <ul className={s.rightMenu}>
-              {/* <li >
-                <a href={ROUTE_PATH.STORY} className={s.menuItem}>
-                  Our story
+              <li >
+                <a href={ROUTE_PATH.NBC_STORY} className={s.menuItem}>
+                  Our Story
                 </a>
-              </li> */}
+              </li>
               <li>
                 <a href={DISCORD_URL}>
                   <IconSVG

@@ -12,7 +12,7 @@ const Status: React.FC<IStatusProps> = ({ type }) => {
     return (
       <div className={s.received}>
         <IconSVG src={successIcon} maxHeight={'16'} maxWidth={'16'} />
-        <span>Received</span>
+        <span>Adopted</span>
       </div>
     );
   };
