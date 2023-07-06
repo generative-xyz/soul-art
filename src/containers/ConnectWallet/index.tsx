@@ -6,7 +6,6 @@ import { getIsAuthenticatedSelector } from '@/state/user/selector';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { useRouter } from 'next/router';
 import { showToastError } from '@/utils/toast';
-import { CDN_URL } from '@/configs';
 import logger from '@/services/logger';
 
 const ConnectWallet: React.FC = (): React.ReactElement => {
@@ -49,11 +48,6 @@ const ConnectWallet: React.FC = (): React.ReactElement => {
           disabled={isConnecting}
           onClick={handleConnectWallet}
         >
-          <img
-            alt="wallet-icon"
-            className="wallet-icon"
-            src={`${CDN_URL}/heroicons_wallet-solid.svg`}
-          />
           <span className={'connectWalletButton'}>
             {isConnecting ? 'Connecting...' : 'Connect wallet'}
           </span>
