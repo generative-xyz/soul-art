@@ -50,6 +50,28 @@
                 margin-top: rem(40px);
             }
         }
+
+        &_flex {
+            display: flex;
+            gap: rem(87px);
+
+            .leftContent {
+                flex: 1;
+
+                .content_desc {
+                    text-align: left;
+                }
+            }
+
+            .rightContent {
+                width: rem(537px);
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
     }
 
     .wrapContentBottom {
