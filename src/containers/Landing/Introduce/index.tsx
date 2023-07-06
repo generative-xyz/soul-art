@@ -66,7 +66,7 @@ const Introduce: React.FC = () => {
             <AnimFade className={s['introduceVideo']} screen={.1}>
             <Text
               as={'p'}
-              size={'28'}
+              size={'24'}
               color={'white-primary'}
               className={`${s['introduceBox-title']}`}
             >
@@ -77,7 +77,6 @@ const Introduce: React.FC = () => {
               <br/>
               <br/>
               The final artworks are soulbound. Souls are interconnected and perform their ever-changing artworks not as one but collectively.
-              <br/>
               <br/>
             </Text>
             </AnimFade>
