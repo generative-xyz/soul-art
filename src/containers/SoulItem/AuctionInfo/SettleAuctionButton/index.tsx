@@ -123,7 +123,7 @@ const SettleAuctionButton: React.FC<IProps> = ({
       {auction && (
         <div className={s.auctionInfo}>
           <div className={s.highestBidWrapper}>
-            <p className={s.highestBidTitle}>Highest bid</p>
+            <p className={s.highestBidTitle}>Highest amount</p>
             <p className={s.highestBidPrice}>
               {`${formatEthPrice(auction.highestBid)} GM`}
             </p>

@@ -69,7 +69,7 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
               <img src={`${CDN_URL}/ic-question-owner.svg`} />
             </div>
             <div className={s.content_waitingOwner}>
-              Awaiting a better match...
+              Waiting for adoption…
             </div>
           </>
         ) : (

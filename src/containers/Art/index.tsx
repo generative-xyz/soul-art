@@ -9,6 +9,7 @@ import { HEADER_HEIGHT } from '@/layouts';
 import TechniqueItem from './Item';
 import ArtItem from './ArtItem';
 import Link from 'next/link';
+import {WHITEPAPER} from "@Constants/url";
 
 const ArtLandingPage = () => {
   const itemTechniques = [
@@ -224,7 +225,7 @@ const ArtLandingPage = () => {
           </div>
 
           <Link
-            href={'https://newbitcoincity.com/souls/whitepaper.pdf'}
+            href={WHITEPAPER}
             target="_blank"
             className={s.bottomButton}
           >

@@ -7,7 +7,7 @@ import { DISCORD_URL } from '@/constants/common';
 const Discord: React.FC = (): React.ReactElement => {
   return (
     <div className={s.discord}>
-      <h3 className={s.blockTitle}>New adopter?</h3>
+      <h3 className={s.blockTitle}>Potential adopter?</h3>
       <div className={s.discordContainer}>
         <div className={s.mainContent}>
           <div className={s.discordLogoWrapper}>

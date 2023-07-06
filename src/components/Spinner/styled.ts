@@ -10,9 +10,15 @@ const Container = styled.div<{
   height: ${({ height }) => px2rem(height)};
   animation: rotateLoop 4s infinite linear;
   will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
     width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-width: 80px;
   }
 
   @keyframes rotateLoop {

@@ -95,7 +95,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
             className={s.column}
           >
             <div className={`${s.wrapBox}`}>
-              <h3 className={s.blockTitle}>The OG adopters</h3>
+              <h3 className={s.blockTitle}>GM Contributors</h3>
               <div
                 className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''
                   }`}

@@ -7,6 +7,7 @@ import Text from '@/animations/Text';
 import Headline from './Headline';
 import Link from 'next/link';
 import IconSVG from '@/components/IconSVG';
+import {WHITEPAPER} from "@Constants/url";
 
 const TechLandingPage = () => {
   return (
@@ -118,7 +119,7 @@ const TechLandingPage = () => {
           </div>
 
           <Link
-            href={'https://newbitcoincity.com/souls/whitepaper.pdf'}
+            href={WHITEPAPER}
             target="_blank"
             className={s.bottomButton}
           >
