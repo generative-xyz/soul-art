@@ -2,9 +2,6 @@
   background: #000;
   color: #fff;
   position: relative;
-  --padding-top: #{rem(168px)};
-  padding-top: var(--padding-top);
-  padding-bottom: rem(160px);
 
   .background {
     position: absolute;
@@ -21,13 +18,13 @@
     }
   }
 
-  @include mobile {
-    --padding-top: 80px;
-    padding-bottom: 80px;
-  }
+
+  --padding-top: 80px;
+  padding-bottom: 80px;
+  padding-top: var(--padding-top);
 
   @include min-tablet {
-    --padding-top: #{rem(168px)};
+    --padding-top: #{rem(160px)};
     padding-bottom: rem(160px);
   }
 
@@ -38,7 +35,7 @@
       .wrapLeftContainer {
         position: unset;
         margin-bottom: rem(30px);
-        top: rem(100px);
+        top: rem(160px);
 
         .leftContainer-title {
           font-size: rem(68px);
@@ -114,7 +111,7 @@
     }
 
     .right-container {
-      >div {
+      > div {
         margin-bottom: rem(60px);
 
         &:last-child {
