@@ -79,7 +79,7 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
         } = {
           page,
           limit: LIMIT_PAGE,
-          owner: is_orphan ? '0x00' : owner || undefined,
+          owner: owner || undefined,
           sort_by: sortBy || undefined,
           sort: sort || undefined,
         };
