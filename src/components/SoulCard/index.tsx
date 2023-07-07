@@ -16,6 +16,7 @@ import cs from 'classnames';
 import SonarWaveCircle from '../SonarWaveCircle';
 import CountdownText from '../CountdownText';
 import { CDN_URL, SOUL_CONTRACT } from '@/configs';
+import ImageWrapper from '../ImageWrapper';
 
 export interface IProps {
   href: string;
@@ -74,7 +75,7 @@ const SoulCard: React.FC<IProps> = ({
       )}
       <Card.Link href={href} as={Link} className={s.card_link}>
         <div className={s.card_image__container}>
-          <Card.Img variant="top" src={image} className={s.card_image} />
+          <ImageWrapper src={image} className={s.card_image} />
         </div>
         <Card.Body className={s.card_body}>
           <div className={s.hoverInfo}>
@@ -94,11 +95,11 @@ const SoulCard: React.FC<IProps> = ({
                   </div>
                   <div className={s.address}>
                     {user?.walletAddress?.toLowerCase() ===
-                    ownerAddr.toLowerCase()
+                      ownerAddr.toLowerCase()
                       ? 'You'
                       : ownerAddr.toLowerCase() === SOUL_CONTRACT.toLowerCase()
-                      ? 'Waiting for adoption…'
-                      : shortenAddress(ownerAddr)}
+                        ? 'Waiting for adoption…'
+                        : shortenAddress(ownerAddr)}
                   </div>
                 </div>
               )}
