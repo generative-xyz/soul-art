@@ -1,0 +1,137 @@
+.mobileMenu {
+  display: none;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  right: calc(-100% - 10px);
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  @include mobile {
+    display: block;
+  }
+
+  &.show {
+    right: 0;
+  }
+}
+
+.wrapper {
+  position: relative;
+  overflow-y: auto;
+}
+
+.menuHeader {
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: rem(12) rem(16);
+}
+
+.nbcLogo {
+  font-size: rem(20);
+  font-family: var(--sora-font);
+  font-weight: 700;
+  line-height: 20px;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.menuBody {
+  min-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: rem(32);
+  padding-left: rem(16);
+  padding-right: rem(16);
+}
+
+.menuItem {
+  padding-top: rem(32);
+  padding-bottom: rem(32);
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #ececec;
+  }
+}
+
+.menuLink {
+  color: #5b5b5b;
+  font-size: rem(16);
+  line-height: rem(20);
+  font-family: var(--sora-font);
+
+  &.gradientText {
+    background: conic-gradient(
+      from 168.15deg at 46.78% 60%,
+      #8f7dc2 0deg,
+      #00b2d9 135deg,
+      #9099fc 256.87deg,
+      #d87cee 360deg
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &.blackText {
+    color: #000;
+  }
+}
+
+.socialWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(20);
+}
+
+.socialLink {
+  width: rem(48);
+  height: rem(48);
+  border-radius: 50%;
+  background: #f6f6f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accordion {
+  * {
+    border: none !important;
+    outline: none !important;
+    background: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.accordionHeader {
+  :global(.accordion-button) {
+    padding: 0;
+    color: #000;
+    font-size: rem(16);
+    line-height: rem(20);
+    font-family: var(--sora-font);
+    background: none;
+
+    &::after {
+      background-image: var(--bs-accordion-btn-icon) !important;
+    }
+  }
+}
+
+.soulMenuItem {
+  padding: rem(16);
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}

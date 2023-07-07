@@ -38,6 +38,10 @@
   font-weight: 700;
   line-height: 20px;
 
+  @include mobile {
+    font-size: rem(20);
+  }
+
   &:hover {
     text-decoration: none;
   }
@@ -106,6 +110,14 @@
 
   @include mobile {
     display: none;
+  }
+
+  .hamburgerBtn {
+    display: none;
+
+    @include mobile {
+      display: inline-block;
+    }
   }
 }
 
@@ -473,5 +485,13 @@
     h5 {
       color: white;
     }
+  }
+}
+
+.hamburgerBtn {
+  display: none;
+
+  @include mobile {
+    display: inline-block;
   }
 }

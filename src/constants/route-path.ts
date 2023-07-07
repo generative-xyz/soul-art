@@ -14,7 +14,7 @@ export const ROUTE_PATH = {
   NBC_GAMEFI: 'https://newbitcoincity.com/gamefi',
   NBC_DEFI: 'https://newbitcoincity.com/defi',
   NBC_NFT: 'https://newbitcoincity.com/nfts',
-  NBC_BUILDER: 'https://trustless.computer',
+  NBC_BUILDER: 'https://newbitcoincity.com/builder',
   NBC_STORY: 'https://newbitcoincity.com/story',
   GM: '/souls/gm',
 };

@@ -24,6 +24,7 @@ import { Button, Dropdown } from 'react-bootstrap';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { useSelector } from 'react-redux';
 import SubHeader from '../SubHeader';
+import MobileMenu from './MobileMenu';
 import s from './styles.module.scss';
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -56,6 +57,15 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
   const { gmBalance, btcBalance, tcBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  const handleOpenMobileMenu = () => {
+    setShowMobileMenu(true);
+  }
+
+  const handleCloseMobileMenu = () => {
+    setShowMobileMenu(false);
+  }
 
   const handleConnectWallet = async () => {
     try {
@@ -140,22 +150,26 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                   GameFi
                 </a>
               </li>
-              <li className={s.menuItem}>
+              <li >
                 <a className={s.menuItem} href={ROUTE_PATH.NBC_DEFI}>
                   DeFi
                 </a>
               </li>
-              <li className={s.menuItem}>
+              <li >
                 <a className={s.menuItem} href={ROUTE_PATH.NBC_NFT}>
                   NFTs
                 </a>
               </li>
-              <li className={`${s.menuItem} ${s.textBlack}`}>GM & Souls</li>
-              {/* <li className={cs(s.menuItem, s.gradientText)}>
-                <a className={s.menuItem} href={ROUTE_PATH.NBC_BUILDER}>
+              <li >
+                <span className={`${s.menuItem} ${s.textBlack}`}>
+                  GM & Souls
+                </span>
+              </li>
+              <li >
+                <a className={cs(s.menuItem, s.gradientText)} href={ROUTE_PATH.NBC_BUILDER}>
                   Builder
                 </a>
-              </li> */}
+              </li>
             </ul>
           </div>
           <div className={s.rightContent}>
@@ -262,6 +276,18 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                 )}
               </li>
             </ul>
+            <Button className={s.hamburgerBtn} onClick={handleOpenMobileMenu}>
+              <IconSVG
+                src={theme === 'dark' ? `${CDN_URL}/ic-menu-right-w.svg` : `${CDN_URL}/ic-menu-right.svg`}
+                maxWidth={'24'}
+                maxHeight={'24'}
+              />
+            </Button>
+            <MobileMenu
+              theme={theme}
+              show={showMobileMenu}
+              handleClose={handleCloseMobileMenu}
+            />
           </div>
         </div>
         <div className={s.divider}></div>

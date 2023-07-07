@@ -1,13 +1,9 @@
 import { ROUTE_PATH } from '@/constants/route-path';
 import { useRouter } from 'next/router';
-import React, { PropsWithChildren, useContext } from 'react';
+import React, { PropsWithChildren } from 'react';
 import FeatureAlert from './FeatureAlert';
 import s from './layout.module.scss';
-// import Banner from './Banner';
-import { CLAIM_START_TIME } from '@/configs';
 import { LightboxProvider } from '@/contexts/Lightbox/lighbox-context';
-import { AssetsContext } from '@/contexts/assets-context';
-import useTimeComparison from '@/hooks/useTimeComparison';
 import cs from 'classnames';
 import HistoryAlert from './HistoryAlert';
 import NbcHeader from './NbcHeader';
@@ -19,10 +15,6 @@ const Layout: React.FC<PropsWithChildren> = ({
   children,
 }): React.ReactElement => {
   const router = useRouter();
-  const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
-  const { ownerTokenId } = useContext(AssetsContext);
-  const isEventStarted =
-    claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
 
   if (
     router.pathname &&
