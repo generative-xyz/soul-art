@@ -1,5 +1,7 @@
 .tabs {
   width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
 
   li {
     padding-right: rem(24px);

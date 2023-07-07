@@ -3,6 +3,10 @@
   height: calc(80vh - 202px);
   overflow-x: hidden;
   overflow-y: auto;
+
+  @include mobile {
+    height: auto;
+  }
 }
 
 .tabDescHead {

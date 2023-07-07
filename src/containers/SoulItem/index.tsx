@@ -61,13 +61,17 @@ const SoulItem = ({ data: soulDetail }: { data: ITokenDetail }) => {
     <div className={s.artDetail}>
       <Container>
         <Row className={s.row} id="soul-detail-main-section">
-          <Col lg={4} className={s.left_col}>
+          <Col xs={12} md={4} className={s.left_col}>
             <AuctionProvider>
               <AuctionInfo data={soulDetail} />
               <TabsComponent data={soulDetail} />
             </AuctionProvider>
           </Col>
-          <Col lg={8} className={s.right_col}>
+          <Col
+            md={{ span: 8, order: 'last' }}
+            xs={{ span: 12, order: 'first' }}
+            className={s.right_col}
+          >
             <DetailImg
               animationUrl={soulDetail.animationFileUrl}
               imgCapture={soulDetail?.imageCapture}

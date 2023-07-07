@@ -46,9 +46,7 @@ const SubHeader = ({ theme = 'light' }: { theme?: string }) => {
           </Fragment>
         ))}
       </div>
-      <div>
-        <Banner />
-      </div>
+      <Banner />
     </div>
   );
 };

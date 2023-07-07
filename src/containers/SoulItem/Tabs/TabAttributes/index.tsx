@@ -1,7 +1,6 @@
 import { ITokenAttributes } from '@/interfaces/token';
-import s from './style.module.scss';
 import { useEffect, useState } from 'react';
-import px2rem from '@/utils/px2rem';
+import s from './style.module.scss';
 
 const TabAttributes = ({ attributes }: { attributes: ITokenAttributes[] }) => {
   const [blockHeight, setBlockHeight] = useState(0);
@@ -10,7 +9,7 @@ const TabAttributes = ({ attributes }: { attributes: ITokenAttributes[] }) => {
     const mainSection = document.getElementById('soul-detail-main-section');
     // get height of main section
     if (mainSection) {
-      setBlockHeight(mainSection.offsetHeight - 202);
+      setBlockHeight(mainSection.offsetHeight - 100);
     }
   }, []);
 
@@ -18,7 +17,7 @@ const TabAttributes = ({ attributes }: { attributes: ITokenAttributes[] }) => {
     <div
       className={`${s.wrapper} small-scrollbar`}
       style={{
-        height: `${px2rem(blockHeight)}`,
+        height: `${blockHeight}px`,
       }}
     >
       {attributes.map((attr, index) => (

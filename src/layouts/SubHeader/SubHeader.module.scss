@@ -16,6 +16,10 @@
       text-decoration: none;
       opacity: 0.6;
     }
+
+    @media screen and (max-width: 767.98px) {
+      display: none;
+    }
   }
 
   &.dark {
@@ -23,5 +27,9 @@
     span {
       filter: invert(1);
     }
+  }
+
+  @media screen and (max-width: 767.98px) {
+    justify-content: center;
   }
 }
