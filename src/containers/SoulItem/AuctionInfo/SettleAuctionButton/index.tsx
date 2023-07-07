@@ -27,7 +27,7 @@ interface IProps {
 
 const SettleAuctionButton: React.FC<IProps> = ({
   tokenId,
-  title = 'Settle auction',
+  title = 'Complete adoption.',
   className,
 }: IProps): React.ReactElement => {
   const user = useSelector(getUserSelector);
@@ -114,7 +114,7 @@ const SettleAuctionButton: React.FC<IProps> = ({
     intervalRef.current = setInterval(() => {
       fetchTransactionStatus();
     }, 30000);
-  }
+  };
 
   useEffect(() => {
     createIntervalCheckStatus();
@@ -138,7 +138,7 @@ const SettleAuctionButton: React.FC<IProps> = ({
             <p className={s.highestBidTitle}>Adopter</p>
             <p className={s.winnerInfo}>
               {auction.highestBidder &&
-                auction.highestBidder !== ROOT_ADDRESS ? (
+              auction.highestBidder !== ROOT_ADDRESS ? (
                 <>
                   <Jazzicon
                     diameter={24}

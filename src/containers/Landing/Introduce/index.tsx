@@ -150,9 +150,7 @@ const Introduce: React.FC = () => {
                 )}
               >
                 <div className={s['introduceVideo']}>
-                  <h5 className={s['introduceVideo-title']}>
-                    View Adopted Souls
-                  </h5>
+                  <h5 className={s['introduceVideo-title']}>View Gallery</h5>
                   <div className={classNames(s['wrap-video'], s['wrap-pdf'])}>
                     <ImageFrame type={'small'}>
                       <Link href={ROUTE_PATH.GALLERY} className={s.content}>

@@ -19,9 +19,14 @@ const SubHeader = ({ theme = 'light' }: { theme?: string }) => {
       link: ROUTE_PATH.GM,
     },
     {
-      title: 'Orphanage',
-      link: `${ROUTE_PATH.GALLERY}?is_orphan=1`,
+      title: 'Gallery',
+      link: `${ROUTE_PATH.GALLERY}`,
     },
+    // TODO: uncomment when orphanage is ready
+    // {
+    //   title: 'Orphanage',
+    //   link: `${ROUTE_PATH.GALLERY}?is_orphan=1`,
+    // },
     {
       title: 'Your Soul',
       link: `${ROUTE_PATH.HOME}/${ownerTokenId}`,
