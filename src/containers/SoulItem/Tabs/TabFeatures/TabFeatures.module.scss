@@ -31,12 +31,7 @@
     flex: 1;
   }
 
-  @media screen and (max-width: 475px) {
+  @include smallMobile {
     flex-wrap: wrap;
   }
-
-  // p:nth-child(2) {
-  //   opacity: 0.6;
-  //   text-transform: uppercase;
-  // }
 }

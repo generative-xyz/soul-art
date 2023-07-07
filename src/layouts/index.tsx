@@ -39,11 +39,7 @@ const Layout: React.FC<PropsWithChildren> = ({
     <div className={s.container}>
       <NbcHeader />
 
-      <main
-        className={cs(s.main, {
-          [`${s.eventStarted}`]: isEventStarted && !Number(ownerTokenId),
-        })}
-      >
+      <main className={cs(s.main)}>
         {children}
       </main>
       <FeatureAlert />

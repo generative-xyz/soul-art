@@ -12,7 +12,7 @@
   width: rem(120px);
   white-space: nowrap;
 
-  @media screen and (max-width: 475px) {
+  @include smallMobile {
     width: 100%;
   }
 
