@@ -100,6 +100,7 @@ const Gm: React.FC = (): React.ReactElement => {
           <div className={s.videoInner}>
             <img
               src={`${CDN_URL}/video-thumbnail.png`}
+              alt='thumbnail'
             />
             <div
               className={s.playIconWrapper}

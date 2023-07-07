@@ -43,7 +43,6 @@ export interface IAssetsContext {
   feeRate: IFeeRate;
   availableFeatures: number[] | null;
   ownerTokenId?: string;
-  setAvailableFeatures: React.Dispatch<React.SetStateAction<number[] | null>>;
   historyAlerts: ISoulHistoryItem[] | null;
   avgBlockTime: number;
   gmToUnlockNextFeature: string;
@@ -62,9 +61,6 @@ const initialValue: IAssetsContext = {
   },
   availableFeatures: null,
   ownerTokenId: '',
-  setAvailableFeatures: () => {
-    return;
-  },
   historyAlerts: null,
   avgBlockTime: 0,
   gmToUnlockNextFeature: '0',
@@ -203,7 +199,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     return '0';
   }, [btcAddress, currentAssets]);
 
-  const fetchTCBalance = useCallback(async () => {
+  const fetchTcBalance = useCallback(async () => {
     if (user?.walletAddress && provider) {
       const balance = await provider.getBalance(user.walletAddress);
       setTcBalance(balance.toString());
@@ -236,23 +232,6 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     setAvgBlockTime(blockTime);
   }, []);
 
-  const fetchAssetsData = useCallback(() => {
-    fetchFeeRate();
-    fetchAvgBlockTime();
-    fetchTCBalance();
-    fetchGMBalance();
-    fetchGMDepositBalance();
-    fetchBtcAssets();
-    getAvailableAssetsCreateTx();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    fetchFeeRate,
-    fetchAvgBlockTime,
-    fetchTCBalance,
-    fetchBtcAssets,
-    getAvailableAssetsCreateTx,
-  ]);
-
   const fetchSoulHistory = useCallback(async () => {
     if (!ownerTokenId) return;
     try {
@@ -272,6 +251,23 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       logger.debug('failed to fetch user history');
     }
   }, [ownerTokenId, tcAddress]);
+
+  const fetchAssetsData = useCallback(() => {
+    fetchFeeRate();
+    fetchAvgBlockTime();
+    fetchTcBalance();
+    fetchGMBalance();
+    fetchGMDepositBalance();
+    fetchBtcAssets();
+    getAvailableAssetsCreateTx();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    fetchFeeRate,
+    fetchAvgBlockTime,
+    fetchTcBalance,
+    fetchBtcAssets,
+    getAvailableAssetsCreateTx,
+  ]);
 
   useEffect(() => {
     fetchAssetsData();
@@ -332,7 +328,7 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       const nextUnlockFeatureIndex = featuresStatus.findIndex((_, id) => {
         return (
           settingFeatures.balances[id] -
-            Number(formatEthPrice(totalGMBalance.toString())) >
+          Number(formatEthPrice(totalGMBalance.toString())) >
           0
         );
       });
@@ -365,7 +361,6 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       availableFeatures,
       ownerTokenId,
       avgBlockTime,
-      setAvailableFeatures,
       historyAlerts: histories,
       gmToUnlockNextFeature,
       nextUnlockFeatureId,
@@ -379,7 +374,6 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
     availableFeatures,
     ownerTokenId,
     avgBlockTime,
-    setAvailableFeatures,
     histories,
     gmToUnlockNextFeature,
     nextUnlockFeatureId,

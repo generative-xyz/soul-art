@@ -76,7 +76,7 @@ const useContractOperation = <P, R>(
         hash: Object(tx).hash,
         dappURL: window.location.href,
         isRedirect: true,
-        target: '_self',
+        target: '_blank',
         isMainnet: APP_ENV === 'production',
       });
 

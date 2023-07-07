@@ -85,7 +85,7 @@ const SoulCard: React.FC<IProps> = ({
                 <div className={s.owner}>
                   <div className={s.avatarWrapper}>
                     {ownerAddr.toLowerCase() === SOUL_CONTRACT.toLowerCase() ? (
-                      <img src={`${CDN_URL}/ic-question-owner.svg`} />
+                      <img src={`${CDN_URL}/ic-question-owner.svg`} alt='owner' />
                     ) : (
                       <Jazzicon
                         diameter={24}

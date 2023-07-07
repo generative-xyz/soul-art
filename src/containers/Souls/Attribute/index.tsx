@@ -87,7 +87,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
 
   const syncAttributesState = useMemo<boolean>(() => {
     return attributes.some(attr => router.query[attr.traitName]);
-  }, [attributes]);
+  }, [attributes, router]);
 
   const handleFilterOrphan = () => {
     router.push(

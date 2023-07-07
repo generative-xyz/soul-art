@@ -77,11 +77,11 @@ const AuctionInfo: React.FC<AuctionProps> = ({ data }) => {
       </div>
       <div className={s.content_warning}>
         {auction?.auctionStatus === AuctionStatus.INPROGRESS ||
-        auction?.auctionStatus === AuctionStatus.ENDED ||
-        data.owner.toLowerCase() === SOUL_CONTRACT.toLowerCase() ? (
+          auction?.auctionStatus === AuctionStatus.ENDED ||
+          data.owner.toLowerCase() === SOUL_CONTRACT.toLowerCase() ? (
           <>
             <div className={s.content_warning_iconUser}>
-              <img src={`${CDN_URL}/ic-question-owner.svg`} />
+              <img src={`${CDN_URL}/ic-question-owner.svg`} alt='owner ic' />
             </div>
             <div className={s.content_waitingOwner}>Waiting for adoption…</div>
           </>

@@ -30,6 +30,7 @@ import { ROUTE_PATH } from '@/constants/route-path';
 import * as TC_SDK from 'trustless-computer-sdk';
 import logger from '@/services/logger';
 import { APP_ENV } from '@/configs';
+import { showToastError } from '@/utils/toast';
 
 export interface IWalletContext {
   onDisconnect: () => Promise<void>;
@@ -48,7 +49,7 @@ export const WalletContext = React.createContext<IWalletContext>(initialValue);
 export const WalletProvider: React.FC<PropsWithChildren> = ({
   children,
 }: PropsWithChildren): React.ReactElement => {
-  const { connector, chainId } = useWeb3React();
+  const { connector, chainId, account } = useWeb3React();
   const dispatch = useAppDispatch();
   const user = useSelector(getUserSelector);
   const router = useRouter();
@@ -167,13 +168,23 @@ export const WalletProvider: React.FC<PropsWithChildren> = ({
       tcAddress: string;
       tpAddress: string;
     };
-    if (tpAddress) {
-      dispatch(updateTaprootWallet(tpAddress));
-      bitcoinStorage.setUserTaprootAddress(tcAddress, tpAddress);
-      const lastRoute = localStorage.getItem('route');
-      router.push(lastRoute || ROUTE_PATH.HOME);
+    if (!tpAddress || !tcAddress || !account) {
+      return;
     }
-  }, [router, dispatch]);
+
+    if (tcAddress.toLowerCase() !== account.toLowerCase()) {
+      showToastError({
+        message: "You are attempting to connect a different wallet you use at Trustless Wallet. Please switch to the correct wallet and try again."
+      });
+      disconnect();
+      return;
+    }
+
+    dispatch(updateTaprootWallet(tpAddress));
+    bitcoinStorage.setUserTaprootAddress(tcAddress, tpAddress);
+    const lastRoute = localStorage.getItem('route');
+    router.push(lastRoute || ROUTE_PATH.HOME);
+  }, [router, account, dispatch, disconnect]);
 
   const contextValues = useMemo((): IWalletContext => {
     return {

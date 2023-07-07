@@ -1,5 +1,5 @@
 import { ITokenDetail } from '@/interfaces/api/marketplace';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import s from './styles.module.scss';
 import Button from '@/components/Button';
 import useContractOperation from '@/hooks/contract-operations/useContractOperation';
@@ -33,6 +33,7 @@ const StartAuctionButton: React.FC<IProps> = ({
   });
   const { provider } = useWeb3React();
   const { fetchAuction, auction } = useContext(AuctionContext);
+  const intervalRef = useRef<NodeJS.Timer | null>(null);
 
   const onTxSuccessCallback = async (tx: Transaction | null): Promise<void> => {
     if (!tx || !user?.walletAddress) return;
@@ -63,6 +64,7 @@ const StartAuctionButton: React.FC<IProps> = ({
         tokenId: Number(data.tokenId),
         txSuccessCallback: onTxSuccessCallback,
       });
+      createIntervalCheckStatus();
     } catch (err: unknown) {
       logger.error(err);
       showToastError({
@@ -73,7 +75,7 @@ const StartAuctionButton: React.FC<IProps> = ({
     }
   };
 
-  useEffect(() => {
+  const createIntervalCheckStatus = () => {
     if (!user?.walletAddress || !provider) return;
 
     const key = toStorageKey(
@@ -85,7 +87,6 @@ const StartAuctionButton: React.FC<IProps> = ({
     if (!txHash) return;
 
     setInscribing(true);
-    let intervalId: NodeJS.Timer | null = null;
 
     const fetchTransactionStatus = async () => {
       try {
@@ -99,7 +100,7 @@ const StartAuctionButton: React.FC<IProps> = ({
             auction?.auctionStatus === AuctionStatus.INPROGRESS ||
             auction?.auctionStatus === AuctionStatus.ENDED
           ) {
-            intervalId && clearInterval(intervalId);
+            intervalRef.current && clearInterval(intervalRef.current);
             setInscribing(false);
             localStorage.removeItem(key);
           }
@@ -111,14 +112,18 @@ const StartAuctionButton: React.FC<IProps> = ({
 
     fetchTransactionStatus();
 
-    intervalId = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       fetchTransactionStatus();
     }, 60000);
+  }
+
+  useEffect(() => {
+    createIntervalCheckStatus();
 
     return () => {
-      intervalId && clearInterval(intervalId);
+      intervalRef.current && clearInterval(intervalRef.current);
     };
-  }, [user, provider, operationName, auction]);
+  }, [createIntervalCheckStatus]);
 
   return (
     <Button
