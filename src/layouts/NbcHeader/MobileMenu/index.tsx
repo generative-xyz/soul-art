@@ -34,7 +34,7 @@ const MobileMenu: React.FC<IProps> = ({
             />
           </Button>
         </div>
-        <div className={s.menuBody}>
+        <div className={cs(s.menuBody, 'disable-scrollbar')}>
           <ul className={s.menuList}>
             <li className={s.menuItem}>
               <a className={s.menuLink} href={ROUTE_PATH.NBC_GAMEFI}>

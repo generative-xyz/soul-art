@@ -46,7 +46,8 @@
 }
 
 .menuBody {
-  min-height: calc(100vh - 48px);
+  height: calc(100vh - 48px);
+  overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -56,9 +57,6 @@
 }
 
 .menuItem {
-  padding-top: rem(32);
-  padding-bottom: rem(32);
-
   &:not(:last-child) {
     border-bottom: 1px solid #ececec;
   }
@@ -69,6 +67,10 @@
   font-size: rem(16);
   line-height: rem(20);
   font-family: var(--sora-font);
+  padding-top: rem(32);
+  padding-bottom: rem(32);
+  display: block;
+  text-decoration: none !important;
 
   &.gradientText {
     background: conic-gradient(
@@ -92,6 +94,9 @@
   align-items: center;
   justify-content: center;
   gap: rem(20);
+  position: sticky;
+  bottom: 0;
+  left: 0;
 }
 
 .socialLink {
@@ -105,6 +110,9 @@
 }
 
 .accordion {
+  padding-top: rem(32);
+  padding-bottom: rem(32);
+
   * {
     border: none !important;
     outline: none !important;
@@ -130,9 +138,13 @@
 }
 
 .soulMenuItem {
-  padding: rem(16);
+  .menuLink {
+    padding: rem(16);
+  }
 
   &:last-child {
-    padding-bottom: 0;
+    .menuLink {
+      padding-bottom: rem(0);
+    }
   }
 }

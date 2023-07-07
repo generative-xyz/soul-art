@@ -118,6 +118,8 @@ const Gm: React.FC = (): React.ReactElement => {
               <IconSVG
                 src={`${CDN_URL}/ic-arrow-expand.svg`}
                 className={s.expandIcon}
+                maxHeight='24'
+                maxWidth='24'
               />
             </div>
             <video

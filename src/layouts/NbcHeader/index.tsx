@@ -19,7 +19,7 @@ import {
 import { useWeb3React } from '@web3-react/core';
 import cs from 'classnames';
 import copy from 'copy-to-clipboard';
-import React, { HTMLAttributes, forwardRef, useContext, useState } from 'react';
+import React, { HTMLAttributes, forwardRef, useContext, useEffect, useState } from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { useSelector } from 'react-redux';
@@ -135,6 +135,15 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
       </div>
     );
   };
+
+
+  useEffect(() => {
+    if (showMobileMenu) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [showMobileMenu]);
 
   return (
     <header className={cs(s.nbcHeader, theme ? s[theme] : '', 'dark')}>
