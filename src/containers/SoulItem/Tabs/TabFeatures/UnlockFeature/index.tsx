@@ -193,22 +193,12 @@ const UnlockFeature = ({
                 </OverlayTrigger>
               ) : (
                 <a href={GM_TOKEN_PAGE} target="_blank">
-                  Buy GM{' '}
+                  Get more GM{' '}
                 </a>
               )}
             </Button>
           ) : (
-            <Button
-              disabled={isEnoughGM}
-              className={cs(s.locked, s.unlock_btn)}
-            >
-              <IconSVG
-                src={`${CDN_URL}/ic-key.svg`}
-                maxWidth={'16'}
-                maxHeight={'16'}
-              />
-              Locked
-            </Button>
+            <></>
           )}
         </>
       );
@@ -233,7 +223,7 @@ const UnlockFeature = ({
                 maxWidth={'16'}
                 maxHeight={'16'}
               />
-              {processing || inscribing ? 'Processing...' : 'Unlock'}
+              {processing || inscribing ? 'Processing...' : 'Ready'}
             </Button>
           ) : (
             <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>
