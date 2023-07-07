@@ -31,9 +31,7 @@ const Layout: React.FC<PropsWithChildren> = ({
     <div className={s.container}>
       <NbcHeader />
 
-      <main className={cs(s.main)}>
-        {children}
-      </main>
+      <main className={cs(s.main)}>{children}</main>
       <FeatureAlert />
       <HistoryAlert />
     </div>

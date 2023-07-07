@@ -19,7 +19,10 @@ export interface ISettleAuctionParams {
   txSuccessCallback?: (_tx: Transaction | null) => Promise<void>;
 }
 
-const useSettleAuction: ContractOperationHook<ISettleAuctionParams, Transaction | null> = () => {
+const useSettleAuction: ContractOperationHook<
+  ISettleAuctionParams,
+  Transaction | null
+> = () => {
   const { account, provider } = useWeb3React();
   const contract = useContract(SOUL_CONTRACT, SoulAbiJson.abi, true);
   const { btcBalance, feeRate } = useContext(AssetsContext);
@@ -28,9 +31,7 @@ const useSettleAuction: ContractOperationHook<ISettleAuctionParams, Transaction 
     async (params: ISettleAuctionParams): Promise<string> => {
       if (account && provider && contract) {
         const { tokenId } = params;
-        const gasLimit = await contract.estimateGas.settleAuction(
-          tokenId
-        );
+        const gasLimit = await contract.estimateGas.settleAuction(tokenId);
         const gasLimitBN = new BigNumber(gasLimit.toString());
         const gasBuffer = gasLimitBN.times(1.1).decimalPlaces(0);
         logger.debug('Create auction estimate gas', gasBuffer.toString());
@@ -85,7 +86,7 @@ const useSettleAuction: ContractOperationHook<ISettleAuctionParams, Transaction 
     estimateGas: estimateGas,
     call: call,
     dAppType: DAppType.SOUL,
-    operationName: 'Settle Auction',
+    operationName: 'Complete adoption.',
   };
 };
 
