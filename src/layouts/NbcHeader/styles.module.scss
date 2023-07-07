@@ -48,7 +48,7 @@
   align-items: center;
   gap: rem(48px);
 
-  @media screen and (max-width: 767.98px) {
+  @include mobile {
     display: none;
   }
 }
@@ -104,7 +104,7 @@
   justify-content: flex-end;
   gap: rem(24px);
 
-  @media screen and (max-width: 767.98px) {
+  @include mobile {
     display: none;
   }
 }

@@ -4,6 +4,10 @@
   align-items: center;
   gap: rem(34px);
 
+  @include mobile {
+    display: none;
+  }
+
   .links {
     display: flex;
     align-items: center;
@@ -17,7 +21,7 @@
       opacity: 0.6;
     }
 
-    @media screen and (max-width: 767.98px) {
+    @include mobile {
       display: none;
     }
   }
@@ -29,7 +33,7 @@
     }
   }
 
-  @media screen and (max-width: 767.98px) {
+  @include mobile {
     justify-content: center;
   }
 }
