@@ -10,6 +10,10 @@
   align-items: center;
   justify-content: center;
   height: calc(100% - rem(76.8px));
+
+  @include mobile {
+    padding: rem(32) rem(16);
+  }
 }
 
 .mainContent {

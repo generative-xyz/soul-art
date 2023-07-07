@@ -117,7 +117,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     <div className={s.claimPage}>
       <Container className={s.container}>
         <Row className={s.row}>
-          <Col lg={{ span: 8, offset: 2 }} className={s.column}>
+          <Col lg={{ span: 8, offset: 2 }} xs={12} className={s.column}>
             <div className={`${s.wrapBox}`}>
               <h3 className={s.blockTitle}>GM Contributors</h3>
               <div

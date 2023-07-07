@@ -3,6 +3,10 @@
   padding-top: rem(20px);
   padding-bottom: rem(120px);
 
+  @include mobile {
+    padding-bottom: rem(60px);
+  }
+
   :global(.tab-content) {
     padding-top: rem(32px);
   }
@@ -18,6 +22,16 @@
   font-size: rem(40px);
   font-weight: 500;
   line-height: 140%;
+
+  @include mobile {
+    margin-bottom: rem(24px);
+    font-size: rem(32px);
+    text-align: left;
+  }
+}
+
+.dataList {
+  overflow-x: auto;
 }
 
 .tableData {
@@ -88,10 +102,20 @@
     color: #000;
   }
 
+  .dateWrapper {
+    @include mobile {
+      min-width: rem(200);
+    }
+  }
+
   .itemWrapper {
     display: flex;
     align-items: center;
     gap: rem(16px);
+
+    @include mobile {
+      min-width: rem(200);
+    }
 
     .thumbnail {
       width: rem(48px);

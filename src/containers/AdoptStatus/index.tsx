@@ -292,7 +292,7 @@ const AdoptStatus: React.FC = (): React.ReactElement => {
       <div className={s.adoptStatus}>
         <Container className={s.container}>
           <h1 className={s.sectionTitle}>Adoption Records</h1>
-          <div className={`small-scrollbar`}>
+          <div className={cs(`small-scrollbar`, s.dataList)}>
             <Table
               tableHead={[
                 'Item',
