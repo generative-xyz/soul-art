@@ -3,13 +3,25 @@
 
   .row {
     overflow: hidden;
+    @include mobile {
+      overflow: unset;
+    }
   }
 
   .left_col {
     max-height: 500px;
+
+    @include mobile {
+      max-height: unset;
+    }
   }
 
   .right_col {
     padding-left: rem(60px);
+
+    @include mobile {
+      padding-left: rem(20px);
+      margin-bottom: rem(70px);
+    }
   }
 }

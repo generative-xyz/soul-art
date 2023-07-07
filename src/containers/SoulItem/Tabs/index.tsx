@@ -72,7 +72,7 @@ const TabsComponent = ({
     <div className={s.wrapper}>
       <Tabs
         activeKey={defaultTab}
-        className={s.tabs}
+        className={`${s.tabs} small-scrollbar`}
         onSelect={key => {
           if (!key) return;
           setDefaultTab(key);

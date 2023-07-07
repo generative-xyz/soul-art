@@ -1,10 +1,6 @@
 .auctionInfo {
   margin-bottom: rem(32px);
 
-  @include mobile {
-    display: none;
-  }
-
   @include pcSmall {
     display: block;
   }

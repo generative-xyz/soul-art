@@ -8,7 +8,6 @@ import useAsyncEffect from 'use-async-effect';
 import FeatureInfo from './FeatureInfo';
 import s from './TabFeatures.module.scss';
 import UnlockFeature from './UnlockFeature';
-import px2rem from '@/utils/px2rem';
 
 const TabFeatures = ({
   owner,
@@ -79,8 +78,9 @@ const TabFeatures = ({
   useEffect(() => {
     const mainSection = document.getElementById('soul-detail-main-section');
     // get height of main section
+
     if (mainSection) {
-      setBlockHeight(mainSection.offsetHeight - 202);
+      setBlockHeight(mainSection.offsetHeight);
     }
   }, []);
 
@@ -88,7 +88,7 @@ const TabFeatures = ({
     <div
       className={`${s.wrapper} small-scrollbar`}
       style={{
-        height: `${px2rem(blockHeight)}`,
+        height: `${blockHeight}px`,
       }}
     >
       {!!featuresStatus &&
