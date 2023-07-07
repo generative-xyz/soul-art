@@ -4,6 +4,10 @@
   align-items: center;
   gap: rem(34px);
 
+  @include mobile {
+    display: none;
+  }
+
   .links {
     display: flex;
     align-items: center;
@@ -16,6 +20,10 @@
       text-decoration: none;
       opacity: 0.6;
     }
+
+    @include mobile {
+      display: none;
+    }
   }
 
   &.dark {
@@ -23,5 +31,9 @@
     span {
       filter: invert(1);
     }
+  }
+
+  @include mobile {
+    justify-content: center;
   }
 }

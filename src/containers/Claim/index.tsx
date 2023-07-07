@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import ClaimContent from './ClaimContent';
 import ClaimImg from './ClaimImg';
@@ -11,7 +11,6 @@ import { useWeb3React } from '@web3-react/core';
 import Discord from './Discord';
 import useMint from '@/hooks/contract-operations/soul/useMint';
 import { toStorageKey } from '@/utils';
-import useAsyncEffect from 'use-async-effect';
 import { getListTokensByWallet } from '@/services/soul';
 import ClaimButton from './ClaimButton';
 import { useSelector } from 'react-redux';
@@ -24,7 +23,6 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
   const router = useRouter();
   const { ownerTokenId } = useContext(AssetsContext);
-
   const [claimStatus, setClaimStatus] = useState<
     'idle' | 'waiting' | 'success'
   >('idle');
@@ -36,8 +34,10 @@ const ClaimPage: React.FC = (): React.ReactElement => {
   const claimingStartComparisonResult = useTimeComparison(CLAIM_START_TIME);
   const isEventStarted =
     claimingStartComparisonResult !== null && claimingStartComparisonResult > 0;
+  const txIntervalRef = useRef<NodeJS.Timer | null>(null);
+  const tokenIntervalRef = useRef<NodeJS.Timer | null>(null);
 
-  useAsyncEffect(async () => {
+  const fetchToken = useCallback(async () => {
     if (!user?.walletAddress) return;
 
     try {
@@ -54,18 +54,26 @@ const ClaimPage: React.FC = (): React.ReactElement => {
     } finally {
       setIsFetchingApi(false);
     }
-  }, [user?.walletAddress]);
+  }, [user?.walletAddress])
 
-  useEffect(() => {
+  const createIntervalCheckTokenStatus = useCallback(() => {
+    tokenIntervalRef.current = setInterval(() => {
+      logger.debug('tokenIntervalRef')
+      fetchToken();
+    }, 10000);
+  }, [fetchToken]);
+
+  const createIntervalCheckTxStatus = useCallback(() => {
+    txIntervalRef.current && clearInterval(txIntervalRef.current);
     if (!user?.walletAddress || !provider || isClaimed) return;
 
     const key = toStorageKey(operationName, user?.walletAddress);
-    const transactionHash = localStorage.getItem(key);
-    if (!transactionHash) return;
+    const txHash = localStorage.getItem(key);
+    if (!txHash) return;
 
     const fetchTransactionStatus = async () => {
       try {
-        const receipt = await provider.getTransactionReceipt(transactionHash);
+        const receipt = await provider.getTransactionReceipt(txHash);
 
         if (
           receipt?.status === null ||
@@ -74,6 +82,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
         ) {
           setIsClaimed(true);
           setClaimStatus('waiting');
+          createIntervalCheckTokenStatus();
         } else {
           setIsClaimed(false);
           setClaimStatus('idle');
@@ -85,26 +94,35 @@ const ClaimPage: React.FC = (): React.ReactElement => {
 
     fetchTransactionStatus();
 
-    const intervalId = setInterval(() => {
+    txIntervalRef.current = setInterval(() => {
+      logger.debug('txIntervalRef')
       fetchTransactionStatus();
-    }, 10000);
+    }, 60000);
+  }, [provider, user?.walletAddress, operationName, isClaimed, createIntervalCheckTokenStatus]);
+
+  useEffect(() => {
+    fetchToken();
+  }, [fetchToken]);
+
+  useEffect(() => {
+    createIntervalCheckTxStatus();
 
     return () => {
-      intervalId && clearInterval(intervalId);
+      txIntervalRef.current && clearInterval(txIntervalRef.current);
+      tokenIntervalRef.current && clearInterval(tokenIntervalRef.current);
     };
-  }, [provider, user?.walletAddress, operationName, isClaimed]);
+  }, []);
 
   return (
     <div className={s.claimPage}>
       <Container className={s.container}>
         <Row className={s.row}>
-          <Col lg={{ span: 8, offset: 2 }} className={s.column}>
+          <Col lg={{ span: 8, offset: 2 }} xs={12} className={s.column}>
             <div className={`${s.wrapBox}`}>
               <h3 className={s.blockTitle}>GM Contributors</h3>
               <div
-                className={`${s.claimBox} ${
-                  claimStatus === 'success' ? s.success : ''
-                }`}
+                className={`${s.claimBox} ${claimStatus === 'success' ? s.success : ''
+                  }`}
                 onClick={() => {
                   if (!!ownerTokenId) {
                     router.push(`${ROUTE_PATH.HOME}/${ownerTokenId}`);
@@ -122,7 +140,7 @@ const ClaimPage: React.FC = (): React.ReactElement => {
                   claimStatus={claimStatus}
                 />
                 {isEventStarted && claimStatus === 'idle' && (
-                  <ClaimButton isFetchingApi={isFetchingApi} />
+                  <ClaimButton isFetchingApi={isFetchingApi} afterMintSuccess={createIntervalCheckTxStatus} />
                 )}
               </div>
             </div>

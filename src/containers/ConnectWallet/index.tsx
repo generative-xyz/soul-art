@@ -36,7 +36,7 @@ const ConnectWallet: React.FC = (): React.ReactElement => {
       const lastRoute = localStorage.getItem('route');
       router.push(lastRoute || ROUTE_PATH.HOME);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   return (
     <Wrapper>

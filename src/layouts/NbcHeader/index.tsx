@@ -1,30 +1,31 @@
-import React, { HTMLAttributes, forwardRef, useContext, useState } from 'react';
-import s from './styles.module.scss';
-import { ROUTE_PATH } from '@/constants/route-path';
-import { CDN_URL, TC_URL } from '@/configs';
 import IconSVG from '@/components/IconSVG';
+import { CDN_URL, TC_URL } from '@/configs';
+import { DISCORD_URL, TWITTER_URL } from '@/constants/common';
+import { ROUTE_PATH } from '@/constants/route-path';
+import { AssetsContext } from '@/contexts/assets-context';
 import { WalletContext } from '@/contexts/wallet-context';
 import { DappsTabs } from '@/enums/tabs';
+import logger from '@/services/logger';
 import {
   getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
 import { formatEthPrice } from '@/utils/format';
+import { showToastError, showToastSuccess } from '@/utils/toast';
 import {
   formatBTCPrice,
   formatLongAddress,
 } from '@trustless-computer/dapp-core';
 import { useWeb3React } from '@web3-react/core';
-import { Dropdown, Button } from 'react-bootstrap';
+import cs from 'classnames';
+import copy from 'copy-to-clipboard';
+import React, { HTMLAttributes, forwardRef, useContext, useState } from 'react';
+import { Button, Dropdown } from 'react-bootstrap';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 import { useSelector } from 'react-redux';
-import cs from 'classnames';
-import { AssetsContext } from '@/contexts/assets-context';
-import { showToastError, showToastSuccess } from '@/utils/toast';
-import copy from 'copy-to-clipboard';
-import logger from '@/services/logger';
-import { DISCORD_URL } from '@/constants/common';
 import SubHeader from '../SubHeader';
+import MobileMenu from './MobileMenu';
+import s from './styles.module.scss';
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -56,6 +57,15 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
   const { gmBalance, btcBalance, tcBalance } = useContext(AssetsContext);
   const user = useSelector(getUserSelector);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  const handleOpenMobileMenu = () => {
+    setShowMobileMenu(true);
+  }
+
+  const handleCloseMobileMenu = () => {
+    setShowMobileMenu(false);
+  }
 
   const handleConnectWallet = async () => {
     try {
@@ -140,48 +150,52 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                   GameFi
                 </a>
               </li>
-              <li className={s.menuItem}>
+              <li >
                 <a className={s.menuItem} href={ROUTE_PATH.NBC_DEFI}>
                   DeFi
                 </a>
               </li>
-              <li className={s.menuItem}>
+              <li >
                 <a className={s.menuItem} href={ROUTE_PATH.NBC_NFT}>
                   NFTs
                 </a>
               </li>
-              <li className={`${s.menuItem} ${s.textBlack}`}>GM & Souls</li>
-              {/* <li className={cs(s.menuItem, s.gradientText)}>
-                <a className={s.menuItem} href={ROUTE_PATH.NBC_BUILDER}>
+              <li >
+                <span className={`${s.menuItem} ${s.textBlack}`}>
+                  GM & Souls
+                </span>
+              </li>
+              <li >
+                <a className={cs(s.menuItem, s.gradientText)} href={ROUTE_PATH.NBC_BUILDER}>
                   Builder
                 </a>
-              </li> */}
+              </li>
             </ul>
           </div>
           <div className={s.rightContent}>
             <ul className={s.rightMenu}>
-              <li >
+              <li>
                 <a href={ROUTE_PATH.NBC_STORY} className={s.menuItem}>
                   Our Story
                 </a>
               </li>
               <li>
-                <a href={DISCORD_URL}>
+                <a href={DISCORD_URL} className={s.menuItem}>
                   <IconSVG
                     src={`${CDN_URL}/ic-discord.svg`}
-                    maxWidth="20"
                     type="fill"
                     color={theme === 'dark' ? 'white' : 'black'}
+                    className={s.menuItem_icon}
                   ></IconSVG>
                 </a>
               </li>
               <li>
-                <a href={DISCORD_URL}>
+                <a href={TWITTER_URL} className={s.menuItem}>
                   <IconSVG
                     src={`${CDN_URL}/ic_twitter.svg`}
-                    maxWidth="20"
                     type="fill"
                     color={theme === 'dark' ? 'white' : 'black'}
+                    className={s.menuItem_icon}
                   ></IconSVG>
                 </a>
               </li>
@@ -262,6 +276,18 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                 )}
               </li>
             </ul>
+            <Button className={s.hamburgerBtn} onClick={handleOpenMobileMenu}>
+              <IconSVG
+                src={theme === 'dark' ? `${CDN_URL}/ic-menu-right-w.svg` : `${CDN_URL}/ic-menu-right.svg`}
+                maxWidth={'24'}
+                maxHeight={'24'}
+              />
+            </Button>
+            <MobileMenu
+              theme={theme}
+              show={showMobileMenu}
+              handleClose={handleCloseMobileMenu}
+            />
           </div>
         </div>
         <div className={s.divider}></div>

@@ -1,10 +1,15 @@
 .itemTechnique {
-    width: calc(100% / 3 - rem(12px));
+  width: calc(100% / 3 - rem(12px));
 
-    img {
-        width: 100%;
-        height: auto;
-        margin-bottom: rem(24px);
-        box-shadow: 0px 11.928147315979004px 29.82036590576172px 0px rgba(0, 0, 0, 0.08);
-    }
+  @include mobile {
+    width: 100%;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    margin-bottom: rem(24px);
+    box-shadow: 0px 11.928147315979004px 29.82036590576172px 0px
+      rgba(0, 0, 0, 0.08);
+  }
 }

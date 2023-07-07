@@ -3,7 +3,7 @@ import s from './style.module.scss';
 import { notiReceive } from '@/constants/asset';
 import { getUserSelector } from '@/state/user/selector';
 import { useSelector } from 'react-redux';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { WalletContext } from '@/contexts/wallet-context';
 import logger from '@/services/logger';
 import { showToastError } from '@/utils/toast';
@@ -18,10 +18,12 @@ import { toStorageKey } from '@/utils';
 
 interface IClaimButtonProps {
   isFetchingApi: boolean;
+  afterMintSuccess: () => void;
 }
 
 const ClaimButton: React.FC<IClaimButtonProps> = ({
   isFetchingApi,
+  afterMintSuccess,
 }): React.ReactElement => {
   const user = useSelector(getUserSelector);
   const { btcBalance, tcBalance } = useContext(AssetsContext);
@@ -70,6 +72,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
       });
       return;
     }
+
     if (minting) {
       return;
     }
@@ -82,6 +85,7 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
         signature: signature,
         txSuccessCallback: txSuccessCallback,
       });
+      afterMintSuccess();
     } catch (err: unknown) {
       logger.error(err);
       showToastError({
@@ -167,4 +171,4 @@ const ClaimButton: React.FC<IClaimButtonProps> = ({
   );
 };
 
-export default ClaimButton;
+export default React.memo(ClaimButton);

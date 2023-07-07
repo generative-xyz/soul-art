@@ -13,8 +13,8 @@
   position: relative;
   z-index: 1;
 
-  &.eventStarted {
-    padding-top: rem(180px);
+  @include mobile {
+    padding-top: rem(60);
   }
 
   > div {

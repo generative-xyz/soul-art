@@ -1,138 +1,181 @@
 .techLandingPage {
-    background: #F6F6F6;
-    padding-top: rem(170px);
-    padding-bottom: rem(169px);
+  background: #f6f6f6;
+  padding-top: rem(170px);
+  padding-bottom: rem(170px);
 
-    .wrapContent {
-        background: #fff;
-        border-radius: rem(40px);
-        box-shadow: 0px 0px 40px 4px rgba(0, 0, 0, 0.06);
-        padding: rem(80px) rem(150px) rem(156px) rem(150px);
-        margin-bottom: rem(60px);
+  @include mobile {
+    padding-bottom: rem(60px);
+  }
 
-        &_headline {
-            .headline_icon {
-                padding: rem(5px);
-                width: fit-content;
-                margin: 0 auto;
-                margin-bottom: rem(24px);
-            }
+  .wrapContent {
+    background: #fff;
+    border-radius: rem(40px);
+    box-shadow: 0px 0px 40px 4px rgba(0, 0, 0, 0.06);
+    padding: rem(80px) rem(150px) rem(156px) rem(150px);
+    margin-bottom: rem(60px);
 
-            .headline_title {
-                text-align: center;
-                margin-bottom: rem(60px);
-            }
-        }
-
-        &_content {
-            margin-bottom: rem(120px);
-
-            .content_desc {
-                text-align: center;
-                margin-bottom: rem(60px);
-
-                &:last-child {
-                    margin-bottom: 0;
-                }
-            }
-        }
-
-        &_bottom {
-            margin-top: rem(120px);
-
-            img {
-                width: 100%;
-                height: auto;
-            }
-
-            .bottomText {
-                text-align: center;
-                margin-top: rem(40px);
-            }
-        }
-
-        &_flex {
-            display: flex;
-            gap: rem(87px);
-
-            .leftContent {
-                flex: 1;
-
-                .content_desc {
-                    text-align: left;
-                }
-            }
-
-            .rightContent {
-                width: rem(537px);
-
-                img {
-                    width: 100%;
-                    height: auto;
-                }
-            }
-        }
+    @include mobile {
+      padding: rem(32) rem(16);
+      border-radius: rem(20px);
     }
 
-    .wrapContentBottom {
-        .imgMedium {
-            width: 100%;
-            padding: 0 rem(87px);
-            margin-bottom: rem(120px);
-
-            img {
-                width: 100%;
-                height: auto;
-            }
-        }
-
-        .imgFull {
-            width: 100%;
-            margin-bottom: rem(120px);
-
-            img {
-                width: 100%;
-                height: auto;
-            }
-        }
-
-        .text {
-            text-align: center;
-
-            &.mb_60 {
-                margin-bottom: rem(60px);
-            }
-
-            &.mb_32 {
-                margin-bottom: rem(32px);
-            }
-        }
-    }
-
-    .bottomButton {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-size: rem(14px);
-        font-weight: 500;
-        line-height: rem(18px);
-        gap: rem(8px);
-        padding: rem(8px) rem(12px);
-        background: #000;
-        color: #fff;
-        offset: 0px, 0px rgba(0, 0, 0, 0.12);
-        box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
-        border-radius: rem(24px);
+    &_headline {
+      .headline_icon {
+        padding: rem(5px);
         width: fit-content;
         margin: 0 auto;
-        transition: .3s all ease-in-out;
-        margin-top: rem(-12px);
+        margin-bottom: rem(24px);
+      }
 
-        &:hover {
-            background: #fff;
-            color: #000;
-            text-decoration: none;
+      .headline_title {
+        text-align: center;
+        margin-bottom: rem(60px);
+
+        @include mobile {
+          margin-bottom: rem(24px);
         }
+      }
     }
+
+    &_content {
+      margin-bottom: rem(120px);
+
+      @include mobile {
+        margin-bottom: rem(24px);
+      }
+
+      .content_desc {
+        text-align: center;
+        margin-bottom: rem(60px);
+
+        @include mobile {
+          margin-bottom: rem(24px);
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    &_bottom {
+      margin-top: rem(120px);
+
+      @include mobile {
+        margin-top: rem(60);
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+      .bottomText {
+        text-align: center;
+        margin-top: rem(40px);
+      }
+    }
+
+    &_flex {
+      display: flex;
+      gap: rem(80px);
+
+      @include mobile {
+        flex-direction: column;
+        gap: rem(24);
+      }
+
+      .leftContent {
+        flex: 1;
+
+        .content_desc {
+          text-align: left;
+        }
+      }
+
+      .rightContent {
+        max-width: 100%;
+        width: rem(538px);
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  .wrapContentBottom {
+    .imgMedium {
+      width: 100%;
+      padding: 0 rem(88px);
+      margin-bottom: rem(120px);
+
+      @include mobile {
+        margin-bottom: rem(60px);
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .imgFull {
+      width: 100%;
+      margin-bottom: rem(120px);
+
+      @include mobile {
+        margin-bottom: rem(60px);
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .text {
+      text-align: center;
+
+      @include mobile {
+        margin-bottom: rem(24px) !important;
+      }
+
+      &.mb_60 {
+        margin-bottom: rem(60px);
+      }
+
+      &.mb_32 {
+        margin-bottom: rem(32px);
+      }
+    }
+  }
+
+  .bottomButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: rem(14px);
+    font-weight: 500;
+    line-height: rem(18px);
+    gap: rem(8px);
+    padding: rem(8px) rem(12px);
+    background: #000;
+    color: #fff;
+    offset: 0px, 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 0px rem(16px) rem(-6px) rgba(0, 0, 0, 0.3);
+    border-radius: rem(24px);
+    width: fit-content;
+    margin: 0 auto;
+    transition: 0.3s all ease-in-out;
+    margin-top: rem(-12px);
+
+    &:hover {
+      background: #fff;
+      color: #000;
+      text-decoration: none;
+    }
+  }
 }

@@ -87,7 +87,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
 
   const syncAttributesState = useMemo<boolean>(() => {
     return attributes.some(attr => router.query[attr.traitName]);
-  }, [attributes]);
+  }, [attributes, router]);
 
   const handleFilterOrphan = () => {
     router.push(
@@ -152,7 +152,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
             )}
             onClick={handleGetAllTokens}
           >
-            Adopted Souls
+            Gallery
           </Button>
           <Button
             className={cs(
@@ -212,7 +212,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                   className={classNames(
                     attributeStyles.attribute_iconLive,
                     isEnabledAttributesFilter &&
-                    attributeStyles.attribute_iconLive_active
+                      attributeStyles.attribute_iconLive_active
                   )}
                 >
                   <div className={attributeStyles.dots_circle}></div>

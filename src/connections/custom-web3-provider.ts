@@ -49,39 +49,24 @@ class CustomWeb3Provider {
   }
 
   async calculateAverageBlockTime(): Promise<number> {
-    const latestBlockNumber = await this.web3.eth.getBlockNumber();
-    const numBlocksToAverage = 50;
-    let totalBlockTime = 0;
+    try {
+      const latestBlockNumber = await this.web3.eth.getBlockNumber();
+      const numBlocksToAverage = 1000;
 
-    const blockPromises = [];
-    for (
-      let i = latestBlockNumber;
-      i > latestBlockNumber - numBlocksToAverage;
-      i--
-    ) {
-      blockPromises.push(this.getBlock(i));
+      const blockPromises = [
+        this.getBlock(latestBlockNumber),
+        this.getBlock(latestBlockNumber - numBlocksToAverage),
+      ];
+
+      const blocks = await Promise.all(blockPromises);
+      const timeDelta = Number(blocks[0].timestamp) - Number(blocks[1].timestamp);
+
+      const averageBlockTime = timeDelta / numBlocksToAverage;
+      return averageBlockTime;
+    } catch (err: unknown) {
+      logger.error(err);
+      return 0;
     }
-
-    const blocks = await Promise.all(blockPromises);
-
-    for (let i = 1; i < blocks.length; i++) {
-      const block = blocks[i];
-      const previousBlock = blocks[i - 1];
-
-      if (
-        block &&
-        block.timestamp &&
-        previousBlock &&
-        previousBlock.timestamp
-      ) {
-        totalBlockTime += Math.abs(
-          (block.timestamp as number) - (previousBlock.timestamp as number)
-        );
-      }
-    }
-
-    const averageBlockTime = totalBlockTime / numBlocksToAverage;
-    return averageBlockTime;
   }
 
   async getErc20Balance(

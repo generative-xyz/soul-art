@@ -174,7 +174,7 @@
             }
           }
 
-          @include onlyMobile {
+          @include mobile {
             margin-top: rem(15px);
             padding-top: rem(15px);
           }
