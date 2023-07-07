@@ -83,6 +83,7 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
           sort_by: sortBy || undefined,
           sort: sort || undefined,
         };
+
         let attributesQuery;
 
         if (attributes) {
@@ -144,7 +145,7 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
     );
   }
 
-  if (souls && souls.length === 0) {
+  if (souls && souls.length === 0 && !isFetching) {
     if (!router.query.is_orphan) {
       return (
         <div className={s.emptyWrapper}>
