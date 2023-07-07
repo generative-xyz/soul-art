@@ -240,12 +240,17 @@
     // position: absolute;
     right: -4px;
     // transform: translateX(calc(100%));
+    display: none;
 
     .dots_circle {
       width: rem(8px);
       height: rem(8px);
       border-radius: 50%;
       background: #000;
+    }
+
+    @include min-tablet {
+      display: block;
     }
 
     &_active {
