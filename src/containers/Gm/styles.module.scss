@@ -1,8 +1,13 @@
 .gmPage {
   padding-top: rem(60);
+  padding-bottom: rem(60);
   color: #1c1c1c;
   background-color: #fff;
   font-family: var(--montserrat-alternates);
+
+  @include mobile {
+    padding-top: rem(24);
+  }
 
   .actionWrapper {
     margin-top: rem(32px);
@@ -11,6 +16,12 @@
     align-items: center;
     justify-content: center;
     gap: rem(32px);
+
+    @include mobile {
+      gap: rem(16);
+      margin-top: rem(32px);
+      margin-bottom: rem(32);
+    }
   }
 
   .submitBtn,
@@ -18,10 +29,18 @@
     font-style: normal;
     font-weight: 600;
     font-size: rem(20);
-    line-height: rem(26);
+    line-height: 1.4;
     min-height: rem(74);
     min-width: rem(384);
     border: 1px solid #1588ff;
+
+    @include mobile {
+      min-width: auto;
+      flex: 1;
+      min-height: rem(48);
+      font-size: rem(16);
+      padding: rem(16);
+    }
 
     &:hover {
       opacity: 0.8;
@@ -43,22 +62,22 @@
     }
   }
 
-  @include max-tablet {
-    padding-top: rem(30);
-  }
-
   p {
     color: #1c1c1c;
   }
 }
 
-.container {
+.mainWrapper {
   display: flex;
   flex-direction: column;
 
   .sectionBlock {
     &:global(#about-nbc) {
       margin-bottom: rem(80);
+
+      @include mobile {
+        margin-bottom: rem(0);
+      }
     }
   }
 
@@ -67,6 +86,11 @@
     display: flex;
     align-items: center;
     gap: rem(32);
+
+    @include mobile {
+      gap: rem(12);
+      flex-direction: column;
+    }
   }
 
   .button {
@@ -76,9 +100,11 @@
     line-height: rem(26);
     border: 1px solid #1588ff;
     color: #1588ff;
+    flex: 1;
+    padding: rem(12);
 
-    @include max-tablet {
-      width: calc(100% - rem(32));
+    @include mobile {
+      width: 100%;
     }
 
     &:hover {
@@ -89,28 +115,44 @@
 
   .heading {
     font-weight: 700;
-    font-size: rem(96);
-    line-height: rem(106);
-    margin-bottom: rem(16);
+    font-size: rem(64);
+    line-height: 1.4;
     letter-spacing: -0.03em;
+    margin-bottom: 0;
+    text-align: center;
 
-    @include max-tablet {
-      margin-bottom: rem(8);
-      line-height: 1.2;
+    @include mobile {
+      font-size: rem(48);
     }
   }
 
   .subHeading {
     font-weight: 500;
-    font-size: rem(32);
     line-height: 1.5;
     letter-spacing: -0.01em;
+    font-size: rem(24);
+    text-align: center;
+    margin-bottom: rem(24);
+
+    @include mobile {
+      margin-bottom: rem(16);
+      font-size: rem(18);
+    }
   }
 
   .headingText {
     font-weight: 500;
     font-size: rem(20);
-    line-height: 150%;
+    line-height: 1.5;
+    text-align: center;
+    max-width: rem(1100);
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mobile {
+      font-size: rem(16);
+      text-align: justify;
+    }
 
     &:not(:last-child) {
       margin-bottom: rem(16);
@@ -126,7 +168,7 @@
     font-style: normal;
     font-weight: 500;
     font-size: rem(24);
-    line-height: 150%;
+    line-height: 1.5;
     letter-spacing: -0.01em;
     color: #5b5b5b;
 
@@ -137,11 +179,21 @@
 
     &:not(:last-child) {
       margin-bottom: rem(32);
+    }
 
-      @include max-tablet {
-        margin-bottom: rem(16);
+    @include mobile {
+      font-size: rem(16);
+
+      &:not(:last-child) {
+        margin-bottom: rem(24);
       }
     }
+  }
+
+  .visualWrapper {
+    gap: rem(60);
+    padding-top: rem(80);
+    padding-bottom: rem(80);
   }
 
   .listTitle {
@@ -150,6 +202,10 @@
     letter-spacing: -0.01em;
     margin-bottom: rem(4);
     color: #5b5b5b;
+
+    @include mobile {
+      font-size: rem(16);
+    }
 
     b {
       color: #1c1c1c;
@@ -160,7 +216,7 @@
     padding-left: rem(28);
     margin-bottom: rem(32);
 
-    @include max-tablet {
+    @include mobile {
       margin-bottom: rem(16);
     }
   }
@@ -172,6 +228,10 @@
     letter-spacing: -0.01em;
     color: #5b5b5b;
 
+    @include mobile {
+      font-size: rem(16);
+    }
+
     &:before {
       content: '\2022';
       color: #5b5b5b;
@@ -181,56 +241,33 @@
       margin-left: -1em;
     }
   }
+
+  .bannerHeader {
+    background: #fff;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .headingImage {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+  }
 }
 
 .mainBannerBlock {
   margin-bottom: rem(80);
 
-  @include max-tablet {
+  @include mobile {
     margin-bottom: rem(0);
-  }
-
-  &__campaginStarted {
-    .bannerHeader {
-      background: #fff;
-      padding: 0;
-      margin-bottom: 0;
-    }
-
-    .visualWrapper {
-      gap: rem(60);
-      padding-top: rem(80);
-      padding-bottom: rem(80);
-    }
-
-    .heading {
-      font-size: rem(64);
-      margin-bottom: 0;
-      text-align: center;
-    }
-
-    .subHeading {
-      font-size: rem(24);
-      text-align: center;
-      margin-bottom: rem(24);
-    }
-
-    .headingText {
-      text-align: center;
-      max-width: rem(1100);
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .headingImage {
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
-      border-radius: 16px;
-    }
   }
 }
 
 .videoWrapper {
   margin-bottom: rem(160);
+
+  @include mobile {
+    margin-bottom: rem(48);
+  }
 }
 
 .videoInner {
@@ -241,6 +278,10 @@
   cursor: pointer;
   overflow: hidden;
   margin-inline: auto;
+
+  @include mobile {
+    border-radius: rem(12);
+  }
 }
 
 .video {
@@ -253,7 +294,7 @@
   z-index: -1;
 
   @include mobile {
-    border-radius: rem(20) !important;
+    border-radius: rem(12);
   }
 
   &__play {
@@ -265,6 +306,11 @@
   opacity: 0.8;
   width: rem(100);
   height: rem(100);
+
+  @include mobile {
+    width: rem(60);
+    height: rem(60);
+  }
 }
 
 .playIconWrapper {
