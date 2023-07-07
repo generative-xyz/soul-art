@@ -197,6 +197,7 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
   return (
     <>
       <div className={`${s.list} small-scrollbar`}>
+        <div className={s.mobileFilter_backdrop} id={'backdropFilter'}></div>
         <div className={`${s.art} small-scrollbar`} id="soul-list">
           <Container className={s.grid_container}>
             {souls &&

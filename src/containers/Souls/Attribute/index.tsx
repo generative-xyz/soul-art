@@ -8,7 +8,6 @@ import React, {
   useState,
 } from 'react';
 import { Dropdown } from 'react-bootstrap';
-
 import Button from '@/components/Button';
 import IconSVG from '@/components/IconSVG';
 import { CDN_URL } from '@/configs';
@@ -17,12 +16,13 @@ import {
   getIsAuthenticatedSelector,
   getUserSelector,
 } from '@/state/user/selector';
-import { default as classNames, default as cs } from 'classnames';
+import cs from 'classnames';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import AccordionComponent from './Accordion';
 import attributeStyles from './attribute.module.scss';
+import useWindowResize from '@/hooks/useWindowResize';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -55,10 +55,27 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   const [filterYourSoul, setFilterYourSoul] = useState(false);
   const user = useSelector(getUserSelector);
 
+  const isMobile = useWindowResize();
+  const [isShowMobile, setIsShowMobile] = useState<boolean>(false);
   const router = useRouter();
+
+  const isMobileCheck = useMemo((): boolean => {
+    return isMobile.isMobile;
+  }, [isMobile]);
 
   const [isEnabledAttributesFilter, setIsEnabledAttributesFilter] =
     useState(false);
+
+  const [activeItem, setActiveItem] = useState<string | null>(null);
+
+  const handleItemClick = (eventKey: string) => {
+    setActiveItem(eventKey);
+  };
+
+  const isActive = (eventKey: string) =>
+    activeItem === eventKey
+      ? attributeStyles.attribute_mobileRarity_itemChecked
+      : attributeStyles.attribute_mobileRarity_item;
 
   const handleSelect = (eventKey: string | null) => {
     setSelectedOption(eventKey);
@@ -101,11 +118,26 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
 
   const handleShowFilter = (show: boolean) => {
     const soulList = document.getElementById('soul-list') as HTMLDivElement;
+    const header = document.getElementById('header') as HTMLDivElement;
+    const backdropFilter = document.getElementById(
+      'backdropFilter'
+    ) as HTMLDivElement;
     if (!soulList) return;
     if (show) {
       soulList.style.pointerEvents = 'none';
+
+      setIsShowMobile(true);
     } else {
       soulList.style.pointerEvents = 'auto';
+      setIsShowMobile(false);
+    }
+
+    if (isMobileCheck && show) {
+      header.style.zIndex = '0';
+      backdropFilter.style.display = 'block';
+    } else {
+      backdropFilter.style.display = 'none';
+      header.style.zIndex = '7';
     }
   };
 
@@ -144,7 +176,11 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   return (
     <div className={attributeStyles.attribute_box}>
       <div className={attributeStyles.attribute_container}>
-        <div className={attributeStyles.attribute_leftContainer}>
+        <div
+          className={`${attributeStyles.attribute_leftContainer} ${
+            isMobileCheck && isShowMobile ? attributeStyles.isHide : ''
+          }`}
+        >
           <Button
             className={cs(
               attributeStyles.attribute_button,
@@ -164,7 +200,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
             Orphanage
           </Button>
         </div>
-        <div className={attributeStyles.attribute_rightContainer}>
+        <div className={`${attributeStyles.attribute_rightContainer}`}>
           <Dropdown onSelect={handleSelect}>
             <Dropdown.Toggle
               id="dropdown-basic"
@@ -201,15 +237,23 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
           <div className={attributeStyles.attribute_divide} />
           <Dropdown drop="up" onToggle={show => handleShowFilter(show)}>
             <Dropdown.Toggle as={FilterToggle} id="dropdown-custom-components">
-              <div className={attributeStyles.attribute_filter}>
-                <IconSVG
-                  src={`${CDN_URL}/ic-filter.svg`}
-                  maxWidth="15"
-                  maxHeight="10"
-                />
-                <p>Attributes</p>
+              <div className={`${attributeStyles.attribute_filter}`}>
+                {isMobileCheck && isShowMobile ? (
+                  <IconSVG
+                    src={`${CDN_URL}/close.svg`}
+                    maxWidth="20"
+                    maxHeight="20"
+                  />
+                ) : (
+                  <IconSVG
+                    src={`${CDN_URL}/ic-filter.svg`}
+                    maxWidth="15"
+                    maxHeight="10"
+                  />
+                )}
+                <p>{isMobileCheck && isShowMobile ? 'Close' : 'Attributes'}</p>
                 <div
-                  className={classNames(
+                  className={cs(
                     attributeStyles.attribute_iconLive,
                     isEnabledAttributesFilter &&
                       attributeStyles.attribute_iconLive_active
@@ -220,8 +264,32 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
               </div>
             </Dropdown.Toggle>
             <Dropdown.Menu
-              className={attributeStyles.filterAttribute_container}
+              className={`${attributeStyles.filterAttribute_container} small-scrollbar`}
             >
+              <Dropdown
+                className={attributeStyles.attribute_mobileRarity}
+                onSelect={handleSelect}
+              >
+                <p className={attributeStyles.attribute_mobileRarity_header}>
+                  Sort by
+                </p>
+                <Dropdown.Item
+                  className={`${isActive('Top Rarity')}`}
+                  eventKey="Top Rarity"
+                  onClick={() => handleItemClick('Top Rarity')}
+                >
+                  <span></span>
+                  Top Rarity
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className={`${isActive('Bottom Rarity')}`}
+                  eventKey="Bottom Rarity"
+                  onClick={() => handleItemClick('Bottom Rarity')}
+                >
+                  <span></span>
+                  Bottom Rarity
+                </Dropdown.Item>
+              </Dropdown>
               <p className={attributeStyles.filterAttribute_header}>
                 Attributes
               </p>
@@ -244,5 +312,5 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
     </div>
   );
 };
-
+// box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.08);
 export default memo(AttributeSort);
