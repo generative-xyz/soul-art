@@ -2,10 +2,6 @@
   min-height: 100vh;
   padding-top: rem(24);
 
-  @include mobile {
-    padding-top: 0;
-  }
-
   .container {
     height: 100%;
     position: relative;

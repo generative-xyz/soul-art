@@ -6,7 +6,7 @@ import s from './styles.module.scss';
 import { SyntheticEvent, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import IconSVG from '@/components/IconSVG';
-import RowContent from '@/components/RowContent';
+import RowContent from '@/containers/Gm/RowContent';
 import Button from '@/components/Button';
 import { GM_TOKEN_PAGE } from '@/constants/url';
 
@@ -42,17 +42,17 @@ const Gm: React.FC = (): React.ReactElement => {
   };
 
   return (
-    <div className={s.gmPage}>
+    <div className={`${s.gmPage} container`}>
       <div
-        className={cs(s.mainBannerBlock, s.mainBannerBlock__campaginStarted)}
+        className={cs(s.mainBannerBlock)}
         id={ABOUT_GM_ID}
         data-section={ABOUT_GM_ID}
       >
         <div className={s.bannerHeader}>
-          <div className={cs(s.container, 'container')}>
+          <div className={cs(s.mainWrapper)}>
             <h1 className={s.heading}>$GM</h1>
             <p className={s.subHeading}>
-              <b>The first smart contract on Bitcoin.</b>
+              <b>The first smart contract on Bitcoin</b>
             </p>
             <p className={s.headingText}>
               Ethereum’s heyday is over. Bitcoin is the new home for dapps and
@@ -95,7 +95,7 @@ const Gm: React.FC = (): React.ReactElement => {
         </div>
       </div>
 
-      <div className={cs(s.container, 'container')}>
+      <div className={cs(s.mainWrapper)}>
         <div className={s.videoWrapper}>
           <div className={s.videoInner}>
             <img
@@ -118,6 +118,8 @@ const Gm: React.FC = (): React.ReactElement => {
               <IconSVG
                 src={`${CDN_URL}/ic-arrow-expand.svg`}
                 className={s.expandIcon}
+                maxHeight='24'
+                maxWidth='24'
               />
             </div>
             <video
@@ -221,7 +223,7 @@ const Gm: React.FC = (): React.ReactElement => {
       </div>
 
       <div className={s.grayBg}>
-        <div className={cs(s.container, 'container')}>
+        <div className={cs(s.mainWrapper)}>
           <RowContent
             className={cs(s.sectionBlock)}
             id={TOKENMICS_ID}

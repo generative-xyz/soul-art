@@ -17,6 +17,7 @@ import cs from 'classnames';
 import { Transaction } from 'ethers';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import s from './UnlockFeature.module.scss';
 
@@ -49,6 +50,7 @@ const UnlockFeature = ({
   const [processing, setProcessing] = useState(false);
   const [inscribing, setInscribing] = useState(false);
   const [isEnoughGM, setIsEnoughGM] = useState(false);
+  const [blocksLeftToUnlock, setBlocksLeftToUnlock] = useState(0);
 
   const { run: unlockFeature } = useContractOperation({
     operation: useUnlockFeature,
@@ -144,6 +146,10 @@ const UnlockFeature = ({
         Number(formatEthPrice(totalGMBalance.toString())) > balances[index] &&
         tokenBlocksExist < holdTimes[index];
       setIsEnoughGM(enoughGmToUnlock);
+      const blocksLeft = holdTimes[index] - tokenBlocksExist;
+      if (blocksLeft > 0) {
+        setBlocksLeftToUnlock(blocksLeft);
+      }
     }
   }, [unlockConditions, gmBalance, gmDepositBalance, tokenBlocksExist, index]);
 
@@ -153,22 +159,46 @@ const UnlockFeature = ({
         <>
           {isOwner ? (
             <Button
-              className={cs(s.unlock_btn, s.buy_btn)}
-              disabled={isEnoughGM}
+              className={cs(s.unlock_btn, s.buy_btn, {
+                [s.blocks_wait]: isEnoughGM,
+              })}
             >
-              <a href={GM_TOKEN_PAGE} target="_blank">
-                {isEnoughGM ? 'Locked' : ' Buy GM'}
-              </a>
+              {isEnoughGM ? (
+                <OverlayTrigger
+                  overlay={
+                    <Tooltip
+                      id={'warning-gm'}
+                      className={cs(s.tooltip_body, s.auction_wallet_tooltip)}
+                    >
+                      <div className={s.auction_tooltip_content}>
+                        <p>
+                          Simply be with your Soul in {blocksLeftToUnlock} more
+                          blocks to unlock this effect.
+                        </p>
+                      </div>
+                    </Tooltip>
+                  }
+                  placement="bottom"
+                >
+                  <div className={s.blocks_wait_inner}>
+                    {blocksLeftToUnlock} blocks to go
+                    <IconSVG
+                      src={`${CDN_URL}/ic_round-info.svg`}
+                      maxWidth="16"
+                      maxHeight="16"
+                      color={'black'}
+                      type="fill"
+                    ></IconSVG>
+                  </div>
+                </OverlayTrigger>
+              ) : (
+                <a href={GM_TOKEN_PAGE} target="_blank">
+                  Get more GM{' '}
+                </a>
+              )}
             </Button>
           ) : (
-            <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>
-              <IconSVG
-                src={`${CDN_URL}/ic-key.svg`}
-                maxWidth={'16'}
-                maxHeight={'16'}
-              />
-              Locked
-            </Button>
+            <></>
           )}
         </>
       );
@@ -193,7 +223,7 @@ const UnlockFeature = ({
                 maxWidth={'16'}
                 maxHeight={'16'}
               />
-              {processing || inscribing ? 'Processing...' : 'Unlock'}
+              {processing || inscribing ? 'Processing...' : 'Ready'}
             </Button>
           ) : (
             <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>

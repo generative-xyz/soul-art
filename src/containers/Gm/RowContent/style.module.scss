@@ -4,8 +4,8 @@
   align-items: center;
   gap: rem(60);
 
-  @include tablet {
-    gap: rem(30);
+  @include mobile {
+    gap: rem(24);
     grid-template-columns: 1fr !important;
     flex-direction: column;
   }
@@ -13,8 +13,8 @@
   &_left {
     margin-bottom: rem(16px);
 
-    @include min-tablet {
-      margin-bottom: rem(32);
+    @include mobile {
+      margin-bottom: rem(0);
     }
 
     &_inner {
@@ -42,9 +42,14 @@
 
   .heading {
     font-size: rem(56);
-    line-height: rem(66);
+    line-height: 1.4;
     margin-bottom: rem(32);
     font-weight: 700;
+
+    @include mobile {
+      font-size: rem(24);
+      margin-bottom: rem(16);
+    }
   }
 
   &.isRight {

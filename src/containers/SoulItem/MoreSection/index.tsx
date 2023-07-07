@@ -17,13 +17,13 @@ const MoreSection: FC<MoreSectionProps> = ({ soulItems }) => {
   return (
     <Container className={moreSectionStyles.container}>
       <h4 className={moreSectionStyles.heading}>
-        More from this collection
+        Meet more Souls
         <Button className={moreSectionStyles.button}>
           <Link
             href={`${ROUTE_PATH.GALLERY}`}
             className={moreSectionStyles.link}
           >
-            View all art
+            View Gallery
             <IconSVG
               src={`${CDN_URL}/bannerArrow.svg`}
               maxWidth="12"

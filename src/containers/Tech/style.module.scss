@@ -4,6 +4,7 @@
   padding-bottom: rem(170px);
 
   @include mobile {
+    padding-top: rem(84px);
     padding-bottom: rem(60px);
   }
 
