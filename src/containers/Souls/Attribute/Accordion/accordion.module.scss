@@ -2,7 +2,7 @@
   &_item {
     border: none;
 
-    h2 > button {
+    h2>button {
       background: none !important;
       padding: 0;
       outline: none;
@@ -33,25 +33,42 @@
 
 .filterAttribute {
   &_accordionHeader {
-    font-size: rem(16px);
+    font-size: rem(14px);
 
     :global(.accordion-button:not(.collapsed)) {
       box-shadow: none !important;
+    }
+
+    @include min-tablet {
+      font-size: rem(16px);
     }
   }
 
   &_title {
     color: #000;
-    font-size: 16px;
+    font-size: rem(14px);
     line-height: 140%;
     padding-left: 0;
+
     // margin-bottom: 5px;
+    @include min-tablet {
+      font-size: rem(16px);
+    }
   }
 
   &_content {
     font-size: rem(14px);
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: rem(12px);
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: rem(16px);
+
+    @include min-tablet {
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: rem(12px)
+    }
+
+    @include pcMid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 }

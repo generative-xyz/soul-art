@@ -61,11 +61,11 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
 
   const handleOpenMobileMenu = () => {
     setShowMobileMenu(true);
-  }
+  };
 
   const handleCloseMobileMenu = () => {
     setShowMobileMenu(false);
-  }
+  };
 
   const handleConnectWallet = async () => {
     try {
@@ -146,7 +146,10 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
   }, [showMobileMenu]);
 
   return (
-    <header className={cs(s.nbcHeader, theme ? s[theme] : '', 'dark')}>
+    <header
+      className={cs(s.nbcHeader, theme ? s[theme] : '', 'dark')}
+      id={'header'}
+    >
       <div className="container">
         <div className={s.wrapper}>
           <div className={s.leftContent}>
@@ -159,23 +162,26 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                   GameFi
                 </a>
               </li>
-              <li >
+              <li>
                 <a className={s.menuItem} href={ROUTE_PATH.NBC_DEFI}>
                   DeFi
                 </a>
               </li>
-              <li >
+              <li>
                 <a className={s.menuItem} href={ROUTE_PATH.NBC_NFT}>
                   NFTs
                 </a>
               </li>
-              <li >
+              <li>
                 <span className={`${s.menuItem} ${s.textBlack}`}>
                   GM & Souls
                 </span>
               </li>
-              <li >
-                <a className={cs(s.menuItem, s.gradientText)} href={ROUTE_PATH.NBC_BUILDER}>
+              <li>
+                <a
+                  className={cs(s.menuItem, s.gradientText)}
+                  href={ROUTE_PATH.NBC_BUILDER}
+                >
                   Builder
                 </a>
               </li>
@@ -287,7 +293,11 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
             </ul>
             <Button className={s.hamburgerBtn} onClick={handleOpenMobileMenu}>
               <IconSVG
-                src={theme === 'dark' ? `${CDN_URL}/ic-menu-right-w.svg` : `${CDN_URL}/ic-menu-right.svg`}
+                src={
+                  theme === 'dark'
+                    ? `${CDN_URL}/ic-menu-right-w.svg`
+                    : `${CDN_URL}/ic-menu-right.svg`
+                }
                 maxWidth={'24'}
                 maxHeight={'24'}
               />

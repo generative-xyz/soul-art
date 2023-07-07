@@ -32,6 +32,17 @@
   }
 }
 
+.mobileFilter_backdrop {
+  width: 100vw;
+  height: 100vh;
+  background: rgba($color: #000000, $alpha: .95);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 8;
+  display: none;
+}
+
 .emptyWrapper {
   width: 100vw;
   display: grid;

@@ -65,6 +65,7 @@ const ArtLandingPage = () => {
   return (
     <div className={s.artLandingPage}>
       <NbcHeader />
+      <div className={s.mobileFilter_backdrop}></div>
       <Container className={s.container}>
         <Col className={s.column} lg={{ span: 10, offset: 1 }}>
           <div className={s.wrapContent}>
