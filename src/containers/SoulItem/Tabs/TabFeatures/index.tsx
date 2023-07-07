@@ -2,12 +2,13 @@ import web3Instance from '@/connections/custom-web3-provider';
 import logger from '@/services/logger';
 import { getUserSelector } from '@/state/user/selector';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useAsyncEffect from 'use-async-effect';
 import FeatureInfo from './FeatureInfo';
 import s from './TabFeatures.module.scss';
 import UnlockFeature from './UnlockFeature';
+import { AssetsContext } from '@/contexts/assets-context';
 
 const TabFeatures = ({
   owner,
@@ -18,6 +19,7 @@ const TabFeatures = ({
 }) => {
   const router = useRouter();
   const user = useSelector(getUserSelector);
+  const { nextUnlockFeatureId } = useContext(AssetsContext);
 
   const [tokenBlocksExist, setTokenBlocksExist] = useState(0);
   const [blockHeight, setBlockHeight] = useState(0);
@@ -96,10 +98,12 @@ const TabFeatures = ({
         settingFeatures.length > 0 &&
         settingFeatures.map((feat, index) => (
           <div
-            className={s.feature_wrapper}
+            className={`${s.feature_wrapper} ${
+              isOwner && nextUnlockFeatureId === index ? 'animationBorder' : ''
+            }`}
             key={`${feat}-${index}-${tokenId}`}
           >
-            <div className={s.feature_list}>
+            <div className={`${s.feature_list}`}>
               <FeatureInfo
                 feat={feat}
                 tokenBlocksExist={tokenBlocksExist}

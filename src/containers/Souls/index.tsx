@@ -9,7 +9,7 @@ import { IAttribute } from '@/interfaces/attributes';
 import { getCollectionNFTList } from '@/services/marketplace';
 import { getSoulAttributes } from '@/services/soul';
 import cs from 'classnames';
-import _, { debounce, pick } from 'lodash';
+import { debounce, pick } from 'lodash';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -113,6 +113,8 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
 
         if (isFetchMore) {
           setSouls(prev => [...prev, ...data.items]);
+          // setSouls(prev => uniqBy([...prev, ...data.items], 'tokenId'));
+
           // setSouls([]);
         } else {
           setSouls(data.items);
@@ -136,6 +138,11 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
       fetchSouls();
     }
   }, [isFetchSuccessAttributes, fetchSouls, attributes]);
+
+  useEffect(() => {
+    setHasMore(true);
+    setSouls([]);
+  }, [router.query]);
 
   if (initialLoading) {
     return (
