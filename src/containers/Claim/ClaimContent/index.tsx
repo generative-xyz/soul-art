@@ -38,7 +38,7 @@ const ClaimContent: React.FC<IClaimContentProps> = ({
       <div className={s.claimContent_top}>
         <div className={s.claimContent_header}>
           <p className={`${s.claimContent_title} ${isClaimed ? s.true : ''}`}>
-            Souls {!!ownerTokenId && `#${ownerTokenId}`}
+            Soul {!!ownerTokenId && `#${ownerTokenId}`}
           </p>
           {!isEventStarted && (
             <div className={s.claimContent_countdownWrapper}>
