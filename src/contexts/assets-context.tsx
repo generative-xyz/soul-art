@@ -325,11 +325,11 @@ export const AssetsProvider: React.FC<PropsWithChildren> = ({
       );
 
       // check in featureLockedIndexes if item balance is greater than total GM balance
-      const nextUnlockFeatureIndex = featuresStatus.findIndex((_, id) => {
+      const nextUnlockFeatureIndex = featuresStatus.findIndex((status, id) => {
         return (
           settingFeatures.balances[id] -
-          Number(formatEthPrice(totalGMBalance.toString())) >
-          0
+            Number(formatEthPrice(totalGMBalance.toString())) >
+            0 && status === FeatureStatus['Locked']
         );
       });
 
