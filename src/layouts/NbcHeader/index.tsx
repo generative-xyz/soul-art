@@ -182,7 +182,7 @@ const NbcHeader: React.FC<IProps> = ({ theme }: IProps): React.ReactElement => {
                   className={cs(s.menuItem, s.gradientText)}
                   href={ROUTE_PATH.NBC_BUILDER}
                 >
-                  Builder
+                  Builders
                 </a>
               </li>
             </ul>
