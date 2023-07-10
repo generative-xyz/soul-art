@@ -33,6 +33,10 @@
     padding-right: 0;
   }
 
+  &:global(.nav-tabs) {
+    // border-bottom: none;
+  }
+
   :global(.nav-link) {
     display: block;
     border: none;

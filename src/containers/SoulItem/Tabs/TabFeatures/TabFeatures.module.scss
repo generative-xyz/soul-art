@@ -32,8 +32,10 @@
   overflow: hidden;
   gap: rem(18px);
 
-  > div:nth-of-type(2) {
-    flex: 1;
+  @include smallMobile {
+    > div:nth-of-type(2) {
+      flex: 1;
+    }
   }
 
   @include smallMobile {
