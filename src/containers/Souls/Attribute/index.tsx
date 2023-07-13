@@ -79,13 +79,23 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
 
   const handleSelect = (eventKey: string | null) => {
     setSelectedOption(eventKey);
-    router.push(
-      {
-        query: { sortBy: 'rarity', sort: eventKey === 'Top Rarity' ? -1 : 1 },
-      },
-      undefined,
-      { shallow: true }
-    );
+    if (eventKey === 'Newest') {
+      router.push(
+        {
+          query: {},
+        },
+        undefined,
+        { shallow: true }
+      );
+    } else {
+      router.push(
+        {
+          query: { sortBy: 'rarity', sort: eventKey === 'Top Rarity' ? -1 : 1 },
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
   };
 
   const handleOnSubmit = useCallback((submitVal: ISubmitValues) => {
@@ -211,7 +221,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
               <div className={attributeStyles.attribute_top_rarity}>
                 <p>Sort By:</p>
                 &nbsp;
-                {selectedOption ? selectedOption : 'Top Rarity'}
+                {selectedOption ? selectedOption : 'Newest'}
                 <div className={attributeStyles.attribute_chevronUp}>
                   <IconSVG src={`${CDN_URL}/ic-dropdown.svg`} maxWidth={'10'} />
                 </div>
@@ -220,6 +230,12 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
             <Dropdown.Menu
               className={attributeStyles.attribute_rarity_container}
             >
+              <Dropdown.Item
+                className={attributeStyles.attribute_rarity_option}
+                eventKey="Newest"
+              >
+                Newest
+              </Dropdown.Item>
               <Dropdown.Item
                 className={attributeStyles.attribute_rarity_option}
                 eventKey="Top Rarity"

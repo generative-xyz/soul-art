@@ -30,7 +30,7 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
     const routerAttributesVal = router.query[traitName];
     let attributesArray: string[] = [];
     if (typeof routerAttributesVal === 'string') {
-      attributesArray = routerAttributesVal.split(',');
+      attributesArray = routerAttributesVal.split('|');
     }
 
     if (attributesArray?.includes(title)) {
@@ -52,7 +52,7 @@ const AccordionCheckBox: FC<AccordionCheckboxProps> = ({
 
     const queries = {
       ...router.query,
-      [traitName]: attributesArray.toString(),
+      [traitName]: attributesArray.join('|'),
     };
 
     attributesArray = attributesArray.filter(attribute => attribute !== '');
