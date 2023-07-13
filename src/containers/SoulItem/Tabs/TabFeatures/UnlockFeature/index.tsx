@@ -223,7 +223,7 @@ const UnlockFeature = ({
                 maxWidth={'16'}
                 maxHeight={'16'}
               />
-              {processing || inscribing ? 'Processing...' : 'Ready'}
+              {processing || inscribing ? 'Processing...' : 'Reveal'}
             </Button>
           ) : (
             <Button disabled={true} className={cs(s.locked, s.unlock_btn)}>

@@ -51,7 +51,7 @@ export interface ISubmitValues {
 
 const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>('Newest');
   const [filterYourSoul, setFilterYourSoul] = useState(false);
   const user = useSelector(getUserSelector);
 
@@ -66,7 +66,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   const [isEnabledAttributesFilter, setIsEnabledAttributesFilter] =
     useState(false);
 
-  const [activeItem, setActiveItem] = useState<string | null>(null);
+  const [activeItem, setActiveItem] = useState<string | null>('Newest');
 
   const handleItemClick = (eventKey: string) => {
     setActiveItem(eventKey);
@@ -79,10 +79,18 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
 
   const handleSelect = (eventKey: string | null) => {
     setSelectedOption(eventKey);
-    if (eventKey === 'Newest') {
+    if (eventKey === '' || eventKey === 'Newest') {
       router.push(
         {
           query: {},
+        },
+        undefined,
+        { shallow: true }
+      );
+    } else if (eventKey === 'Highest GM Balance') {
+      router.push(
+        {
+          query: { sortBy: 'soul_balance_of', sort: -1 },
         },
         undefined,
         { shallow: true }
@@ -223,7 +231,11 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 &nbsp;
                 {selectedOption ? selectedOption : 'Newest'}
                 <div className={attributeStyles.attribute_chevronUp}>
-                  <IconSVG src={`${CDN_URL}/ic-dropdown.svg`} maxWidth={'10'} />
+                  <IconSVG
+                    src={`${CDN_URL}/ic-dropdown.svg`}
+                    maxWidth={'10'}
+                    maxHeight={'10'}
+                  />
                 </div>
               </div>
             </Dropdown.Toggle>
@@ -247,6 +259,12 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 eventKey="Bottom Rarity"
               >
                 Bottom Rarity
+              </Dropdown.Item>
+              <Dropdown.Item
+                className={attributeStyles.attribute_rarity_option}
+                eventKey="Highest GM Balance"
+              >
+                Highest GM Balance
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -290,6 +308,14 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                   Sort by
                 </p>
                 <Dropdown.Item
+                  className={`${isActive('Newest')}`}
+                  eventKey="Newest"
+                  onClick={() => handleItemClick('Newest')}
+                >
+                  <span></span>
+                  Newest
+                </Dropdown.Item>
+                <Dropdown.Item
                   className={`${isActive('Top Rarity')}`}
                   eventKey="Top Rarity"
                   onClick={() => handleItemClick('Top Rarity')}
@@ -304,6 +330,14 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 >
                   <span></span>
                   Bottom Rarity
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className={`${isActive(' Highest GM Balance')}`}
+                  eventKey=" Highest GM Balance"
+                  onClick={() => handleItemClick(' Highest GM Balance')}
+                >
+                  <span></span>
+                  Highest GM Balance
                 </Dropdown.Item>
               </Dropdown>
               <p className={attributeStyles.filterAttribute_header}>

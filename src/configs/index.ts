@@ -20,6 +20,7 @@ export const BLOCKSTREAM_URL = process.env.NEXT_PUBLIC_BLOCKSTREAM_URL!;
 
 // Event
 export const CLAIM_START_TIME = '2023-07-06 14:00:00';
-export const BUY_GM_URL = 'https://newbitcoindex.com/token?address=0x2fe8d5A64afFc1d703aECa8a566f5e9FaeE0C003'
+export const BUY_GM_URL =
+  'https://newbitcoindex.com/swap/tc?from_token=0x74B033e56434845E02c9bc4F0caC75438033b00D&to_token=0x2fe8d5A64afFc1d703aECa8a566f5e9FaeE0C003';
 
 /* eslint-enable @typescript-eslint/no-non-null-assertion */

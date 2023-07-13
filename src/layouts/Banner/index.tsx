@@ -1,12 +1,12 @@
 import Button from '@/components/Button';
+import { BUY_GM_URL } from '@/configs';
 import { Feature } from '@/constants/feature';
 import { ROUTE_PATH } from '@/constants/route-path';
-import { GM_TOKEN_PAGE } from '@/constants/url';
 import { AssetsContext } from '@/contexts/assets-context';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import s from './style.module.scss';
-import { useRouter } from 'next/router';
 
 const Banner: React.FC = (): React.ReactElement => {
   const { ownerTokenId, gmToUnlockNextFeature, nextUnlockFeatureId } =
@@ -32,7 +32,7 @@ const Banner: React.FC = (): React.ReactElement => {
       </p>
       <Button borderRadius="100px" className={s.bannerButton}>
         <Link
-          href={ownerTokenId ? GM_TOKEN_PAGE : ROUTE_PATH.CLAIM}
+          href={ownerTokenId ? BUY_GM_URL : ROUTE_PATH.CLAIM}
           className={s.banner_link}
           target={ownerTokenId ? '_blank' : '_self'}
         >
