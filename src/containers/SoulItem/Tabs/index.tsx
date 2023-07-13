@@ -104,7 +104,7 @@ const TabsComponent = ({
               <div className={`${s.content_auction_tabBox} small-scrollbar`}>
                 {tab.type === 'adopters' && <TabBidders />}
                 {tab.type === 'desc' && <TabDescription />}
-                {tab.type === 'inter' && <TabInteraction />}``
+                {tab.type === 'inter' && <TabInteraction />}
                 {tab.type === 'effect' && <TabFeatures owner={data.owner} />}
                 {tab.type === 'history' && <TabHistories data={data} />}
                 {tab.type === 'attr' && (
