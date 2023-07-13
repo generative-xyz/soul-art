@@ -434,3 +434,22 @@
     line-height: 140%;
   }
 }
+
+.dark {
+  .profile_avatar {
+    background: rgba($color: #fff, $alpha: 0.1);
+    border-color: rgba($color: #fff, $alpha: 0.1);
+
+    > div {
+    }
+  }
+
+  .gm_balance {
+    p {
+      color: rgba($color: #fff, $alpha: 0.6);
+    }
+    h5 {
+      color: white;
+    }
+  }
+}
