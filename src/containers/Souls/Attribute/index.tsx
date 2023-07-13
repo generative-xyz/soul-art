@@ -87,6 +87,14 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
         undefined,
         { shallow: true }
       );
+    } else if (eventKey === 'Balance') {
+      router.push(
+        {
+          query: { sortBy: 'soul_balance_of', sort: -1 },
+        },
+        undefined,
+        { shallow: true }
+      );
     } else {
       router.push(
         {
@@ -223,7 +231,11 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 &nbsp;
                 {selectedOption ? selectedOption : 'Newest'}
                 <div className={attributeStyles.attribute_chevronUp}>
-                  <IconSVG src={`${CDN_URL}/ic-dropdown.svg`} maxWidth={'10'} />
+                  <IconSVG
+                    src={`${CDN_URL}/ic-dropdown.svg`}
+                    maxWidth={'10'}
+                    maxHeight={'10'}
+                  />
                 </div>
               </div>
             </Dropdown.Toggle>
@@ -248,6 +260,12 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
               >
                 Bottom Rarity
               </Dropdown.Item>
+              {/* <Dropdown.Item
+                className={attributeStyles.attribute_rarity_option}
+                eventKey="Balance"
+              >
+                GM Balance
+              </Dropdown.Item> */}
             </Dropdown.Menu>
           </Dropdown>
           <div className={attributeStyles.attribute_divide} />
