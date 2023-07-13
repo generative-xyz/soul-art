@@ -63,23 +63,23 @@ const Introduce: React.FC = () => {
           className={s.column}
         >
           <div className={s['introduceBox']}>
-            <Text
-              as={'p'}
-              size={'28'}
-              color={'white-primary'}
-              className={`${s['introduceBox-title']}`}
-            >
-              GM and Souls are two halves of a single artwork that is the historical symbol of New Bitcoin City.
-              <br />
-              <br />
-              Souls is a revolutionary cryptoart protocol for experiencing art in an entirely new way. GM is the native cryptocurrency powering the protocol.
-              <br />
-              <br />
-              The final artworks are soulbound. Souls are interconnected and perform their ever-changing artworks not as one but collectively.
-              <br />
-              <br />
-            </Text>
-
+            <AnimFade className={s['introduceVideo']} screen={.1}>
+              <Text
+                as={'p'}
+                size={'24'}
+                color={'white-primary'}
+                className={`${s['introduceBox-title']}`}
+              >
+                GM and Souls are two halves of a single artwork that is the historical symbol of New Bitcoin City.
+                <br />
+                <br />
+                Souls is a revolutionary cryptoart protocol for experiencing art in an entirely new way. GM is the native cryptocurrency powering the protocol.
+                <br />
+                <br />
+                The final artworks are soulbound. Souls are interconnected and perform their ever-changing artworks not as one but collectively.
+                <br />
+              </Text>
+            </AnimFade>
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
               <Link href={ROUTE_PATH.CLAIM} className={cs(s.button, s.init)}>
                 Adopt a Soul
@@ -90,9 +90,9 @@ const Introduce: React.FC = () => {
               </Link>
             </AnimFade>
 
-            <div className={s.introduce_actions}>
+            <AnimFade className={s.introduce_actions} screen={1}>
               <div className={s.introduce_actions_item}>
-                <AnimFade className={s['introduceVideo']} screen={1}>
+                <div className={s['introduceVideo']}>
                   <h5 className={s['introduceVideo-title']}>Watch the film</h5>
                   <div className={s['wrap-video']} onClick={handleOpenModal}>
                     <ImageFrame type={'small'}>
@@ -108,7 +108,7 @@ const Introduce: React.FC = () => {
                       />
                     </ImageFrame>
                   </div>
-                </AnimFade>
+                </div>
               </div>
               <div
                 className={classNames(
@@ -116,7 +116,7 @@ const Introduce: React.FC = () => {
                   s.introduce_actions_item__pdf
                 )}
               >
-                <AnimFade className={s['introduceVideo']} screen={1}>
+                <div className={s['introduceVideo']}>
                   <h5 className={s['introduceVideo-title']}>
                     Read the Whitepaper
                   </h5>
@@ -139,9 +139,9 @@ const Introduce: React.FC = () => {
                       </div>
                     </ImageFrame>
                   </div>
-                </AnimFade>
+                </div>
               </div>
-            </div>
+            </AnimFade>
           </div>
         </Col>
       </Container>
