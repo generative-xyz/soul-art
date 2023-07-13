@@ -16,7 +16,7 @@ import { modalPlay } from '@Constants/asset';
 import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
 import useTimeComparison from '@/hooks/useTimeComparison';
-import {WHITEPAPER} from "@Constants/url";
+import { WHITEPAPER } from "@Constants/url";
 
 const Introduce: React.FC = () => {
   const [isShow, setIsShow] = useState<boolean>(false);
@@ -70,14 +70,14 @@ const Introduce: React.FC = () => {
               className={`${s['introduceBox-title']}`}
             >
               GM and Souls are two halves of a single artwork that is the historical symbol of New Bitcoin City.
-              <br/>
-              <br/>
+              <br />
+              <br />
               Souls is a revolutionary cryptoart protocol for experiencing art in an entirely new way. GM is the native cryptocurrency powering the protocol.
-              <br/>
-              <br/>
+              <br />
+              <br />
               The final artworks are soulbound. Souls are interconnected and perform their ever-changing artworks not as one but collectively.
-              <br/>
-              <br/>
+              <br />
+              <br />
             </Text>
 
             <AnimFade className={s['introduceBox-buttons']} screen={0.6}>
@@ -85,7 +85,7 @@ const Introduce: React.FC = () => {
                 Adopt a Soul
                 {renderCountdown}
               </Link>
-              <Link href={'https://newbitcoincity.com/gm'} target="_blank" className={cs(s.button, s.trans)}>
+              <Link href={ROUTE_PATH.GM} className={cs(s.button, s.trans)}>
                 Get GM
               </Link>
             </AnimFade>
@@ -124,7 +124,7 @@ const Introduce: React.FC = () => {
                     className={classNames(s['wrap-video'], s['wrap-pdf'])}
                     onClick={() => {
                       window.open(
-                          WHITEPAPER
+                        WHITEPAPER
                       );
                     }}
                   >

@@ -15,7 +15,7 @@ import SonarWaveCircle from '@/components/SonarWaveCircle';
 import CountdownText from '@/components/CountdownText';
 import useTimeComparison from '@/hooks/useTimeComparison';
 import HeroModal from "@/containers/Landing/Introduce/Modal";
-import {WHITEPAPER} from "@Constants/url";
+import { WHITEPAPER } from "@Constants/url";
 
 const HomeHero: React.FC = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -43,9 +43,9 @@ const HomeHero: React.FC = () => {
             <>
                 {!isEventStarted && (
                     <span className={s.countdown}>
-            <SonarWaveCircle />
-            <CountdownText countDownTo={CLAIM_START_TIME} />
-          </span>
+                        <SonarWaveCircle />
+                        <CountdownText countDownTo={CLAIM_START_TIME} />
+                    </span>
                 )}
             </>
         );
@@ -79,9 +79,8 @@ const HomeHero: React.FC = () => {
                                 {renderCountdown}
                             </Link>
                             <Link
-                                href={'https://newbitcoincity.com/gm'}
+                                href={ROUTE_PATH.GM}
                                 className={cs(s.button, s.trans)}
-                                target="_blank"
                             >
                                 Get GM
                             </Link>
