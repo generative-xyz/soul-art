@@ -97,7 +97,7 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
         if (attributesQuery) {
           for (const [trail, value] of Object.entries(attributesQuery)) {
             if (typeof value === 'string') {
-              const AttributeValueArr = value.split(',');
+              const AttributeValueArr = value.split('|');
               AttributeValueArr.map(trailValue => {
                 attributesFilter.push(`${trail}:${trailValue}`);
               });
@@ -106,7 +106,7 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
         }
         const data = await getCollectionNFTList({
           contract_address: SOUL_CONTRACT,
-          attributes: attributesFilter.toString(),
+          attributes: attributesFilter.join('|'),
           is_orphan,
           ...query,
         });
