@@ -1,14 +1,15 @@
+import IconSVG from '@/components/IconSVG';
+import { CDN_URL } from '@/configs';
 import { ROUTE_PATH } from '@/constants/route-path';
 import { AssetsContext } from '@/contexts/assets-context';
 import cs from 'classnames';
 import Link from 'next/link';
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import Banner from '../Banner';
 import s from './SubHeader.module.scss';
 
 const SubHeader = ({ theme = 'light' }: { theme?: string }) => {
-  const { ownerTokenId } = useContext(AssetsContext);
-
+  const { ownerTokenId, availableFeatures } = useContext(AssetsContext);
   const SUBHEADER_LINKS = [
     {
       title: 'Souls',
@@ -30,6 +31,7 @@ const SubHeader = ({ theme = 'light' }: { theme?: string }) => {
     {
       title: 'Your Soul',
       link: `${ROUTE_PATH.HOME}/${ownerTokenId}`,
+      newEffect: availableFeatures && availableFeatures?.length > 0,
       hide: !ownerTokenId,
     },
     {
@@ -46,9 +48,19 @@ const SubHeader = ({ theme = 'light' }: { theme?: string }) => {
     <div className={cs(s.wrapper, s[theme])}>
       <div className={s.links}>
         {SUBHEADER_LINKS.map((item, index) => (
-          <Fragment key={`subheader-${index}`}>
+          <div key={`subheader-${index}`} className={s.links_item}>
+            {item.newEffect && (
+              <div className={s.new_effect}>
+                <IconSVG
+                  src={`${CDN_URL}/ic-sparkles.svg`}
+                  maxWidth="12"
+                  maxHeight="12"
+                />
+                <span>New Effect</span>
+              </div>
+            )}
             {!item.hide && <Link href={item.link}>{item.title}</Link>}
-          </Fragment>
+          </div>
         ))}
       </div>
       <Banner />

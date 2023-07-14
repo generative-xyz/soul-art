@@ -190,6 +190,15 @@
               width: rem(212px);
             }
           }
+
+          .content_gallery {
+            // padding: 0;
+
+            .content_gallery_item {
+              width: rem(115px);
+              height: rem(86px);
+            }
+          }
         }
       }
     }
