@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux';
 import AccordionComponent from './Accordion';
 import attributeStyles from './attribute.module.scss';
 import useWindowResize from '@/hooks/useWindowResize';
+import pick from 'lodash/pick';
 
 const FilterToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ children, onClick }, ref) => (
@@ -51,7 +52,7 @@ export interface ISubmitValues {
 
 const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   const isAuthenticated = useSelector(getIsAuthenticatedSelector);
-  const [selectedOption, setSelectedOption] = useState<string | null>('Newest');
+  const [selectedOption, setSelectedOption] = useState<string | null>('Highest GM Balance');
   const [filterYourSoul, setFilterYourSoul] = useState(false);
   const user = useSelector(getUserSelector);
 
@@ -66,7 +67,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   const [isEnabledAttributesFilter, setIsEnabledAttributesFilter] =
     useState(false);
 
-  const [activeItem, setActiveItem] = useState<string | null>('Newest');
+  const [activeItem, setActiveItem] = useState<string | null>('Highest GM Balance');
 
   const handleItemClick = (eventKey: string) => {
     setActiveItem(eventKey);
@@ -79,31 +80,36 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
 
   const handleSelect = (eventKey: string | null) => {
     setSelectedOption(eventKey);
+    const { is_orphan } = pick(router.query, [
+      'is_orphan',
+    ])
+    let query: Record<string, number | string> = {}
     if (eventKey === '' || eventKey === 'Newest') {
-      router.push(
-        {
-          query: {},
-        },
-        undefined,
-        { shallow: true }
-      );
+      query = {
+        sortBy: 'token_id_int', sort: -1
+      };
+    } else if (eventKey === '' || eventKey === 'Oldest') {
+      query = {
+        sortBy: 'token_id_int', sort: 1
+      };
     } else if (eventKey === 'Highest GM Balance') {
-      router.push(
-        {
-          query: { sortBy: 'soul_balance_of', sort: -1 },
-        },
-        undefined,
-        { shallow: true }
-      );
+      query = { sortBy: 'soul_balance_of', sort: -1 }
+    } else if (eventKey === 'Top Rarity') {
+      query = { sortBy: 'rarity', sort: -1 };
     } else {
-      router.push(
-        {
-          query: { sortBy: 'rarity', sort: eventKey === 'Top Rarity' ? -1 : 1 },
-        },
-        undefined,
-        { shallow: true }
-      );
+      query = { sortBy: 'rarity', sort: 1 };
     }
+    if (is_orphan) {
+      query['is_orphan'] = 1;
+    }
+
+    router.push(
+      {
+        query: query
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   const handleOnSubmit = useCallback((submitVal: ISubmitValues) => {
@@ -168,13 +174,12 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
   }, [router.query, isAuthenticated, router]);
 
   useEffect(() => {
+    const { owner, ...rest } = router.query;
     if (
       !isAuthenticated ||
-      (isAuthenticated && user && router.query.owner !== user.walletAddress)
+      (isAuthenticated && user && owner !== user.walletAddress)
     ) {
       setFilterYourSoul(false);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { owner, ...rest } = router.query;
       router.push(
         {
           query: {
@@ -195,9 +200,8 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
     <div className={attributeStyles.attribute_box}>
       <div className={attributeStyles.attribute_container}>
         <div
-          className={`${attributeStyles.attribute_leftContainer} ${
-            isMobileCheck && isShowMobile ? attributeStyles.isHide : ''
-          }`}
+          className={`${attributeStyles.attribute_leftContainer} ${isMobileCheck && isShowMobile ? attributeStyles.isHide : ''
+            }`}
         >
           <Button
             className={cs(
@@ -250,6 +254,12 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
               </Dropdown.Item>
               <Dropdown.Item
                 className={attributeStyles.attribute_rarity_option}
+                eventKey="Oldest"
+              >
+                Oldest
+              </Dropdown.Item>
+              <Dropdown.Item
+                className={attributeStyles.attribute_rarity_option}
                 eventKey="Top Rarity"
               >
                 Top Rarity
@@ -290,7 +300,7 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                   className={cs(
                     attributeStyles.attribute_iconLive,
                     isEnabledAttributesFilter &&
-                      attributeStyles.attribute_iconLive_active
+                    attributeStyles.attribute_iconLive_active
                   )}
                 >
                   <div className={attributeStyles.dots_circle}></div>
@@ -314,6 +324,14 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
                 >
                   <span></span>
                   Newest
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className={`${isActive('Oldest')}`}
+                  eventKey="Oldest"
+                  onClick={() => handleItemClick('Oldest')}
+                >
+                  <span></span>
+                  Oldest
                 </Dropdown.Item>
                 <Dropdown.Item
                   className={`${isActive('Top Rarity')}`}
@@ -362,5 +380,5 @@ const AttributeSort: React.FC<AttributeSortProps> = ({ attributes }) => {
     </div>
   );
 };
-// box-shadow: 0px 0px 24px -6px rgba(0, 0, 0, 0.08);
+
 export default memo(AttributeSort);
