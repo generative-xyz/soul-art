@@ -25,6 +25,21 @@
       display: none;
     }
   }
+  .links_item {
+    position: relative;
+
+    .new_effect {
+      // display: none;
+      display: flex;
+      align-items: center;
+      gap: rem(4px);
+      color: #ff7e21;
+      font-size: rem(10px);
+      position: absolute;
+      white-space: nowrap;
+      top: rem(-20px);
+    }
+  }
 
   &.dark {
     filter: invert(1);

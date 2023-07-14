@@ -151,15 +151,25 @@ const Introduce: React.FC = () => {
               >
                 <div className={s['introduceVideo']}>
                   <h5 className={s['introduceVideo-title']}>View Gallery</h5>
-                  <div className={classNames(s['wrap-video'], s['wrap-pdf'])}>
+                  <div className={classNames(s['wrap-video'])}>
                     <ImageFrame type={'small'}>
-                      <Link href={ROUTE_PATH.GALLERY} className={s.content}>
-                        <IconSVG
+                      <Link
+                        href={ROUTE_PATH.GALLERY}
+                        className={`${s.content} ${s.content_gallery}`}
+                      >
+                        <img
+                          src={`${CDN_URL}/img-view-gallery.png`}
+                          alt="view gallery thumbnail"
+                          width={'115px'}
+                          height={'86px'}
+                          className={`${s.content_gallery_item} ${s.modalPlay}`}
+                        />
+                        {/* <IconSVG
                           src={`${CDN_URL}/icon-gallery1.svg`}
                           maxWidth={'115'}
                           maxHeight={'86'}
                           className={s.modalPlay}
-                        />
+                        /> */}
                       </Link>
                     </ImageFrame>
                   </div>

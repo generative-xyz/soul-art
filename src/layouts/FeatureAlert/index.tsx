@@ -6,7 +6,6 @@ import { AssetsContext } from '@/contexts/assets-context';
 import { getIsAuthenticatedSelector } from '@/state/user/selector';
 import { useRouter } from 'next/router';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import s from './FeatureAlert.module.scss';
 
@@ -26,21 +25,18 @@ const FeatureAlert = () => {
     });
   }, [ownerTokenId, router]);
 
-  const handleCloseAlert = useCallback(
-    (t: { id: string | undefined }) => {
-      if (!featureList) return;
+  const handleCloseAlert = useCallback(() => {
+    if (!featureList) return;
 
-      toast.dismiss(t.id);
-      const closedAlert = JSON.parse(
-        localStorage.getItem('closed_alert') || '[]'
-      );
+    const closedAlert = JSON.parse(
+      localStorage.getItem('closed_alert') || '[]'
+    );
 
-      const updatedClosedAlert = [...closedAlert, ...featureList];
+    const updatedClosedAlert = [...closedAlert, ...featureList];
 
-      localStorage.setItem('closed_alert', JSON.stringify(updatedClosedAlert));
-    },
-    [featureList]
-  );
+    localStorage.setItem('closed_alert', JSON.stringify(updatedClosedAlert));
+    setFeatureList([]);
+  }, [featureList]);
 
   useEffect(() => {
     if (availableFeatures && availableFeatures.length > 0) {
@@ -58,67 +54,55 @@ const FeatureAlert = () => {
 
   useEffect(() => {
     if (!isAuthenticated || tokenId === ownerTokenId) {
-      toast.dismiss('unlock-alert');
+      setFeatureList([]);
+
       return;
     }
   }, [ownerTokenId, isAuthenticated, tokenId]);
 
   useEffect(() => {
-    if (tokenId === ownerTokenId || !featureList || featureList.length === 0)
-      return;
+    if (featureList.length > 0) {
+      //disable body scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      //enable body scroll
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      //enable body scroll
+      document.body.style.overflow = 'unset';
+    };
+  }, [featureList]);
 
-    toast(
-      t => (
-        <div className={s.alert_wrapper} key={t.id}>
-          <div className={s.content_wrapper}>
-            <div className={s.thumbnail_wrapper}>
-              <img
-                src={`${CDN_URL}/shining.png`}
-                alt={`Thumbnail of feature`}
-              />
-            </div>
-            <div className={s.content}>
-              <p>Your Soul has earned a new effect.</p>
-            </div>
+  if (!featureList || featureList.length === 0) return null;
+
+  return (
+    <div className={s.wrapper}>
+      <div className={s.box}>
+        <div className={s.alert_wrapper}>
+          <div className={s.thumbnail_wrapper}>
+            <img src={`${CDN_URL}/shining.png`} alt={`Thumbnail of feature`} />
           </div>
-          <Button className={s.unlock_btn} onClick={goToTokenPage}>
-            Unlock it now
-            <IconSVG
-              src={`${CDN_URL}/ic-arrow-right.svg`}
-              maxWidth={'14'}
-              maxHeight={'14'}
-            />
-          </Button>
-          <Button className={s.close_btn} onClick={() => handleCloseAlert(t)}>
-            Close
-          </Button>
+          <div className={s.content_wrapper}>
+            <div className={s.content}>
+              <p>A new effect is available to unlock.</p>
+            </div>
+            <Button className={s.unlock_btn} onClick={goToTokenPage}>
+              Unlock it now
+              <IconSVG
+                src={`${CDN_URL}/ic-arrow-right.svg`}
+                maxWidth={'14'}
+                maxHeight={'14'}
+              />
+            </Button>
+            <Button className={s.close_btn} onClick={() => handleCloseAlert()}>
+              Close
+            </Button>
+          </div>
         </div>
-      ),
-      {
-        id: `unlock-alert`,
-        position: 'bottom-right',
-        duration: Infinity,
-        className: s.alert,
-
-        style: {
-          background: '#fff',
-          boxShadow: '0px 0px 24px -6px rgba(0, 0, 0, 0.16)',
-          borderRadius: '8px',
-          padding: '20px',
-          width: '248px',
-        },
-      }
-    );
-  }, [
-    ownerTokenId,
-    featureList,
-    goToTokenPage,
-    handleCloseAlert,
-    tokenId,
-    router,
-  ]);
-
-  return <div className={s.wrapper}></div>;
+      </div>
+    </div>
+  );
 };
 
 export default FeatureAlert;
