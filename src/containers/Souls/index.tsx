@@ -22,7 +22,7 @@ export interface Props {
   isOrphanagePage?: boolean;
 }
 
-export const SoulsContainer: React.FC<Props> = ({}: Props) => {
+export const SoulsContainer: React.FC<Props> = ({ }: Props) => {
   const router = useRouter();
   const [initialLoading, setInitialLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
@@ -80,8 +80,8 @@ export const SoulsContainer: React.FC<Props> = ({}: Props) => {
           page,
           limit: LIMIT_PAGE,
           owner: owner || undefined,
-          sort_by: sortBy || undefined,
-          sort: sort || undefined,
+          sort_by: sortBy || 'soul_balance_of',
+          sort: sort || -1,
         };
 
         let attributesQuery;
