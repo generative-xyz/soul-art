@@ -35,7 +35,7 @@ export const StyledToggleIcon = styled.div`
 
   .horizontal {
     position: absolute;
-    background-color: #000;
+    background-color: #fff;
     width: 100%;
     height: 2px;
     left: 0;
@@ -44,7 +44,7 @@ export const StyledToggleIcon = styled.div`
   }
   .vertical {
     position: absolute;
-    background-color: #000;
+    background-color: #fff;
     width: 2px;
     height: 100%;
     top: 0;

@@ -50,7 +50,7 @@ const FAQ_CONTENT = [
 const FAQs = () => {
   return (
     <div className={s.wrapper}>
-      <h2>FAQs</h2>
+      <h3>FAQs</h3>
       <div className={s.faq_content}>
         <Accordion
           //   defaultActiveKey={['']}

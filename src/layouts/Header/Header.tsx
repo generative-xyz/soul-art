@@ -86,10 +86,6 @@ const NAV_CONTENT: NavContent[] = [
   //   title: 'Bidding',
   //   url: ROUTE_PATH.STATUS,
   // },
-  {
-    title: 'FAQs',
-    url: ROUTE_PATH.FAQS,
-  },
 ];
 
 const Header = ({
