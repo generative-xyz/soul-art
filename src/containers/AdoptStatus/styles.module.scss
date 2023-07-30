@@ -156,5 +156,57 @@
       color: #fff;
       background: #b6b6b6;
     }
+    &.disabled {
+      color: #fff;
+      background: #b6b6b6;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
+}
+
+.action_tooltip {
+  --bs-tooltip-bg: #fff;
+  --bs-tooltip-arrow-width: 1rem;
+  --bs-tooltip-opacity: 1;
+  margin-top: rem(8px);
+
+  :global(.tooltip-inner) {
+    background: #fff;
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.12);
+    padding: rem(12px) rem(16px);
+    font-size: rem(14px);
+    border: 1px solid #ececec;
+    min-width: 60ch;
+    text-align: left;
+  }
+
+  // :global(.tooltip-arrow) {
+  //   width: 100%;
+  //   height: 100%;
+
+  //   &::before {
+  //     position: absolute;
+  //     content: '';
+  //     left: 66%;
+  //     bottom: 100%;
+  //     border-bottom: 6px solid #fff;
+  //     border-top: 6px solid transparent;
+  //     border-right: 6px solid transparent;
+  //     border-left: 6px solid transparent;
+  //     background: 0;
+  //   }
+  // }
+
+  // z-index: 999;
+  // border: 1px solid #ececec;
+  // border-radius: rem(8px);
+  // font-size: rem(14px);
+  // line-height: 140%;
+  // margin-top: rem(12px);
+  // max-width: rem(440px);
 }
