@@ -229,9 +229,15 @@ const Header = ({
             );
           })}
         </div>
-
         <Link className={s.logo} href={ROUTE_PATH.HOME}>
-          Souls
+          <IconSVG
+            src={
+              theme === 'dark'
+                ? `${CDN_URL}/logo-soul-white.svg`
+                : `${CDN_URL}/logo-soul-black.svg`
+            }
+            maxHeight="28"
+          ></IconSVG>
         </Link>
         <MenuMobile
           isOpen={isOpenMenu}
