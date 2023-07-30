@@ -146,8 +146,7 @@ export const SoulsContainer: React.FC<Props> = ({
     );
   }
 
-  // if (souls && souls.length === 0 && _.isEmpty(router.query)) {
-  if (true && true && _.isEmpty(router.query)) {
+  if (souls && souls.length === 0 && _.isEmpty(router.query)) {
     if (!isOrphanagePage) {
       return (
         <div className={s.emptyWrapper}>
