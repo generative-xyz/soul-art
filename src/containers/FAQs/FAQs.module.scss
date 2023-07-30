@@ -5,18 +5,26 @@
   margin-left: auto;
   margin-right: auto;
   padding-bottom: rem(100px);
+  color: white;
 
-  h2 {
+  * {
+    color: inherit;
+  }
+
+  h3 {
     font-size: rem(40px);
     font-weight: 500;
     line-height: 56/40;
     margin-bottom: rem(60px);
+    font-family: var(--righteous-font);
   }
 
   .faq_content_wrapper {
     display: flex;
     flex-direction: column;
     gap: rem(32px);
+
+    --bs-accordion-active-color: #fff;
   }
 
   :global(.accordion-button::after) {
@@ -31,6 +39,8 @@
 
   .item {
     border: none;
+    background: black;
+
     .item_header {
       margin: 0;
       padding: 0;
@@ -61,7 +71,7 @@
       padding-bottom: rem(32px);
       font-size: rem(16px);
       line-height: 22/16;
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid #fff;
     }
   }
 }

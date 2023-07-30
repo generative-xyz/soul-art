@@ -9,6 +9,7 @@ import Header from '@/layouts/Header';
 import ProgressBarCs from '@/containers/Landing/ProgressBarCs';
 import { Loading } from '@/containers/Landing/Loading';
 import SectionFlys from '@/containers/Landing/SectionFlys';
+import FAQs from '../FAQs';
 
 export const LandingContainer: React.FC = (): React.ReactElement => {
   useSmoothScroll();
@@ -21,6 +22,7 @@ export const LandingContainer: React.FC = (): React.ReactElement => {
       <Flare />
       <SectionFlys />
       <Tech />
+      <FAQs />
       <ProgressBarCs />
     </div>
   );
