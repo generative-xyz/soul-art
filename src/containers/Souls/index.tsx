@@ -81,8 +81,7 @@ export const SoulsContainer: React.FC<Props> = ({
         } = {
           page,
           limit: LIMIT_PAGE,
-          // TODO: Update query when API filter orphan ready
-          owner: isOrphanagePage ? '0x00' : owner || undefined,
+          owner: owner || undefined,
           sortBy: sortBy || undefined,
           sort: sort || undefined,
         };
@@ -109,6 +108,7 @@ export const SoulsContainer: React.FC<Props> = ({
         const data = await getCollectionNFTList({
           contract_address: SOUL_CONTRACT,
           attributes: attributesFilter.toString(),
+          is_orphan: isOrphanagePage ? 1 : undefined,
           ...query,
         });
 

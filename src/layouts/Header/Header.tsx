@@ -43,6 +43,7 @@ import BigNumber from 'bignumber.js';
 type NavContent = {
   title: string;
   url: string;
+  target?: string;
 };
 
 const WalletToggle = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -71,6 +72,11 @@ const NAV_CONTENT: NavContent[] = [
   {
     title: 'Artworks',
     url: ROUTE_PATH.ART,
+  },
+  {
+    title: 'GM',
+    url: 'https://newbitcoincity.com/gm',
+    target: '_blank',
   },
   {
     title: 'Orphanage',
@@ -209,13 +215,14 @@ const Header = ({
         }`}
       >
         <div className={s.nav_container}>
-          {NAV_CONTENT.map(({ title, url }) => {
+          {NAV_CONTENT.map(({ title, url, target }) => {
             return (
               <Link
                 key={title}
                 href={url}
                 className={`${s.nav_item}
                   ${router.pathname === url ? s.active : ''}`}
+                target={target || '_self'}
               >
                 {title}
               </Link>
